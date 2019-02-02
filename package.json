@@ -1,0 +1,22 @@
+{
+  "name": "hifumi",
+  "version": "1.0.0",
+  "description": "A bot for the best girl",
+  "main": "index.js",
+  "scripts": {
+    "test": "ping"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hifumibestgirl/hifumi.git"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "whamer100",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hifumibestgirl/hifumi/issues"
+  },
+  "homepage": "https://github.com/hifumibestgirl/hifumi#readme"
+}
