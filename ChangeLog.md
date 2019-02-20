@@ -1,3 +1,3 @@
-# Changelog for untitled
+# Changelog for newgame
 
 ## Unreleased changes
