@@ -56,8 +56,10 @@ getStatsJSON = convertJson <$> getStats
     convertJson (reddit, discord) = StatsResponse {discord = getDefault discord, reddit = getDefault reddit}
 
 start :: IO ()
-start =
-  scotty 3000 $ do
+start = do
+  let port = 3000
+  putStrLn $ "Starting server on port" <> show port
+  scotty port $ do
     middleware logStdout
     get "/api/stats" $ liftIO getStatsJSON >>= json
     get "/api/discord" $ liftIO getDiscordMembers >>= json
