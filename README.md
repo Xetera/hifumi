@@ -17,6 +17,7 @@ Most discussion will be in the `#tech-talk` channel.
 
 ## Setting up Hifumi
 
+Step 0: copy `.env.example` to `.env` and add your bot token
 
 ### The big boy way
 
