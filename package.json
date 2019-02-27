@@ -2,8 +2,9 @@
   "name": "hifumi",
   "version": "1.0.0",
   "description": "A bot for the best girl",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
+    "dev": "nodemon",
     "test": "ping"
   },
   "repository": {
@@ -18,5 +19,14 @@
   "bugs": {
     "url": "https://github.com/hifumibestgirl/hifumi/issues"
   },
-  "homepage": "https://github.com/hifumibestgirl/hifumi#readme"
+  "homepage": "https://github.com/hifumibestgirl/hifumi#readme",
+  "devDependencies": {
+    "@types/dotenv": "^6.1.0",
+    "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "dotenv": "^6.2.0",
+    "typescript": "^3.3.3333"
+  }
 }
