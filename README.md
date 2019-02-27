@@ -15,7 +15,7 @@ Most discussion will be in the `#tech-talk` channel.
 
 
 ## Contributing
-1. `git clone https://github.com/hifumibestgirl/hifumi.git`
+1. `git clone https://github.com/moedevs/hifumi.git`
 2. `npm install`
 
 ##### Made with <3 by the /r/NewGame community
