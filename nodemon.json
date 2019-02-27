@@ -6,5 +6,5 @@
 	"ignore": [
 		"src/**/*.spec.ts"
 	],
-	"exec": "tsc && node dist/index.js"
+	"exec": "tsc --skipLibCheck && node dist/index.js"
 }

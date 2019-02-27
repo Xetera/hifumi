@@ -1,0 +1,30 @@
+{
+	"defaultSeverity": "error",
+	"extends": [
+		"tslint:recommended"
+	],
+	"jsRules": {},
+	"rules": {
+		"prefer-object-spread": true,
+		"prefer-const": true,
+		"prefer-template": true,
+		"only-arrow-functions": true,
+		"no-eval": true,
+		"no-parameter-reassignment": true,
+		"no-var-keyword": true,
+		"no-arg": true,
+		"no-var-requires": true,
+		"no-console": [true, "warn"],
+		"object-literal-sort-keys": false,
+		"no-magic-numbers": [
+			true,
+			{
+				"allowed-numbers": [
+					0,
+					1
+				]
+			}
+		]
+	},
+	"rulesDirectory": []
+}

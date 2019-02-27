@@ -23,7 +23,8 @@ Most discussion will be in the `#tech-talk` channel.
 1. install docker-compose
 2. `git clone https://github.com/moedevs/hifumi.git`
 3. `cd hifumi`
-4. `docker-compose up`
+4. `npm install`
+5. `docker-compose up`
 
 In order to spawn an interactive shell within the bot so you can use `rs`
 to restart the bot, you can do `docker-compose run bot` (you shouldn't 

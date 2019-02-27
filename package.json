@@ -5,28 +5,33 @@
   "main": "index.ts",
   "scripts": {
     "dev": "nodemon",
-    "test": "ping"
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "test": "echo O hai dere"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/hifumibestgirl/hifumi.git"
+    "url": "git://github.com/moedevs/hifumi.git"
   },
   "keywords": [
     "npm"
   ],
   "author": "/r/newgame",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hifumibestgirl/hifumi/issues"
+    "url": "https://github.com/moedevs/hifumi/issues"
   },
   "homepage": "https://github.com/hifumibestgirl/hifumi#readme",
   "devDependencies": {
     "@types/dotenv": "^6.1.0",
-    "nodemon": "^1.18.10"
+    "@types/glob": "^7.1.1",
+    "nodemon": "^1.18.10",
+    "tslint": "^5.13.0"
   },
   "dependencies": {
+    "discord-akairo": "^7.5.5",
     "discord.js": "^11.4.2",
     "dotenv": "^6.2.0",
+    "glob": "^7.1.3",
     "typescript": "^3.3.3333"
   }
 }
