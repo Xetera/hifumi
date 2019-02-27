@@ -4,19 +4,25 @@
   "description": "A bot for the best girl",
   "main": "index.js",
   "scripts": {
-    "test": "ping"
+    "start": "nodemon src/index.js",
+    "test": "echo O hai dere"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/hifumibestgirl/hifumi.git"
+    "url": "git://github.com/moedevs/hifumi.git"
   },
   "keywords": [
     "npm"
   ],
   "author": "/r/newgame",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hifumibestgirl/hifumi/issues"
+    "url": "https://github.com/moedevs/hifumi/issues"
   },
-  "homepage": "https://github.com/hifumibestgirl/hifumi#readme"
+  "homepage": "https://github.com/moedevs/hifumi#readme",
+  "dependencies": {
+    "discord-akairo": "^7.5.5",
+    "discord.js": "^11.4.2",
+    "glob": "^7.1.3"
+  }
 }
