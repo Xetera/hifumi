@@ -1,8 +1,9 @@
 import { AkairoClient } from "discord-akairo";
 import dotenv from "dotenv";
 import { handleEvents } from "./events";
-
 dotenv.config();
+
+import "./db";
 
 const prefix = process.env.PREFIX || "$";
 

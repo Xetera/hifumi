@@ -1,22 +1,21 @@
 version: "3.5"
 services:
-  bot:
-    container_name: hifumi
-    image: node:10-alpine
-    volumes:
-      - ./:/app
-    working_dir: /app
-    depends_on:
-      - mongo
-    environment:
-      NODE_ENV: development
-    ports:
-      - 3000:3000
-    networks:
-      - hifuminet
-    command: npm run dev
-    stdin_open: true
-    tty: true
+#  bot:
+#    container_name: hifumi
+#    image: node:10-alpine
+#    volumes:
+#      - ./:/app
+#    working_dir: /app
+#    depends_on:
+#      - mongo
+#    environment:
+#      DATABASE_URL: mongodb://mongo:27017/hifumi
+#      NODE_ENV: development
+#    ports:
+#      - 3000:3000
+#    command: npm run dev
+#    stdin_open: true
+#    tty: true
   mongo:
     container_name: hifumi_mongo
     image: mongo
@@ -26,5 +25,17 @@ services:
       - 27017:27017
     volumes:
       - ./data/db:/data/db
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    networks:
+      - hifuminet
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+    depends_on:
+      - mongo
+    ports:
+      - 8081:8081
 networks:
   hifuminet:

@@ -25,16 +25,12 @@ Step 0: copy `.env.example` to `.env` and add your bot token
 2. `git clone https://github.com/moedevs/hifumi.git`
 3. `cd hifumi`
 4. `npm install`
-5. `docker-compose up`
+5. `docker-compose -d up`
+6. `npm run dev`
 
-In order to spawn an interactive shell within the bot so you can use `rs`
-to restart the bot, you can do `docker-compose run bot` (you shouldn't 
-need this because the bot already restarts when it detects changes) 
-
-If you only want to use mongodb you can use `docker-compose run mongo`
-and connect to it on port **:27017**
-
-When you're done, you can stop everything with `docker-compose down`
+Docker compose gives you **Mongodb** on port 27017 and **Mongo-Express**
+on port 8081. To access your database, go to `http://localhost:8081` when
+docker-compose is running
 
 ### The lame way
 

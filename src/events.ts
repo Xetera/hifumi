@@ -1,12 +1,12 @@
 import { AkairoClient } from "discord-akairo";
 import { Message } from "discord.js";
 
-const onMessage = (message: Message) => {
+const onMessage = ({ guild, channel, author, content }: Message) => {
   // @ts-ignore
-  console.log(`(${message.guild.name}:${message.channel.name}) ${message.author.tag}: ${message.content}`);
+  console.log(`(${guild.name}:${channel.name}) ${author.tag}: ${content}`);
 };
 
-const onReady = (client: AkairoClient) => {
+const onReady = async (client: AkairoClient) => {
   console.log("Started up!");
   const l = `Logged in as ${client.user.tag} [id:${client.user.id}]`;
   console.log("-".repeat(l.length));
