@@ -7,8 +7,8 @@ maintainer:          "@"
 copyright:           "2018 Xetera"
 
 extra-source-files:
-- README.md
-- ChangeLog.md
+  - README.md
+  - ChangeLog.md
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package
@@ -20,39 +20,41 @@ extra-source-files:
 description:         Please see the README on GitHub at <https://github.com/Github username here/untitled#readme>
 
 dependencies:
-- base >= 4.7 && < 5
-- async
-- http-conduit
-- aeson
-- lens-aeson
-- bytestring
-- text
-- lens
-- scotty
-- wai-extra
-- wai
+  - base >= 4.7 && < 5
+  - async
+  - http-conduit
+  - aeson
+  - lens-aeson
+  - bytestring
+  - text
+  - lens
+  - scotty
+  - wai-extra
+  - wai
 
 library:
   source-dirs: src
+  ghc-options:
+    - -Wall
 
 executables:
   newgame-exe:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
     dependencies:
-    - newgame
+      - newgame
 
 tests:
   newgame-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
     dependencies:
-    - newgame
+      - newgame
