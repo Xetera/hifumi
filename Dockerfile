@@ -15,6 +15,6 @@ WORKDIR /opt/server
 COPY --from=build-env /root/.local/bin/newgame-exe ./newgame-exe
 
 RUN apt-get update
-RUN apt-get install netbase
+RUN apt-get install netbase ca-certificates -y
 
 CMD ./newgame-exe
