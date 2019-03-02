@@ -1,7 +1,8 @@
-import { AkairoClient } from "discord-akairo";
 import dotenv from "dotenv";
-import { handleEvents } from "./events";
 dotenv.config();
+
+import { AkairoClient } from "discord-akairo";
+import { handleEvents } from "./events";
 
 import "./db";
 
@@ -14,8 +15,6 @@ const client = new AkairoClient({
 }, {
   disableEveryone: true,
 });
-
-console.log(`Working dir: ${process.cwd()}`);
 
 handleEvents(client);
 

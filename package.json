@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/hifumibestgirl/hifumi#readme",
   "devDependencies": {
+    "@types/datadog-metrics": "^0.6.0",
     "@types/dotenv": "^6.1.0",
     "@types/glob": "^7.1.1",
     "@types/mongodb": "^3.1.19",
@@ -30,6 +31,7 @@
     "tslint": "^5.13.0"
   },
   "dependencies": {
+    "datadog-metrics": "^0.8.1",
     "discord-akairo": "^7.5.5",
     "discord.js": "^11.4.2",
     "dotenv": "^6.2.0",
