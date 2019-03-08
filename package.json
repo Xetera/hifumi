@@ -30,6 +30,7 @@
     "tslint": "^5.13.0"
   },
   "dependencies": {
+    "canvas": "^2.3.1",
     "discord-akairo": "^7.5.5",
     "discord.js": "^11.4.2",
     "dotenv": "^6.2.0",
