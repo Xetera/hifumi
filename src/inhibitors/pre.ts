@@ -1,6 +1,6 @@
 import { Inhibitor } from "discord-akairo";
 import { Message } from "discord.js";
-import { withDatadog } from "@/analytics/datadog";
+import { withDatadog } from "../analytics/datadog";
 
 export default class extends Inhibitor {
   constructor() {

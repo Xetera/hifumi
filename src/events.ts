@@ -1,8 +1,14 @@
 import { AkairoClient } from "discord-akairo";
-import { GuildMember, Message, TextChannel } from "discord.js";
+import { Emoji, Message, MessageReaction, TextChannel, User } from "discord.js";
+import { boxContents, countMembers, logger } from "./utils";
+import { addStar, removeStar } from "./starboard";
 import { withDatadog } from "./analytics/datadog";
-import { boxContents, countMembers } from "./utils";
 import { ANALYTICS_INTERVAL } from "./constants";
+
+const events: { [key: string]: string } = {
+  MESSAGE_REACTION_ADD: "messageReactionAdd",
+  MESSAGE_REACTION_REMOVE: "messageReactionRemove",
+};
 
 const onGuildMessage = ({ guild, channel, author, content }: Message) => {
   const channelName = (channel as TextChannel).name;
@@ -19,9 +25,7 @@ const onMessage = (message: Message) => {
   if (message.guild) {
     return onGuildMessage(message)
   }
-  return onDM(message);
 };
-
 const logStartup = (client: AkairoClient) => {
   const stat = `Logged in as ${client.user.tag} [id:${client.user.id}]`;
   const commands = client.commandHandler.modules.map(
@@ -48,7 +52,48 @@ const onReady = async (client: AkairoClient) => {
   )
 };
 
+const onReactAdd = async (react: MessageReaction, user: User) => {
+  logger.info(`Received a add event by ${user.username}`);
+  await addStar(react, user);
+};
+
+const onReactRemove = async (react: MessageReaction, user: User) => {
+  logger.info(`Received a reaction remove event by ${user.username}`);
+  await removeStar(react, user);
+};
+
 export const handleEvents = (client: AkairoClient) => {
   client.on("message", onMessage);
   client.on("ready", () => onReady(client));
+  client.on("messageReactionAdd", onReactAdd);
+  client.on("messageReactionRemove", onReactRemove);
+  client.on("raw", async (event: any) => {
+    if (!("t" in event) || !Object.keys(events).includes(event.t)) {
+      return;
+    }
+
+    const { d: data } = event;
+
+    const user = client.users.get(data.user_id);
+    const channel = client.channels.get(data.channel_id) as TextChannel || await user!.createDM();
+
+    if (channel.messages.has(data.message_id)) {
+      return;
+    }
+
+    const message = await channel.fetchMessage(data.message_id);
+    const emojiKey = data.emoji.id ? `${data.emoji.name}:${data.emoji.id}` : data.emoji.name;
+
+    let reaction = message.reactions.get(emojiKey);
+
+    // when removing the last reaction no reaction is emitted
+    if (!reaction) {
+      const emoji = new Emoji(client.guilds.get(data.guild_id)!, data.emoji);
+      reaction = new MessageReaction(message, emoji, 0, data.user_id === client.user.id);
+    }
+
+    console.log(reaction);
+
+    client.emit(events[event.t], reaction, user);
+  });
 };

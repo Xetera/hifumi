@@ -1,5 +1,5 @@
 import { Command } from "discord-akairo";
-import { Message, RichEmbed } from "discord.js";
+import { Message, RichEmbedOptions } from "discord.js";
 
 export default class HelpCommand extends Command {
   constructor() {
@@ -10,19 +10,20 @@ export default class HelpCommand extends Command {
   }
 
   public exec(message: Message) {
-    const cstr = [];
+    const cstr = this.client.commandHandler.modules.map(command =>
+      `$${command.id}: ${command.description}`
+    );
 
-    for (const command of this.client.commandHandler.modules.array()) {
-      cstr.push(`$${command.id}: ${command.description}`);
-    }
+    const embed: RichEmbedOptions = {
+      title: "Hifumi (Rewritten)",
+      description: "Temporary Description",
+      fields: [{
+        name: "Commands",
+        value: cstr.join("\n")
+      }]
+    };
 
-    const HelpEmbed = new RichEmbed()
-      .setTitle("Hifumi (Rewritten)")
-      .setDescription("Temporary Description")
-
-      .addField("Commands", cstr.join("\n"));
-
-    message.channel.send({ embed: HelpEmbed });
+    message.channel.send({ embed });
   }
 }
 
