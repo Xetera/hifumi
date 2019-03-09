@@ -1,18 +1,24 @@
 import { Document, Model, model, Schema } from "mongoose";
 
-interface Guilds extends Document {
+export interface Guilds extends Document {
   id: string;
   enabled: boolean;
   starboard_channel?: string;
-  min_star_requirement: number;
+  min_stars: number;
   suspended_members?: string[];
 }
 
 export const GuildSchema = new Schema({
   id: String,
-  enabled: Boolean,
+  enabled: {
+    type: Boolean,
+    default: false
+  },
   starboard_channel: String,
-  min_star_requirement: Number,
+  min_stars: {
+    type: Number,
+    default: 3
+  },
   suspended_members: Array
 }, {
   timestamps: {
