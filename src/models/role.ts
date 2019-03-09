@@ -1,6 +1,6 @@
-import { Document, Schema, Model, model } from "mongoose";
+import { Document, Model, model, Schema } from "mongoose";
 
-interface Role extends Document {
+interface Roles extends Document {
   id: string;
 }
 
@@ -14,4 +14,4 @@ export const RoleSchema = new Schema({
   }
 });
 
-export const Roles: Model<Role> = model<Role>("Role", RoleSchema);
+export const Role: Model<Roles> = model<Roles>("Role", RoleSchema);

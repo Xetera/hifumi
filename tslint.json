@@ -5,6 +5,8 @@
 	],
 	"jsRules": {},
 	"rules": {
+		"interface-name": false,
+		"trailing-comma": false,
 		"prefer-object-spread": true,
 		"prefer-const": true,
 		"prefer-template": true,

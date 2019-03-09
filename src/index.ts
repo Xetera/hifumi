@@ -1,4 +1,5 @@
 import { AkairoClient } from "discord-akairo";
+import CustomCommandHandler from "./utils";
 import dotenv from "dotenv";
 import { handleEvents } from "./events";
 dotenv.config();
@@ -13,6 +14,11 @@ const client = new AkairoClient({
   commandDirectory: "./dist/commands/",
 }, {
   disableEveryone: true,
+});
+
+const _ = new CustomCommandHandler(client, {
+  commandDirectory: "./dist/commands",
+  blockClient: true,
 });
 
 console.log(`Working dir: ${process.cwd()}`);
