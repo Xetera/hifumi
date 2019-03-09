@@ -2,9 +2,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { AkairoClient } from "discord-akairo";
-import { handleEvents } from "./events";
 
 import "./db";
+import { handleEvents } from "@/events";
 
 const prefix = process.env.PREFIX || "$";
 
@@ -12,6 +12,7 @@ const client = new AkairoClient({
   prefix,
   ownerID: [],
   commandDirectory: "./dist/commands/",
+  inhibitorDirectory: "./dist/inhibitors/"
 }, {
   disableEveryone: true,
 });

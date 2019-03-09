@@ -1,7 +1,8 @@
 import { AkairoClient } from "discord-akairo";
-import { Message, TextChannel } from "discord.js";
+import { GuildMember, Message, TextChannel } from "discord.js";
 import { withDatadog } from "./analytics/datadog";
-import { boxContents } from "./utils";
+import { boxContents, countMembers } from "./utils";
+import { ANALYTICS_INTERVAL } from "./constants";
 
 const onGuildMessage = ({ guild, channel, author, content }: Message) => {
   const channelName = (channel as TextChannel).name;
@@ -21,16 +22,33 @@ const onMessage = (message: Message) => {
   return onDM(message);
 };
 
-const onReady = async (client: AkairoClient) => {
+const logStartup = (client: AkairoClient) => {
   const stat = `Logged in as ${client.user.tag} [id:${client.user.id}]`;
   const commands = client.commandHandler.modules.map(
     mod => `${process.env.PREFIX || "$"}${mod.id}: ${mod.description}`
-  ).join('\n');
-  const out = boxContents("Started Up!", stat, commands);
+  );
+  const out = boxContents("Started Up!", stat, commands.join("\n"));
   console.log(out)
+};
+
+const sendAnalytics = (client: AkairoClient) => {
+  const totalMembers = countMembers(client);
+  const totalServers = client.guilds.size;
+  withDatadog(datadog => {
+    datadog.gauge('member.count', totalMembers);
+    datadog.gauge('server.count', totalServers)
+  });
+};
+
+const onReady = async (client: AkairoClient) => {
+  logStartup(client);
+  setTimeout(
+    () => sendAnalytics(client),
+    ANALYTICS_INTERVAL
+  )
 };
 
 export const handleEvents = (client: AkairoClient) => {
   client.on("message", onMessage);
-  client.on("ready", () => onReady(client))
+  client.on("ready", () => onReady(client));
 };
