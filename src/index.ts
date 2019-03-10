@@ -1,8 +1,8 @@
+import dotenv from "dotenv";
+dotenv.config();
 import { AkairoClient } from "discord-akairo";
 import CustomCommandHandler from "./utils";
-import dotenv from "dotenv";
 import { handleEvents } from "./events";
-dotenv.config();
 
 import "./db";
 
@@ -12,6 +12,7 @@ const client = new AkairoClient({
   prefix,
   ownerID: [],
   commandDirectory: "./dist/commands/",
+  inhibitorDirectory: "./dist/inhibitors"
 }, {
   disableEveryone: true,
 });

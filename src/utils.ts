@@ -2,6 +2,15 @@ import { AkairoClient } from "discord-akairo";
 import { CommandHandler } from "discord-akairo";
 import pino from "pino";
 import { chain } from "ramda";
+import { TextChannel } from "discord.js";
+import { withDatadog } from "./analytics/datadog";
+
+const _send = TextChannel.prototype.send;
+
+TextChannel.prototype.send = function(...args: any[]) {
+  withDatadog(client => client.increment("bot.messages.sent"));
+  return _send.call(this, ...args);
+};
 
 export const boxContents = (...texts: string[]) => {
   const getLines = (text: string) => text.split('\n').map(line => line.length);

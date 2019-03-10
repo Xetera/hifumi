@@ -11,8 +11,7 @@ export default class extends Inhibitor {
     });
   }
 
-  public exec(message: Message) {
-    withDatadog((client) => client.increment("commands.used"));
+  public exec(message: Message, e: any) {
     // console.log(message.content);
     return false;
   }

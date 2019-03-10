@@ -1,8 +1,8 @@
 import { AkairoClient } from "discord-akairo";
 import { Emoji, Message, MessageReaction, TextChannel, User } from "discord.js";
-import { boxContents, countMembers, logger } from "./utils";
+import { boxContents, logger } from "./utils";
 import { addStar, removeStar } from "./starboard";
-import { withDatadog } from "./analytics/datadog";
+import { sendAnalytics, withDatadog } from "./analytics/datadog";
 import { ANALYTICS_INTERVAL } from "./constants";
 
 const events: { [key: string]: string } = {
@@ -13,17 +13,17 @@ const events: { [key: string]: string } = {
 const onGuildMessage = ({ guild, channel, author, content }: Message) => {
   const channelName = (channel as TextChannel).name;
   console.log(`(${guild.name}:${channelName}) ${author.username}: ${content}`);
-  withDatadog(client => client.increment('messages.seen', 1, ['guild']))
+  withDatadog(client => client.increment('bot.messages.seen', 1, ['guild']));
 };
 
 const onDM = ({ author, content }: Message) => {
   console.log(`(DM:${author.username}#${author.tag}): ${content}`);
-  withDatadog(client => client.increment('messages.seen', 1, ['dm']))
+  withDatadog(client => client.increment('bot.messages.seen', 1, ['dm']));
 };
 
 const onMessage = (message: Message) => {
   if (message.guild) {
-    return onGuildMessage(message)
+    return onGuildMessage(message);
   }
 };
 const logStartup = (client: AkairoClient) => {
@@ -32,24 +32,15 @@ const logStartup = (client: AkairoClient) => {
     mod => `${process.env.PREFIX || "$"}${mod.id}: ${mod.description}`
   );
   const out = boxContents("Started Up!", stat, commands.join("\n"));
-  console.log(out)
-};
-
-const sendAnalytics = (client: AkairoClient) => {
-  const totalMembers = countMembers(client);
-  const totalServers = client.guilds.size;
-  withDatadog(datadog => {
-    datadog.gauge('member.count', totalMembers);
-    datadog.gauge('server.count', totalServers)
-  });
+  console.log(out);
 };
 
 const onReady = async (client: AkairoClient) => {
   logStartup(client);
-  setTimeout(
+  setInterval(
     () => sendAnalytics(client),
     ANALYTICS_INTERVAL
-  )
+  );
 };
 
 const onReactAdd = async (react: MessageReaction, user: User) => {

@@ -1,4 +1,7 @@
 import { BufferedMetricsLogger } from "datadog-metrics";
+import { AkairoClient } from "discord-akairo";
+import { countMembers, logger } from "../utils";
+import * as mongoose from "mongoose";
 
 const { DATADOG_API_KEY } = process.env;
 
@@ -14,4 +17,17 @@ export const withDatadog = (func: (client: BufferedMetricsLogger) => void) => {
     func(_dd);
   }
 };
+
+export const sendAnalytics = (client: AkairoClient) => {
+  logger.debug(`Sending analytics`);
+  const totalMembers = countMembers(client);
+  const totalServers = client.guilds.size;
+  const ping = client.ping;
+  withDatadog(datadog => {
+    datadog.gauge('bot.member.count', totalMembers);
+    datadog.gauge('bot.server.count', totalServers);
+    datadog.gauge('bot.ping', ping);
+  });
+};
+
 
