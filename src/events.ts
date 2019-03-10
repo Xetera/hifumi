@@ -44,7 +44,7 @@ const onReady = async (client: AkairoClient) => {
 };
 
 const onReactAdd = async (react: MessageReaction, user: User) => {
-  logger.info(`Received a add event by ${user.username}`);
+  logger.info(`Received an add event by ${user.username}`);
   await addStar(react, user);
 };
 
@@ -53,11 +53,20 @@ const onReactRemove = async (react: MessageReaction, user: User) => {
   await removeStar(react, user);
 };
 
+const onUserJoin = async (member: GuildMember) => {
+  const channel = member.guild.defaultChannel.send({embed: {
+    color: 42495,
+    title: `Welcome ${user.username}`,
+    description: "Welcome to /r/NewGame, check out #welcome for the rules and instructions on getting yourself a role. Come say hi when you're done."
+  }});
+};
+
 export const handleEvents = (client: AkairoClient) => {
   client.on("message", onMessage);
   client.on("ready", () => onReady(client));
   client.on("messageReactionAdd", onReactAdd);
   client.on("messageReactionRemove", onReactRemove);
+  client.on("guildMemberAdd", onUserJoin)
   client.on("raw", async (event: any) => {
     if (!("t" in event) || !Object.keys(events).includes(event.t)) {
       return;
