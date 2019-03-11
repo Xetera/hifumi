@@ -57,10 +57,18 @@ interface CreateCommand extends CommandOptions {
  * work with algebraic data types
  * @param options
  */
-export const createCommand = ({ id, exec, ...rest }: CreateCommand) => class extends Command {
-  constructor() {
-    super(id, exec, rest);
-  }
+export const createCommand = ({ id, exec, condition, ...rest }: CreateCommand) => {
+  return class extends Command {
+    constructor() {
+      super(id, exec, rest);
+    }
+    condition = (message: Message) => {
+      if (condition) {
+        return condition(message);
+      }
+      return true;
+    };
+  };
 };
 
 export const STAR = "⭐";

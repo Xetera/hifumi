@@ -1,10 +1,16 @@
 import { Message, RichEmbedOptions } from "discord.js";
 import { createCommand } from "../utils";
+import { Command } from "discord-akairo";
 
-export default createCommand({
-  id: "help",
-  aliases: ["help"],
-  description: "Lists all the commands",
+export default class extends Command {
+  constructor() {
+    super("help", {
+      aliases: ["help"],
+      description: "Lists all the commands",
+    });
+
+  }
+
   exec(message: Message) {
     const cstr = this.client.commandHandler.modules.map(command =>
       `$${command.id}: ${command.description}`
@@ -21,5 +27,5 @@ export default createCommand({
 
     message.channel.send({ embed });
   }
-});
+}
 

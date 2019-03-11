@@ -1,24 +1,30 @@
-import { createCommand } from "../../utils";
 import { Message } from "discord.js";
+import { Command } from "discord-akairo";
 
-export default createCommand({
-  id: "eval",
-  aliases: ["eval"],
-  args: [{
-    id: "code",
-    match: "rest"
-  }],
-  condition(message: Message) {
+export default class Eval extends Command {
+  constructor() {
+    super("eval", {
+      aliases: ["eval"],
+      category: "admin",
+      args: [{
+        id: "code",
+        match: "rest"
+      }],
+    });
+  }
+
+  condition(message: Message): boolean {
     const { OWNERS } = process.env;
+
     if (!OWNERS) {
       return false;
     }
-    const owners = OWNERS.split(",");
-    return owners.some(owner => message.author.id === owner);
-  },
+
+    return OWNERS.split(",").some(owner => owner === message.author.id);
+  }
+
   async exec(message: Message, { code }: any) {
-    // @ts-ignore
     const out = await eval(code);
     return message.channel.send(out);
   }
-});
+}

@@ -1,17 +1,20 @@
 import { Command } from "discord-akairo";
 import { Message } from "discord.js";
 import { Guild } from "../../models/guild";
-import { createCommand } from "../../utils";
 
-export default createCommand({
-  id: "setchannel",
-  aliases: ["setchannel", "sc"],
-  description: "Sets the starboard channel",
-  userPermissions: "BAN_MEMBERS",
-  args: [{
-    id: "channel",
-    type: "channel",
-  }],
+export default class extends Command {
+  constructor() {
+    super("setchannel", {
+      aliases: ["setchannel", "sc"],
+      description: "Sets the starboard channel",
+      userPermissions: "BAN_MEMBERS",
+      args: [{
+        id: "channel",
+        type: "channel",
+      }],
+    });
+  }
+
   async exec(message: Message, { channel }: any) {
     await Guild.updateOne({ id: message.guild.id }, { starboard_channel: channel.id }, {
       upsert: true,
@@ -19,4 +22,4 @@ export default createCommand({
     });
     await message.channel.send(`Set your starboard channel to ${channel}`);
   }
-});
+}
