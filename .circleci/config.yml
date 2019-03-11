@@ -26,8 +26,8 @@ jobs:
     docker:
       - image: circleci/node:10
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
+      - setup_remote_docker
       - run: docker build -t moedevs/hifumi:latest .
       - run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
       - run: docker push moedevs/hifumi:latest

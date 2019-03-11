@@ -9,6 +9,7 @@ const _dd = new BufferedMetricsLogger({
   host: 'hifumi',
   prefix: 'hifumi.',
   flushIntervalSeconds: 15,
+  defaultTags: [process.env.NODE_ENV === "production" ? "prod" : "dev"]
 });
 
 export const withDatadog = (func: (client: BufferedMetricsLogger) => void) => {
