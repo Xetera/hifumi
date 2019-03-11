@@ -22,20 +22,20 @@ services:
     volumes:
       - ./data/db:/data/db
   mongo-express:
-    image: mongo-express
-    container_name: mongo-express
+    image: mongoclient/mongoclient
+    container_name: mongo-client
     restart: always
     networks:
       - hifuminet
     environment:
-      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
-      ME_CONFIG_MONGODB_SERVER: mongo
-      ME_CONFIG_MONGODB_ADMINUSERNAME: hifumi
-      ME_CONFIG_MONGODB_ADMINPASSWORD: test
+      MONGO_URL: mongodb://mongo/hifumi
+      MONGOCLIENT_AUTH: "true"
+      MONGOCLIENT_USERNAME: hifumi
+      MONGOCLIENT_PASSWORD: test
     depends_on:
       - mongo
     ports:
-      - 8081:8081
+      - 3001:3000
 networks:
   hifuminet:
     name: hifuminet
