@@ -28,10 +28,10 @@ services:
     networks:
       - hifuminet
     environment:
-      ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
       ME_CONFIG_MONGODB_SERVER: mongo
-      ME_CONFIG_MONGODB_AUTH_USERNAME: hifumi
-      ME_CONFIG_MONGODB_AUTH_PASSWORD: test
+      ME_CONFIG_MONGODB_ADMINUSERNAME: hifumi
+      ME_CONFIG_MONGODB_ADMINPASSWORD: test
     depends_on:
       - mongo
     ports:
