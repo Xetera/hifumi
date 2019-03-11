@@ -1,16 +1,12 @@
-import { Command } from "discord-akairo";
 import { Message } from "discord.js";
+import { createCommand } from "../utils";
 
-export default class TestCommand extends Command {
-  constructor() {
-    super("test", {
-      aliases: ["test"],
-      description: "This is a test",
-      editable: true,
-    });
-  }
-
-  public async exec(message: Message) {
+export default createCommand({
+  id: "test",
+  aliases: ["test"],
+  description: "This is a test",
+  editable: true,
+  async exec(message: Message) {
     return message.channel.send("This is a test command. If you can see this that means it worked.");
   }
-}
+});

@@ -1,5 +1,5 @@
 import { AkairoClient } from "discord-akairo";
-import { Emoji, Message, MessageReaction, TextChannel, User } from "discord.js";
+import { Emoji, GuildMember, Message, MessageReaction, TextChannel, User } from "discord.js";
 import { boxContents, logger } from "./utils";
 import { addStar, removeStar } from "./starboard";
 import { sendAnalytics, withDatadog } from "./analytics/datadog";
@@ -56,7 +56,7 @@ const onReactRemove = async (react: MessageReaction, user: User) => {
 const onUserJoin = async (member: GuildMember) => {
   const channel = member.guild.defaultChannel.send({embed: {
     color: 42495,
-    title: `Welcome ${user.username}`,
+    title: `Welcome ${member.user.username}`,
     description: "Welcome to /r/NewGame, check out #welcome for the rules and instructions on getting yourself a role. Come say hi when you're done."
   }});
 };

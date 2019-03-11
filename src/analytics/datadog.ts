@@ -1,7 +1,6 @@
 import { BufferedMetricsLogger } from "datadog-metrics";
 import { AkairoClient } from "discord-akairo";
 import { countMembers, logger } from "../utils";
-import * as mongoose from "mongoose";
 
 const { DATADOG_API_KEY } = process.env;
 

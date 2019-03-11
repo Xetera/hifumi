@@ -6,6 +6,7 @@ export interface Guilds extends Document {
   starboard_channel?: string;
   min_stars: number;
   suspended_members?: string[];
+  welcome_channel?: string;
 }
 
 export const GuildSchema = new Schema({
@@ -13,6 +14,9 @@ export const GuildSchema = new Schema({
   enabled: {
     type: Boolean,
     default: false
+  },
+  welcome_channel: {
+    type: String,
   },
   starboard_channel: String,
   min_stars: {
