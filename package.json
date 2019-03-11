@@ -4,7 +4,9 @@
 	"description": "A bot for the best girl",
 	"main": "index.ts",
 	"scripts": {
+		"start": "node ./dist/index.js",
 		"dev": "nodemon",
+		"build": "tsc --skipLibCheck",
 		"lint": "tslint -c tslint.json 'src/**/*.ts'",
 		"test": "echo O hai dere"
 	},

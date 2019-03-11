@@ -1,0 +1,39 @@
+version: "3.5"
+services:
+  bot:
+    container_name: hifumi
+    build:
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - mongo
+    environment:
+      DATABASE_URL: mongodb://mongo/hifumi
+      NODE_ENV: production
+    networks:
+      - hifuminet
+  mongo:
+    container_name: hifumi_mongo
+    image: mongo
+    networks:
+      - hifuminet
+    volumes:
+      - ./data/db:/data/db
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    networks:
+      - hifuminet
+    environment:
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_AUTH_USERNAME: hifumi
+      ME_CONFIG_MONGODB_AUTH_PASSWORD: test
+    depends_on:
+      - mongo
+    ports:
+      - 8081:8081
+networks:
+  hifuminet:
+    name: hifuminet

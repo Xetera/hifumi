@@ -1,9 +1,10 @@
 import { AkairoClient } from "discord-akairo";
-import { Emoji, GuildMember, Message, MessageReaction, TextChannel, User } from "discord.js";
+import { Emoji, GuildMember, Message, MessageReaction, RichEmbedOptions, TextChannel, User } from "discord.js";
 import { boxContents, logger } from "./utils";
 import { addStar, removeStar } from "./starboard";
 import { sendAnalytics, withDatadog } from "./analytics/datadog";
 import { ANALYTICS_INTERVAL } from "./constants";
+import { Guild } from "./models/guild";
 
 const events: { [key: string]: string } = {
   MESSAGE_REACTION_ADD: "messageReactionAdd",
@@ -54,11 +55,27 @@ const onReactRemove = async (react: MessageReaction, user: User) => {
 };
 
 const onUserJoin = async (member: GuildMember) => {
-  const channel = member.guild.defaultChannel.send({embed: {
+  const { welcome_channel } = await Guild.findOne({ id: member.guild.id }) || new Guild();
+  if (!welcome_channel) {
+    return;
+  }
+
+  const channel = member.guild.channels.get(welcome_channel);
+
+  if (!channel) {
+    // TODO: delete setting here
+    return logger.warn(`welcome channel in ${member.guild.name} deleted`);
+  } else if (!(channel instanceof TextChannel)) {
+    return logger.warn(`welcome channel in ${member.guild.name} is not a text channel`);
+  }
+
+  const embed: RichEmbedOptions = {
     color: 42495,
     title: `Welcome ${member.user.username}`,
-    description: "Welcome to /r/NewGame, check out #welcome for the rules and instructions on getting yourself a role. Come say hi when you're done."
-  }});
+    description: `Welcome to ${member.guild.name}, check out #welcome for the rules and instructions on getting yourself a role. Come say hi when you're done.`,
+    thumbnail: { url: member.user.displayAvatarURL }
+  };
+  channel.send({ embed });
 };
 
 export const handleEvents = (client: AkairoClient) => {
@@ -66,7 +83,7 @@ export const handleEvents = (client: AkairoClient) => {
   client.on("ready", () => onReady(client));
   client.on("messageReactionAdd", onReactAdd);
   client.on("messageReactionRemove", onReactRemove);
-  client.on("guildMemberAdd", onUserJoin)
+  client.on("guildMemberAdd", onUserJoin);
   client.on("raw", async (event: any) => {
     if (!("t" in event) || !Object.keys(events).includes(event.t)) {
       return;
