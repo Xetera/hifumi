@@ -1,0 +1,43 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - restore_cache:
+          key: hifumi-{{ checksum "package.json" }}
+      - run: npm install
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: hifumi-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: .
+          paths: .
+  lint:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - attach_workspace:
+          at: .
+      - run: npm run lint
+  build_image:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - attach_workspace:
+          at: .
+      - run: docker build -t moedevs/hifumi:$TAG .
+      - run: docker push moedevs/hifumi:$TAG
+workflows:
+  version: 2
+  pipeline:
+    jobs:
+      - build
+#      - test:
+#          requires:
+#            - build
+      - build_image:
+          requires:
+            - build
