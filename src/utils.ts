@@ -50,25 +50,4 @@ interface CreateCommand extends CommandOptions {
   id: string;
 }
 
-/**
- * Sane akairo command wrapper
- *
- * Important: Typescript inference with explicit parameters doesn't
- * work with algebraic data types
- * @param options
- */
-export const createCommand = ({ id, exec, condition, ...rest }: CreateCommand) => {
-  return class extends Command {
-    constructor() {
-      super(id, exec, rest);
-    }
-    condition = (message: Message) => {
-      if (condition) {
-        return condition(message);
-      }
-      return true;
-    };
-  };
-};
-
 export const STAR = "⭐";

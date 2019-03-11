@@ -1,5 +1,4 @@
 import { Message, RichEmbedOptions } from "discord.js";
-import { createCommand } from "../utils";
 import { Command } from "discord-akairo";
 
 export default class extends Command {

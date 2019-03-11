@@ -1,7 +1,6 @@
 import { Command } from "discord-akairo";
 import { GuildMember, Message } from "discord.js";
 import { Role } from "../models/role";
-import { createCommand } from "../utils";
 
 
 export default class extends Command {

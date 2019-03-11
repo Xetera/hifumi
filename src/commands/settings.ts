@@ -1,4 +1,3 @@
-import { createCommand } from "../utils";
 import { Message, TextChannel } from "discord.js";
 import { Guild } from "../models/guild";
 import { Command } from "discord-akairo";

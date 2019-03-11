@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import { Command } from "discord-akairo";
 
-export default class Eval extends Command {
+export default class EvalCommand extends Command {
   constructor() {
     super("eval", {
       aliases: ["eval"],
@@ -13,17 +13,18 @@ export default class Eval extends Command {
     });
   }
 
-  condition(message: Message): boolean {
+  async exec(message: Message, { code }: any) {
     const { OWNERS } = process.env;
 
     if (!OWNERS) {
       return false;
     }
 
-    return OWNERS.split(",").some(owner => owner === message.author.id);
-  }
+    const isOwner = OWNERS.split(",").some(owner => owner === message.author.id);
+    if (!isOwner) {
+      return;
+    }
 
-  async exec(message: Message, { code }: any) {
     const out = await eval(code);
     return message.channel.send(out);
   }
