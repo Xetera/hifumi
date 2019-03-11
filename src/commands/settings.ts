@@ -3,7 +3,7 @@ import { Guild } from "../models/guild";
 import { Command } from "discord-akairo";
 
 const changeWelcome = (message: Message, channel: TextChannel) =>
-  Guild.updateOne({ id: channel.guild.id }, { welcome_channel: channel.id });
+  Guild.updateOne({ id: channel.guild.id }, { welcome_channel: channel.id }, { upsert: true });
 
 const deleteWelcome = (message: Message) =>
   Guild.updateOne({ id: message.guild.id }, { $unset: { welcome_channel: "" } });
@@ -14,6 +14,7 @@ export default class extends Command {
   constructor() {
     super("settings", {
       aliases: ["settings"],
+      userPermissions: ["BAN_MEMBERS"],
       description: "Adjusts the settings",
       args: [{
         id: "setting",
@@ -21,10 +22,6 @@ export default class extends Command {
         id: "val",
       }],
     });
-  }
-
-  condition(message: Message) {
-    return message.member.hasPermission(["BAN_MEMBERS"]);
   }
 
   async exec(message: Message, { setting, val }: any) {
