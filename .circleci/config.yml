@@ -28,16 +28,17 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: docker build -t moedevs/hifumi:$TAG .
-      - run: docker push moedevs/hifumi:$TAG
+      - run: docker build -t moedevs/hifumi:latest .
+      - run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+      - run: docker push moedevs/hifumi:latest
 workflows:
   version: 2
   pipeline:
     jobs:
       - build
-#      - test:
-#          requires:
-#            - build
       - build_image:
+          filters:
+            branches:
+              only: master
           requires:
             - build
