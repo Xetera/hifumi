@@ -1,6 +1,14 @@
 import { createCommand } from "../utils";
-import { Message } from "discord.js";
-import { Command } from "discord-akairo";
+import { Message, TextChannel } from "discord.js";
+import { Guild } from "../models/guild";
+
+const changeWelcome = (message: Message, channel: TextChannel) =>
+  Guild.updateOne({ id: channel.guild.id }, { welcome_channel: channel.id });
+
+const deleteWelcome = (message: Message) =>
+  Guild.updateOne({ id: message.guild.id }, { $unset: { welcome_channel: "" } });
+
+const settings = new Set("welcome");
 
 export default createCommand({
   id: "settings",
@@ -9,10 +17,22 @@ export default createCommand({
   args: [{
     id: "setting",
   }, {
-    id: "out",
+    id: "val",
   }],
-  exec(message: Message, args: any, edited: boolean) {
-    // console.log(this.client);
-    return "dab"
+  condition(message: Message) {
+    return message.member.hasPermission(["BAN_MEMBERS"]);
+  },
+  async exec(message: Message, { setting, val }: any) {
+    const targetChannel = message.mentions.channels.first();
+
+    if (setting === "welcome") {
+      if (targetChannel) {
+        await changeWelcome(message, targetChannel);
+        await message.channel.send(`Set your welcome channel to ${targetChannel}.`);
+      } else if (val === "disable") {
+        await deleteWelcome(message);
+        await message.channel.send(`Disabled the server welcome.`);
+      }
+    }
   },
 });
