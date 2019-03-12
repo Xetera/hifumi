@@ -7,12 +7,13 @@ import { logger } from "./utils";
 import "./db";
 
 const prefix = process.env.PREFIX || "$";
+const owners = process.env.OWNERS || "";
 
 const client = new AkairoClient({
   prefix,
-  ownerID: [],
+  ownerID: owners.split(","),
   commandDirectory: "./dist/commands/",
-  inhibitorDirectory: "./dist/inhibitors"
+  inhibitorDirectory: "./dist/inhibitors",
 }, {
   disableEveryone: true,
 });
