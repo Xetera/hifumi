@@ -34,7 +34,7 @@ jobs:
 
   deploy:
     docker:
-      image: williamyeh/ansible
+      - image: williamyeh/ansible
     steps:
       - checkout
       - run: ansible-playbook -b .deploy/update-bot.yaml -i "$HOST_IP,"
