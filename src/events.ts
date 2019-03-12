@@ -1,10 +1,10 @@
 import { AkairoClient } from "discord-akairo";
 import { Emoji, GuildMember, Message, MessageReaction, RichEmbedOptions, TextChannel, User } from "discord.js";
-import { boxContents, logger } from "./utils";
-import { addStar, removeStar } from "./starboard";
 import { sendAnalytics, withDatadog } from "./analytics/datadog";
 import { ANALYTICS_INTERVAL } from "./constants";
 import { Guild } from "./models/guild";
+import { addStar, removeStar } from "./starboard";
+import { boxContents, logger } from "./utils";
 
 const events: { [key: string]: string } = {
   MESSAGE_REACTION_ADD: "messageReactionAdd",
@@ -14,12 +14,12 @@ const events: { [key: string]: string } = {
 const onGuildMessage = ({ guild, channel, author, content }: Message) => {
   const channelName = (channel as TextChannel).name;
   console.log(`(${guild.name}:${channelName}) ${author.username}: ${content}`);
-  withDatadog(client => client.increment('bot.messages.seen', 1, ['guild']));
+  withDatadog((client) => client.increment("bot.messages.seen", 1, ["guild"]));
 };
 
 const onDM = ({ author, content }: Message) => {
   console.log(`(DM:${author.username}#${author.tag}): ${content}`);
-  withDatadog(client => client.increment('bot.messages.seen', 1, ['dm']));
+  withDatadog((client) => client.increment("bot.messages.seen", 1, ["dm"]));
 };
 
 const onMessage = (message: Message) => {
@@ -30,7 +30,7 @@ const onMessage = (message: Message) => {
 const logStartup = (client: AkairoClient) => {
   const stat = `Logged in as ${client.user.tag} [id:${client.user.id}]`;
   const commands = client.commandHandler.modules.map(
-    mod => `${process.env.PREFIX || "$"}${mod.id}: ${mod.description}`
+    (mod) => `${process.env.PREFIX || "$"}${mod.id}: ${mod.description}`
   );
   const out = boxContents("Started Up!", stat, commands.join("\n"));
   console.log(out);
@@ -72,7 +72,9 @@ const onUserJoin = async (member: GuildMember) => {
   const embed: RichEmbedOptions = {
     color: 42495,
     title: `Welcome ${member.user.username}`,
-    description: `Welcome to ${member.guild.name}, check out #welcome for the rules and instructions on getting yourself a role. Come say hi when you're done.`,
+    description:
+      `Welcome to ${member.guild.name}, check out #welcome for the rules and ` +
+      `instructions on getting yourself a role. Come say hi when you're done.`,
     thumbnail: { url: member.user.displayAvatarURL }
   };
   channel.send({ embed });

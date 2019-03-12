@@ -10,7 +10,7 @@ export default class extends Inhibitor {
     });
   }
 
-  exec(message: Message, e: Command) {
+  public exec(message: Message, e: Command) {
     withDatadog((client) => client.increment("bot.commands.used", 1, [`name:${e.id}`]));
     return false;
   }

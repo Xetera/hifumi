@@ -15,7 +15,7 @@ export default class extends Command {
     });
   }
 
-  async exec(message: Message, { channel }: any) {
+  public async exec(message: Message, { channel }: any) {
     await Guild.updateOne({ id: message.guild.id }, { starboard_channel: channel.id }, {
       upsert: true,
       setDefaultsOnInsert: true

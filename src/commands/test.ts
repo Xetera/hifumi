@@ -1,5 +1,5 @@
-import { Message } from "discord.js";
 import { Command } from "discord-akairo";
+import { Message } from "discord.js";
 
 export default class extends Command {
   constructor() {
@@ -10,7 +10,7 @@ export default class extends Command {
     });
   }
 
-  async exec(message: Message) {
+  public async exec(message: Message) {
     return message.channel.send("This is a test command. If you can see this that means it worked.");
   }
 }

@@ -48,6 +48,10 @@ workflows:
   pipeline:
     jobs:
       - build
+      - lint:
+          filters:
+            branches:
+              only: master
       - build_image:
           filters:
             branches:

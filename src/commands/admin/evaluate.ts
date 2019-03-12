@@ -1,5 +1,5 @@
-import { Message } from "discord.js";
 import { Command } from "discord-akairo";
+import { Message } from "discord.js";
 
 export default class EvalCommand extends Command {
   constructor() {
@@ -13,18 +13,19 @@ export default class EvalCommand extends Command {
     });
   }
 
-  async exec(message: Message, { code }: any) {
+  public async exec(message: Message, { code }: any) {
     const { OWNERS } = process.env;
 
     if (!OWNERS) {
       return false;
     }
 
-    const isOwner = OWNERS.split(",").some(owner => owner === message.author.id);
+    const isOwner = OWNERS.split(",").some((owner) => owner === message.author.id);
     if (!isOwner) {
       return;
     }
 
+    // tslint:disable-next-line:no-eval
     const out = await eval(code);
     return message.channel.send(out);
   }
