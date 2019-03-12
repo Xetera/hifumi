@@ -40,7 +40,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            pip install ansible
+            sudo pip install ansible
             sudo apt update
       - run: ansible-playbook -b .deploy/update-bot.yaml -i "$HOST_IP,"
 workflows:
