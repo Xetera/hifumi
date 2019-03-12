@@ -1,6 +1,6 @@
+import { Command } from "discord-akairo";
 import { Message, TextChannel } from "discord.js";
 import { Guild } from "../models/guild";
-import { Command } from "discord-akairo";
 
 const changeWelcome = (message: Message, channel: TextChannel) =>
   Guild.updateOne({ id: channel.guild.id }, { welcome_channel: channel.id }, { upsert: true });
@@ -24,7 +24,7 @@ export default class extends Command {
     });
   }
 
-  async exec(message: Message, { setting, val }: any) {
+  public async exec(message: Message, { setting, val }: any) {
     const targetChannel = message.mentions.channels.first();
 
     if (setting === "welcome") {
@@ -38,4 +38,3 @@ export default class extends Command {
     }
   }
 }
-

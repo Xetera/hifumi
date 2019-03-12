@@ -1,21 +1,6 @@
+# development compose file
 version: "3.5"
 services:
-#  bot:
-#    container_name: hifumi
-#    image: node:10-alpine
-#    volumes:
-#      - ./:/app
-#    working_dir: /app
-#    depends_on:
-#      - mongo
-#    environment:
-#      DATABASE_URL: mongodb://mongo:27017/hifumi
-#      NODE_ENV: development
-#    ports:
-#      - 3000:3000
-#    command: npm run dev
-#    stdin_open: true
-#    tty: true
   mongo:
     container_name: hifumi_mongo
     image: mongo

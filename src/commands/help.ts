@@ -1,5 +1,5 @@
-import { Message, RichEmbedOptions } from "discord.js";
 import { Command } from "discord-akairo";
+import { Message, RichEmbedOptions } from "discord.js";
 
 export default class extends Command {
   constructor() {
@@ -10,8 +10,8 @@ export default class extends Command {
 
   }
 
-  exec(message: Message) {
-    const cstr = this.client.commandHandler.modules.map(command =>
+  public exec(message: Message) {
+    const cstr = this.client.commandHandler.modules.map((command) =>
       `$${command.id}: ${command.description}`
     );
 
@@ -27,4 +27,3 @@ export default class extends Command {
     message.channel.send({ embed });
   }
 }
-

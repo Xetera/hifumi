@@ -10,7 +10,7 @@ export default class extends Command {
     });
 
   }
-  async exec(msg: Message) {
+  public async exec(msg: Message) {
     const m = await msg.channel.send("Ping...") as Message;
     const latency = Math.round(m.createdTimestamp - msg.createdTimestamp);
     const response = `Pong! 🏓 Latency: **${latency}ms**`;

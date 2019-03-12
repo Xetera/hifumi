@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 import { AkairoClient } from "discord-akairo";
-import{ logger } from "./utils";
 import { handleEvents } from "./events";
+import { logger } from "./utils";
 
 import "./db";
 

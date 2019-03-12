@@ -7,7 +7,7 @@ const genFooter = (count: string | number) => `${STAR} ${count}`;
 
 const genEmbed = (embed: MessageEmbed) => (count: number): MessageEmbed =>
   // @ts-ignore
-  new RichEmbed(embed).setFooter(genFooter(count), "https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png");
+  new RichEmbed(embed).setFooter(genFooter(count) );
 
 const updateStar = async (id: string, starboard: TextChannel, stars: number) => {
   const doc = await StarredMessage.findOne({ id });
@@ -70,7 +70,9 @@ export const addStar = async (reaction: MessageReaction, user: User) => {
     };
     const { id: embed_id } = await starboard.send({ embed }) as Message;
 
-    const starred = await StarredMessage.create({ id: reaction.message.id, stars: reaction.count, embed_id });
+    await StarredMessage.create({
+      id: reaction.message.id, stars: reaction.count, embed_id
+    });
     return;
   }
 

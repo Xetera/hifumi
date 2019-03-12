@@ -12,6 +12,7 @@
 		"prefer-template": true,
 		"only-arrow-functions": true,
 		"no-eval": true,
+		"variable-name": false,
 		"no-parameter-reassignment": true,
 		"no-var-keyword": true,
 		"no-arg": true,

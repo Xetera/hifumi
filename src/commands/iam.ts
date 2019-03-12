@@ -2,7 +2,6 @@ import { Command } from "discord-akairo";
 import { GuildMember, Message } from "discord.js";
 import { Role } from "../models/role";
 
-
 export default class extends Command {
   constructor() {
     super("iam", {
@@ -16,7 +15,7 @@ export default class extends Command {
 
   }
 
-  async exec(message: Message, { role }: any) {
+  public async exec(message: Message, { role }: any) {
     await Role.find({ id: role.id }).then(console.log);
   }
 }

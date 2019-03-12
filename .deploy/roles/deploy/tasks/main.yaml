@@ -1,0 +1,15 @@
+---
+- name: Updating hifumi's image
+  docker_container:
+    name: hifumi
+    image: moedevs/hifumi
+    restart: yes
+    env:
+      TOKEN: "{{  lookup('env', 'TOKEN')  }}"
+      PREFIX: $
+      OWNERS: "{{ lookup('env', 'OWNERS') }}"
+      DATADOG_API_KEY: "{{  lookup('env', 'DATADOG_API_KEY')  }}"
+      DATABASE_URL: mongodb://mongo/hifumi
+      NODE_ENV: production
+    networks:
+      - name: hifuminet

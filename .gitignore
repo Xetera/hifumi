@@ -79,6 +79,9 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+# ansible retry files
+*.retry
+
 dist/
 .idea/
 .vscode/
