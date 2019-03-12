@@ -23,6 +23,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
+      - run: npm install
       - run: npm run lint
   build_image:
     docker:
