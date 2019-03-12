@@ -8,6 +8,7 @@ jobs:
       - restore_cache:
           key: hifumi-{{ checksum "package.json" }}
       - run: npm install
+      - run: npm run build
       - save_cache:
           paths:
             - ~/.m2
