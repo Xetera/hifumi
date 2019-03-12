@@ -34,9 +34,14 @@ jobs:
 
   deploy:
     docker:
-      - image: williamyeh/ansible
+      - image: circleci/python:3.6.2
     steps:
       - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            pip install ansible
+            sudo apt update
       - run: ansible-playbook -b .deploy/update-bot.yaml -i "$HOST_IP,"
 workflows:
   version: 2
