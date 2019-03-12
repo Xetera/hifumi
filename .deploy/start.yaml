@@ -1,0 +1,7 @@
+---
+- name: Starting all processes
+  hosts: all
+  gather_facts: true
+  roles:
+    - create
+    - deploy

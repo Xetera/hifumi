@@ -42,7 +42,7 @@ jobs:
           command: |
             sudo pip install ansible
             sudo apt update
-      - run: ansible-playbook -b .deploy/update-bot.yaml -i "$HOST_IP,"
+      - run: ansible-playbook -b .deploy/start.yaml -i "$HOST_IP,"
 workflows:
   version: 2
   pipeline:
@@ -55,5 +55,8 @@ workflows:
           requires:
             - build
       - deploy:
+          filters:
+            branches:
+              only: master
           requires:
-            - build
+            - build_image

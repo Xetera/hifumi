@@ -3,6 +3,7 @@
   docker_container:
     name: hifumi
     image: moedevs/hifumi
+    restart: yes
     env:
       TOKEN: "{{  lookup('env', 'TOKEN')  }}"
       PREFIX: $
@@ -12,17 +13,3 @@
       NODE_ENV: production
     networks:
       - name: hifuminet
-
-#- name: Get bot container results
-#  docker_container_facts:
-#    name: mydata
-#  register: result
-#
-#- name: Does bot exist?
-#  debug:
-#    msg: "The container {{ 'exists' if result.exists else 'does not exist' }}"
-#
-#- name: Print container info
-#  debug:
-#    var: result.container
-#  when: result.exists
