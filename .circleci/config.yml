@@ -50,8 +50,5 @@ workflows:
           requires:
             - build
       - deploy:
-          filters:
-            branches:
-              only: master
           requires:
-            - build_image
+            - build
