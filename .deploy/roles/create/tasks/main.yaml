@@ -1,8 +1,23 @@
 ---
+- name: Creating datadog-agent
+  docker_container:
+    name: datadog-client
+    image: datadog/agent:latest
+    env:
+      - DD_API_KEY: "{{ lookup('env', 'DATADOG_API_KEY') }}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+    networks:
+      - name: hifuminet
+
 - name: Creating database
   docker_container:
     name: mongo
     image: mongo
+    volumes:
+      - ./data/db:/data/db
     networks:
       - name: hifuminet
 
