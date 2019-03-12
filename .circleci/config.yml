@@ -23,7 +23,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run: npm install
+      - run: npm install tslint
       - run: npm run lint
   build_image:
     docker:
@@ -38,8 +38,11 @@ jobs:
   deploy:
     docker:
       - image: circleci/python:3.6.2
+        environment:
+          ANSIBLE_HOST_KEY_CHECKING: False
     steps:
       - checkout
+      - add_ssh_keys
       - run:
           name: Install dependencies
           command: |
@@ -58,6 +61,7 @@ workflows:
               only: master
           requires:
             - build
+            - lint
       - deploy:
           filters:
             branches:
