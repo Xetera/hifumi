@@ -1,0 +1,28 @@
+---
+- name: Updating hifumi's image
+  docker_container:
+    name: hifumi
+    image: moedevs/hifumi
+    env:
+      TOKEN: "{{  lookup('env', 'TOKEN')  }}"
+      PREFIX: $
+      OWNERS: "{{ lookup('env', 'OWNERS') }}"
+      DATADOG_API_KEY: "{{  lookup('env', 'DATADOG_API_KEY')  }}"
+      DATABASE_URL: mongodb://mongo/hifumi
+      NODE_ENV: production
+    networks:
+      - name: hifuminet
+
+#- name: Get bot container results
+#  docker_container_facts:
+#    name: mydata
+#  register: result
+#
+#- name: Does bot exist?
+#  debug:
+#    msg: "The container {{ 'exists' if result.exists else 'does not exist' }}"
+#
+#- name: Print container info
+#  debug:
+#    var: result.container
+#  when: result.exists

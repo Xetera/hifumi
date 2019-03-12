@@ -1,0 +1,28 @@
+---
+- name: Creating database
+  docker_container:
+    name: mongo
+    image: mongo
+    networks:
+      - name: hifuminet
+
+- name: Creating database administration
+  docker_container:
+    name: mongo-client
+    image: mongoclient/mongoclient
+    env:
+      MONGO_URL: mongodb://mongo/hifumi
+      MONGOCLIENT_AUTH: "true"
+      MONGOCLIENT_USERNAME: hifumi
+      MONGOCLIENT_PASSWORD: test
+    ports:
+      - 3001:3000
+    networks:
+      - name: hifuminet
+
+- name: Creating Hifumi
+  docker_container:
+    name: hifumi
+    image: moedevs/hifumi
+    networks:
+      - name: hifuminet

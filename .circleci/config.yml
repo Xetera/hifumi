@@ -31,6 +31,13 @@ jobs:
       - run: docker build -t moedevs/hifumi:latest .
       - run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
       - run: docker push moedevs/hifumi:latest
+
+  deploy:
+    docker:
+      image: williamyeh/ansible
+    steps:
+      - checkout
+      - run: ansible-playbook -b .deploy/update-bot.yaml -i "$HOST_IP,"
 workflows:
   version: 2
   pipeline:
@@ -42,3 +49,9 @@ workflows:
               only: master
           requires:
             - build
+      - deploy:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build_image

@@ -2,11 +2,7 @@ version: "3.5"
 services:
   bot:
     container_name: hifumi
-    build:
-      dockerfile: Dockerfile
-      context: .
-    depends_on:
-      - mongo
+    image: moedevs/hifumi
     environment:
       DATABASE_URL: mongodb://mongo/hifumi
       NODE_ENV: production
