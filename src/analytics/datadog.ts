@@ -19,12 +19,12 @@ export const withDatadog = (func: (client: BufferedMetricsLogger) => void) => {
 
 export const sendAnalytics = (client: AkairoClient) => {
   const perMinute = 60000;
-  logger.debug(`Sending analytics`);
   const totalMembers = countMembers(client);
   const totalServers = client.guilds.size;
   const ping = client.ping;
   const uptime = client.uptime / perMinute;
   withDatadog((datadog) => {
+    logger.debug(`Sending analytics`);
     datadog.gauge("bot.member.count", totalMembers);
     datadog.gauge("bot.server.count", totalServers);
     datadog.gauge("bot.ping", ping);

@@ -29,7 +29,17 @@ export interface TextDimensions {
   width?: number;
 }
 
+/**
+ * Placing text on an existing canvas
+ * @param text
+ * @param canvas
+ * @param dimensions
+ */
 export const placeText = (text: string, canvas: any, dimensions: TextDimensions): any => {
+  /**
+   * In order for this to work, a separate canvas has to be created
+   * so the text can be adjusted according to the new canvas
+   */
   const textCanvas = new Canvas();
   textCanvas.height = dimensions.height;
   textCanvas.width = dimensions.width;
@@ -38,6 +48,7 @@ export const placeText = (text: string, canvas: any, dimensions: TextDimensions)
     textAlign: "center",
     verticalAlign: "middle"
   });
+  // merging the created text canvas with the original canvas to "draw" the text on
   canvas.getContext("2d").drawImage(textCanvas, dimensions.x, dimensions.y);
   return canvas;
 };
