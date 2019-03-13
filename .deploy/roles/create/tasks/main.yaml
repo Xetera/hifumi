@@ -1,4 +1,13 @@
 ---
+- name: Ensure docker is installed
+  pip:
+    name:
+      - docker
+
+- name: Ensure hifuminet is created
+  docker_network:
+    name: hifuminet
+
 - name: Creating datadog-agent
   docker_container:
     name: datadog-client
