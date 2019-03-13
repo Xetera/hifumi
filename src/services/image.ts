@@ -1,13 +1,7 @@
 // @ts-ignore
 import { Canvas, Image } from "canvas";
-import * as fs from "fs";
-// @ts-ignore
 import { CanvasTextWrapper } from "canvas-text-wrapper";
-import * as opentype from "opentype.js";
 import * as path from "path";
-import { promisify } from "util";
-
-const font = opentype.loadSync(path.join("assets", "fonts", "open-sans.ttf"));
 
 export const loadTemplate = (name: string) => new Promise(async (res, rej) => {
   const src = path.resolve(path.join("assets", "templates", name));
