@@ -1,5 +1,5 @@
 import { Command } from "discord-akairo";
-import { Message, RichEmbedOptions, Permissions } from "discord.js";
+import { Message, RichEmbedOptions } from "discord.js";
 import { ClientRequest } from "http";
 import { Guild } from "../../models/guild";
 
@@ -40,9 +40,7 @@ export default class extends Command {
     const TEN = 10;
     const FIFTEEN = 15;
     const TWENTY = 20;
-
-    const num = Math.floor(Math.random()*TWENTY);
-
+    const num = Math.floor(Math.random() * TWENTY);
 
     if (num < TEN) {
         return {string: choices[num], color: 0x6DAE55};
@@ -66,7 +64,7 @@ export default class extends Command {
 
     const embed: RichEmbedOptions = {
         color: out.color,
-        description: (msg.guild.me.permissions.has("EXTERNAL_EMOJIS")) ? ifServerIsFun : ifServerSucks,
+        description: msg.guild.me.permissions.has("USE_EXTERNAL_EMOJIS") ? ifServerIsFun : ifServerSucks,
       };
 
     return msg.channel.send("🎱 |  The Magic 8 Ball says...", { embed });
