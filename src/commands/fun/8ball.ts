@@ -1,5 +1,7 @@
 import { Command } from "discord-akairo";
-import { Message, RichEmbedOptions } from "discord.js";
+import { Message, RichEmbedOptions, Permissions } from "discord.js";
+import { ClientRequest } from "http";
+import { Guild } from "../../models/guild";
 
 export default class extends Command {
   constructor() {
@@ -35,29 +37,38 @@ export default class extends Command {
                      ["Very doubtful."],
                     ];
 
-    const num = Math.floor(Math.random()*20);
+    const TEN = 10;
+    const FIFTEEN = 15;
+    const TWENTY = 20;
 
-    if (num < 10) {
-        return {string: choices[num], color: 0x6DAE55}
-    }
-    else if (num < 15) {
-        return {string: choices[num], color: 0xF1982D}
-    }
-    else {
-        return {string: choices[num], color: 0xFF5370}
+    const num = Math.floor(Math.random()*TWENTY);
+
+
+    if (num < TEN) {
+        return {string: choices[num], color: 0x6DAE55};
+    } else if (num < FIFTEEN) {
+        return {string: choices[num], color: 0xF1982D};
+    } else {
+        return {string: choices[num], color: 0xFF5370};
     }
   }
 
   public exec(msg: Message) {
 
-    const out = this.choose()
+    const out = this.choose();
+    const blobber = "<:hb1:556699207235403787>";
+    const clapR = "<a:hb2:556699208967651328>";
+    const clapL = "<a:hb4:556699207516291113>";
+    const aoooba = "<:hb5:556699207893909504>";
 
-    const response: RichEmbedOptions = {
+    const ifServerIsFun = `${blobber} ${clapR} **${out.string}** ${clapL} ${aoooba}`;
+    const ifServerSucks = `**${out.string}**`;
+
+    const embed: RichEmbedOptions = {
         color: out.color,
-        title: "",
-        description: `<:hb1:556699207235403787> <a:hb2:556699208967651328> **${out.string}** <a:hb4:556699207516291113> <:hb5:556699207893909504>`,
+        description: (msg.guild.me.permissions.has("EXTERNAL_EMOJIS")) ? ifServerIsFun : ifServerSucks,
       };
 
-    return msg.channel.send("🎱 |  The Magic 8 Ball says...", { embed: response});
+    return msg.channel.send("🎱 |  The Magic 8 Ball says...", { embed });
   }
 }
