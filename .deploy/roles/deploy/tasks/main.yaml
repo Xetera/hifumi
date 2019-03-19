@@ -3,6 +3,7 @@
   docker_container:
     name: hifumi
     image: moedevs/hifumi
+    log_driver: fluentd
     restart: yes
     env:
       TOKEN: "{{  lookup('env', 'TOKEN')  }}"
