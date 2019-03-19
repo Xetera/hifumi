@@ -1,0 +1,61 @@
+---
+- name: Ensure elknet is created
+  docker_network:
+    name: elknet
+
+- name: Deploy daemon.json
+  copy:
+    src: roles/efk/daemon.json
+    dest: /etc/docker/daemon.json
+
+- name: Running fluentd
+  docker_container:
+    name: fluentd
+    image: moedevs/fluentd
+    pull: true
+    ports:
+      - 24224:24224
+    log_driver: "json-file"
+    log_options:
+      tag: docker.fluentd
+      max-size: 100m
+      max-file: "5"
+    networks:
+      - name: elknet
+
+- name: Ensure esdata is created
+  docker_volume:
+    name: esdata
+
+- name: Ensure kbdata is created
+  docker_volume:
+    name: kbdata
+
+
+- name: Running elasticsearch
+  docker_container:
+    name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.2
+    restart_policy: on-failure
+    restart_retries: 5
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    env:
+      MAX_MAP_COUNT: "262144"
+      cluster.name: es-cluster
+      discovery.type: single-node
+    networks:
+      - name: elknet
+
+- name: Running kibana
+  docker_container:
+    name: kibana
+    image: docker.elastic.co/kibana/kibana:6.6.2
+    env:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    ports:
+      - 5601:5601
+    volumes:
+      - kbdata:/user/share/kibana/config/kibana.yml
+    networks:
+      - name: elknet
