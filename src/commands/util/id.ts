@@ -28,21 +28,23 @@ export default class extends Command {
 
   // https://github.com/discordjs/discord.js/blob/master/src/util/Util.js#L365
   public decToBin(dec: string) {
-    let bin = '';
+    const big = 5000000000;
+    const TWO = 2;
+    let bin = "";
     let high = parseInt(dec.slice(0, -10)) || 0;
     let low = parseInt(dec.slice(-10));
-  
+
     while (low > 0 || high > 0) {
       bin = String(low & 1) + bin;
-      low = Math.floor(low / 2);
+      low = Math.floor(low / TWO);
       if (high > 0) {
-        low += 5000000000 * (high % 2);
-        high = Math.floor(high / 2);
+        low += big * (high % TWO);
+        high = Math.floor(high / TWO);
       }
     }
-  
+
     return bin;
-  };
+  }
 
   public ident(id: string) {
     if (typeof parseInt(id) === "number" && !isNaN(parseInt(id))) {
