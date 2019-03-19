@@ -2,10 +2,10 @@ import { AkairoClient } from "discord-akairo";
 import { Emoji, GuildMember, Message, MessageReaction, RichEmbedOptions, TextChannel, User } from "discord.js";
 import { sendAnalytics, withDatadog } from "./analytics/datadog";
 import { ANALYTICS_INTERVAL } from "./constants";
+import { Guild } from "./models/guild";
 import { updateEmojis } from "./services/emoji";
 import { addStar, removeStar } from "./starboard";
 import { boxContents, logger } from "./utils";
-import { Guild } from "./models/guild";
 
 const events: { [key: string]: string } = {
   MESSAGE_REACTION_ADD: "messageReactionAdd",
