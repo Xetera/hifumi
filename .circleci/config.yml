@@ -48,7 +48,7 @@ jobs:
           command: |
             sudo pip install ansible
             sudo apt update
-      - run: ansible-playbook -b .deploy/start.yaml -i "$HOST_IP,"
+      - run: echo "$ANSIBLE_PASS" >> .deploy/secret.txt && ansible-playbook --vault-password-file .deploy/secret.txt -b .deploy/start.yaml -i "root@$HOST_IP,"
 workflows:
   version: 2
   pipeline:

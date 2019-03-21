@@ -1,4 +1,6 @@
 ---
+- include_vars: secret.yaml
+
 - name: Ensure elknet is created
   docker_network:
     name: elknet

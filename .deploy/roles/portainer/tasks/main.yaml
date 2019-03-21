@@ -1,0 +1,15 @@
+- name: Ensure portainerdata is created
+  docker_volume:
+    name: portainerdata
+
+- name: Starting portainer
+  docker_container:
+    name: portainer
+    image: portainer/portainer
+    ports:
+      - 9000:9000
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart_policy: always
+  

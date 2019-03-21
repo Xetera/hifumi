@@ -1,7 +1,0 @@
----
-- name: Updating from CircleCI
-  hosts: all
-  become: true
-  gather_facts: true
-  roles:
-    - deploy
