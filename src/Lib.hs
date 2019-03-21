@@ -11,12 +11,13 @@ import           Control.Lens
 import           Control.Monad.IO.Class
 import           Data.Aeson                           (ToJSON, Value)
 import           Data.Aeson.Lens
-import System.Environment
 import           Data.Maybe
-import Data.Text.Internal.Lazy as T
+import           Data.Text.Internal.Lazy              as T
 import           GHC.Generics
 import           Network.HTTP.Simple
+import           Network.Wai.Middleware.Cors
 import           Network.Wai.Middleware.RequestLogger (logStdout)
+import           System.Environment
 import           Web.Scotty                           as WS
 
 data StatsResponse = StatsResponse
@@ -61,10 +62,12 @@ getStatsJSON = convertJson <$> getStats
     convertJson (reddit, discord) = StatsResponse {discord = getDefault discord, reddit = getDefault reddit}
 
 start :: IO ()
-start = read <$> getEnv "NEWGAME_PORT" >>= \port ->
-  scotty port $ do
-    middleware logStdout
-    get "/bot/stats" $ redirect datadogUrl
-    get "/social/stats" $ liftIO getStatsJSON >>= json
-    get "/social/discord" $ liftIO getDiscordMembers >>= json
-    get "/social/reddit" $ liftIO getNewGameSubs >>= json
+start =
+  read <$> getEnv "NEWGAME_PORT" >>= \port ->
+    scotty port $ do
+      middleware logStdout
+      middleware simpleCors
+      get "/bot/stats" $ redirect datadogUrl
+      get "/social/stats" $ liftIO getStatsJSON >>= json
+      get "/social/discord" $ liftIO getDiscordMembers >>= json
+      get "/social/reddit" $ liftIO getNewGameSubs >>= json

@@ -30,6 +30,7 @@ dependencies:
   - lens
   - scotty
   - wai-extra
+  - wai-cors
   - wai
 
 library:
