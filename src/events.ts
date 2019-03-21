@@ -80,12 +80,17 @@ const onUserJoin = async (member: GuildMember) => {
   channel.send({ embed });
 };
 
+const handleError = (event: any) => {
+  logger.warn(event);
+};
+
 export const handleEvents = (client: AkairoClient) => {
   client.on("message", onMessage);
   client.on("ready", () => onReady(client));
   client.on("messageReactionAdd", onReactAdd);
   client.on("messageReactionRemove", onReactRemove);
   client.on("guildMemberAdd", onUserJoin);
+  client.on("error", handleError);
   client.on("raw", async (event: any) => {
     if (!("t" in event) || !Object.keys(events).includes(event.t)) {
       return;
