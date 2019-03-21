@@ -86,3 +86,4 @@ dist/
 .idea/
 .vscode/
 data/
+.deploy/secret.yaml

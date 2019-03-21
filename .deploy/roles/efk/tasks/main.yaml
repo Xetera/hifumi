@@ -44,6 +44,7 @@
       - esdata:/usr/share/elasticsearch/data
     env:
       MAX_MAP_COUNT: "262144"
+      ELASTIC_PASSWORD: "{{ elastic.password }}"
       cluster.name: es-cluster
       discovery.type: single-node
     networks:
@@ -55,6 +56,7 @@
     image: docker.elastic.co/kibana/kibana:6.6.2
     env:
       ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_PASSWORD: "{{ elastic.password }}"
     ports:
       - 5601:5601
     volumes:
