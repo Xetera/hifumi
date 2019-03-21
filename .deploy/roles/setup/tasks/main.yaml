@@ -1,20 +1,7 @@
 ---
+- name: Install sudo
+  apt: pkg=sudo state=present
+
 - name: Create user
   user: name=hifumi group=www-data state=present
 
-- name: Downloading all dependencies
-  apt: pkg="{{ item }}" state=present
-  with_items:
-    - apt-transport-https
-    - ca-certificates
-    - curl
-    - software-properties-common
-    - docker
-
-- name: Adding the GPG docker key
-  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-- name: Adding apt repository
-  shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-
-# rest of docker dependencies here when not lazy
