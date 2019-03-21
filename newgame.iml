@@ -139,5 +139,9 @@
     <orderEntry type="library" name="network-byte-order-0.0.0.0" level="project" />
     <orderEntry type="library" name="psqueues-0.2.7.1" level="project" />
     <orderEntry type="library" name="old-time-1.1.0.3" level="project" />
+    <orderEntry type="library" name="cache-0.1.1.1" level="project" />
+    <orderEntry type="library" name="wai-cors-0.2.6" level="project" />
+    <orderEntry type="library" name="clock-0.7.2" level="project" />
+    <orderEntry type="library" name="base-unicode-symbols-0.2.3" level="project" />
   </component>
 </module>

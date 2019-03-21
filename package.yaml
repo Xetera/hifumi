@@ -27,6 +27,9 @@ dependencies:
   - lens-aeson
   - bytestring
   - text
+  - cache
+  - hashable
+  - clock
   - lens
   - scotty
   - wai-extra

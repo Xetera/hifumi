@@ -6,6 +6,7 @@ module Lib
   ( start
   ) where
 
+import           Cache
 import           Control.Concurrent.Async
 import           Control.Lens
 import           Control.Monad.IO.Class
@@ -42,32 +43,35 @@ fetchData url fn = fn . getBody <$> httpJSON url
 datadogUrl :: Text
 datadogUrl = "https://p.datadoghq.com/sb/71d9e3d68-233c63b5d43908deb0df73c63059cdb2"
 
-getNewGameSubs :: IO (Maybe Int)
-getNewGameSubs = fetchData newGameUrl extractSubs
+getNewGameSubs :: StatCache -> IO (Maybe Int)
+getNewGameSubs cache = makeCache $ fetchData newGameUrl extractSubs
   where
+    makeCache = withCache cache "newgame"
     extractSubs res = res ^? key "data" . key "subscribers" . _Integral
 
-getDiscordMembers :: IO (Maybe Int)
-getDiscordMembers = fetchData discordUrl extractMembers
+getDiscordMembers :: StatCache -> IO (Maybe Int)
+getDiscordMembers cache = makeCache $ fetchData discordUrl extractMembers
   where
+    makeCache = withCache cache "discord"
     extractMembers res = res ^? key "approximate_member_count" . _Integral
 
-getStats :: IO (Maybe Int, Maybe Int)
-getStats = concurrently getNewGameSubs getDiscordMembers
+getStats :: StatCache -> IO (Maybe Int, Maybe Int)
+getStats cache = concurrently (getNewGameSubs cache) (getDiscordMembers cache)
 
-getStatsJSON :: IO StatsResponse
-getStatsJSON = convertJson <$> getStats
+getStatsJSON :: StatCache -> IO StatsResponse
+getStatsJSON cache = convertJson <$> getStats cache
   where
     getDefault = fromMaybe 0
     convertJson (reddit, discord) = StatsResponse {discord = getDefault discord, reddit = getDefault reddit}
 
 start :: IO ()
-start =
+start = do
+  cache <- generateCache
   read <$> getEnv "NEWGAME_PORT" >>= \port ->
     scotty port $ do
       middleware logStdout
       middleware simpleCors
       get "/bot/stats" $ redirect datadogUrl
-      get "/social/stats" $ liftIO getStatsJSON >>= json
-      get "/social/discord" $ liftIO getDiscordMembers >>= json
-      get "/social/reddit" $ liftIO getNewGameSubs >>= json
+      get "/social/stats" $ liftIO (getStatsJSON cache) >>= json
+      get "/social/discord" $ liftIO (getDiscordMembers cache) >>= json
+      get "/social/reddit" $ liftIO (getNewGameSubs cache) >>= json
