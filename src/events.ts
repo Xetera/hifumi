@@ -115,8 +115,6 @@ export const handleEvents = (client: AkairoClient) => {
       reaction = new MessageReaction(message, emoji, 0, data.user_id === client.user.id);
     }
 
-    console.log(reaction);
-
     client.emit(events[event.t], reaction, user);
   });
 };
