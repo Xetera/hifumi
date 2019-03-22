@@ -33,6 +33,7 @@ dependencies:
   - lens
   - scotty
   - wai-extra
+  - wai-middleware-static
   - wai-cors
   - wai
 

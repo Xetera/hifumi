@@ -16,7 +16,9 @@ import           Data.Maybe
 import           Data.Text.Internal.Lazy              as T
 import           GHC.Generics
 import           Network.HTTP.Simple
+import           Network.Wai (Middleware)
 import           Network.Wai.Middleware.Cors
+import           Network.Wai.Middleware.Static
 import           Network.Wai.Middleware.RequestLogger (logStdout)
 import           System.Environment
 import           Web.Scotty                           as WS
@@ -64,14 +66,19 @@ getStatsJSON cache = convertJson <$> getStats cache
     getDefault = fromMaybe 0
     convertJson (reddit, discord) = StatsResponse {discord = getDefault discord, reddit = getDefault reddit}
 
+serveStatic :: Middleware
+serveStatic = staticPolicy $ noDots >-> isNotAbsolute >-> addBase "./views"
+
 start :: IO ()
 start = do
   cache <- generateCache
-  read <$> getEnv "NEWGAME_PORT" >>= \port ->
-    scotty port $ do
-      middleware logStdout
-      middleware simpleCors
-      get "/bot/stats" $ redirect datadogUrl
-      get "/social/stats" $ liftIO (getStatsJSON cache) >>= json
-      get "/social/discord" $ liftIO (getDiscordMembers cache) >>= json
-      get "/social/reddit" $ liftIO (getNewGameSubs cache) >>= json
+  port <- read <$> getEnv "NEWGAME_PORT"
+  scotty port $ do
+    middleware logStdout
+    middleware simpleCors
+    middleware serveStatic
+    get "/" $ file "./views/index.html"
+    get "/bot/stats" $ redirect datadogUrl
+    get "/social/stats" $ liftIO (getStatsJSON cache) >>= json
+    get "/social/discord" $ liftIO (getDiscordMembers cache) >>= json
+    get "/social/reddit" $ liftIO (getNewGameSubs cache) >>= json
