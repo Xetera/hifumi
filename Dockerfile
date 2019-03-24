@@ -13,6 +13,7 @@ FROM ubuntu
 
 WORKDIR /opt/server
 COPY --from=build-env /root/.local/bin/newgame-exe ./newgame-exe
+COPY --from=build-env ./views ./views
 
 RUN apt-get update
 RUN apt-get install netbase ca-certificates -y
