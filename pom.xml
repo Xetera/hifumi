@@ -44,11 +44,16 @@
             <artifactId>ktor-client</artifactId>
             <version>${ktor.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.github.kittinunf.fuel</groupId>-->
-            <!--<artifactId>fuel</artifactId>-->
-            <!--<version>2.0.1</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.github.kittinunf.fuel</groupId>
+            <artifactId>fuel</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.kittinunf.fuel</groupId>
+            <artifactId>fuel-coroutines</artifactId>
+            <version>2.0.1</version>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
