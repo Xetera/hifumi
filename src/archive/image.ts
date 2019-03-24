@@ -18,14 +18,16 @@ const hasArchivableContent = async (message: Message) =>
 const archiveAttachments = async (message: Message) => {
   const { attachments, id } = message;
 
-  const { _id } = await Guild.findOne({ id: message.guild.id }) || new Guild();
-  if (!_id) {
+  const targetGuild = await Guild.findOne({ id: message.guild.id });
+
+  if (!targetGuild) {
     throw Error(`Received an attachment from a non-existing guild: ${message.guild.id}`);
   }
+
   const uploads = attachments.map((att) =>
     ArchivedImage.updateOne(
       { message_id: id },
-      { message_id: id, url: att.url, file_name: att.filename, guild: _id },
+      { message_id: id, url: att.url, file_name: att.filename, guild: targetGuild._id },
       { upsert: true }
     )
   );

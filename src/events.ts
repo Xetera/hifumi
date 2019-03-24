@@ -20,7 +20,7 @@ const onGuildMessage = (message: Message) => {
 };
 
 const onDM = ({ author, content }: Message) => {
-  console.log(`(DM:${author.username}#${author.tag}): ${content}`);
+  logger.info({ event: "dm", content, name: author.username });
   withDatadog((client) => client.increment("bot.messages.seen", 1, ["dm"]));
 };
 
