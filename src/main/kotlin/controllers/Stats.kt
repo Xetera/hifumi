@@ -1,15 +1,14 @@
 package controllers
 
-import arrow.core.None
-import arrow.core.Option
-import arrow.core.Some
-import arrow.core.orElse
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitStringResponse
 import com.google.gson.Gson
 import helpers.Cache
 import helpers.CacheOptions
 import kotlinx.coroutines.*
+import org.slf4j.LoggerFactory
+
+val logger = LoggerFactory.getLogger("Controller.Stats")
 
 const val discordURL = "https://discordapp.com/api/v6/invite/ZWW5CJw?with_counts=true"
 const val redditUrl = "https://reddit.com/r/newgame/about.json"
@@ -27,12 +26,14 @@ val statCache = Cache<String, Int>(
 )
 val gson = Gson()
 
-suspend fun <T> get(url: String, json: Class<T>): T =
-    gson.fromJson(
+suspend fun <T> get(url: String, json: Class<T>): T {
+    logger.info("Fetching url: $url")
+    return gson.fromJson(
         Fuel.get(url)
             .header("User-Agent", USER_AGENT)
             .awaitStringResponse().third, json
     )
+}
 
 suspend fun getDiscordAsync(): Deferred<Int> = coroutineScope {
     async {
