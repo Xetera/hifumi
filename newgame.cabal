@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8834898b90f4a9e4f610153690a61ceeda5998bafacf45e61e681478311f3df4
+-- hash: e78aa5efb63c8cc1c8f471a6fa8c466124a5a178a7eaf862ff4030128cdbf55f
 
 name:           newgame
 version:        0.1.0.0
@@ -28,8 +28,9 @@ source-repository head
 library
   exposed-modules:
       Cache
+      Controllers.Stats
+      Database.Base
       Lib
-      Mongo
   other-modules:
       Paths_newgame
   hs-source-dirs:

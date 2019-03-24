@@ -24,7 +24,7 @@ data Image
   deriving (Show, Generic)
 
 defaultDbUrl :: String
-defaultDbUrl = "mongodb://127.0.0.1:27017"
+defaultDbUrl = "127.0.0.1"
 
 dbUrl :: IO String
 dbUrl = lookupEnv "MONGO_URL" >>= return <$> fromMaybe defaultDbUrl

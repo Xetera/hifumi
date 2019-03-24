@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Stats where
+module Controllers.Stats where
 
 import           Cache                    (StatCache, withCache)
 import           Control.Concurrent.Async (concurrently)
@@ -9,9 +9,10 @@ import           Control.Lens             ((^?))
 import           Data.Aeson               (ToJSON, Value)
 import           Data.Aeson.Lens          (key, _Integral)
 import           Data.Maybe               (fromMaybe)
-import qualified Data.Text                as T
+import qualified Data.Text.Lazy           as T
 import           GHC.Generics             (Generic)
-import           Network.HTTP.Simple      (Request, Response, getResponseBody, httpJSON)
+import           Network.HTTP.Simple      (Request, Response, getResponseBody,
+                                           httpJSON)
 
 data StatsResponse = StatsResponse
   { discord :: Int
