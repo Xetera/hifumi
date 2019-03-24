@@ -15,8 +15,6 @@ const events: { [key: string]: string } = {
 
 const onGuildMessage = (message: Message) => {
   const { guild, channel, author, content } = message;
-  const channelName = (channel as TextChannel).name;
-  console.log(`(${guild.name}:${channelName}) ${author.username}: ${content}`);
   withDatadog((client) => client.increment("bot.messages.seen", 1, ["guild"]));
   processImage(message);
 };
