@@ -1,4 +1,4 @@
-import { Attachment, Channel, Message, TextChannel } from "discord.js";
+import { Channel, Message, TextChannel } from "discord.js";
 import { ArchivedImage } from "../models/archived_image";
 import { Guild } from "../models/guild";
 import { logger } from "../utils";
@@ -15,12 +15,19 @@ const isArchiveChannel = async (channel: Channel) => {
 const hasArchivableContent = async (message: Message) =>
   message.attachments.size > 0;
 
-const archiveAttachments = (message: Message) => {
+const archiveAttachments = async (message: Message) => {
   const { attachments, id, channel } = message;
-  console.log(attachments.first().filename);
+
+  const { _id } = await Guild.findOne({ id: message.guild.id }) || new Guild();
+  if (!_id) {
+    throw Error(`Received an attachment from a non-existing guild: ${message.guild.id}`);
+  }
   const uploads = attachments.map((att) =>
-    ArchivedImage.updateOne({ message_id: id }, { message_id: id, url: att.url, file_name: att.filename }
-    , { upsert: true })
+    ArchivedImage.updateOne(
+      { message_id: id },
+      { message_id: id, url: att.url, file_name: att.filename, guild: _id },
+      { upsert: true }
+    )
   );
   return Promise.all(uploads);
 };
