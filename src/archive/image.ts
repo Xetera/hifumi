@@ -1,6 +1,6 @@
 import { Channel, Message, TextChannel } from "discord.js";
-import { ArchivedImage } from "../models/archived_image";
 import { Guild } from "../models/guild";
+import { ArchivedImage } from "../models/image";
 import { logger } from "../utils";
 
 const isArchiveChannel = async (channel: Channel) => {
@@ -34,9 +34,9 @@ const archiveAttachments = async (message: Message) => {
   return Promise.all(uploads);
 };
 
-export const processImage = (message: Message) => {
+export const processImage = async (message: Message) => {
   logger.debug("Processing an message");
-  if (!isArchiveChannel(message.channel) || !hasArchivableContent(message)) {
+  if (!hasArchivableContent(message) || !await isArchiveChannel(message.channel)) {
     return;
   }
   logger.debug("Image is valid");

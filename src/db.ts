@@ -1,12 +1,11 @@
-import { AkairoClient } from "discord-akairo";
 import mongoose from "mongoose";
-import { Guild } from "./models/guild";
+import { logger } from "./utils";
 
-// export const checkStartup = async (client: AkairoClient) => {
-//   const all = await Guild.find().exec();
-//   for (const guild of client.guilds.array()) {
-//
-//   }
-// };
-
-mongoose.connect(process.env.DATABASE_URL!, { useNewUrlParser: true });
+logger.debug(`Connecting to mongodb @ ${process.env.DATABASE_URL}`);
+mongoose.connect(process.env.DATABASE_URL!, { useNewUrlParser: true, connectTimeoutMS: 5000 }).then((e) => {
+  logger.debug(`Connected to database @ ${process.env.DATABASE_URL}`);
+}).catch((err) => {
+  logger.error(`Problem connecting to the database, shutting down...`);
+  logger.error(err);
+  process.exit(1);
+});

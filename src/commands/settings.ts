@@ -11,7 +11,7 @@ const deleteWelcome = (message: Message) =>
 
 interface Context {
   message: Message;
-  args: string[];
+  args: string;
 }
 
 const settings: { [k: string]: (ctx: Context) => Promise<void> } = {
@@ -27,7 +27,7 @@ const settings: { [k: string]: (ctx: Context) => Promise<void> } = {
     }
   },
   imageBoard: async ({ message, args }: Context) => {
-    const [target, status] = args;
+    const [target, status] = args.split(" ");
     const targetChannel = message.mentions.channels.first();
     if (!targetChannel) {
       return void message.channel.send(`No channel was specified`);

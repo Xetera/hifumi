@@ -18,7 +18,8 @@ export const starredMessageSchema = new Schema({
   embed_id: String
 }, {
   timestamps: {
-    createdAt: "created_at"
+    createdAt: "created_at",
+    updatedAt: "updated_at"
   }
 });
 

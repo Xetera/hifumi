@@ -1,7 +1,7 @@
 import { Document, Model, model, Schema } from "mongoose";
 import { Guilds } from "./guild";
 
-export interface ArchivedImage extends Document {
+export interface Image extends Document {
   message_id?: string;
   url: string;
   name: string;
@@ -9,7 +9,7 @@ export interface ArchivedImage extends Document {
   guild: Model<Guilds>;
 }
 
-export const ArchivedImageSchema = new Schema({
+export const ImageSchema = new Schema({
   message_id: String,
   guild: {
     required: true,
@@ -29,8 +29,9 @@ export const ArchivedImageSchema = new Schema({
   }
 }, {
   timestamps: {
-    createdAt: "created_at"
+    createdAt: "created_at",
+    updatedAt: "updated_at"
   }
 });
 
-export const ArchivedImage: Model<ArchivedImage> = model<ArchivedImage>("ArchivedImage", ArchivedImageSchema);
+export const ArchivedImage: Model<Image> = model<Image>("Image", ImageSchema);

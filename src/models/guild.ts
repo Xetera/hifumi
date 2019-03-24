@@ -31,7 +31,8 @@ export const GuildSchema = new Schema({
   suspended_members: Array
 }, {
   timestamps: {
-    createdAt: "created_at"
+    createdAt: "created_at",
+    updatedAt: "updated_at"
   }
 });
 

@@ -1,7 +1,6 @@
 import { Command } from "discord-akairo";
 import { GuildMember, Message } from "discord.js";
-import { ArchivedImage } from "../models/archived_image";
-import { Role } from "../models/role";
+import { ArchivedImage } from "../models/image";
 
 export default class extends Command {
   constructor() {
@@ -16,13 +15,13 @@ export default class extends Command {
   }
 
   public async exec(message: Message, { type }: any) {
-    const count = await ArchivedImage.count({});
+    const count = await ArchivedImage.countDocuments();
     const random = Math.floor(Math.random() * count);
     const image = await ArchivedImage.findOne().skip(random);
     if (!image) {
       throw Error();
     }
-    message.channel.send(image.url);
+    await message.channel.send(image.url);
     // await Role.find({ id: role.id }).then(console.log);
   }
 }
