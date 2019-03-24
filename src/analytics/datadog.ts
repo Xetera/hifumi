@@ -19,11 +19,11 @@ export const withDatadog = (func: (client: BufferedMetricsLogger) => void) => {
 };
 
 export const sendAnalytics = (client: AkairoClient) => {
-  logger.debug(`Sending analytics`);
   const totalMembers = countMembers(client);
   const totalServers = client.guilds.size;
   const ping = client.ping;
   withDatadog((datadog) => {
+    logger.debug(`Sending analytics`);
     datadog.gauge("bot.member.count", totalMembers);
     datadog.gauge("bot.server.count", totalServers);
     datadog.gauge("bot.ping", ping);

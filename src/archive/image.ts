@@ -16,7 +16,7 @@ const hasArchivableContent = async (message: Message) =>
   message.attachments.size > 0;
 
 const archiveAttachments = async (message: Message) => {
-  const { attachments, id, channel } = message;
+  const { attachments, id } = message;
 
   const { _id } = await Guild.findOne({ id: message.guild.id }) || new Guild();
   if (!_id) {

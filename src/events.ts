@@ -30,6 +30,7 @@ const onMessage = (message: Message) => {
   if (message.guild) {
     return onGuildMessage(message);
   }
+  return onDM(message);
 };
 const logStartup = (client: AkairoClient) => {
   const stat = `Logged in as ${client.user.tag} [id:${client.user.id}]`;
@@ -44,7 +45,7 @@ const onReady = async (client: AkairoClient) => {
   logStartup(client);
   await updateEmojis(client);
   setInterval(() => sendAnalytics(client), ANALYTICS_INTERVAL);
-  Promise.all(client.guilds.map((guild) => Guild.updateOne({ id: guild.id }, { id: guild.id}, { upsert: true })));
+  Promise.all(client.guilds.map((guild) => Guild.updateOne({ id: guild.id }, { id: guild.id }, { upsert: true })));
 };
 
 const onReactAdd = async (react: MessageReaction, user: User) => {

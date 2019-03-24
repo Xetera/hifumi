@@ -18,7 +18,7 @@ const client = new AkairoClient({
   disableEveryone: true,
 });
 
-logger.debug(`Working dir: ${process.cwd()}`);
+logger.debug(`Logging in...`);
 
 handleEvents(client);
 
