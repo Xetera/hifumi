@@ -1,6 +1,7 @@
 import { AkairoClient } from "discord-akairo";
 import { Emoji, GuildMember, Message, MessageReaction, RichEmbedOptions, TextChannel, User } from "discord.js";
 import { sendAnalytics, withDatadog } from "./analytics/datadog";
+import { processImage } from "./archive/image";
 import { ANALYTICS_INTERVAL } from "./constants";
 import { Guild } from "./models/guild";
 import { updateEmojis } from "./services/emoji";
@@ -12,10 +13,12 @@ const events: { [key: string]: string } = {
   MESSAGE_REACTION_REMOVE: "messageReactionRemove",
 };
 
-const onGuildMessage = ({ guild, channel, author, content }: Message) => {
+const onGuildMessage = (message: Message) => {
+  const { guild, channel, author, content } = message;
   const channelName = (channel as TextChannel).name;
   console.log(`(${guild.name}:${channelName}) ${author.username}: ${content}`);
   withDatadog((client) => client.increment("bot.messages.seen", 1, ["guild"]));
+  processImage(message);
 };
 
 const onDM = ({ author, content }: Message) => {
@@ -41,6 +44,7 @@ const onReady = async (client: AkairoClient) => {
   logStartup(client);
   await updateEmojis(client);
   setInterval(() => sendAnalytics(client), ANALYTICS_INTERVAL);
+  Promise.all(client.guilds.map((guild) => Guild.updateOne({ id: guild.id }, { id: guild.id}, { upsert: true })));
 };
 
 const onReactAdd = async (react: MessageReaction, user: User) => {

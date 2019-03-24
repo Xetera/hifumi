@@ -4,6 +4,7 @@ export interface Guilds extends Document {
   id: string;
   enabled: boolean;
   starboard_channel?: string;
+  image_archives: string[];
   min_stars: number;
   suspended_members?: string[];
   welcome_channel?: string;
@@ -14,6 +15,10 @@ export const GuildSchema = new Schema({
   enabled: {
     type: Boolean,
     default: false
+  },
+  image_archives: {
+    type: Array,
+    default: []
   },
   welcome_channel: {
     type: String,
