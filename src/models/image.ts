@@ -4,6 +4,8 @@ import { Guilds } from "./guild";
 export interface Image extends Document {
   message_id?: string;
   url: string;
+  user_id: string;
+  hosted_url?: string;
   name: string;
   tags: string[];
   guild: Model<Guilds>;
@@ -15,6 +17,10 @@ export const ImageSchema = new Schema({
     required: true,
     type: Schema.Types.ObjectId,
     ref: "Guild"
+  },
+  user_id: {
+    required: true,
+    type: String
   },
   url: String,
   hosted_url: {

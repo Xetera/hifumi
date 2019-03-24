@@ -24,4 +24,4 @@ export const EmojiSchema = new Schema({
   }
 });
 
-export const Emoji: Model<Emojis> = model<Emojis>("Emojis", EmojiSchema);
+export const Emoji: Model<Emojis> = model<Emojis>("Emoji", EmojiSchema);

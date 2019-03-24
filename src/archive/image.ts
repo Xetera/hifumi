@@ -27,7 +27,13 @@ const archiveAttachments = async (message: Message) => {
   const uploads = attachments.map((att) =>
     ArchivedImage.updateOne(
       { message_id: id },
-      { message_id: id, url: att.url, file_name: att.filename, guild: targetGuild._id },
+      {
+        message_id: id,
+        url: att.url,
+        file_name: att.filename,
+        guild: targetGuild._id,
+        user_id: message.author.id
+      },
       { upsert: true }
     )
   );
