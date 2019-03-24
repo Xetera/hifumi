@@ -7,6 +7,7 @@ module Lib
   ) where
 
 import           Cache
+import Data.Aeson.Bson
 import           Control.Concurrent.Async
 import           Control.Lens
 import           Control.Monad.IO.Class
@@ -14,7 +15,10 @@ import           Data.Aeson                           (ToJSON, Value)
 import           Data.Aeson.Lens
 import           Data.Maybe
 import           Data.Text.Internal.Lazy              as T
+import qualified Database.MongoDB                     as M
+import           Debug.Trace
 import           GHC.Generics
+import           Mongo
 import           Network.HTTP.Simple
 import           Network.Wai.Middleware.Cors
 import           Network.Wai.Middleware.RequestLogger (logStdout)
@@ -67,11 +71,14 @@ getStatsJSON cache = convertJson <$> getStats cache
 start :: IO ()
 start = do
   cache <- generateCache
-  read <$> getEnv "NEWGAME_PORT" >>= \port ->
-    scotty port $ do
-      middleware logStdout
-      middleware simpleCors
-      get "/bot/stats" $ redirect datadogUrl
-      get "/social/stats" $ liftIO (getStatsJSON cache) >>= json
-      get "/social/discord" $ liftIO (getDiscordMembers cache) >>= json
-      get "/social/reddit" $ liftIO (getNewGameSubs cache) >>= json
+  pipe <- dbConnect
+  let run = M.access pipe M.master "test" :: M.Action ActionM a -> ActionM a
+  port <- read <$> getEnv "NEWGAME_PORT"
+  scotty port $ do
+    middleware logStdout
+    middleware simpleCors
+    get "/bot/stats" $ redirect datadogUrl
+    get "/social/stats" $ liftIO (getStatsJSON cache) >>= json
+    get "/social/discord" $ liftIO (getDiscordMembers cache) >>= json
+    get "/social/reddit" $ liftIO (getNewGameSubs cache) >>= json
+    get "/test" $ serialize (run findImages) >>= json

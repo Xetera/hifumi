@@ -143,5 +143,24 @@
     <orderEntry type="library" name="wai-cors-0.2.6" level="project" />
     <orderEntry type="library" name="clock-0.7.2" level="project" />
     <orderEntry type="library" name="base-unicode-symbols-0.2.3" level="project" />
+    <orderEntry type="library" name="mongoDB-2.4.0.0" level="project" />
+    <orderEntry type="library" name="base16-bytestring-0.1.1.6" level="project" />
+    <orderEntry type="library" name="bson-0.3.2.7" level="project" />
+    <orderEntry type="library" name="cryptohash-0.11.9" level="project" />
+    <orderEntry type="library" name="hashtables-1.2.3.1" level="project" />
+    <orderEntry type="library" name="lifted-base-0.2.3.12" level="project" />
+    <orderEntry type="library" name="nonce-1.0.7" level="project" />
+    <orderEntry type="library" name="pureMD5-2.1.3" level="project" />
+    <orderEntry type="library" name="random-shuffle-0.0.4" level="project" />
+    <orderEntry type="library" name="data-binary-ieee754-0.4.4" level="project" />
+    <orderEntry type="library" name="entropy-0.4.1.4" level="project" />
+    <orderEntry type="library" name="unliftio-0.2.10" level="project" />
+    <orderEntry type="library" name="crypto-api-0.13.3" level="project" />
+    <orderEntry type="library" name="MonadRandom-0.5.1.1" level="project" />
+    <orderEntry type="library" name="aeson-bson-0.3.0" level="project" />
+    <orderEntry type="library" name="base64-bytestring-type-1" level="project" />
+    <orderEntry type="library" name="QuickCheck-2.12.6.1" level="project" />
+    <orderEntry type="library" name="erf-2.0.0.0" level="project" />
+    <orderEntry type="library" name="tf-random-0.5" level="project" />
   </component>
 </module>

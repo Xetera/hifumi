@@ -34,10 +34,20 @@ resolver: lts-13.8
 #  - wai
 packages:
 - .
+- location:
+    git: "https://github.com/mirokuratczyk/aeson-bson"
+    commit: 54cfd7fae180bcfd081b66efe6e9dab3715c7db2
+  extra-dep: true
 # Dependency packages to be pulled from upstream that are not in the resolver
 # using the same syntax as the packages field.
 # (e.g., acme-missiles-0.3)
-# extra-deps: []
+#extra-deps:
+#  - aeson-bson
+#    commit: 54cfd7fae180bcfd081b66efe6e9dab3715c7db2
+#  - github: "mirokuratczyk/aeson-bson"
+#    commit: 54cfd7fae180bcfd081b66efe6e9dab3715c7db2
+#  - aeson-bson-0.3.0
+#  - bytestring-0.10.2.0
 
 # Override default flag values for local packages and extra-deps
 # flags: {}

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a418603aec834bf5d913598d296afaefe568bdc89b014d16a95ef9af86a6e164
+-- hash: 8834898b90f4a9e4f610153690a61ceeda5998bafacf45e61e681478311f3df4
 
 name:           newgame
 version:        0.1.0.0
@@ -29,6 +29,7 @@ library
   exposed-modules:
       Cache
       Lib
+      Mongo
   other-modules:
       Paths_newgame
   hs-source-dirs:
@@ -36,6 +37,7 @@ library
   ghc-options: -Wall
   build-depends:
       aeson
+    , aeson-bson
     , async
     , base >=4.7 && <5
     , bytestring
@@ -45,6 +47,7 @@ library
     , http-conduit
     , lens
     , lens-aeson
+    , mongoDB
     , scotty
     , text
     , wai
@@ -61,6 +64,7 @@ executable newgame-exe
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
+    , aeson-bson
     , async
     , base >=4.7 && <5
     , bytestring
@@ -70,6 +74,7 @@ executable newgame-exe
     , http-conduit
     , lens
     , lens-aeson
+    , mongoDB
     , newgame
     , scotty
     , text
@@ -88,6 +93,7 @@ test-suite newgame-test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
+    , aeson-bson
     , async
     , base >=4.7 && <5
     , bytestring
@@ -97,6 +103,7 @@ test-suite newgame-test
     , http-conduit
     , lens
     , lens-aeson
+    , mongoDB
     , newgame
     , scotty
     , text

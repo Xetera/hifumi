@@ -19,11 +19,17 @@ extra-source-files:
 # common to point users to the README.md file.
 description:         Please see the README on GitHub at <https://github.com/Github username here/untitled#readme>
 
+#defaults:
+#  - github: mirokuratczyk/aeson-bson
+#    name: aeson-bsons
+#    ref: "2017"
 dependencies:
   - base >= 4.7 && < 5
   - async
   - http-conduit
+  - mongoDB
   - aeson
+  - aeson-bson
   - lens-aeson
   - bytestring
   - text
@@ -35,7 +41,6 @@ dependencies:
   - wai-extra
   - wai-cors
   - wai
-
 library:
   source-dirs: src
   ghc-options:

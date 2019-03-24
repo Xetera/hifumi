@@ -2,25 +2,26 @@ version: 2
 jobs:
   build:
     docker:
-      - image: fpco/stack-build:lts
+      - image: circleci/node:10
     steps:
       - checkout
+      - setup_remote_docker
       - restore_cache:
           name: Restore Cached Dependencies
           keys:
             - yun-{{ checksum "package.yaml" }}-{{ checksum "stack.yaml" }}
+          paths:
+            - ".stack-work"
+            - "~/.stack"
+      - run: docker build -t moedevs/yun:latest .
       - run:
           name: Resolve/Update Dependencies
           command: stack setup
-      - run:
-          name: Install executable
-          command: stack install --only-dependencies -j4
       - save_cache:
           name: Cache Dependencies
           key: yun-{{ checksum "package.yaml" }}-{{ checksum "stack.yaml" }}
           paths:
-            - ".stack"
-            - ".stack-work"
+            - "~/.stack"
       - persist_to_workspace:
           root: .
           paths: .
@@ -30,7 +31,8 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: docker build -t moedevs/yun:latest .
+      - attach_workspace:
+          at: .
       - run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
       - run: docker push moedevs/yun:latest
 workflows:
