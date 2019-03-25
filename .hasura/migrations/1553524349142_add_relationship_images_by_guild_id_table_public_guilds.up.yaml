@@ -1,0 +1,12 @@
+- args:
+    name: images_by_guild_id
+    table:
+      name: guilds
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: guild_id
+        table:
+          name: images
+          schema: public
+  type: create_array_relationship

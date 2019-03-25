@@ -1,6 +1,6 @@
 import { AkairoClient } from "discord-akairo";
 import { Guild } from "discord.js";
-import { Emoji } from "../models/emoji";
+import { Emoji } from "../queries/emoji";
 
 export const loadEmojis = async (guild: Guild) => {
   const emojiCommits = guild.emojis.map(({ name, url, id, guild: g }) => ({

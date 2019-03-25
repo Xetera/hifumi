@@ -1,0 +1,6 @@
+- args:
+    sql: ALTER TABLE "public"."images" ALTER COLUMN "message_id" SET NOT NULL;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."images"."message_id" IS 'undefined'
+  type: run_sql

@@ -1,4 +1,5 @@
 {
+	"exclude": ["src/generated/graphql.ts"],
 	"compilerOptions": {
 		/* Basic Options */
 		"target": "esnext",

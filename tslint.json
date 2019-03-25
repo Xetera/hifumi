@@ -3,6 +3,9 @@
 	"extends": [
 		"tslint:recommended"
 	],
+	"linterOptions": {
+		"exclude": ["src/generated/*"]
+	},
 	"jsRules": {},
 	"rules": {
 		"interface-name": false,

@@ -1,0 +1,9 @@
+- args:
+    sql: CREATE TABLE "public"."gtemp"("id" serial NOT NULL UNIQUE, "guild_id" text
+      NOT NULL UNIQUE, "enabled" boolean NOT NULL DEFAULT True, "welcome_channel"
+      text , "name" text NOT NULL, PRIMARY KEY ("id","guild_id") );
+  type: run_sql
+- args:
+    name: gtemp
+    schema: public
+  type: add_existing_table_or_view

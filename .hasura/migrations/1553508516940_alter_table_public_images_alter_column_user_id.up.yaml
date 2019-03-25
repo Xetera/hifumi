@@ -1,0 +1,3 @@
+- args:
+    sql: COMMENT ON COLUMN "public"."images"."user_id" IS ''
+  type: run_sql

@@ -3,10 +3,11 @@ import { Emoji, GuildMember, Message, MessageReaction, RichEmbedOptions, TextCha
 import { sendAnalytics, withDatadog } from "./analytics/datadog";
 import { processImage } from "./archive/image";
 import { ANALYTICS_INTERVAL } from "./constants";
-import { Guild } from "./models/guild";
+import { Guild } from "./queries/guild";
 import { updateEmojis } from "./services/emoji";
 import { addStar, removeStar } from "./starboard";
 import { boxContents, logger } from "./utils";
+import { syncGuilds, syncUsers } from "./db";
 
 const events: { [key: string]: string } = {
   MESSAGE_REACTION_ADD: "messageReactionAdd",
@@ -41,9 +42,8 @@ const logStartup = (client: AkairoClient) => {
 
 const onReady = async (client: AkairoClient) => {
   logStartup(client);
-  await updateEmojis(client);
   setInterval(() => sendAnalytics(client), ANALYTICS_INTERVAL);
-  Promise.all(client.guilds.map((guild) => Guild.updateOne({ id: guild.id }, { id: guild.id }, { upsert: true })));
+  return Promise.all([syncGuilds(client.guilds.array()), syncUsers(client.users.array())]);
 };
 
 const onReactAdd = async (react: MessageReaction, user: User) => {

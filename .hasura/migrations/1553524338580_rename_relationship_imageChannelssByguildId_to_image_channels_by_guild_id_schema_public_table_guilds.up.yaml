@@ -1,0 +1,5 @@
+- args:
+    name: imageChannelssByguildId
+    new_name: image_channels_by_guild_id
+    table: guilds
+  type: rename_relationship

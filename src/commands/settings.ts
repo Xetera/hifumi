@@ -1,13 +1,79 @@
 import { Command } from "discord-akairo";
-import { Message, TextChannel } from "discord.js";
-import { Guild } from "../models/guild";
+import { Message, TextChannel, User } from "discord.js";
+import { req } from "../db";
 import { logger } from "../utils";
+import gql from "gql-tag/dist";
 
-const changeWelcome = (message: Message, channel: TextChannel) =>
-  Guild.updateOne({ id: channel.guild.id }, { welcome_channel: channel.id }, { upsert: true });
+const changeWelcome = (message: Message, channel: TextChannel) => req(gql`
+  mutation {
+    update_guilds(
+      _set: {
+        welcome_channel: "${channel.id}"
+        guild_id: "${channel.id}"
+      }
+      where: {
+        guild_id: {
+          _eq: "${channel.guild.id}"
+        }
+      }
+    ) {
+      returning {
+        welcome_channel
+      }
+    }
+  }
+`);
 
-const deleteWelcome = (message: Message) =>
-  Guild.updateOne({ id: message.guild.id }, { $unset: { welcome_channel: "" } });
+const deleteWelcome = (message: Message) => req(gql`
+  mutation {
+    update_guilds(
+      _set: {
+        welcome_channel: null
+      }
+      where: {
+        guild_id: {
+          _eq: "${message.id}"
+        }
+      }
+    ) {
+      returning {
+        welcome_channel
+      }
+    }
+  }
+`);
+
+const upsertImageChannel = (channel: TextChannel, user: User) => req(gql`
+  mutation {
+    insert_image_channels(
+      objects: [{
+        channel_id: "${channel.id}"
+        guild_id: "${channel.guild.id}"
+        user_id: "${user.id}"
+      }]
+    ) {
+      returning {
+        channel_id
+      }
+    }
+  }
+`);
+
+const deleteImageChannel = (channel: TextChannel) => req(gql`
+  mutation {
+    delete_image_channels(
+      where: {
+        channel_id: {
+          _eq: "${channel.id}"
+        }
+      }
+    ) {
+      returning {
+        id
+      }
+    }
+  }
+`);
 
 interface Context {
   message: Message;
@@ -33,14 +99,10 @@ const settings: { [k: string]: (ctx: Context) => Promise<void> } = {
       return void message.channel.send(`No channel was specified`);
     }
     if (target === "remove") {
-      await Guild.updateOne(
-        { id: message.guild.id }, { $pull: { image_archives: targetChannel.id } }
-      );
+      await deleteImageChannel(targetChannel);
       await message.channel.send(`${targetChannel} was removed from your tracked image archives`);
     } else if (target === "add") {
-      await Guild.updateOne(
-        { id: message.guild.id }, { $addToSet: { image_archives: targetChannel.id } }
-      );
+      await upsertImageChannel(targetChannel, message.author);
       await message.channel.send(`Added ${targetChannel} to your tracked image archives`);
     } else if (!target) {
       await message.channel.send(`No setting specified`);

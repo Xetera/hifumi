@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "public"."image_channels" ADD FOREIGN KEY ("guild_id") REFERENCES
+      "public"."guilds" ("id")
+  type: run_sql

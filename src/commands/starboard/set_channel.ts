@@ -1,6 +1,6 @@
 import { Command } from "discord-akairo";
 import { Message } from "discord.js";
-import { Guild } from "../../models/guild";
+import { Guild } from "../../queries/guild";
 
 export default class extends Command {
   constructor() {

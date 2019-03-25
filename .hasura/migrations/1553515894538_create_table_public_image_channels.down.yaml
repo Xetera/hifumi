@@ -1,0 +1,3 @@
+- args:
+    sql: DROP TABLE "public"."image_channels"
+  type: run_sql

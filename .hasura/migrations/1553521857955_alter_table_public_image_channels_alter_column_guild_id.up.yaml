@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "public"."image_channels" ADD CONSTRAINT "image_channels_guild_id_key"
+      UNIQUE ("guild_id")
+  type: run_sql

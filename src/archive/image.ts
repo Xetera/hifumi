@@ -1,42 +1,57 @@
-import { Channel, Message, TextChannel } from "discord.js";
-import { Guild } from "../models/guild";
-import { ArchivedImage } from "../models/image";
+import { Attachment, Channel, Guild, Message, MessageAttachment, TextChannel } from "discord.js";
+import gql from "gql-tag/dist";
+import { req } from "../db";
+import { Image_Channels } from "../generated/graphql";
 import { logger } from "../utils";
+
+const findArchiveChannels = (guild: Guild) => req(gql`
+  query {
+    image_channels(
+      where: {
+        guilds_by_guild_id: {
+          guild_id: {
+            _eq: "${guild.id}"
+          }
+        }
+      }
+    ) {
+      channel_id
+    }
+  }
+`);
+
+const upsertImage = (message: Message, att: MessageAttachment) => req(gql`
+  mutation {
+    insert_images(
+      objects: [{
+        message_id: "${message.id}"
+        url: "${att.url}"
+        file_name: "${att.filename}"
+        guild_id: "${message.guild.id}"
+        user_id: "${message.author.id}"
+      }]
+    ) {
+      returning {
+        id
+      }
+    }
+  }
+`);
 
 const isArchiveChannel = async (channel: Channel) => {
   if (!(channel instanceof TextChannel)) {
     return false;
   }
 
-  const { image_archives } = await Guild.findOne({ id: channel.guild.id }) || new Guild();
-  return image_archives.includes(channel.id);
+  const res = await findArchiveChannels(channel.guild) as { image_channels: Image_Channels[] };
+  return res.image_channels.some((chan) => chan.channel_id === channel.id);
 };
 
 const hasArchivableContent = async (message: Message) =>
   message.attachments.size > 0;
 
 const archiveAttachments = async (message: Message) => {
-  const { attachments, id } = message;
-
-  const targetGuild = await Guild.findOne({ id: message.guild.id });
-
-  if (!targetGuild) {
-    throw Error(`Received an attachment from a non-existing guild: ${message.guild.id}`);
-  }
-
-  const uploads = attachments.map((att) =>
-    ArchivedImage.updateOne(
-      { message_id: id },
-      {
-        message_id: id,
-        url: att.url,
-        file_name: att.filename,
-        guild: targetGuild._id,
-        user_id: message.author.id
-      },
-      { upsert: true }
-    )
-  );
+  const uploads = message.attachments.map((att) => upsertImage(message, att));
   return Promise.all(uploads);
 };
 

@@ -1,4 +1,18 @@
 import { Document, Model, model, Schema } from "mongoose";
+import gql from "graphql-tag";
+
+export const upsertGuildQ = gql`
+  mutation($data: [guilds_insert_input!]! $on_conflict: guilds_on_conflict) {
+    insert_guilds(
+      objects: $data
+      on_conflict: $on_conflict
+    ) {
+      returning {
+        id
+      }
+    }
+  }
+`;
 
 export interface Guilds extends Document {
   id: string;

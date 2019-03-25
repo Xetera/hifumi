@@ -1,27 +1,30 @@
 # development compose file
 version: "3.5"
 services:
-  mongo:
-    container_name: hifumi_mongo
-    image: mongo
-    networks:
-      - hifuminet
+  hasura:
+    container_name: hasura
+    image: moedevs/hasura
     ports:
-      - 27017:27017
-    volumes:
-      - ./data/db:/data/db
-  mongo-express:
-    image: mongo-express
-    container_name: mongo-express
-    restart: always
+      - 8080:8080
     networks:
       - hifuminet
     environment:
-      ME_CONFIG_MONGODB_SERVER: mongo
-    depends_on:
-      - mongo
+      HASURA_GRAPHQL_DATABASE_URL: postgres://hifumi:uwu@postgres/hifumi
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: public
+  postgres:
+    container_name: pg
+    image: postgres
+    networks:
+      - hifuminet
     ports:
-      - 8081:8081
+      - 5432:5432
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: hifumi
+      POSTGRES_PASSWORD: uwu
+      POSTGRES_DB: hifumi
 networks:
   hifuminet:
     name: hifuminet

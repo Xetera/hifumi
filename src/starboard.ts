@@ -1,6 +1,6 @@
 import { Message, MessageEmbed, MessageReaction, RichEmbed, RichEmbedOptions, TextChannel, User } from "discord.js";
-import { Guild } from "./models/guild";
-import { StarredMessage, } from "./models/starred_message";
+import { Guild } from "./queries/guild";
+import { StarredMessage, } from "./queries/starred_message";
 import { logger, STAR } from "./utils";
 
 const genFooter = (count: string | number) => `${STAR} ${count}`;
