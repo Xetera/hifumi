@@ -1,3 +1,4 @@
+import controllers.getGuildImages
 import controllers.getStats
 import io.ktor.application.call
 import io.ktor.response.respondRedirect
@@ -19,12 +20,18 @@ fun main(args: Array<String>) {
                     call.respondRedirect(datadogStats)
                 }
             }
-            route("social") {
-                get("stats") {
-                    call.respondText(getStats())
+            route("images/{guildId}") {
+                get {
+                    val id = call.parameters["guildId"]
+                    if (id == null) {
+                        call.respondText("No guild id present")
+                    } else {
+                        call.respondText(getGuildImages(id))
+                    }
                 }
             }
         }
     }
     server.start(wait = true)
 }
+
