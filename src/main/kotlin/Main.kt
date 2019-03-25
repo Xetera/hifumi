@@ -20,6 +20,11 @@ fun main(args: Array<String>) {
                     call.respondRedirect(datadogStats)
                 }
             }
+            route("social") {
+                get("stats") {
+                    call.respondText(getStats())
+                }
+            }
             route("images/{guildId}") {
                 get {
                     val id = call.parameters["guildId"]
