@@ -14,12 +14,14 @@ fun main(args: Array<String>) {
     val port = Integer.parseInt(System.getenv("NEWGAME_PORT") ?: "3000")
     val server = embeddedServer(Netty, port = port) {
         routing {
-            route("stats") {
-                get("social") {
-                    call.respondText(getStats())
-                }
-                get("bot") {
+            route("bot") {
+                get("stats") {
                     call.respondRedirect(datadogStats)
+                }
+            }
+            route("social") {
+                get("stats") {
+                    call.respondText(getStats())
                 }
             }
         }
