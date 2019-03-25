@@ -87,3 +87,4 @@ dist/
 .vscode/
 data/
 .deploy/secret.txt
+graphql.schema.json
