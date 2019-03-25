@@ -1,4 +1,4 @@
-import { Attachment, Channel, Guild, Message, MessageAttachment, TextChannel } from "discord.js";
+import { Channel, Guild, Message, MessageAttachment, TextChannel } from "discord.js";
 import gql from "gql-tag/dist";
 import { req } from "../db";
 import { Image_Channels } from "../generated/graphql";
@@ -8,10 +8,8 @@ const findArchiveChannels = (guild: Guild) => req(gql`
   query {
     image_channels(
       where: {
-        guilds_by_guild_id: {
-          guild_id: {
-            _eq: "${guild.id}"
-          }
+        guild_id: {
+          _eq: "${guild.id}"
         }
       }
     ) {
