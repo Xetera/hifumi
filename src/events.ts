@@ -3,11 +3,11 @@ import { Emoji, GuildMember, Message, MessageReaction, RichEmbedOptions, TextCha
 import { sendAnalytics, withDatadog } from "./analytics/datadog";
 import { processImage } from "./archive/image";
 import { ANALYTICS_INTERVAL } from "./constants";
+import { syncGuilds, syncUsers } from "./db";
 import { Guild } from "./queries/guild";
 import { updateEmojis } from "./services/emoji";
 import { addStar, removeStar } from "./starboard";
 import { boxContents, logger } from "./utils";
-import { syncGuilds, syncUsers } from "./db";
 
 const events: { [key: string]: string } = {
   MESSAGE_REACTION_ADD: "messageReactionAdd",

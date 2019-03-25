@@ -1,8 +1,8 @@
 import { Command } from "discord-akairo";
 import { Message, TextChannel, User } from "discord.js";
+import gql from "gql-tag/dist";
 import { req } from "../db";
 import { logger } from "../utils";
-import gql from "gql-tag/dist";
 
 const changeWelcome = (message: Message, channel: TextChannel) => req(gql`
   mutation {

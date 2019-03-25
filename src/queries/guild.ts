@@ -1,5 +1,5 @@
-import { Document, Model, model, Schema } from "mongoose";
 import gql from "graphql-tag";
+import { Document, Model, model, Schema } from "mongoose";
 
 export const upsertGuildQ = gql`
   mutation($data: [guilds_insert_input!]! $on_conflict: guilds_on_conflict) {
