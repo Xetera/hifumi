@@ -12,6 +12,7 @@
   docker_container:
     name: datadog-client
     image: datadog/agent:latest
+    log_driver: fluentd
     env:
       DD_API_KEY: "{{ lookup('env', 'DATADOG_API_KEY') }}"
     volumes:
@@ -24,6 +25,7 @@
 - name: Creating database
   docker_container:
     name: mongo
+    log_driver: fluentd
     image: mongo
     volumes:
       - ./data/db:/data/db
@@ -34,6 +36,7 @@
   docker_container:
     name: mongo-client
     image: mongoclient/mongoclient
+    log_driver: fluentd
     env:
       MONGO_URL: mongodb://mongo/hifumi
       MONGOCLIENT_AUTH: "true"
@@ -43,10 +46,19 @@
       - 3001:3000
     networks:
       - name: hifuminet
-
-- name: Creating Hifumi
+        
+- name: Updating hifumi's image
   docker_container:
     name: hifumi
     image: moedevs/hifumi
+    log_driver: fluentd
+    pull: yes
+    env:
+      TOKEN: "{{  lookup('env', 'TOKEN')  }}"
+      PREFIX: $
+      OWNERS: "{{ lookup('env', 'OWNERS') }}"
+      DATADOG_API_KEY: "{{  lookup('env', 'DATADOG_API_KEY')  }}"
+      DATABASE_URL: mongodb://mongo/hifumi
+      NODE_ENV: production
     networks:
       - name: hifuminet
