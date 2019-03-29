@@ -3,6 +3,19 @@ import { Canvas, Image } from "canvas";
 import { CanvasTextWrapper } from "canvas-text-wrapper";
 import * as path from "path";
 
+// tslint:disable
+export const imageTemplates =  [{
+  name: "momosign",
+  image: "momosign.jpg",
+  dimensions: {
+    x: 80,
+    y: 160,
+    width: 280,
+    height: 80
+  }
+}];
+// tslint:enable
+
 export const loadTemplate = (name: string) => new Promise(async (res, rej) => {
   const src = path.resolve(path.join("assets", "templates", name));
   const img = new Image();

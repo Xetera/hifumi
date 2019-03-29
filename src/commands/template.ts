@@ -1,6 +1,6 @@
 import { Command } from "discord-akairo";
 import { Message } from "discord.js";
-import { loadTemplate, placeText } from "../services/image";
+import { imageTemplates, loadTemplate, placeText } from "../services/image";
 
 export default class extends Command {
   constructor() {
@@ -18,13 +18,18 @@ export default class extends Command {
 
   public async exec(message: Message, { canvas, text }: any) {
     try {
-      const image: any = await loadTemplate(canvas);
-      const texted = placeText(text, image, { x: 80, y: 160, width: 280, height: 80 });
+      const template = imageTemplates.find((tmp) => tmp.name.toLowerCase() === canvas.toLowerCase());
+      if (!template) {
+        // TODO: echoing message back, clean this out first somehow
+        return message.channel.send(`No template named ${canvas} was found`);
+      }
+      const image: any = await loadTemplate(template.image);
+      const texted = placeText(text, image, template.dimensions);
       const attachment = texted.toBuffer();
       message.channel.send({
         files: [{
           attachment,
-          name: "momo.jpg"
+          name: template.image
         }]
       });
     } catch (e) {
