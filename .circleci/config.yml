@@ -37,7 +37,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/python:3.6.2
+      - image: circleci/python:3.6.2-stretch
         environment:
           ANSIBLE_HOST_KEY_CHECKING: False
     steps:
