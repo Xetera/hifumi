@@ -22,6 +22,15 @@ export const imageTemplates =  [{
     width: 200,
     height: 215
   }
+}, {
+  name: "hifumisign",
+  image: "hifumisign.jpg",
+  dimensions: {
+    x: 240,
+    y: 365,
+    width: 150,
+    height: 180
+  }
 }];
 // tslint:enable
 
