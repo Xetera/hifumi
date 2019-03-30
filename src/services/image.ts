@@ -1,10 +1,21 @@
 // @ts-ignore
 import { Canvas, Image } from "canvas";
-import { CanvasTextWrapper } from "canvas-text-wrapper";
+import { CanvasTextWrapper, CanvasTextWrapperOptions } from "canvas-text-wrapper";
 import * as path from "path";
 
+export interface ImageTemplate {
+  name: string;
+  image: string;
+  dimensions: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  options?: CanvasTextWrapperOptions;
+}
 // tslint:disable
-export const imageTemplates =  [{
+export const imageTemplates: ImageTemplate[] = [{
   name: "momosign",
 
   image: "momosign.jpg",
@@ -41,6 +52,18 @@ export const imageTemplates =  [{
     width: 250,
     height: 200
   }
+}, {
+  name: "chat",
+  image: "chat.png",
+  options: {
+    textAlign: "left"
+  },
+  dimensions: {
+    x: 135,
+    y: 115,
+    width: 210,
+    height: 150
+  }
 }];
 // tslint:enable
 
@@ -69,8 +92,11 @@ export interface TextDimensions {
  * @param text
  * @param canvas
  * @param dimensions
+ * @param options
  */
-export const placeText = (text: string, canvas: any, dimensions: TextDimensions): any => {
+export const placeText = (
+  text: string, canvas: any, dimensions: TextDimensions, options?: CanvasTextWrapperOptions
+): any => {
   /**
    * In order for this to work, a separate canvas has to be created
    * so the text can be adjusted according to the new canvas
@@ -81,7 +107,8 @@ export const placeText = (text: string, canvas: any, dimensions: TextDimensions)
   CanvasTextWrapper(textCanvas, text, {
     sizeToFill: true,
     textAlign: "center",
-    verticalAlign: "middle"
+    verticalAlign: "middle",
+    ...(options || {})
   });
   // merging the created text canvas with the original canvas to "draw" the text on
   canvas.getContext("2d").drawImage(textCanvas, dimensions.x, dimensions.y);

@@ -24,7 +24,7 @@ export default class extends Command {
         return message.channel.send(`No template named ${canvas} was found`);
       }
       const image: any = await loadTemplate(template.image);
-      const texted = placeText(text, image, template.dimensions);
+      const texted = placeText(text, image, template.dimensions, template.options);
       const attachment = texted.toBuffer();
       message.channel.send({
         files: [{
