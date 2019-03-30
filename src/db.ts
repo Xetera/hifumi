@@ -39,7 +39,8 @@ export const syncUsers = (users: User[]) => {
   logger.info("Synchronizing users");
   const data = users.map((user): Users_Insert_Input => ({
     user_id: user.id,
-    name: user.username
+    name: user.username,
+    avatar: user.displayAvatarURL
   }));
   const query = gql`
     mutation($data: [users_insert_input!]!) {
@@ -47,7 +48,7 @@ export const syncUsers = (users: User[]) => {
         objects: $data
         on_conflict: {
           constraint: users_user_id_key
-          update_columns: [name]
+          update_columns: [name, avatar]
         }
       ) {
         returning {
