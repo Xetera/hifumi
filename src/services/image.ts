@@ -6,6 +6,7 @@ import * as path from "path";
 // tslint:disable
 export const imageTemplates =  [{
   name: "momosign",
+
   image: "momosign.jpg",
   dimensions: {
     x: 80,
@@ -30,6 +31,15 @@ export const imageTemplates =  [{
     y: 365,
     width: 150,
     height: 180
+  }
+}, {
+  name: "hajimesign",
+  image: "hajimesign.jpg",
+  dimensions: {
+    x: 260,
+    y: 395,
+    width: 250,
+    height: 200
   }
 }];
 // tslint:enable
