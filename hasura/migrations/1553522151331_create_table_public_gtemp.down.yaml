@@ -1,0 +1,3 @@
+- args:
+    sql: DROP TABLE "public"."gtemp"
+  type: run_sql

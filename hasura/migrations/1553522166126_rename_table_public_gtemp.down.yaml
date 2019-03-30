@@ -1,0 +1,3 @@
+- args:
+    sql: alter table "public"."guilds" rename to "gtemp";
+  type: run_sql

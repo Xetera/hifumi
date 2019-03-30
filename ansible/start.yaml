@@ -1,0 +1,10 @@
+---
+- name: Starting all processes
+  hosts: all
+  gather_facts: true
+  vars_files:
+    - secret.yaml
+  roles:
+    - efk
+    - portainer
+    - create

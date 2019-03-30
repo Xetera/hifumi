@@ -1,0 +1,6 @@
+- args:
+    relationship: guilds_by_guild_id
+    table:
+      name: image_channels
+      schema: public
+  type: drop_relationship
