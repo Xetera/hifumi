@@ -12,6 +12,15 @@ export const imageTemplates =  [{
     y: 160,
     width: 280,
     height: 80
+  },
+}, {
+  name: "fact",
+  image: "fact.jpg",
+  dimensions: {
+    x: 20,
+    y: 45,
+    width: 200,
+    height: 215
   }
 }];
 // tslint:enable
