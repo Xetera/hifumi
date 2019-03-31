@@ -1,5 +1,5 @@
 ---
-- include_vars: secret.yaml
+- include_vars: hifumi.yaml
 
 - name: Ensure elknet is created
   docker_network:

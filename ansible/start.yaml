@@ -3,10 +3,10 @@
   hosts: all
   gather_facts: true
   vars_files:
-    - secret.yaml
+    - host_vars/hifumi.yaml
   roles:
     - role: nickjj.docker
-    - caddy
+#    - caddy
     - efk
     - portainer
     - create
