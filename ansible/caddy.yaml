@@ -1,0 +1,9 @@
+---
+- name: Setting up caddy
+  hosts: all
+  gather_facts: true
+  vars_files:
+    - secret.yaml
+  roles:
+    - caddy
+

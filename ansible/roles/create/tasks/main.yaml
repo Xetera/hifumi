@@ -1,4 +1,6 @@
 ---
+- include_vars: secret.yaml
+
 - name: Ensure docker is installed
   pip:
     name:
@@ -24,29 +26,30 @@
 
 - name: Creating database
   docker_container:
-    name: mongo
-    log_driver: fluentd
-    image: mongo
+    name: postgres
+    image: postgres
+    env:
+      POSTGRES_PASSWORD: "{{ postgres.password }}"
+      POSTGRES_USER: "{{ postgres.user }}"
+      POSTGRES_DB: "{{ postgres.database }}"
     volumes:
       - ./data/db:/data/db
     networks:
       - name: hifuminet
 
-- name: Creating database administration
+- name: Creating hasura
   docker_container:
-    name: mongo-client
-    image: mongoclient/mongoclient
-    log_driver: fluentd
+    name: hasura
+    image: moedevs/hasura
     env:
-      MONGO_URL: mongodb://mongo/hifumi
-      MONGOCLIENT_AUTH: "true"
-      MONGOCLIENT_USERNAME: hifumi
-      MONGOCLIENT_PASSWORD: test
+      HASURA_GRAPHQL_DATABASE_URL: "postgres://{{ postgres.user }}:{{ postgres.password }}@postgres:5432/{{ postgres.database }}"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: "{{ hasura.admin_secret }}"
     ports:
-      - 3001:3000
+      - 8080:8080
     networks:
       - name: hifuminet
-        
+
 - name: Updating hifumi's image
   docker_container:
     name: hifumi

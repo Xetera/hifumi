@@ -5,6 +5,8 @@
   vars_files:
     - secret.yaml
   roles:
+    - role: nickjj.docker
+    - caddy
     - efk
     - portainer
     - create
