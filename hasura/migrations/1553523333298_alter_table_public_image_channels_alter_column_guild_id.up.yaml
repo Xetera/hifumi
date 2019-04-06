@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."image_channels" ALTER COLUMN "guild_id" TYPE text;
-  type: run_sql

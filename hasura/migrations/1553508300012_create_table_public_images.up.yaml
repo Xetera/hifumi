@@ -1,9 +1,0 @@
-- args:
-    sql: CREATE TABLE "public"."images"("message_id" text NOT NULL UNIQUE, "guild_id"
-      text NOT NULL, "id" serial NOT NULL, "url" text NOT NULL, "file_name" text ,
-      "tags" integer NOT NULL, PRIMARY KEY ("id") );
-  type: run_sql
-- args:
-    name: images
-    schema: public
-  type: add_existing_table_or_view
