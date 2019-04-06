@@ -10,6 +10,10 @@
   docker_network:
     name: hifuminet
 
+- name: Ensure pgdata is created
+  docker_volume:
+    name: pgdata
+
 - name: Creating datadog-agent
   docker_container:
     name: datadog-client
@@ -33,7 +37,7 @@
       POSTGRES_USER: "{{ postgres.username }}"
       POSTGRES_DB: "{{ postgres.database }}"
     volumes:
-      - ./data/db:/data/db
+      - pgdata:/data/db
     networks:
       - name: hifuminet
 
@@ -57,6 +61,8 @@
     log_driver: fluentd
     pull: yes
     env:
+      HASURA_ACCESS_KEY: "{{ hasura.admin_secret }}"
+      HASURA_URL: "http://hasura:8080/v1alpha1/graphql"
       TOKEN: "{{ hifumi.token }}"
       PREFIX: $
       OWNERS: "{{ hifumi.owners }}"
