@@ -21,7 +21,8 @@ export const syncGuilds = (guilds: Guild[]) => {
   logger.info("Synchronizing guilds");
   const data = guilds.map((guild): Guilds_Insert_Input => ({
     guild_id: guild.id,
-    name: guild.name
+    name: guild.name,
+    enabled: true
   }));
   const query = gql`
     mutation($data: [guilds_insert_input!]!) {
