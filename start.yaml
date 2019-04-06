@@ -5,7 +5,7 @@
   vars_files:
     - host_vars/hifumi.yaml
   roles:
-    - role: nickjj.docker
+#    - role: nickjj.docker
 #    - caddy
     - efk
     - portainer

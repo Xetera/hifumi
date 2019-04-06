@@ -3,6 +3,6 @@
   hosts: all
   gather_facts: true
   vars_files:
-    - hifumi.yaml
+    - host_vars/hifumi.yaml
   roles:
     - caddy

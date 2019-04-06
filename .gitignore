@@ -1,2 +1,3 @@
-ansible/secret.txt
+secret.txt
 .idea/
+*.retry

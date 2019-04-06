@@ -1,4 +1,4 @@
-# this is only here to allow
+# this is only here to allow quick changes to hasura
 version: "3.5"
 services:
   hasura:

@@ -1,4 +1,0 @@
-https://api.hifumi.io {
-  proxy / localhost:3000
-  tls mythologyali@gmail.com
-}

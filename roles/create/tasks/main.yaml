@@ -1,5 +1,5 @@
 ---
-- include_vars: hifumi.yaml
+- include_vars: secret.yaml
 
 - name: Ensure docker is installed
   pip:
@@ -30,7 +30,7 @@
     image: postgres
     env:
       POSTGRES_PASSWORD: "{{ postgres.password }}"
-      POSTGRES_USER: "{{ postgres.user }}"
+      POSTGRES_USER: "{{ postgres.username }}"
       POSTGRES_DB: "{{ postgres.database }}"
     volumes:
       - ./data/db:/data/db
@@ -42,7 +42,7 @@
     name: hasura
     image: moedevs/hasura
     env:
-      HASURA_GRAPHQL_DATABASE_URL: "postgres://{{ postgres.user }}:{{ postgres.password }}@postgres:5432/{{ postgres.database }}"
+      HASURA_GRAPHQL_DATABASE_URL: "postgres://{{ postgres.username }}:{{ postgres.password }}@postgres:5432/{{ postgres.database }}"
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_ADMIN_SECRET: "{{ hasura.admin_secret }}"
     ports:
