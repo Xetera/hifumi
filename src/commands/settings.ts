@@ -2,14 +2,13 @@ import { Command } from "discord-akairo";
 import { Message, TextChannel, User } from "discord.js";
 import gql from "gql-tag/dist";
 import { req } from "../db";
-import { logger } from "../utils";
+import { isOwner, logger } from "../utils";
 
 const changeWelcome = (message: Message, channel: TextChannel) => req(gql`
   mutation {
     update_guilds(
       _set: {
         welcome_channel: "${channel.id}"
-        guild_id: "${channel.id}"
       }
       where: {
         guild_id: {
@@ -49,7 +48,7 @@ const upsertImageChannel = (channel: TextChannel, user: User) => req(gql`
       objects: [{
         channel_id: "${channel.id}"
         guild_id: "${channel.guild.id}"
-        user_id: "${user.id}"
+        assigner_id: "${user.id}"
       }]
     ) {
       returning {
@@ -69,7 +68,7 @@ const deleteImageChannel = (channel: TextChannel) => req(gql`
       }
     ) {
       returning {
-        id
+        assigner_id
       }
     }
   }
@@ -87,7 +86,7 @@ const settings: { [k: string]: (ctx: Context) => Promise<void> } = {
     if (targetChannel) {
       await changeWelcome(message, targetChannel);
       await message.channel.send(`Set your welcome channel to ${targetChannel}.`);
-    } else if (value === "disable") {
+    } else if (value === "disable" || value === "off") {
       await deleteWelcome(message);
       await message.channel.send(`Disabled the server welcome.`);
     }
@@ -114,7 +113,6 @@ export default class extends Command {
   constructor() {
     super("settings", {
       aliases: ["settings"],
-      userPermissions: ["BAN_MEMBERS"],
       description: "Adjusts the settings",
       args: [{
         id: "setting",
@@ -126,10 +124,17 @@ export default class extends Command {
     });
   }
 
+  public condition(message: Message): boolean {
+    return message.member.hasPermission("BAN_MEMBERS") || isOwner(message.member.id);
+  }
+
   public async exec(message: Message, { setting, args }: any) {
+    if (!setting) {
+      return message.channel.send(`Available settings: welcome, imageBoard`);
+    }
     const func = settings[setting];
     if (!func) {
-      message.channel.send(`'${setting}' is not a valid setting`);
+      return message.channel.send(`'${setting}' is not a valid setting`);
     }
     try {
       await func({ message, args });

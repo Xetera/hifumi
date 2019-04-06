@@ -1,0 +1,9 @@
+- args:
+    sql: CREATE TABLE "public"."image_tags"("id" serial NOT NULL UNIQUE, "name" text
+      NOT NULL, "tagger_id" text NOT NULL, "image_id" integer NOT NULL, PRIMARY KEY
+      ("id") );
+  type: run_sql
+- args:
+    name: image_tags
+    schema: public
+  type: add_existing_table_or_view

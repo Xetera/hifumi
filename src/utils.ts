@@ -8,6 +8,7 @@ import { Message, TextChannel } from "discord.js";
 import pino from "pino";
 import { chain } from "ramda";
 import { withDatadog } from "./analytics/datadog";
+import R = require("ramda");
 
 const _send = TextChannel.prototype.send;
 
@@ -48,5 +49,9 @@ interface CreateCommand extends CommandOptions {
   exec: (this: Command, message: Message, args: any, edited: boolean) => any;
   id: string;
 }
+
+export const isOwner = (id: string) => (process.env.OWNERS || "140862798832861184")
+  .split(",")
+  .some(R.equals(id));
 
 export const STAR = "⭐";

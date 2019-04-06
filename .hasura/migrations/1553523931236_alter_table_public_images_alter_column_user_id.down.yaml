@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."images" ALTER COLUMN "user_id" TYPE integer;
-  type: run_sql

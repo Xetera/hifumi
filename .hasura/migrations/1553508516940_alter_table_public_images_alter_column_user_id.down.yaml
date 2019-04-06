@@ -1,3 +1,0 @@
-- args:
-    sql: COMMENT ON COLUMN "public"."images"."user_id" IS 'undefined'
-  type: run_sql

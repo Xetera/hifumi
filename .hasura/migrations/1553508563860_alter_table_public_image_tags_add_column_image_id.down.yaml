@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."image_tags" DROP COLUMN "image_id"
-  type: run_sql

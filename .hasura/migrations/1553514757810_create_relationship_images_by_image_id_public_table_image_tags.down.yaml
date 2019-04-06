@@ -1,6 +1,0 @@
-- args:
-    relationship: images_by_image_id
-    table:
-      name: image_tags
-      schema: public
-  type: drop_relationship

@@ -3,11 +3,10 @@ import { Emoji, GuildMember, Message, MessageReaction, RichEmbedOptions, TextCha
 import { sendAnalytics, withDatadog } from "./analytics/datadog";
 import { processImage } from "./archive/image";
 import { ANALYTICS_INTERVAL } from "./constants";
-import { syncGuilds, syncUsers } from "./db";
-import { Guild } from "./queries/guild";
-import { updateEmojis } from "./services/emoji";
+import { req, syncGuilds, syncUsers } from "./db";
 import { addStar, removeStar } from "./starboard";
 import { boxContents, logger } from "./utils";
+import gql from "gql-tag/dist";
 
 const events: { [key: string]: string } = {
   MESSAGE_REACTION_ADD: "messageReactionAdd",
@@ -15,7 +14,6 @@ const events: { [key: string]: string } = {
 };
 
 const onGuildMessage = (message: Message) => {
-  const { guild, channel, author, content } = message;
   withDatadog((client) => client.increment("bot.messages.seen", 1, ["guild"]));
   processImage(message);
 };
@@ -57,7 +55,12 @@ const onReactRemove = async (react: MessageReaction, user: User) => {
 };
 
 const onUserJoin = async (member: GuildMember) => {
-  const { welcome_channel } = await Guild.findOne({ id: member.guild.id }) || new Guild();
+  const { guild: { welcome_channel } } = await req(gql`{
+    guild: guilds_by_pk(guild_id: "${member.guild.id}") {
+      welcome_channel
+    }
+  }`) as any;
+  console.log(welcome_channel);
   if (!welcome_channel) {
     return;
   }

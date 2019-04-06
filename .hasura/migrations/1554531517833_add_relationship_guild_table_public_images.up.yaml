@@ -1,0 +1,8 @@
+- args:
+    name: guild
+    table:
+      name: images
+      schema: public
+    using:
+      foreign_key_constraint_on: guild_id
+  type: create_object_relationship

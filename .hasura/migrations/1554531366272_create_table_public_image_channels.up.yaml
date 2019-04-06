@@ -1,0 +1,9 @@
+- args:
+    sql: CREATE TABLE "public"."image_channels"("channel_id" text NOT NULL UNIQUE,
+      "assigner_id" text NOT NULL, "guild_id" text NOT NULL, PRIMARY KEY ("channel_id")
+      );
+  type: run_sql
+- args:
+    name: image_channels
+    schema: public
+  type: add_existing_table_or_view

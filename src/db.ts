@@ -22,12 +22,12 @@ export const syncGuilds = (guilds: Guild[]) => {
       insert_guilds(
         objects: $data
         on_conflict: {
-          constraint: guilds_guild_id_key
+          constraint: guilds_pkey
           update_columns: [name]
         }
       ) {
         returning {
-          id
+          guild_id
         }
       }
     }
@@ -47,12 +47,12 @@ export const syncUsers = (users: User[]) => {
       insert_users(
         objects: $data
         on_conflict: {
-          constraint: users_user_id_key
+          constraint: users_pkey
           update_columns: [name, avatar]
         }
       ) {
         returning {
-          id
+          user_id
         }
       }
     }

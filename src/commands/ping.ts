@@ -8,7 +8,6 @@ export default class extends Command {
       category: "utility",
       description: "Checks latency of the bot",
     });
-
   }
   public async exec(msg: Message) {
     const m = await msg.channel.send("Ping...") as Message;
