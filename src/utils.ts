@@ -12,7 +12,7 @@ import { withDatadog } from "./analytics/datadog";
 
 const _send = TextChannel.prototype.send;
 
-TextChannel.prototype.send = function (...args: any[]) {
+TextChannel.prototype.send = function(...args: any[]) {
   withDatadog((client) => client.increment("bot.messages.sent"));
   return _send.call(this, ...args);
 };
