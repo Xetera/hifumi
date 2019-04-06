@@ -1,12 +1,12 @@
 import { AkairoClient } from "discord-akairo";
 import { Emoji, GuildMember, Message, MessageReaction, RichEmbedOptions, TextChannel, User } from "discord.js";
+import gql from "gql-tag/dist";
 import { sendAnalytics, withDatadog } from "./analytics/datadog";
 import { processImage } from "./archive/image";
 import { ANALYTICS_INTERVAL } from "./constants";
 import { req, syncGuilds, syncUsers } from "./db";
 import { addStar, removeStar } from "./starboard";
 import { boxContents, logger } from "./utils";
-import gql from "gql-tag/dist";
 
 const events: { [key: string]: string } = {
   MESSAGE_REACTION_ADD: "messageReactionAdd",

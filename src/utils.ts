@@ -7,8 +7,8 @@ import {
 import { Message, TextChannel } from "discord.js";
 import pino from "pino";
 import { chain } from "ramda";
-import { withDatadog } from "./analytics/datadog";
 import R = require("ramda");
+import { withDatadog } from "./analytics/datadog";
 
 const _send = TextChannel.prototype.send;
 

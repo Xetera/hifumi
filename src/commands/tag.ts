@@ -107,9 +107,9 @@ export default class extends Command {
   }
 
   private findValidMessage = (channel: TextChannel) =>
-    channel.messages.array().reverse().find((msg) => msg.attachments.size > 0 || msg.embeds.length > 0);
+    channel.messages.array().reverse().find((msg) => msg.attachments.size > 0 || msg.embeds.length > 0)
 
   private fetchMedia = (msg: Message) =>
     (msg.attachments.first() && msg.attachments.first().url)
-    || (msg.embeds[0] && msg.embeds[0].url);
+    || (msg.embeds[0] && msg.embeds[0].url)
 }
