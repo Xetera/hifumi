@@ -4,7 +4,7 @@ import {
   ConditionalCommandExecFunction,
   RegexCommandExecFunction
 } from "discord-akairo";
-import { Message, TextChannel } from "discord.js";
+import { GuildMember, Message, TextChannel } from "discord.js";
 import pino from "pino";
 import { chain } from "ramda";
 import R = require("ramda");
@@ -12,7 +12,7 @@ import { withDatadog } from "./analytics/datadog";
 
 const _send = TextChannel.prototype.send;
 
-TextChannel.prototype.send = function(...args: any[]) {
+TextChannel.prototype.send = function (...args: any[]) {
   withDatadog((client) => client.increment("bot.messages.sent"));
   return _send.call(this, ...args);
 };
@@ -53,5 +53,8 @@ interface CreateCommand extends CommandOptions {
 export const isOwner = (id: string) => (process.env.OWNERS || "140862798832861184")
   .split(",")
   .some(R.equals(id));
+
+export const isMod = (member: GuildMember) =>
+  member.hasPermission("BAN_MEMBERS") || isOwner(member.id);
 
 export const STAR = "⭐";

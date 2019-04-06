@@ -2,7 +2,7 @@ import { Command } from "discord-akairo";
 import { Message, TextChannel, User } from "discord.js";
 import gql from "gql-tag/dist";
 import { req } from "../db";
-import { isOwner, logger } from "../utils";
+import { isMod, isOwner, logger } from "../utils";
 
 const changeWelcome = (message: Message, channel: TextChannel) => req(gql`
   mutation {
@@ -124,11 +124,11 @@ export default class extends Command {
     });
   }
 
-  public condition(message: Message): boolean {
-    return message.member.hasPermission("BAN_MEMBERS") || isOwner(message.member.id);
-  }
-
   public async exec(message: Message, { setting, args }: any) {
+    if (!isMod(message.member)) {
+      return;
+    }
+
     if (!setting) {
       return message.channel.send(`Available settings: welcome, imageBoard`);
     }
