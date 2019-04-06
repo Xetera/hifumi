@@ -1,7 +1,0 @@
----
-- name: Install sudo
-  apt: pkg=sudo state=present
-
-- name: Create user
-  user: name=hifumi group=www-data state=present
-

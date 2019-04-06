@@ -1,8 +1,0 @@
----
-- name: Starting up ELK
-  hosts: all
-  gather_facts: true
-  vars_files:
-    - secret.yaml
-  roles:
-    - efk
