@@ -1,6 +1,6 @@
 import { Guild, User } from "discord.js";
 import gql from "gql-tag/dist";
-import request from "graphql-request";
+import { GraphQLClient } from "graphql-request";
 import { Variables } from "graphql-request/dist/src/types";
 import { GRAPHQL_ENDPOINT } from "./constants";
 import {
@@ -9,7 +9,13 @@ import {
 } from "./generated/graphql";
 import { logger } from "./utils";
 
-export const req = (q: string, vars?: Variables) => request(GRAPHQL_ENDPOINT, q, vars);
+const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
+  headers: process.env.HASURA_ACCESS_KEY ? {
+    "X-Hasura-Access-Key": process.env.HASURA_ACCESS_KEY
+  } : {}
+});
+
+export const req = (q: string, vars?: Variables) => client.request(q, vars);
 
 export const syncGuilds = (guilds: Guild[]) => {
   logger.info("Synchronizing guilds");
