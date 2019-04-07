@@ -10,3 +10,4 @@
     - efk
     - portainer
     - create
+    - { role: datadog, tags: ['datadog'] }

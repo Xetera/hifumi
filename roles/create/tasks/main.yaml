@@ -14,19 +14,10 @@
   docker_volume:
     name: pgdata
 
-- name: Creating datadog-agent
-  docker_container:
-    name: datadog-client
-    image: datadog/agent:latest
-    log_driver: fluentd
-    env:
-      DD_API_KEY: "{{ hifumi.datadog_api_key }}"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /proc/:/host/proc/:ro
-      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
-    networks:
-      - name: hifuminet
+- name: Copy analytics config
+  copy:
+    src: monitoring.sql
+    dest: "{{ postgres.mount_point }}"
 
 - name: Creating database
   docker_container:
@@ -54,11 +45,21 @@
     networks:
       - name: hifuminet
 
+- name: Creating the API
+  docker_container:
+    name: api
+    image: moedevs/yun
+    pull: yes
+    env:
+      NEWGAME_PORT: "3000"
+    ports:
+      - 3000:3000
+
+
 - name: Updating hifumi's image
   docker_container:
     name: hifumi
     image: moedevs/hifumi
-    log_driver: fluentd
     pull: yes
     env:
       HASURA_ACCESS_KEY: "{{ hasura.admin_secret }}"

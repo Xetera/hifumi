@@ -2,6 +2,7 @@
 all:
   hosts:
     hifumi:
+      pipelining: True
       ansible_host: !vault |
         $ANSIBLE_VAULT;1.1;AES256
         39333735643636333862646530323262366232383539303032616539306635386234386336663135

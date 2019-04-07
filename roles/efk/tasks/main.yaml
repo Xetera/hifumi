@@ -17,6 +17,7 @@
     pull: true
     ports:
       - 24224:24224
+      - 24220:24220
     log_driver: "json-file"
     log_options:
       tag: docker.fluentd
