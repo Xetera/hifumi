@@ -60,7 +60,6 @@ const onUserJoin = async (member: GuildMember) => {
       welcome_channel
     }
   }`) as any;
-  console.log(welcome_channel);
   if (!welcome_channel) {
     return;
   }

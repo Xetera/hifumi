@@ -54,10 +54,9 @@ const archiveAttachments = async (message: Message) => {
 };
 
 export const processImage = async (message: Message) => {
-  logger.debug("Processing an message");
   if (!hasArchivableContent(message) || !await isArchiveChannel(message.channel)) {
     return;
   }
-  logger.debug("Image is valid");
+  logger.debug(`Uploading valid image from channel ${message.channel instanceof TextChannel ? message.channel.name : ""}`);
   return archiveAttachments(message);
 };
