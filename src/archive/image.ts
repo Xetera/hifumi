@@ -57,6 +57,8 @@ export const processImage = async (message: Message) => {
   if (!hasArchivableContent(message) || !await isArchiveChannel(message.channel)) {
     return;
   }
-  logger.debug(`Uploading valid image from channel ${message.channel instanceof TextChannel ? message.channel.name : ""}`);
+  logger.debug(
+    `Uploading valid image from channel ${message.channel instanceof TextChannel ? message.channel.name : ""}`
+  );
   return archiveAttachments(message);
 };
