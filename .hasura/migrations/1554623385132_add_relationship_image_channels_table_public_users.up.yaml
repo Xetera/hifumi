@@ -1,0 +1,12 @@
+- args:
+    name: image_channels
+    table:
+      name: users
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: assigner_id
+        table:
+          name: image_channels
+          schema: public
+  type: create_array_relationship

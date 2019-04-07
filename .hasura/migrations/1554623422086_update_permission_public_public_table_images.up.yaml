@@ -1,0 +1,11 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns: []
+      filter: {}
+      limit: null
+    role: public
+    table:
+      name: images
+      schema: public
+  type: create_select_permission

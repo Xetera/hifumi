@@ -1,0 +1,22 @@
+- args:
+    role: public
+    table:
+      name: images
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - file_name
+      - guild_id
+      - id
+      - message_id
+      - url
+      - user_id
+      filter: {}
+    role: public
+    table:
+      name: images
+      schema: public
+  type: create_select_permission
