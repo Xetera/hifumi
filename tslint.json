@@ -9,6 +9,7 @@
 	"jsRules": {},
 	"rules": {
 		"interface-name": false,
+		"semicolon": [2, "always"],
 		"trailing-comma": false,
 		"prefer-object-spread": true,
 		"prefer-const": true,
