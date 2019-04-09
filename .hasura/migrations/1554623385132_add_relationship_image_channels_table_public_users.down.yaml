@@ -1,6 +1,0 @@
-- args:
-    relationship: image_channels
-    table:
-      name: users
-      schema: public
-  type: drop_relationship

@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."images" DROP CONSTRAINT "images_guild_id_fkey"
-  type: run_sql

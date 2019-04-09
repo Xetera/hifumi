@@ -1,4 +1,0 @@
-- args:
-    sql: ALTER TABLE "public"."image_tags" ADD FOREIGN KEY ("tagger_id") REFERENCES
-      "public"."users" ("user_id")
-  type: run_sql
