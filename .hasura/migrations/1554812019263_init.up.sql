@@ -9,15 +9,6 @@ CREATE TABLE public.tag_counts (
     count bigint NOT NULL
 );
 
-CREATE FUNCTION public.tag_count() RETURNS SETOF public.tag_counts
-    LANGUAGE sql STABLE
-    AS $$
-    SELECT distinct name, COUNT(name)
-    AS "count"
-    FROM image_tags
-    GROUP BY name
-$$;
-
 CREATE TABLE public.guilds (
     guild_id text NOT NULL,
     enabled boolean,
@@ -37,6 +28,15 @@ CREATE TABLE public.image_tags (
     tagger_id text NOT NULL,
     image_id integer NOT NULL
 );
+CREATE FUNCTION public.tag_count() RETURNS SETOF public.tag_counts
+LANGUAGE sql STABLE
+AS $$
+SELECT distinct name, COUNT(name)
+AS "count"
+FROM image_tags
+GROUP BY name
+$$;
+
 
 CREATE SEQUENCE public.image_tags_id_seq
     AS integer
