@@ -37,10 +37,11 @@ export default class extends Command {
     if (!targetMsg) {
       return msg.channel.send(`Couldn't find a message with an image`);
     }
-    const tags = rest && rest.trim().split(",").map((name: string): Image_Tags_Insert_Input => ({
-      name,
-      tagger_id: targetMsg.author.id
-    }));
+    const tags: Image_Tags_Insert_Input[] =
+      rest && rest.trim().split(",").map((name: string): Image_Tags_Insert_Input => ({
+        name,
+        tagger_id: targetMsg.author.id
+      }));
     const url = this.fetchMedia(targetMsg);
 
     const where: Images_Bool_Exp = {
@@ -103,13 +104,16 @@ export default class extends Command {
       }
     }`;
     const resp = await req(query, { image });
-    console.log(resp);
+    const wrappedTags = tags.map((t) => `\`${t.name}\``);
+    msg.channel.send(
+      `✅ | Saved ${targetMsg.author.username}'s image with the following tags: ${wrappedTags.join(", ")}`
+    );
   }
 
   private findValidMessage = (channel: TextChannel) =>
-    channel.messages.array().reverse().find((msg) => msg.attachments.size > 0 || msg.embeds.length > 0)
+    channel.messages.array().reverse().find((msg) => msg.attachments.size > 0 || msg.embeds.length > 0);
 
   private fetchMedia = (msg: Message) =>
     (msg.attachments.first() && msg.attachments.first().url)
-    || (msg.embeds[0] && msg.embeds[0].url)
+    || (msg.embeds[0] && msg.embeds[0].url);
 }
