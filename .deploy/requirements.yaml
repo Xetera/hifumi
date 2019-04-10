@@ -1,0 +1,3 @@
+# Automatically installing docker
+- name: docker
+  src: nickjj.docker

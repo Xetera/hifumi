@@ -1,0 +1,6 @@
+---
+- name: Starting up ELK
+  hosts: all
+  gather_facts: true
+  roles:
+    - elk
