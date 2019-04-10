@@ -202,7 +202,7 @@ export default class extends Command {
 
       const hasCat = (isNullOrUndefined(category)) ? false : true;
       const catName = (hasCat === true) ? category.name : "none";
-      const children = (hasCat === true) ? category.children : "none";
+      const children = (hasCat === true) ? category.children.array().join(", ") : "none";
       const catDat = (hasCat === true) ? [`Name: ${catName}`, `Children: ${children}`] : [];
 
       const cstr = [`Name: ${name}`, `Position: ${pos}`, `Has Category: ${hasCat}`];
