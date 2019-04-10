@@ -52,10 +52,10 @@ export default class extends Command {
   public exec(msg: Message) {
 
     const out = this.choose();
-    const blobber = "<:hb1:556699207235403787>";
+    const blobber = "<:YunBlobber:352781777686757381>";
     const clapR = "<a:hb2:556699208967651328>";
     const clapL = "<a:hb4:556699207516291113>";
-    const aoooba = "<:hb5:556699207893909504>";
+    const aoooba = "<:Aoooba:392943542575562752>";
 
     const ifServerIsFun = `${blobber} ${clapR} **${out.string}** ${clapL} ${aoooba}`;
     const ifServerSucks = `**${out.string}**`;
