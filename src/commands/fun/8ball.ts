@@ -1,7 +1,5 @@
 import { Command } from "discord-akairo";
 import { Message, RichEmbedOptions } from "discord.js";
-import { ClientRequest } from "http";
-import { Guild } from "../../models/guild";
 
 export default class extends Command {
   constructor() {
