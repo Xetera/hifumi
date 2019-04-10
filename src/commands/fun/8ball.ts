@@ -64,7 +64,7 @@ export default class extends Command {
         color: out.color,
         description: msg.guild.me.permissions.has("USE_EXTERNAL_EMOJIS") ? ifServerIsFun : ifServerSucks,
       };
-
-    return msg.channel.send("🎱 |  The Magic 8 Ball says...", { embed });
+      // "🎱 |  The Magic 8 Ball says...",
+    return msg.channel.send({ embed });
   }
 }
