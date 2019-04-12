@@ -1,6 +1,7 @@
 import { Command } from "discord-akairo";
 import { Message, TextChannel } from "discord.js";
 import gql from "gql-tag/dist";
+import { resolve } from "media-extractor";
 import { req } from "../db";
 import {
   Image_Tags,
@@ -9,7 +10,6 @@ import {
   Images_Bool_Exp,
   Images_Insert_Input
 } from "../generated/graphql";
-import { resolve } from "media-extractor";
 
 export default class extends Command {
   constructor() {
