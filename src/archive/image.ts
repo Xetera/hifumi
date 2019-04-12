@@ -1,9 +1,9 @@
 import { Channel, Guild, Message, MessageAttachment, TextChannel } from "discord.js";
 import gql from "gql-tag/dist";
+import { resolve } from "media-extractor"
 import { req } from "../db";
 import { Image_Channels } from "../generated/graphql";
 import { logger } from "../utils";
-
 const findArchiveChannels = (guild: Guild) => req(gql`
   query {
     image_channels(
@@ -18,12 +18,12 @@ const findArchiveChannels = (guild: Guild) => req(gql`
   }
 `);
 
-const upsertImage = (message: Message, att: MessageAttachment) => req(gql`
+const upsertImage = (message: Message, att: MessageAttachment, src: string) => req(gql`
   mutation {
     insert_images(
       objects: [{
         message_id: "${message.id}"
-        url: "${att.url}"
+        url: "${src}"
         file_name: "${att.filename}"
         guild_id: "${message.guild.id}"
         user_id: "${message.author.id}"
@@ -49,7 +49,10 @@ const hasArchivableContent = async (message: Message) =>
   message.attachments.size > 0;
 
 const archiveAttachments = async (message: Message) => {
-  const uploads = message.attachments.map((att) => upsertImage(message, att));
+  const uploads = message.attachments.map(async (att) => {
+    const src = await resolve(att.url);
+    return upsertImage(message, att, src)
+  });
   return Promise.all(uploads);
 };
 

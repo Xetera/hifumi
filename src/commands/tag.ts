@@ -9,6 +9,7 @@ import {
   Images_Bool_Exp,
   Images_Insert_Input
 } from "../generated/graphql";
+import { resolve } from "media-extractor";
 
 export default class extends Command {
   constructor() {
@@ -42,7 +43,7 @@ export default class extends Command {
         name,
         tagger_id: targetMsg.author.id
       }));
-    const url = this.fetchMedia(targetMsg);
+    const url = await resolve(this.fetchMedia(targetMsg));
 
     const where: Images_Bool_Exp = {
       _and: [{
