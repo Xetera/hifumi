@@ -24,9 +24,14 @@ export default class EvalCommand extends Command {
     if (!isOwner) {
       return;
     }
+    const clean = (s: string) => s.replace(process.env.TOKEN!, "[REDACTED]");
 
-    // tslint:disable-next-line:no-eval
-    const out = await eval(code);
-    return message.channel.send(out);
+    try {
+      // tslint:disable-next-line:no-eval
+      const out = await eval(code);
+      return message.channel.send(clean(out));
+    } catch (e) {
+      return message.channel.send(clean(e.message));
+    }
   }
 }

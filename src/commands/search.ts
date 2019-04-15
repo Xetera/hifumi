@@ -1,7 +1,7 @@
 import { Command } from "discord-akairo";
 import { GuildMember, Message, MessageReaction, RichEmbedOptions, User } from "discord.js";
 import gql from "gql-tag/dist";
-import { req } from "../db";
+import { _client, req } from "../db";
 import { Images } from "../generated/graphql";
 
 export default class extends Command {
@@ -18,18 +18,41 @@ export default class extends Command {
   }
 
   public async exec(msg: Message, { query }: any) {
-    const res = await req(gql`{
-      images(
-        limit: 5, where: {_or: [{image_tags: {name: {_ilike: "${query}"}}}, {user: {name: {_ilike: "${query}"}}}]}
-      ) {
-        url
-        image_tags {
-          name
+    const { data } = await _client.query({
+      image_tags_aggregate: [{
+        where: {
+          name: {
+            _eq: query
+          }
         }
-        user_id
-      }
-    }`) as { images: Images[] };
-    const { images: [first] } = res;
+      }, {
+        aggregate: {
+          count: 1,
+        }
+      }]
+    });
+    const { count } = data!.image_tags_aggregate.aggregate!;
+    const offset = Math.floor(Math.random() * count!);
+    const res = await _client.query({
+      images: [{
+        limit: 1,
+        offset,
+        where: {
+          image_tags: {
+            name: {
+              _eq: query
+            }
+          }
+        }
+      }, {
+        url: 1,
+        image_tags: {
+          name: 1
+        },
+        user_id: 1
+      }]
+    });
+    const { images: [first] } = res.data!;
     if (!first) {
       return msg.channel.send(`No results found...`);
     }

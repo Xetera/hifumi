@@ -1,0 +1,4023 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""
+columns and relationships of "auto_tags"
+"""
+type auto_tags {
+  channel_id: String!
+  id: Int!
+
+  """
+  An object relationship
+  """
+  image_channel: image_channels!
+  name: String!
+}
+
+"""
+aggregated selection of "auto_tags"
+"""
+type auto_tags_aggregate {
+  aggregate: auto_tags_aggregate_fields
+  nodes: [auto_tags!]!
+}
+
+"""
+aggregate fields of "auto_tags"
+"""
+type auto_tags_aggregate_fields {
+  avg: auto_tags_avg_fields
+  count(columns: [auto_tags_select_column!], distinct: Boolean): Int
+  max: auto_tags_max_fields
+  min: auto_tags_min_fields
+  stddev: auto_tags_stddev_fields
+  stddev_pop: auto_tags_stddev_pop_fields
+  stddev_samp: auto_tags_stddev_samp_fields
+  sum: auto_tags_sum_fields
+  var_pop: auto_tags_var_pop_fields
+  var_samp: auto_tags_var_samp_fields
+  variance: auto_tags_variance_fields
+}
+
+"""
+order by aggregate values of table "auto_tags"
+"""
+input auto_tags_aggregate_order_by {
+  avg: auto_tags_avg_order_by
+  count: order_by
+  max: auto_tags_max_order_by
+  min: auto_tags_min_order_by
+  stddev: auto_tags_stddev_order_by
+  stddev_pop: auto_tags_stddev_pop_order_by
+  stddev_samp: auto_tags_stddev_samp_order_by
+  sum: auto_tags_sum_order_by
+  var_pop: auto_tags_var_pop_order_by
+  var_samp: auto_tags_var_samp_order_by
+  variance: auto_tags_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "auto_tags"
+"""
+input auto_tags_arr_rel_insert_input {
+  data: [auto_tags_insert_input!]!
+  on_conflict: auto_tags_on_conflict
+}
+
+"""
+aggregate avg on columns
+"""
+type auto_tags_avg_fields {
+  id: Float
+}
+
+"""
+order by avg() on columns of table "auto_tags"
+"""
+input auto_tags_avg_order_by {
+  id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "auto_tags". All fields are combined with a logical 'AND'.
+"""
+input auto_tags_bool_exp {
+  _and: [auto_tags_bool_exp]
+  _not: auto_tags_bool_exp
+  _or: [auto_tags_bool_exp]
+  channel_id: text_comparison_exp
+  id: integer_comparison_exp
+  image_channel: image_channels_bool_exp
+  name: text_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "auto_tags"
+"""
+enum auto_tags_constraint {
+  """
+  unique or primary key constraint
+  """
+  auto_tags_pkey
+}
+
+"""
+input type for incrementing integer columne in table "auto_tags"
+"""
+input auto_tags_inc_input {
+  id: Int
+}
+
+"""
+input type for inserting data into table "auto_tags"
+"""
+input auto_tags_insert_input {
+  channel_id: String
+  id: Int
+  image_channel: image_channels_obj_rel_insert_input
+  name: String
+}
+
+"""
+aggregate max on columns
+"""
+type auto_tags_max_fields {
+  channel_id: String
+  id: Int
+  name: String
+}
+
+"""
+order by max() on columns of table "auto_tags"
+"""
+input auto_tags_max_order_by {
+  channel_id: order_by
+  id: order_by
+  name: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type auto_tags_min_fields {
+  channel_id: String
+  id: Int
+  name: String
+}
+
+"""
+order by min() on columns of table "auto_tags"
+"""
+input auto_tags_min_order_by {
+  channel_id: order_by
+  id: order_by
+  name: order_by
+}
+
+"""
+response of any mutation on the table "auto_tags"
+"""
+type auto_tags_mutation_response {
+  """
+  number of affected rows by the mutation
+  """
+  affected_rows: Int!
+
+  """
+  data of the affected rows by the mutation
+  """
+  returning: [auto_tags!]!
+}
+
+"""
+input type for inserting object relation for remote table "auto_tags"
+"""
+input auto_tags_obj_rel_insert_input {
+  data: auto_tags_insert_input!
+  on_conflict: auto_tags_on_conflict
+}
+
+"""
+on conflict condition type for table "auto_tags"
+"""
+input auto_tags_on_conflict {
+  constraint: auto_tags_constraint!
+  update_columns: [auto_tags_update_column!]!
+}
+
+"""
+ordering options when selecting data from "auto_tags"
+"""
+input auto_tags_order_by {
+  channel_id: order_by
+  id: order_by
+  image_channel: image_channels_order_by
+  name: order_by
+}
+
+"""
+select columns of table "auto_tags"
+"""
+enum auto_tags_select_column {
+  """
+  column name
+  """
+  channel_id
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  name
+}
+
+"""
+input type for updating data in table "auto_tags"
+"""
+input auto_tags_set_input {
+  channel_id: String
+  id: Int
+  name: String
+}
+
+"""
+aggregate stddev on columns
+"""
+type auto_tags_stddev_fields {
+  id: Float
+}
+
+"""
+order by stddev() on columns of table "auto_tags"
+"""
+input auto_tags_stddev_order_by {
+  id: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type auto_tags_stddev_pop_fields {
+  id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "auto_tags"
+"""
+input auto_tags_stddev_pop_order_by {
+  id: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type auto_tags_stddev_samp_fields {
+  id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "auto_tags"
+"""
+input auto_tags_stddev_samp_order_by {
+  id: order_by
+}
+
+"""
+aggregate sum on columns
+"""
+type auto_tags_sum_fields {
+  id: Int
+}
+
+"""
+order by sum() on columns of table "auto_tags"
+"""
+input auto_tags_sum_order_by {
+  id: order_by
+}
+
+"""
+update columns of table "auto_tags"
+"""
+enum auto_tags_update_column {
+  """
+  column name
+  """
+  channel_id
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  name
+}
+
+"""
+aggregate var_pop on columns
+"""
+type auto_tags_var_pop_fields {
+  id: Float
+}
+
+"""
+order by var_pop() on columns of table "auto_tags"
+"""
+input auto_tags_var_pop_order_by {
+  id: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type auto_tags_var_samp_fields {
+  id: Float
+}
+
+"""
+order by var_samp() on columns of table "auto_tags"
+"""
+input auto_tags_var_samp_order_by {
+  id: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type auto_tags_variance_fields {
+  id: Float
+}
+
+"""
+order by variance() on columns of table "auto_tags"
+"""
+input auto_tags_variance_order_by {
+  id: order_by
+}
+
+scalar bigint
+
+"""
+expression to compare columns of type bigint. All fields are combined with logical 'AND'.
+"""
+input bigint_comparison_exp {
+  _eq: bigint
+  _gt: bigint
+  _gte: bigint
+  _in: [bigint]
+  _is_null: Boolean
+  _lt: bigint
+  _lte: bigint
+  _neq: bigint
+  _nin: [bigint]
+}
+
+"""
+expression to compare columns of type boolean. All fields are combined with logical 'AND'.
+"""
+input boolean_comparison_exp {
+  _eq: Boolean
+  _gt: Boolean
+  _gte: Boolean
+  _in: [Boolean]
+  _is_null: Boolean
+  _lt: Boolean
+  _lte: Boolean
+  _neq: Boolean
+  _nin: [Boolean]
+}
+
+"""
+conflict action
+"""
+enum conflict_action {
+  """
+  ignore the insert on this row
+  """
+  ignore
+
+  """
+  update the row with the given values
+  """
+  update
+}
+
+"""
+columns and relationships of "guilds"
+"""
+type guilds {
+  enabled: Boolean
+  guild_id: String!
+
+  """
+  An array relationship
+  """
+  image_channels(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_channels_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_channels_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_channels_bool_exp
+  ): [image_channels!]!
+
+  """
+  An aggregated array relationship
+  """
+  image_channels_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_channels_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_channels_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_channels_bool_exp
+  ): image_channels_aggregate!
+
+  """
+  An array relationship
+  """
+  images(
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): [images!]!
+
+  """
+  An aggregated array relationship
+  """
+  images_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): images_aggregate!
+  name: String!
+  welcome_channel: String
+}
+
+"""
+aggregated selection of "guilds"
+"""
+type guilds_aggregate {
+  aggregate: guilds_aggregate_fields
+  nodes: [guilds!]!
+}
+
+"""
+aggregate fields of "guilds"
+"""
+type guilds_aggregate_fields {
+  count(columns: [guilds_select_column!], distinct: Boolean): Int
+  max: guilds_max_fields
+  min: guilds_min_fields
+}
+
+"""
+order by aggregate values of table "guilds"
+"""
+input guilds_aggregate_order_by {
+  count: order_by
+  max: guilds_max_order_by
+  min: guilds_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "guilds"
+"""
+input guilds_arr_rel_insert_input {
+  data: [guilds_insert_input!]!
+  on_conflict: guilds_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "guilds". All fields are combined with a logical 'AND'.
+"""
+input guilds_bool_exp {
+  _and: [guilds_bool_exp]
+  _not: guilds_bool_exp
+  _or: [guilds_bool_exp]
+  enabled: boolean_comparison_exp
+  guild_id: text_comparison_exp
+  image_channels: image_channels_bool_exp
+  images: images_bool_exp
+  name: text_comparison_exp
+  welcome_channel: text_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "guilds"
+"""
+enum guilds_constraint {
+  """
+  unique or primary key constraint
+  """
+  guilds_pkey
+}
+
+"""
+input type for inserting data into table "guilds"
+"""
+input guilds_insert_input {
+  enabled: Boolean
+  guild_id: String
+  image_channels: image_channels_arr_rel_insert_input
+  images: images_arr_rel_insert_input
+  name: String
+  welcome_channel: String
+}
+
+"""
+aggregate max on columns
+"""
+type guilds_max_fields {
+  guild_id: String
+  name: String
+  welcome_channel: String
+}
+
+"""
+order by max() on columns of table "guilds"
+"""
+input guilds_max_order_by {
+  guild_id: order_by
+  name: order_by
+  welcome_channel: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type guilds_min_fields {
+  guild_id: String
+  name: String
+  welcome_channel: String
+}
+
+"""
+order by min() on columns of table "guilds"
+"""
+input guilds_min_order_by {
+  guild_id: order_by
+  name: order_by
+  welcome_channel: order_by
+}
+
+"""
+response of any mutation on the table "guilds"
+"""
+type guilds_mutation_response {
+  """
+  number of affected rows by the mutation
+  """
+  affected_rows: Int!
+
+  """
+  data of the affected rows by the mutation
+  """
+  returning: [guilds!]!
+}
+
+"""
+input type for inserting object relation for remote table "guilds"
+"""
+input guilds_obj_rel_insert_input {
+  data: guilds_insert_input!
+  on_conflict: guilds_on_conflict
+}
+
+"""
+on conflict condition type for table "guilds"
+"""
+input guilds_on_conflict {
+  constraint: guilds_constraint!
+  update_columns: [guilds_update_column!]!
+}
+
+"""
+ordering options when selecting data from "guilds"
+"""
+input guilds_order_by {
+  enabled: order_by
+  guild_id: order_by
+  image_channels_aggregate: image_channels_aggregate_order_by
+  images_aggregate: images_aggregate_order_by
+  name: order_by
+  welcome_channel: order_by
+}
+
+"""
+select columns of table "guilds"
+"""
+enum guilds_select_column {
+  """
+  column name
+  """
+  enabled
+
+  """
+  column name
+  """
+  guild_id
+
+  """
+  column name
+  """
+  name
+
+  """
+  column name
+  """
+  welcome_channel
+}
+
+"""
+input type for updating data in table "guilds"
+"""
+input guilds_set_input {
+  enabled: Boolean
+  guild_id: String
+  name: String
+  welcome_channel: String
+}
+
+"""
+update columns of table "guilds"
+"""
+enum guilds_update_column {
+  """
+  column name
+  """
+  enabled
+
+  """
+  column name
+  """
+  guild_id
+
+  """
+  column name
+  """
+  name
+
+  """
+  column name
+  """
+  welcome_channel
+}
+
+"""
+columns and relationships of "image_channels"
+"""
+type image_channels {
+  assigner_id: String!
+
+  """
+  An array relationship
+  """
+  auto_tags(
+    """
+    distinct select on columns
+    """
+    distinct_on: [auto_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [auto_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: auto_tags_bool_exp
+  ): [auto_tags!]!
+
+  """
+  An aggregated array relationship
+  """
+  auto_tags_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [auto_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [auto_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: auto_tags_bool_exp
+  ): auto_tags_aggregate!
+  channel_id: String!
+
+  """
+  An object relationship
+  """
+  guild: guilds!
+  guild_id: String!
+
+  """
+  An object relationship
+  """
+  user: users!
+}
+
+"""
+aggregated selection of "image_channels"
+"""
+type image_channels_aggregate {
+  aggregate: image_channels_aggregate_fields
+  nodes: [image_channels!]!
+}
+
+"""
+aggregate fields of "image_channels"
+"""
+type image_channels_aggregate_fields {
+  count(columns: [image_channels_select_column!], distinct: Boolean): Int
+  max: image_channels_max_fields
+  min: image_channels_min_fields
+}
+
+"""
+order by aggregate values of table "image_channels"
+"""
+input image_channels_aggregate_order_by {
+  count: order_by
+  max: image_channels_max_order_by
+  min: image_channels_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "image_channels"
+"""
+input image_channels_arr_rel_insert_input {
+  data: [image_channels_insert_input!]!
+  on_conflict: image_channels_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "image_channels". All fields are combined with a logical 'AND'.
+"""
+input image_channels_bool_exp {
+  _and: [image_channels_bool_exp]
+  _not: image_channels_bool_exp
+  _or: [image_channels_bool_exp]
+  assigner_id: text_comparison_exp
+  auto_tags: auto_tags_bool_exp
+  channel_id: text_comparison_exp
+  guild: guilds_bool_exp
+  guild_id: text_comparison_exp
+  user: users_bool_exp
+}
+
+"""
+unique or primary key constraints on table "image_channels"
+"""
+enum image_channels_constraint {
+  """
+  unique or primary key constraint
+  """
+  image_channels_pkey
+}
+
+"""
+input type for inserting data into table "image_channels"
+"""
+input image_channels_insert_input {
+  assigner_id: String
+  auto_tags: auto_tags_arr_rel_insert_input
+  channel_id: String
+  guild: guilds_obj_rel_insert_input
+  guild_id: String
+  user: users_obj_rel_insert_input
+}
+
+"""
+aggregate max on columns
+"""
+type image_channels_max_fields {
+  assigner_id: String
+  channel_id: String
+  guild_id: String
+}
+
+"""
+order by max() on columns of table "image_channels"
+"""
+input image_channels_max_order_by {
+  assigner_id: order_by
+  channel_id: order_by
+  guild_id: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type image_channels_min_fields {
+  assigner_id: String
+  channel_id: String
+  guild_id: String
+}
+
+"""
+order by min() on columns of table "image_channels"
+"""
+input image_channels_min_order_by {
+  assigner_id: order_by
+  channel_id: order_by
+  guild_id: order_by
+}
+
+"""
+response of any mutation on the table "image_channels"
+"""
+type image_channels_mutation_response {
+  """
+  number of affected rows by the mutation
+  """
+  affected_rows: Int!
+
+  """
+  data of the affected rows by the mutation
+  """
+  returning: [image_channels!]!
+}
+
+"""
+input type for inserting object relation for remote table "image_channels"
+"""
+input image_channels_obj_rel_insert_input {
+  data: image_channels_insert_input!
+  on_conflict: image_channels_on_conflict
+}
+
+"""
+on conflict condition type for table "image_channels"
+"""
+input image_channels_on_conflict {
+  constraint: image_channels_constraint!
+  update_columns: [image_channels_update_column!]!
+}
+
+"""
+ordering options when selecting data from "image_channels"
+"""
+input image_channels_order_by {
+  assigner_id: order_by
+  auto_tags_aggregate: auto_tags_aggregate_order_by
+  channel_id: order_by
+  guild: guilds_order_by
+  guild_id: order_by
+  user: users_order_by
+}
+
+"""
+select columns of table "image_channels"
+"""
+enum image_channels_select_column {
+  """
+  column name
+  """
+  assigner_id
+
+  """
+  column name
+  """
+  channel_id
+
+  """
+  column name
+  """
+  guild_id
+}
+
+"""
+input type for updating data in table "image_channels"
+"""
+input image_channels_set_input {
+  assigner_id: String
+  channel_id: String
+  guild_id: String
+}
+
+"""
+update columns of table "image_channels"
+"""
+enum image_channels_update_column {
+  """
+  column name
+  """
+  assigner_id
+
+  """
+  column name
+  """
+  channel_id
+
+  """
+  column name
+  """
+  guild_id
+}
+
+"""
+columns and relationships of "image_tags"
+"""
+type image_tags {
+  id: Int!
+
+  """
+  An object relationship
+  """
+  image: images!
+  image_id: Int!
+  name: String!
+  tagger_id: String!
+
+  """
+  An object relationship
+  """
+  user: users!
+}
+
+"""
+aggregated selection of "image_tags"
+"""
+type image_tags_aggregate {
+  aggregate: image_tags_aggregate_fields
+  nodes: [image_tags!]!
+}
+
+"""
+aggregate fields of "image_tags"
+"""
+type image_tags_aggregate_fields {
+  avg: image_tags_avg_fields
+  count(columns: [image_tags_select_column!], distinct: Boolean): Int
+  max: image_tags_max_fields
+  min: image_tags_min_fields
+  stddev: image_tags_stddev_fields
+  stddev_pop: image_tags_stddev_pop_fields
+  stddev_samp: image_tags_stddev_samp_fields
+  sum: image_tags_sum_fields
+  var_pop: image_tags_var_pop_fields
+  var_samp: image_tags_var_samp_fields
+  variance: image_tags_variance_fields
+}
+
+"""
+order by aggregate values of table "image_tags"
+"""
+input image_tags_aggregate_order_by {
+  avg: image_tags_avg_order_by
+  count: order_by
+  max: image_tags_max_order_by
+  min: image_tags_min_order_by
+  stddev: image_tags_stddev_order_by
+  stddev_pop: image_tags_stddev_pop_order_by
+  stddev_samp: image_tags_stddev_samp_order_by
+  sum: image_tags_sum_order_by
+  var_pop: image_tags_var_pop_order_by
+  var_samp: image_tags_var_samp_order_by
+  variance: image_tags_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "image_tags"
+"""
+input image_tags_arr_rel_insert_input {
+  data: [image_tags_insert_input!]!
+  on_conflict: image_tags_on_conflict
+}
+
+"""
+aggregate avg on columns
+"""
+type image_tags_avg_fields {
+  id: Float
+  image_id: Float
+}
+
+"""
+order by avg() on columns of table "image_tags"
+"""
+input image_tags_avg_order_by {
+  id: order_by
+  image_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "image_tags". All fields are combined with a logical 'AND'.
+"""
+input image_tags_bool_exp {
+  _and: [image_tags_bool_exp]
+  _not: image_tags_bool_exp
+  _or: [image_tags_bool_exp]
+  id: integer_comparison_exp
+  image: images_bool_exp
+  image_id: integer_comparison_exp
+  name: text_comparison_exp
+  tagger_id: text_comparison_exp
+  user: users_bool_exp
+}
+
+"""
+unique or primary key constraints on table "image_tags"
+"""
+enum image_tags_constraint {
+  """
+  unique or primary key constraint
+  """
+  image_tags_pkey
+}
+
+"""
+input type for incrementing integer columne in table "image_tags"
+"""
+input image_tags_inc_input {
+  id: Int
+  image_id: Int
+}
+
+"""
+input type for inserting data into table "image_tags"
+"""
+input image_tags_insert_input {
+  id: Int
+  image: images_obj_rel_insert_input
+  image_id: Int
+  name: String
+  tagger_id: String
+  user: users_obj_rel_insert_input
+}
+
+"""
+aggregate max on columns
+"""
+type image_tags_max_fields {
+  id: Int
+  image_id: Int
+  name: String
+  tagger_id: String
+}
+
+"""
+order by max() on columns of table "image_tags"
+"""
+input image_tags_max_order_by {
+  id: order_by
+  image_id: order_by
+  name: order_by
+  tagger_id: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type image_tags_min_fields {
+  id: Int
+  image_id: Int
+  name: String
+  tagger_id: String
+}
+
+"""
+order by min() on columns of table "image_tags"
+"""
+input image_tags_min_order_by {
+  id: order_by
+  image_id: order_by
+  name: order_by
+  tagger_id: order_by
+}
+
+"""
+response of any mutation on the table "image_tags"
+"""
+type image_tags_mutation_response {
+  """
+  number of affected rows by the mutation
+  """
+  affected_rows: Int!
+
+  """
+  data of the affected rows by the mutation
+  """
+  returning: [image_tags!]!
+}
+
+"""
+input type for inserting object relation for remote table "image_tags"
+"""
+input image_tags_obj_rel_insert_input {
+  data: image_tags_insert_input!
+  on_conflict: image_tags_on_conflict
+}
+
+"""
+on conflict condition type for table "image_tags"
+"""
+input image_tags_on_conflict {
+  constraint: image_tags_constraint!
+  update_columns: [image_tags_update_column!]!
+}
+
+"""
+ordering options when selecting data from "image_tags"
+"""
+input image_tags_order_by {
+  id: order_by
+  image: images_order_by
+  image_id: order_by
+  name: order_by
+  tagger_id: order_by
+  user: users_order_by
+}
+
+"""
+select columns of table "image_tags"
+"""
+enum image_tags_select_column {
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  image_id
+
+  """
+  column name
+  """
+  name
+
+  """
+  column name
+  """
+  tagger_id
+}
+
+"""
+input type for updating data in table "image_tags"
+"""
+input image_tags_set_input {
+  id: Int
+  image_id: Int
+  name: String
+  tagger_id: String
+}
+
+"""
+aggregate stddev on columns
+"""
+type image_tags_stddev_fields {
+  id: Float
+  image_id: Float
+}
+
+"""
+order by stddev() on columns of table "image_tags"
+"""
+input image_tags_stddev_order_by {
+  id: order_by
+  image_id: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type image_tags_stddev_pop_fields {
+  id: Float
+  image_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "image_tags"
+"""
+input image_tags_stddev_pop_order_by {
+  id: order_by
+  image_id: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type image_tags_stddev_samp_fields {
+  id: Float
+  image_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "image_tags"
+"""
+input image_tags_stddev_samp_order_by {
+  id: order_by
+  image_id: order_by
+}
+
+"""
+aggregate sum on columns
+"""
+type image_tags_sum_fields {
+  id: Int
+  image_id: Int
+}
+
+"""
+order by sum() on columns of table "image_tags"
+"""
+input image_tags_sum_order_by {
+  id: order_by
+  image_id: order_by
+}
+
+"""
+update columns of table "image_tags"
+"""
+enum image_tags_update_column {
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  image_id
+
+  """
+  column name
+  """
+  name
+
+  """
+  column name
+  """
+  tagger_id
+}
+
+"""
+aggregate var_pop on columns
+"""
+type image_tags_var_pop_fields {
+  id: Float
+  image_id: Float
+}
+
+"""
+order by var_pop() on columns of table "image_tags"
+"""
+input image_tags_var_pop_order_by {
+  id: order_by
+  image_id: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type image_tags_var_samp_fields {
+  id: Float
+  image_id: Float
+}
+
+"""
+order by var_samp() on columns of table "image_tags"
+"""
+input image_tags_var_samp_order_by {
+  id: order_by
+  image_id: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type image_tags_variance_fields {
+  id: Float
+  image_id: Float
+}
+
+"""
+order by variance() on columns of table "image_tags"
+"""
+input image_tags_variance_order_by {
+  id: order_by
+  image_id: order_by
+}
+
+"""
+columns and relationships of "images"
+"""
+type images {
+  created_at: timestamptz!
+  file_name: String
+
+  """
+  An object relationship
+  """
+  guild: guilds
+  guild_id: String
+  id: Int!
+
+  """
+  An array relationship
+  """
+  image_tags(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_tags_bool_exp
+  ): [image_tags!]!
+
+  """
+  An aggregated array relationship
+  """
+  image_tags_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_tags_bool_exp
+  ): image_tags_aggregate!
+  message_id: String
+  url: String!
+
+  """
+  An object relationship
+  """
+  user: users
+  user_id: String
+}
+
+"""
+aggregated selection of "images"
+"""
+type images_aggregate {
+  aggregate: images_aggregate_fields
+  nodes: [images!]!
+}
+
+"""
+aggregate fields of "images"
+"""
+type images_aggregate_fields {
+  avg: images_avg_fields
+  count(columns: [images_select_column!], distinct: Boolean): Int
+  max: images_max_fields
+  min: images_min_fields
+  stddev: images_stddev_fields
+  stddev_pop: images_stddev_pop_fields
+  stddev_samp: images_stddev_samp_fields
+  sum: images_sum_fields
+  var_pop: images_var_pop_fields
+  var_samp: images_var_samp_fields
+  variance: images_variance_fields
+}
+
+"""
+order by aggregate values of table "images"
+"""
+input images_aggregate_order_by {
+  avg: images_avg_order_by
+  count: order_by
+  max: images_max_order_by
+  min: images_min_order_by
+  stddev: images_stddev_order_by
+  stddev_pop: images_stddev_pop_order_by
+  stddev_samp: images_stddev_samp_order_by
+  sum: images_sum_order_by
+  var_pop: images_var_pop_order_by
+  var_samp: images_var_samp_order_by
+  variance: images_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "images"
+"""
+input images_arr_rel_insert_input {
+  data: [images_insert_input!]!
+  on_conflict: images_on_conflict
+}
+
+"""
+aggregate avg on columns
+"""
+type images_avg_fields {
+  id: Float
+}
+
+"""
+order by avg() on columns of table "images"
+"""
+input images_avg_order_by {
+  id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "images". All fields are combined with a logical 'AND'.
+"""
+input images_bool_exp {
+  _and: [images_bool_exp]
+  _not: images_bool_exp
+  _or: [images_bool_exp]
+  created_at: timestamptz_comparison_exp
+  file_name: text_comparison_exp
+  guild: guilds_bool_exp
+  guild_id: text_comparison_exp
+  id: integer_comparison_exp
+  image_tags: image_tags_bool_exp
+  message_id: text_comparison_exp
+  url: text_comparison_exp
+  user: users_bool_exp
+  user_id: text_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "images"
+"""
+enum images_constraint {
+  """
+  unique or primary key constraint
+  """
+  images_pkey
+}
+
+"""
+input type for incrementing integer columne in table "images"
+"""
+input images_inc_input {
+  id: Int
+}
+
+"""
+input type for inserting data into table "images"
+"""
+input images_insert_input {
+  created_at: timestamptz
+  file_name: String
+  guild: guilds_obj_rel_insert_input
+  guild_id: String
+  id: Int
+  image_tags: image_tags_arr_rel_insert_input
+  message_id: String
+  url: String
+  user: users_obj_rel_insert_input
+  user_id: String
+}
+
+"""
+aggregate max on columns
+"""
+type images_max_fields {
+  created_at: timestamptz
+  file_name: String
+  guild_id: String
+  id: Int
+  message_id: String
+  url: String
+  user_id: String
+}
+
+"""
+order by max() on columns of table "images"
+"""
+input images_max_order_by {
+  created_at: order_by
+  file_name: order_by
+  guild_id: order_by
+  id: order_by
+  message_id: order_by
+  url: order_by
+  user_id: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type images_min_fields {
+  created_at: timestamptz
+  file_name: String
+  guild_id: String
+  id: Int
+  message_id: String
+  url: String
+  user_id: String
+}
+
+"""
+order by min() on columns of table "images"
+"""
+input images_min_order_by {
+  created_at: order_by
+  file_name: order_by
+  guild_id: order_by
+  id: order_by
+  message_id: order_by
+  url: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "images"
+"""
+type images_mutation_response {
+  """
+  number of affected rows by the mutation
+  """
+  affected_rows: Int!
+
+  """
+  data of the affected rows by the mutation
+  """
+  returning: [images!]!
+}
+
+"""
+input type for inserting object relation for remote table "images"
+"""
+input images_obj_rel_insert_input {
+  data: images_insert_input!
+  on_conflict: images_on_conflict
+}
+
+"""
+on conflict condition type for table "images"
+"""
+input images_on_conflict {
+  constraint: images_constraint!
+  update_columns: [images_update_column!]!
+}
+
+"""
+ordering options when selecting data from "images"
+"""
+input images_order_by {
+  created_at: order_by
+  file_name: order_by
+  guild: guilds_order_by
+  guild_id: order_by
+  id: order_by
+  image_tags_aggregate: image_tags_aggregate_order_by
+  message_id: order_by
+  url: order_by
+  user: users_order_by
+  user_id: order_by
+}
+
+"""
+select columns of table "images"
+"""
+enum images_select_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  file_name
+
+  """
+  column name
+  """
+  guild_id
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  message_id
+
+  """
+  column name
+  """
+  url
+
+  """
+  column name
+  """
+  user_id
+}
+
+"""
+input type for updating data in table "images"
+"""
+input images_set_input {
+  created_at: timestamptz
+  file_name: String
+  guild_id: String
+  id: Int
+  message_id: String
+  url: String
+  user_id: String
+}
+
+"""
+aggregate stddev on columns
+"""
+type images_stddev_fields {
+  id: Float
+}
+
+"""
+order by stddev() on columns of table "images"
+"""
+input images_stddev_order_by {
+  id: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type images_stddev_pop_fields {
+  id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "images"
+"""
+input images_stddev_pop_order_by {
+  id: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type images_stddev_samp_fields {
+  id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "images"
+"""
+input images_stddev_samp_order_by {
+  id: order_by
+}
+
+"""
+aggregate sum on columns
+"""
+type images_sum_fields {
+  id: Int
+}
+
+"""
+order by sum() on columns of table "images"
+"""
+input images_sum_order_by {
+  id: order_by
+}
+
+"""
+update columns of table "images"
+"""
+enum images_update_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  file_name
+
+  """
+  column name
+  """
+  guild_id
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  message_id
+
+  """
+  column name
+  """
+  url
+
+  """
+  column name
+  """
+  user_id
+}
+
+"""
+aggregate var_pop on columns
+"""
+type images_var_pop_fields {
+  id: Float
+}
+
+"""
+order by var_pop() on columns of table "images"
+"""
+input images_var_pop_order_by {
+  id: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type images_var_samp_fields {
+  id: Float
+}
+
+"""
+order by var_samp() on columns of table "images"
+"""
+input images_var_samp_order_by {
+  id: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type images_variance_fields {
+  id: Float
+}
+
+"""
+order by variance() on columns of table "images"
+"""
+input images_variance_order_by {
+  id: order_by
+}
+
+"""
+expression to compare columns of type integer. All fields are combined with logical 'AND'.
+"""
+input integer_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int]
+}
+
+"""
+mutation root
+"""
+type mutation_root {
+  """
+  delete data from the table: "auto_tags"
+  """
+  delete_auto_tags(
+    """
+    filter the rows which have to be deleted
+    """
+    where: auto_tags_bool_exp!
+  ): auto_tags_mutation_response
+
+  """
+  delete data from the table: "guilds"
+  """
+  delete_guilds(
+    """
+    filter the rows which have to be deleted
+    """
+    where: guilds_bool_exp!
+  ): guilds_mutation_response
+
+  """
+  delete data from the table: "image_channels"
+  """
+  delete_image_channels(
+    """
+    filter the rows which have to be deleted
+    """
+    where: image_channels_bool_exp!
+  ): image_channels_mutation_response
+
+  """
+  delete data from the table: "image_tags"
+  """
+  delete_image_tags(
+    """
+    filter the rows which have to be deleted
+    """
+    where: image_tags_bool_exp!
+  ): image_tags_mutation_response
+
+  """
+  delete data from the table: "images"
+  """
+  delete_images(
+    """
+    filter the rows which have to be deleted
+    """
+    where: images_bool_exp!
+  ): images_mutation_response
+
+  """
+  delete data from the table: "tag_counts"
+  """
+  delete_tag_counts(
+    """
+    filter the rows which have to be deleted
+    """
+    where: tag_counts_bool_exp!
+  ): tag_counts_mutation_response
+
+  """
+  delete data from the table: "users"
+  """
+  delete_users(
+    """
+    filter the rows which have to be deleted
+    """
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  """
+  insert data into the table: "auto_tags"
+  """
+  insert_auto_tags(
+    """
+    the rows to be inserted
+    """
+    objects: [auto_tags_insert_input!]!
+
+    """
+    on conflict condition
+    """
+    on_conflict: auto_tags_on_conflict
+  ): auto_tags_mutation_response
+
+  """
+  insert data into the table: "guilds"
+  """
+  insert_guilds(
+    """
+    the rows to be inserted
+    """
+    objects: [guilds_insert_input!]!
+
+    """
+    on conflict condition
+    """
+    on_conflict: guilds_on_conflict
+  ): guilds_mutation_response
+
+  """
+  insert data into the table: "image_channels"
+  """
+  insert_image_channels(
+    """
+    the rows to be inserted
+    """
+    objects: [image_channels_insert_input!]!
+
+    """
+    on conflict condition
+    """
+    on_conflict: image_channels_on_conflict
+  ): image_channels_mutation_response
+
+  """
+  insert data into the table: "image_tags"
+  """
+  insert_image_tags(
+    """
+    the rows to be inserted
+    """
+    objects: [image_tags_insert_input!]!
+
+    """
+    on conflict condition
+    """
+    on_conflict: image_tags_on_conflict
+  ): image_tags_mutation_response
+
+  """
+  insert data into the table: "images"
+  """
+  insert_images(
+    """
+    the rows to be inserted
+    """
+    objects: [images_insert_input!]!
+
+    """
+    on conflict condition
+    """
+    on_conflict: images_on_conflict
+  ): images_mutation_response
+
+  """
+  insert data into the table: "tag_counts"
+  """
+  insert_tag_counts(
+    """
+    the rows to be inserted
+    """
+    objects: [tag_counts_insert_input!]!
+
+    """
+    on conflict condition
+    """
+    on_conflict: tag_counts_on_conflict
+  ): tag_counts_mutation_response
+
+  """
+  insert data into the table: "users"
+  """
+  insert_users(
+    """
+    the rows to be inserted
+    """
+    objects: [users_insert_input!]!
+
+    """
+    on conflict condition
+    """
+    on_conflict: users_on_conflict
+  ): users_mutation_response
+
+  """
+  update data of the table: "auto_tags"
+  """
+  update_auto_tags(
+    """
+    increments the integer columns with given value of the filtered values
+    """
+    _inc: auto_tags_inc_input
+
+    """
+    sets the columns of the filtered rows to the given values
+    """
+    _set: auto_tags_set_input
+
+    """
+    filter the rows which have to be updated
+    """
+    where: auto_tags_bool_exp!
+  ): auto_tags_mutation_response
+
+  """
+  update data of the table: "guilds"
+  """
+  update_guilds(
+    """
+    sets the columns of the filtered rows to the given values
+    """
+    _set: guilds_set_input
+
+    """
+    filter the rows which have to be updated
+    """
+    where: guilds_bool_exp!
+  ): guilds_mutation_response
+
+  """
+  update data of the table: "image_channels"
+  """
+  update_image_channels(
+    """
+    sets the columns of the filtered rows to the given values
+    """
+    _set: image_channels_set_input
+
+    """
+    filter the rows which have to be updated
+    """
+    where: image_channels_bool_exp!
+  ): image_channels_mutation_response
+
+  """
+  update data of the table: "image_tags"
+  """
+  update_image_tags(
+    """
+    increments the integer columns with given value of the filtered values
+    """
+    _inc: image_tags_inc_input
+
+    """
+    sets the columns of the filtered rows to the given values
+    """
+    _set: image_tags_set_input
+
+    """
+    filter the rows which have to be updated
+    """
+    where: image_tags_bool_exp!
+  ): image_tags_mutation_response
+
+  """
+  update data of the table: "images"
+  """
+  update_images(
+    """
+    increments the integer columns with given value of the filtered values
+    """
+    _inc: images_inc_input
+
+    """
+    sets the columns of the filtered rows to the given values
+    """
+    _set: images_set_input
+
+    """
+    filter the rows which have to be updated
+    """
+    where: images_bool_exp!
+  ): images_mutation_response
+
+  """
+  update data of the table: "tag_counts"
+  """
+  update_tag_counts(
+    """
+    increments the integer columns with given value of the filtered values
+    """
+    _inc: tag_counts_inc_input
+
+    """
+    sets the columns of the filtered rows to the given values
+    """
+    _set: tag_counts_set_input
+
+    """
+    filter the rows which have to be updated
+    """
+    where: tag_counts_bool_exp!
+  ): tag_counts_mutation_response
+
+  """
+  update data of the table: "users"
+  """
+  update_users(
+    """
+    sets the columns of the filtered rows to the given values
+    """
+    _set: users_set_input
+
+    """
+    filter the rows which have to be updated
+    """
+    where: users_bool_exp!
+  ): users_mutation_response
+}
+
+"""
+column ordering options
+"""
+enum order_by {
+  """
+  in the ascending order, nulls last
+  """
+  asc
+
+  """
+  in the ascending order, nulls first
+  """
+  asc_nulls_first
+
+  """
+  in the ascending order, nulls last
+  """
+  asc_nulls_last
+
+  """
+  in the descending order, nulls first
+  """
+  desc
+
+  """
+  in the descending order, nulls first
+  """
+  desc_nulls_first
+
+  """
+  in the descending order, nulls last
+  """
+  desc_nulls_last
+}
+
+"""
+query root
+"""
+type query_root {
+  """
+  fetch data from the table: "auto_tags"
+  """
+  auto_tags(
+    """
+    distinct select on columns
+    """
+    distinct_on: [auto_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [auto_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: auto_tags_bool_exp
+  ): [auto_tags!]!
+
+  """
+  fetch aggregated fields from the table: "auto_tags"
+  """
+  auto_tags_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [auto_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [auto_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: auto_tags_bool_exp
+  ): auto_tags_aggregate!
+
+  """
+  fetch data from the table: "auto_tags" using primary key columns
+  """
+  auto_tags_by_pk(id: Int!): auto_tags
+
+  """
+  fetch data from the table: "guilds"
+  """
+  guilds(
+    """
+    distinct select on columns
+    """
+    distinct_on: [guilds_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [guilds_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: guilds_bool_exp
+  ): [guilds!]!
+
+  """
+  fetch aggregated fields from the table: "guilds"
+  """
+  guilds_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [guilds_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [guilds_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: guilds_bool_exp
+  ): guilds_aggregate!
+
+  """
+  fetch data from the table: "guilds" using primary key columns
+  """
+  guilds_by_pk(guild_id: String!): guilds
+
+  """
+  fetch data from the table: "image_channels"
+  """
+  image_channels(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_channels_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_channels_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_channels_bool_exp
+  ): [image_channels!]!
+
+  """
+  fetch aggregated fields from the table: "image_channels"
+  """
+  image_channels_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_channels_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_channels_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_channels_bool_exp
+  ): image_channels_aggregate!
+
+  """
+  fetch data from the table: "image_channels" using primary key columns
+  """
+  image_channels_by_pk(channel_id: String!): image_channels
+
+  """
+  fetch data from the table: "image_tags"
+  """
+  image_tags(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_tags_bool_exp
+  ): [image_tags!]!
+
+  """
+  fetch aggregated fields from the table: "image_tags"
+  """
+  image_tags_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_tags_bool_exp
+  ): image_tags_aggregate!
+
+  """
+  fetch data from the table: "image_tags" using primary key columns
+  """
+  image_tags_by_pk(id: Int!): image_tags
+
+  """
+  fetch data from the table: "images"
+  """
+  images(
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): [images!]!
+
+  """
+  fetch aggregated fields from the table: "images"
+  """
+  images_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): images_aggregate!
+
+  """
+  fetch data from the table: "images" using primary key columns
+  """
+  images_by_pk(id: Int!): images
+
+  """
+  execute function "tag_count" which returns "tag_counts"
+  """
+  tag_count(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tag_counts_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tag_counts_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tag_counts_bool_exp
+  ): [tag_counts!]!
+
+  """
+  execute function "tag_count" and query aggregates on result of table type "tag_counts"
+  """
+  tag_count_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tag_counts_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tag_counts_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tag_counts_bool_exp
+  ): tag_counts_aggregate!
+
+  """
+  fetch data from the table: "tag_counts"
+  """
+  tag_counts(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tag_counts_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tag_counts_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tag_counts_bool_exp
+  ): [tag_counts!]!
+
+  """
+  fetch aggregated fields from the table: "tag_counts"
+  """
+  tag_counts_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tag_counts_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tag_counts_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tag_counts_bool_exp
+  ): tag_counts_aggregate!
+
+  """
+  fetch data from the table: "tag_counts" using primary key columns
+  """
+  tag_counts_by_pk(name: String!): tag_counts
+
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """
+    distinct select on columns
+    """
+    distinct_on: [users_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [users_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: users_bool_exp
+  ): [users!]!
+
+  """
+  fetch aggregated fields from the table: "users"
+  """
+  users_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [users_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [users_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: users_bool_exp
+  ): users_aggregate!
+
+  """
+  fetch data from the table: "users" using primary key columns
+  """
+  users_by_pk(user_id: String!): users
+}
+
+"""
+subscription root
+"""
+type subscription_root {
+  """
+  fetch data from the table: "auto_tags"
+  """
+  auto_tags(
+    """
+    distinct select on columns
+    """
+    distinct_on: [auto_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [auto_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: auto_tags_bool_exp
+  ): [auto_tags!]!
+
+  """
+  fetch aggregated fields from the table: "auto_tags"
+  """
+  auto_tags_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [auto_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [auto_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: auto_tags_bool_exp
+  ): auto_tags_aggregate!
+
+  """
+  fetch data from the table: "auto_tags" using primary key columns
+  """
+  auto_tags_by_pk(id: Int!): auto_tags
+
+  """
+  fetch data from the table: "guilds"
+  """
+  guilds(
+    """
+    distinct select on columns
+    """
+    distinct_on: [guilds_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [guilds_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: guilds_bool_exp
+  ): [guilds!]!
+
+  """
+  fetch aggregated fields from the table: "guilds"
+  """
+  guilds_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [guilds_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [guilds_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: guilds_bool_exp
+  ): guilds_aggregate!
+
+  """
+  fetch data from the table: "guilds" using primary key columns
+  """
+  guilds_by_pk(guild_id: String!): guilds
+
+  """
+  fetch data from the table: "image_channels"
+  """
+  image_channels(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_channels_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_channels_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_channels_bool_exp
+  ): [image_channels!]!
+
+  """
+  fetch aggregated fields from the table: "image_channels"
+  """
+  image_channels_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_channels_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_channels_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_channels_bool_exp
+  ): image_channels_aggregate!
+
+  """
+  fetch data from the table: "image_channels" using primary key columns
+  """
+  image_channels_by_pk(channel_id: String!): image_channels
+
+  """
+  fetch data from the table: "image_tags"
+  """
+  image_tags(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_tags_bool_exp
+  ): [image_tags!]!
+
+  """
+  fetch aggregated fields from the table: "image_tags"
+  """
+  image_tags_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_tags_bool_exp
+  ): image_tags_aggregate!
+
+  """
+  fetch data from the table: "image_tags" using primary key columns
+  """
+  image_tags_by_pk(id: Int!): image_tags
+
+  """
+  fetch data from the table: "images"
+  """
+  images(
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): [images!]!
+
+  """
+  fetch aggregated fields from the table: "images"
+  """
+  images_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): images_aggregate!
+
+  """
+  fetch data from the table: "images" using primary key columns
+  """
+  images_by_pk(id: Int!): images
+
+  """
+  execute function "tag_count" which returns "tag_counts"
+  """
+  tag_count(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tag_counts_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tag_counts_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tag_counts_bool_exp
+  ): [tag_counts!]!
+
+  """
+  execute function "tag_count" and query aggregates on result of table type "tag_counts"
+  """
+  tag_count_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tag_counts_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tag_counts_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tag_counts_bool_exp
+  ): tag_counts_aggregate!
+
+  """
+  fetch data from the table: "tag_counts"
+  """
+  tag_counts(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tag_counts_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tag_counts_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tag_counts_bool_exp
+  ): [tag_counts!]!
+
+  """
+  fetch aggregated fields from the table: "tag_counts"
+  """
+  tag_counts_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tag_counts_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tag_counts_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tag_counts_bool_exp
+  ): tag_counts_aggregate!
+
+  """
+  fetch data from the table: "tag_counts" using primary key columns
+  """
+  tag_counts_by_pk(name: String!): tag_counts
+
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """
+    distinct select on columns
+    """
+    distinct_on: [users_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [users_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: users_bool_exp
+  ): [users!]!
+
+  """
+  fetch aggregated fields from the table: "users"
+  """
+  users_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [users_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [users_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: users_bool_exp
+  ): users_aggregate!
+
+  """
+  fetch data from the table: "users" using primary key columns
+  """
+  users_by_pk(user_id: String!): users
+}
+
+"""
+columns and relationships of "tag_counts"
+"""
+type tag_counts {
+  count: bigint!
+  name: String!
+}
+
+"""
+aggregated selection of "tag_counts"
+"""
+type tag_counts_aggregate {
+  aggregate: tag_counts_aggregate_fields
+  nodes: [tag_counts!]!
+}
+
+"""
+aggregate fields of "tag_counts"
+"""
+type tag_counts_aggregate_fields {
+  avg: tag_counts_avg_fields
+  count(columns: [tag_counts_select_column!], distinct: Boolean): Int
+  max: tag_counts_max_fields
+  min: tag_counts_min_fields
+  stddev: tag_counts_stddev_fields
+  stddev_pop: tag_counts_stddev_pop_fields
+  stddev_samp: tag_counts_stddev_samp_fields
+  sum: tag_counts_sum_fields
+  var_pop: tag_counts_var_pop_fields
+  var_samp: tag_counts_var_samp_fields
+  variance: tag_counts_variance_fields
+}
+
+"""
+order by aggregate values of table "tag_counts"
+"""
+input tag_counts_aggregate_order_by {
+  avg: tag_counts_avg_order_by
+  count: order_by
+  max: tag_counts_max_order_by
+  min: tag_counts_min_order_by
+  stddev: tag_counts_stddev_order_by
+  stddev_pop: tag_counts_stddev_pop_order_by
+  stddev_samp: tag_counts_stddev_samp_order_by
+  sum: tag_counts_sum_order_by
+  var_pop: tag_counts_var_pop_order_by
+  var_samp: tag_counts_var_samp_order_by
+  variance: tag_counts_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "tag_counts"
+"""
+input tag_counts_arr_rel_insert_input {
+  data: [tag_counts_insert_input!]!
+  on_conflict: tag_counts_on_conflict
+}
+
+"""
+aggregate avg on columns
+"""
+type tag_counts_avg_fields {
+  count: Float
+}
+
+"""
+order by avg() on columns of table "tag_counts"
+"""
+input tag_counts_avg_order_by {
+  count: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "tag_counts". All fields are combined with a logical 'AND'.
+"""
+input tag_counts_bool_exp {
+  _and: [tag_counts_bool_exp]
+  _not: tag_counts_bool_exp
+  _or: [tag_counts_bool_exp]
+  count: bigint_comparison_exp
+  name: text_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "tag_counts"
+"""
+enum tag_counts_constraint {
+  """
+  unique or primary key constraint
+  """
+  tag_counts_pkey
+}
+
+"""
+input type for incrementing integer columne in table "tag_counts"
+"""
+input tag_counts_inc_input {
+  count: bigint
+}
+
+"""
+input type for inserting data into table "tag_counts"
+"""
+input tag_counts_insert_input {
+  count: bigint
+  name: String
+}
+
+"""
+aggregate max on columns
+"""
+type tag_counts_max_fields {
+  count: bigint
+  name: String
+}
+
+"""
+order by max() on columns of table "tag_counts"
+"""
+input tag_counts_max_order_by {
+  count: order_by
+  name: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type tag_counts_min_fields {
+  count: bigint
+  name: String
+}
+
+"""
+order by min() on columns of table "tag_counts"
+"""
+input tag_counts_min_order_by {
+  count: order_by
+  name: order_by
+}
+
+"""
+response of any mutation on the table "tag_counts"
+"""
+type tag_counts_mutation_response {
+  """
+  number of affected rows by the mutation
+  """
+  affected_rows: Int!
+
+  """
+  data of the affected rows by the mutation
+  """
+  returning: [tag_counts!]!
+}
+
+"""
+input type for inserting object relation for remote table "tag_counts"
+"""
+input tag_counts_obj_rel_insert_input {
+  data: tag_counts_insert_input!
+  on_conflict: tag_counts_on_conflict
+}
+
+"""
+on conflict condition type for table "tag_counts"
+"""
+input tag_counts_on_conflict {
+  constraint: tag_counts_constraint!
+  update_columns: [tag_counts_update_column!]!
+}
+
+"""
+ordering options when selecting data from "tag_counts"
+"""
+input tag_counts_order_by {
+  count: order_by
+  name: order_by
+}
+
+"""
+select columns of table "tag_counts"
+"""
+enum tag_counts_select_column {
+  """
+  column name
+  """
+  count
+
+  """
+  column name
+  """
+  name
+}
+
+"""
+input type for updating data in table "tag_counts"
+"""
+input tag_counts_set_input {
+  count: bigint
+  name: String
+}
+
+"""
+aggregate stddev on columns
+"""
+type tag_counts_stddev_fields {
+  count: Float
+}
+
+"""
+order by stddev() on columns of table "tag_counts"
+"""
+input tag_counts_stddev_order_by {
+  count: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type tag_counts_stddev_pop_fields {
+  count: Float
+}
+
+"""
+order by stddev_pop() on columns of table "tag_counts"
+"""
+input tag_counts_stddev_pop_order_by {
+  count: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type tag_counts_stddev_samp_fields {
+  count: Float
+}
+
+"""
+order by stddev_samp() on columns of table "tag_counts"
+"""
+input tag_counts_stddev_samp_order_by {
+  count: order_by
+}
+
+"""
+aggregate sum on columns
+"""
+type tag_counts_sum_fields {
+  count: bigint
+}
+
+"""
+order by sum() on columns of table "tag_counts"
+"""
+input tag_counts_sum_order_by {
+  count: order_by
+}
+
+"""
+update columns of table "tag_counts"
+"""
+enum tag_counts_update_column {
+  """
+  column name
+  """
+  count
+
+  """
+  column name
+  """
+  name
+}
+
+"""
+aggregate var_pop on columns
+"""
+type tag_counts_var_pop_fields {
+  count: Float
+}
+
+"""
+order by var_pop() on columns of table "tag_counts"
+"""
+input tag_counts_var_pop_order_by {
+  count: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type tag_counts_var_samp_fields {
+  count: Float
+}
+
+"""
+order by var_samp() on columns of table "tag_counts"
+"""
+input tag_counts_var_samp_order_by {
+  count: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type tag_counts_variance_fields {
+  count: Float
+}
+
+"""
+order by variance() on columns of table "tag_counts"
+"""
+input tag_counts_variance_order_by {
+  count: order_by
+}
+
+"""
+expression to compare columns of type text. All fields are combined with logical 'AND'.
+"""
+input text_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+  _ilike: String
+  _in: [String]
+  _is_null: Boolean
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+  _nilike: String
+  _nin: [String]
+  _nlike: String
+  _nsimilar: String
+  _similar: String
+}
+
+scalar timestamptz
+
+"""
+expression to compare columns of type timestamptz. All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz]
+}
+
+"""
+columns and relationships of "users"
+"""
+type users {
+  avatar: String
+
+  """
+  An array relationship
+  """
+  image_channels(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_channels_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_channels_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_channels_bool_exp
+  ): [image_channels!]!
+
+  """
+  An aggregated array relationship
+  """
+  image_channels_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_channels_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_channels_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_channels_bool_exp
+  ): image_channels_aggregate!
+
+  """
+  An array relationship
+  """
+  image_tags(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_tags_bool_exp
+  ): [image_tags!]!
+
+  """
+  An aggregated array relationship
+  """
+  image_tags_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_tags_bool_exp
+  ): image_tags_aggregate!
+
+  """
+  An array relationship
+  """
+  images(
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): [images!]!
+
+  """
+  An aggregated array relationship
+  """
+  images_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): images_aggregate!
+  name: String
+  user_id: String!
+}
+
+"""
+aggregated selection of "users"
+"""
+type users_aggregate {
+  aggregate: users_aggregate_fields
+  nodes: [users!]!
+}
+
+"""
+aggregate fields of "users"
+"""
+type users_aggregate_fields {
+  count(columns: [users_select_column!], distinct: Boolean): Int
+  max: users_max_fields
+  min: users_min_fields
+}
+
+"""
+order by aggregate values of table "users"
+"""
+input users_aggregate_order_by {
+  count: order_by
+  max: users_max_order_by
+  min: users_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "users"
+"""
+input users_arr_rel_insert_input {
+  data: [users_insert_input!]!
+  on_conflict: users_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'.
+"""
+input users_bool_exp {
+  _and: [users_bool_exp]
+  _not: users_bool_exp
+  _or: [users_bool_exp]
+  avatar: text_comparison_exp
+  image_channels: image_channels_bool_exp
+  image_tags: image_tags_bool_exp
+  images: images_bool_exp
+  name: text_comparison_exp
+  user_id: text_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "users"
+"""
+enum users_constraint {
+  """
+  unique or primary key constraint
+  """
+  users_pkey
+}
+
+"""
+input type for inserting data into table "users"
+"""
+input users_insert_input {
+  avatar: String
+  image_channels: image_channels_arr_rel_insert_input
+  image_tags: image_tags_arr_rel_insert_input
+  images: images_arr_rel_insert_input
+  name: String
+  user_id: String
+}
+
+"""
+aggregate max on columns
+"""
+type users_max_fields {
+  avatar: String
+  name: String
+  user_id: String
+}
+
+"""
+order by max() on columns of table "users"
+"""
+input users_max_order_by {
+  avatar: order_by
+  name: order_by
+  user_id: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type users_min_fields {
+  avatar: String
+  name: String
+  user_id: String
+}
+
+"""
+order by min() on columns of table "users"
+"""
+input users_min_order_by {
+  avatar: order_by
+  name: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "users"
+"""
+type users_mutation_response {
+  """
+  number of affected rows by the mutation
+  """
+  affected_rows: Int!
+
+  """
+  data of the affected rows by the mutation
+  """
+  returning: [users!]!
+}
+
+"""
+input type for inserting object relation for remote table "users"
+"""
+input users_obj_rel_insert_input {
+  data: users_insert_input!
+  on_conflict: users_on_conflict
+}
+
+"""
+on conflict condition type for table "users"
+"""
+input users_on_conflict {
+  constraint: users_constraint!
+  update_columns: [users_update_column!]!
+}
+
+"""
+ordering options when selecting data from "users"
+"""
+input users_order_by {
+  avatar: order_by
+  image_channels_aggregate: image_channels_aggregate_order_by
+  image_tags_aggregate: image_tags_aggregate_order_by
+  images_aggregate: images_aggregate_order_by
+  name: order_by
+  user_id: order_by
+}
+
+"""
+select columns of table "users"
+"""
+enum users_select_column {
+  """
+  column name
+  """
+  avatar
+
+  """
+  column name
+  """
+  name
+
+  """
+  column name
+  """
+  user_id
+}
+
+"""
+input type for updating data in table "users"
+"""
+input users_set_input {
+  avatar: String
+  name: String
+  user_id: String
+}
+
+"""
+update columns of table "users"
+"""
+enum users_update_column {
+  """
+  column name
+  """
+  avatar
+
+  """
+  column name
+  """
+  name
+
+  """
+  column name
+  """
+  user_id
+}
