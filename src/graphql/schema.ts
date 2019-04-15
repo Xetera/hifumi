@@ -1,4 +1,4 @@
-import { Observable } from 'graphql-typed-client'
+import { Observable } from "graphql-typed-client"
 
 /** query root */
 export interface query_root {
@@ -54,11 +54,11 @@ export interface query_root {
 /** select columns of table "auto_tags" */
 export enum auto_tags_select_column {
   /** column name */
-  channel_id = 'channel_id',
+  channel_id = "channel_id",
   /** column name */
-  id = 'id',
+  id = "id",
   /** column name */
-  name = 'name',
+  name = "name",
 }
 
 /** The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.  */
@@ -67,17 +67,17 @@ export type Int = number
 /** column ordering options */
 export enum order_by {
   /** in the ascending order, nulls last */
-  asc = 'asc',
+  asc = "asc",
   /** in the ascending order, nulls first */
-  asc_nulls_first = 'asc_nulls_first',
+  asc_nulls_first = "asc_nulls_first",
   /** in the ascending order, nulls last */
-  asc_nulls_last = 'asc_nulls_last',
+  asc_nulls_last = "asc_nulls_last",
   /** in the descending order, nulls first */
-  desc = 'desc',
+  desc = "desc",
   /** in the descending order, nulls first */
-  desc_nulls_first = 'desc_nulls_first',
+  desc_nulls_first = "desc_nulls_first",
   /** in the descending order, nulls last */
-  desc_nulls_last = 'desc_nulls_last',
+  desc_nulls_last = "desc_nulls_last",
 }
 
 /** The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. */
@@ -224,11 +224,11 @@ export interface guilds {
 /** select columns of table "image_channels" */
 export enum image_channels_select_column {
   /** column name */
-  assigner_id = 'assigner_id',
+  assigner_id = "assigner_id",
   /** column name */
-  channel_id = 'channel_id',
+  channel_id = "channel_id",
   /** column name */
-  guild_id = 'guild_id',
+  guild_id = "guild_id",
 }
 
 /** aggregated selection of "image_channels" */
@@ -265,19 +265,19 @@ export interface image_channels_min_fields {
 /** select columns of table "images" */
 export enum images_select_column {
   /** column name */
-  created_at = 'created_at',
+  created_at = "created_at",
   /** column name */
-  file_name = 'file_name',
+  file_name = "file_name",
   /** column name */
-  guild_id = 'guild_id',
+  guild_id = "guild_id",
   /** column name */
-  id = 'id',
+  id = "id",
   /** column name */
-  message_id = 'message_id',
+  message_id = "message_id",
   /** column name */
-  url = 'url',
+  url = "url",
   /** column name */
-  user_id = 'user_id',
+  user_id = "user_id",
 }
 
 /** columns and relationships of "images" */
@@ -303,13 +303,13 @@ export interface images {
 /** select columns of table "image_tags" */
 export enum image_tags_select_column {
   /** column name */
-  id = 'id',
+  id = "id",
   /** column name */
-  image_id = 'image_id',
+  image_id = "image_id",
   /** column name */
-  name = 'name',
+  name = "name",
   /** column name */
-  tagger_id = 'tagger_id',
+  tagger_id = "tagger_id",
 }
 
 /** columns and relationships of "image_tags" */
@@ -540,13 +540,13 @@ export interface images_variance_fields {
 /** select columns of table "guilds" */
 export enum guilds_select_column {
   /** column name */
-  enabled = 'enabled',
+  enabled = "enabled",
   /** column name */
-  guild_id = 'guild_id',
+  guild_id = "guild_id",
   /** column name */
-  name = 'name',
+  name = "name",
   /** column name */
-  welcome_channel = 'welcome_channel',
+  welcome_channel = "welcome_channel",
 }
 
 /** aggregated selection of "guilds" */
@@ -583,9 +583,9 @@ export interface guilds_min_fields {
 /** select columns of table "tag_counts" */
 export enum tag_counts_select_column {
   /** column name */
-  count = 'count',
+  count = "count",
   /** column name */
-  name = 'name',
+  name = "name",
 }
 
 export type bigint = any
@@ -685,11 +685,11 @@ export interface tag_counts_variance_fields {
 /** select columns of table "users" */
 export enum users_select_column {
   /** column name */
-  avatar = 'avatar',
+  avatar = "avatar",
   /** column name */
-  name = 'name',
+  name = "name",
   /** column name */
-  user_id = 'user_id',
+  user_id = "user_id",
 }
 
 /** aggregated selection of "users" */
@@ -836,123 +836,123 @@ export interface users_mutation_response {
 /** unique or primary key constraints on table "auto_tags" */
 export enum auto_tags_constraint {
   /** unique or primary key constraint */
-  auto_tags_pkey = 'auto_tags_pkey',
+  auto_tags_pkey = "auto_tags_pkey",
 }
 
 /** update columns of table "auto_tags" */
 export enum auto_tags_update_column {
   /** column name */
-  channel_id = 'channel_id',
+  channel_id = "channel_id",
   /** column name */
-  id = 'id',
+  id = "id",
   /** column name */
-  name = 'name',
+  name = "name",
 }
 
 /** unique or primary key constraints on table "image_channels" */
 export enum image_channels_constraint {
   /** unique or primary key constraint */
-  image_channels_pkey = 'image_channels_pkey',
+  image_channels_pkey = "image_channels_pkey",
 }
 
 /** update columns of table "image_channels" */
 export enum image_channels_update_column {
   /** column name */
-  assigner_id = 'assigner_id',
+  assigner_id = "assigner_id",
   /** column name */
-  channel_id = 'channel_id',
+  channel_id = "channel_id",
   /** column name */
-  guild_id = 'guild_id',
+  guild_id = "guild_id",
 }
 
 /** unique or primary key constraints on table "images" */
 export enum images_constraint {
   /** unique or primary key constraint */
-  images_pkey = 'images_pkey',
+  images_pkey = "images_pkey",
 }
 
 /** update columns of table "images" */
 export enum images_update_column {
   /** column name */
-  created_at = 'created_at',
+  created_at = "created_at",
   /** column name */
-  file_name = 'file_name',
+  file_name = "file_name",
   /** column name */
-  guild_id = 'guild_id',
+  guild_id = "guild_id",
   /** column name */
-  id = 'id',
+  id = "id",
   /** column name */
-  message_id = 'message_id',
+  message_id = "message_id",
   /** column name */
-  url = 'url',
+  url = "url",
   /** column name */
-  user_id = 'user_id',
+  user_id = "user_id",
 }
 
 /** unique or primary key constraints on table "users" */
 export enum users_constraint {
   /** unique or primary key constraint */
-  users_pkey = 'users_pkey',
+  users_pkey = "users_pkey",
 }
 
 /** update columns of table "users" */
 export enum users_update_column {
   /** column name */
-  avatar = 'avatar',
+  avatar = "avatar",
   /** column name */
-  name = 'name',
+  name = "name",
   /** column name */
-  user_id = 'user_id',
+  user_id = "user_id",
 }
 
 /** unique or primary key constraints on table "image_tags" */
 export enum image_tags_constraint {
   /** unique or primary key constraint */
-  image_tags_pkey = 'image_tags_pkey',
+  image_tags_pkey = "image_tags_pkey",
 }
 
 /** update columns of table "image_tags" */
 export enum image_tags_update_column {
   /** column name */
-  id = 'id',
+  id = "id",
   /** column name */
-  image_id = 'image_id',
+  image_id = "image_id",
   /** column name */
-  name = 'name',
+  name = "name",
   /** column name */
-  tagger_id = 'tagger_id',
+  tagger_id = "tagger_id",
 }
 
 /** unique or primary key constraints on table "guilds" */
 export enum guilds_constraint {
   /** unique or primary key constraint */
-  guilds_pkey = 'guilds_pkey',
+  guilds_pkey = "guilds_pkey",
 }
 
 /** update columns of table "guilds" */
 export enum guilds_update_column {
   /** column name */
-  enabled = 'enabled',
+  enabled = "enabled",
   /** column name */
-  guild_id = 'guild_id',
+  guild_id = "guild_id",
   /** column name */
-  name = 'name',
+  name = "name",
   /** column name */
-  welcome_channel = 'welcome_channel',
+  welcome_channel = "welcome_channel",
 }
 
 /** unique or primary key constraints on table "tag_counts" */
 export enum tag_counts_constraint {
   /** unique or primary key constraint */
-  tag_counts_pkey = 'tag_counts_pkey',
+  tag_counts_pkey = "tag_counts_pkey",
 }
 
 /** update columns of table "tag_counts" */
 export enum tag_counts_update_column {
   /** column name */
-  count = 'count',
+  count = "count",
   /** column name */
-  name = 'name',
+  name = "name",
 }
 
 /** subscription root */
@@ -1012,9 +1012,9 @@ export type ID = string
 /** conflict action */
 export enum conflict_action {
   /** ignore the insert on this row */
-  ignore = 'ignore',
+  ignore = "ignore",
   /** update the row with the given values */
-  update = 'update',
+  update = "update",
 }
 
 /** query root */
@@ -1611,9 +1611,9 @@ export interface image_tags_variance_order_by {
 
 /** Boolean expression to filter rows from the table "auto_tags". All fields are combined with a logical 'AND'. */
 export interface auto_tags_bool_exp {
-  _and?: (auto_tags_bool_exp | null)[] | null
+  _and?: Array<auto_tags_bool_exp | null> | null
   _not?: auto_tags_bool_exp | null
-  _or?: (auto_tags_bool_exp | null)[] | null
+  _or?: Array<auto_tags_bool_exp | null> | null
   channel_id?: text_comparison_exp | null
   id?: integer_comparison_exp | null
   image_channel?: image_channels_bool_exp | null
@@ -1626,14 +1626,14 @@ export interface text_comparison_exp {
   _gt?: String | null
   _gte?: String | null
   _ilike?: String | null
-  _in?: (String | null)[] | null
+  _in?: Array<String | null> | null
   _is_null?: Boolean | null
   _like?: String | null
   _lt?: String | null
   _lte?: String | null
   _neq?: String | null
   _nilike?: String | null
-  _nin?: (String | null)[] | null
+  _nin?: Array<String | null> | null
   _nlike?: String | null
   _nsimilar?: String | null
   _similar?: String | null
@@ -1644,19 +1644,19 @@ export interface integer_comparison_exp {
   _eq?: Int | null
   _gt?: Int | null
   _gte?: Int | null
-  _in?: (Int | null)[] | null
+  _in?: Array<Int | null> | null
   _is_null?: Boolean | null
   _lt?: Int | null
   _lte?: Int | null
   _neq?: Int | null
-  _nin?: (Int | null)[] | null
+  _nin?: Array<Int | null> | null
 }
 
 /** Boolean expression to filter rows from the table "image_channels". All fields are combined with a logical 'AND'. */
 export interface image_channels_bool_exp {
-  _and?: (image_channels_bool_exp | null)[] | null
+  _and?: Array<image_channels_bool_exp | null> | null
   _not?: image_channels_bool_exp | null
-  _or?: (image_channels_bool_exp | null)[] | null
+  _or?: Array<image_channels_bool_exp | null> | null
   assigner_id?: text_comparison_exp | null
   auto_tags?: auto_tags_bool_exp | null
   channel_id?: text_comparison_exp | null
@@ -1667,9 +1667,9 @@ export interface image_channels_bool_exp {
 
 /** Boolean expression to filter rows from the table "guilds". All fields are combined with a logical 'AND'. */
 export interface guilds_bool_exp {
-  _and?: (guilds_bool_exp | null)[] | null
+  _and?: Array<guilds_bool_exp | null> | null
   _not?: guilds_bool_exp | null
-  _or?: (guilds_bool_exp | null)[] | null
+  _or?: Array<guilds_bool_exp | null> | null
   enabled?: boolean_comparison_exp | null
   guild_id?: text_comparison_exp | null
   image_channels?: image_channels_bool_exp | null
@@ -1683,19 +1683,19 @@ export interface boolean_comparison_exp {
   _eq?: Boolean | null
   _gt?: Boolean | null
   _gte?: Boolean | null
-  _in?: (Boolean | null)[] | null
+  _in?: Array<Boolean | null> | null
   _is_null?: Boolean | null
   _lt?: Boolean | null
   _lte?: Boolean | null
   _neq?: Boolean | null
-  _nin?: (Boolean | null)[] | null
+  _nin?: Array<Boolean | null> | null
 }
 
 /** Boolean expression to filter rows from the table "images". All fields are combined with a logical 'AND'. */
 export interface images_bool_exp {
-  _and?: (images_bool_exp | null)[] | null
+  _and?: Array<images_bool_exp | null> | null
   _not?: images_bool_exp | null
-  _or?: (images_bool_exp | null)[] | null
+  _or?: Array<images_bool_exp | null> | null
   created_at?: timestamptz_comparison_exp | null
   file_name?: text_comparison_exp | null
   guild?: guilds_bool_exp | null
@@ -1713,19 +1713,19 @@ export interface timestamptz_comparison_exp {
   _eq?: timestamptz | null
   _gt?: timestamptz | null
   _gte?: timestamptz | null
-  _in?: (timestamptz | null)[] | null
+  _in?: Array<timestamptz | null> | null
   _is_null?: Boolean | null
   _lt?: timestamptz | null
   _lte?: timestamptz | null
   _neq?: timestamptz | null
-  _nin?: (timestamptz | null)[] | null
+  _nin?: Array<timestamptz | null> | null
 }
 
 /** Boolean expression to filter rows from the table "image_tags". All fields are combined with a logical 'AND'. */
 export interface image_tags_bool_exp {
-  _and?: (image_tags_bool_exp | null)[] | null
+  _and?: Array<image_tags_bool_exp | null> | null
   _not?: image_tags_bool_exp | null
-  _or?: (image_tags_bool_exp | null)[] | null
+  _or?: Array<image_tags_bool_exp | null> | null
   id?: integer_comparison_exp | null
   image?: images_bool_exp | null
   image_id?: integer_comparison_exp | null
@@ -1736,9 +1736,9 @@ export interface image_tags_bool_exp {
 
 /** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
 export interface users_bool_exp {
-  _and?: (users_bool_exp | null)[] | null
+  _and?: Array<users_bool_exp | null> | null
   _not?: users_bool_exp | null
-  _or?: (users_bool_exp | null)[] | null
+  _or?: Array<users_bool_exp | null> | null
   avatar?: text_comparison_exp | null
   image_channels?: image_channels_bool_exp | null
   image_tags?: image_tags_bool_exp | null
@@ -2490,9 +2490,9 @@ export interface tag_counts_order_by {
 
 /** Boolean expression to filter rows from the table "tag_counts". All fields are combined with a logical 'AND'. */
 export interface tag_counts_bool_exp {
-  _and?: (tag_counts_bool_exp | null)[] | null
+  _and?: Array<tag_counts_bool_exp | null> | null
   _not?: tag_counts_bool_exp | null
-  _or?: (tag_counts_bool_exp | null)[] | null
+  _or?: Array<tag_counts_bool_exp | null> | null
   count?: bigint_comparison_exp | null
   name?: text_comparison_exp | null
 }
@@ -2502,12 +2502,12 @@ export interface bigint_comparison_exp {
   _eq?: bigint | null
   _gt?: bigint | null
   _gte?: bigint | null
-  _in?: (bigint | null)[] | null
+  _in?: Array<bigint | null> | null
   _is_null?: Boolean | null
   _lt?: bigint | null
   _lte?: bigint | null
   _neq?: bigint | null
-  _nin?: (bigint | null)[] | null
+  _nin?: Array<bigint | null> | null
 }
 
 /** columns and relationships of "tag_counts" */
@@ -3616,465 +3616,465 @@ export interface users_arr_rel_insert_input {
   on_conflict?: users_on_conflict | null
 }
 
-const query_root_possibleTypes = ['query_root']
+const query_root_possibleTypes = ["query_root"]
 export const isquery_root = (obj: { __typename: String }): obj is query_root => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return query_root_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_possibleTypes = ['auto_tags']
+const auto_tags_possibleTypes = ["auto_tags"]
 export const isauto_tags = (obj: { __typename: String }): obj is auto_tags => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_possibleTypes.includes(obj.__typename)
 }
 
-const image_channels_possibleTypes = ['image_channels']
+const image_channels_possibleTypes = ["image_channels"]
 export const isimage_channels = (obj: { __typename: String }): obj is image_channels => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_channels_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_aggregate_possibleTypes = ['auto_tags_aggregate']
+const auto_tags_aggregate_possibleTypes = ["auto_tags_aggregate"]
 export const isauto_tags_aggregate = (obj: { __typename: String }): obj is auto_tags_aggregate => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_aggregate_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_aggregate_fields_possibleTypes = ['auto_tags_aggregate_fields']
+const auto_tags_aggregate_fields_possibleTypes = ["auto_tags_aggregate_fields"]
 export const isauto_tags_aggregate_fields = (obj: { __typename: String }): obj is auto_tags_aggregate_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_aggregate_fields_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_avg_fields_possibleTypes = ['auto_tags_avg_fields']
+const auto_tags_avg_fields_possibleTypes = ["auto_tags_avg_fields"]
 export const isauto_tags_avg_fields = (obj: { __typename: String }): obj is auto_tags_avg_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_avg_fields_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_max_fields_possibleTypes = ['auto_tags_max_fields']
+const auto_tags_max_fields_possibleTypes = ["auto_tags_max_fields"]
 export const isauto_tags_max_fields = (obj: { __typename: String }): obj is auto_tags_max_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_max_fields_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_min_fields_possibleTypes = ['auto_tags_min_fields']
+const auto_tags_min_fields_possibleTypes = ["auto_tags_min_fields"]
 export const isauto_tags_min_fields = (obj: { __typename: String }): obj is auto_tags_min_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_min_fields_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_stddev_fields_possibleTypes = ['auto_tags_stddev_fields']
+const auto_tags_stddev_fields_possibleTypes = ["auto_tags_stddev_fields"]
 export const isauto_tags_stddev_fields = (obj: { __typename: String }): obj is auto_tags_stddev_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_stddev_fields_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_stddev_pop_fields_possibleTypes = ['auto_tags_stddev_pop_fields']
+const auto_tags_stddev_pop_fields_possibleTypes = ["auto_tags_stddev_pop_fields"]
 export const isauto_tags_stddev_pop_fields = (obj: { __typename: String }): obj is auto_tags_stddev_pop_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_stddev_pop_fields_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_stddev_samp_fields_possibleTypes = ['auto_tags_stddev_samp_fields']
+const auto_tags_stddev_samp_fields_possibleTypes = ["auto_tags_stddev_samp_fields"]
 export const isauto_tags_stddev_samp_fields = (obj: { __typename: String }): obj is auto_tags_stddev_samp_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_stddev_samp_fields_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_sum_fields_possibleTypes = ['auto_tags_sum_fields']
+const auto_tags_sum_fields_possibleTypes = ["auto_tags_sum_fields"]
 export const isauto_tags_sum_fields = (obj: { __typename: String }): obj is auto_tags_sum_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_sum_fields_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_var_pop_fields_possibleTypes = ['auto_tags_var_pop_fields']
+const auto_tags_var_pop_fields_possibleTypes = ["auto_tags_var_pop_fields"]
 export const isauto_tags_var_pop_fields = (obj: { __typename: String }): obj is auto_tags_var_pop_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_var_pop_fields_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_var_samp_fields_possibleTypes = ['auto_tags_var_samp_fields']
+const auto_tags_var_samp_fields_possibleTypes = ["auto_tags_var_samp_fields"]
 export const isauto_tags_var_samp_fields = (obj: { __typename: String }): obj is auto_tags_var_samp_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_var_samp_fields_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_variance_fields_possibleTypes = ['auto_tags_variance_fields']
+const auto_tags_variance_fields_possibleTypes = ["auto_tags_variance_fields"]
 export const isauto_tags_variance_fields = (obj: { __typename: String }): obj is auto_tags_variance_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_variance_fields_possibleTypes.includes(obj.__typename)
 }
 
-const guilds_possibleTypes = ['guilds']
+const guilds_possibleTypes = ["guilds"]
 export const isguilds = (obj: { __typename: String }): obj is guilds => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return guilds_possibleTypes.includes(obj.__typename)
 }
 
-const image_channels_aggregate_possibleTypes = ['image_channels_aggregate']
+const image_channels_aggregate_possibleTypes = ["image_channels_aggregate"]
 export const isimage_channels_aggregate = (obj: { __typename: String }): obj is image_channels_aggregate => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_channels_aggregate_possibleTypes.includes(obj.__typename)
 }
 
-const image_channels_aggregate_fields_possibleTypes = ['image_channels_aggregate_fields']
+const image_channels_aggregate_fields_possibleTypes = ["image_channels_aggregate_fields"]
 export const isimage_channels_aggregate_fields = (obj: { __typename: String }): obj is image_channels_aggregate_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_channels_aggregate_fields_possibleTypes.includes(obj.__typename)
 }
 
-const image_channels_max_fields_possibleTypes = ['image_channels_max_fields']
+const image_channels_max_fields_possibleTypes = ["image_channels_max_fields"]
 export const isimage_channels_max_fields = (obj: { __typename: String }): obj is image_channels_max_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_channels_max_fields_possibleTypes.includes(obj.__typename)
 }
 
-const image_channels_min_fields_possibleTypes = ['image_channels_min_fields']
+const image_channels_min_fields_possibleTypes = ["image_channels_min_fields"]
 export const isimage_channels_min_fields = (obj: { __typename: String }): obj is image_channels_min_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_channels_min_fields_possibleTypes.includes(obj.__typename)
 }
 
-const images_possibleTypes = ['images']
+const images_possibleTypes = ["images"]
 export const isimages = (obj: { __typename: String }): obj is images => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_possibleTypes = ['image_tags']
+const image_tags_possibleTypes = ["image_tags"]
 export const isimage_tags = (obj: { __typename: String }): obj is image_tags => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_possibleTypes.includes(obj.__typename)
 }
 
-const users_possibleTypes = ['users']
+const users_possibleTypes = ["users"]
 export const isusers = (obj: { __typename: String }): obj is users => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return users_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_aggregate_possibleTypes = ['image_tags_aggregate']
+const image_tags_aggregate_possibleTypes = ["image_tags_aggregate"]
 export const isimage_tags_aggregate = (obj: { __typename: String }): obj is image_tags_aggregate => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_aggregate_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_aggregate_fields_possibleTypes = ['image_tags_aggregate_fields']
+const image_tags_aggregate_fields_possibleTypes = ["image_tags_aggregate_fields"]
 export const isimage_tags_aggregate_fields = (obj: { __typename: String }): obj is image_tags_aggregate_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_aggregate_fields_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_avg_fields_possibleTypes = ['image_tags_avg_fields']
+const image_tags_avg_fields_possibleTypes = ["image_tags_avg_fields"]
 export const isimage_tags_avg_fields = (obj: { __typename: String }): obj is image_tags_avg_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_avg_fields_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_max_fields_possibleTypes = ['image_tags_max_fields']
+const image_tags_max_fields_possibleTypes = ["image_tags_max_fields"]
 export const isimage_tags_max_fields = (obj: { __typename: String }): obj is image_tags_max_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_max_fields_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_min_fields_possibleTypes = ['image_tags_min_fields']
+const image_tags_min_fields_possibleTypes = ["image_tags_min_fields"]
 export const isimage_tags_min_fields = (obj: { __typename: String }): obj is image_tags_min_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_min_fields_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_stddev_fields_possibleTypes = ['image_tags_stddev_fields']
+const image_tags_stddev_fields_possibleTypes = ["image_tags_stddev_fields"]
 export const isimage_tags_stddev_fields = (obj: { __typename: String }): obj is image_tags_stddev_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_stddev_fields_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_stddev_pop_fields_possibleTypes = ['image_tags_stddev_pop_fields']
+const image_tags_stddev_pop_fields_possibleTypes = ["image_tags_stddev_pop_fields"]
 export const isimage_tags_stddev_pop_fields = (obj: { __typename: String }): obj is image_tags_stddev_pop_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_stddev_pop_fields_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_stddev_samp_fields_possibleTypes = ['image_tags_stddev_samp_fields']
+const image_tags_stddev_samp_fields_possibleTypes = ["image_tags_stddev_samp_fields"]
 export const isimage_tags_stddev_samp_fields = (obj: { __typename: String }): obj is image_tags_stddev_samp_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_stddev_samp_fields_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_sum_fields_possibleTypes = ['image_tags_sum_fields']
+const image_tags_sum_fields_possibleTypes = ["image_tags_sum_fields"]
 export const isimage_tags_sum_fields = (obj: { __typename: String }): obj is image_tags_sum_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_sum_fields_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_var_pop_fields_possibleTypes = ['image_tags_var_pop_fields']
+const image_tags_var_pop_fields_possibleTypes = ["image_tags_var_pop_fields"]
 export const isimage_tags_var_pop_fields = (obj: { __typename: String }): obj is image_tags_var_pop_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_var_pop_fields_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_var_samp_fields_possibleTypes = ['image_tags_var_samp_fields']
+const image_tags_var_samp_fields_possibleTypes = ["image_tags_var_samp_fields"]
 export const isimage_tags_var_samp_fields = (obj: { __typename: String }): obj is image_tags_var_samp_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_var_samp_fields_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_variance_fields_possibleTypes = ['image_tags_variance_fields']
+const image_tags_variance_fields_possibleTypes = ["image_tags_variance_fields"]
 export const isimage_tags_variance_fields = (obj: { __typename: String }): obj is image_tags_variance_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_variance_fields_possibleTypes.includes(obj.__typename)
 }
 
-const images_aggregate_possibleTypes = ['images_aggregate']
+const images_aggregate_possibleTypes = ["images_aggregate"]
 export const isimages_aggregate = (obj: { __typename: String }): obj is images_aggregate => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_aggregate_possibleTypes.includes(obj.__typename)
 }
 
-const images_aggregate_fields_possibleTypes = ['images_aggregate_fields']
+const images_aggregate_fields_possibleTypes = ["images_aggregate_fields"]
 export const isimages_aggregate_fields = (obj: { __typename: String }): obj is images_aggregate_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_aggregate_fields_possibleTypes.includes(obj.__typename)
 }
 
-const images_avg_fields_possibleTypes = ['images_avg_fields']
+const images_avg_fields_possibleTypes = ["images_avg_fields"]
 export const isimages_avg_fields = (obj: { __typename: String }): obj is images_avg_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_avg_fields_possibleTypes.includes(obj.__typename)
 }
 
-const images_max_fields_possibleTypes = ['images_max_fields']
+const images_max_fields_possibleTypes = ["images_max_fields"]
 export const isimages_max_fields = (obj: { __typename: String }): obj is images_max_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_max_fields_possibleTypes.includes(obj.__typename)
 }
 
-const images_min_fields_possibleTypes = ['images_min_fields']
+const images_min_fields_possibleTypes = ["images_min_fields"]
 export const isimages_min_fields = (obj: { __typename: String }): obj is images_min_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_min_fields_possibleTypes.includes(obj.__typename)
 }
 
-const images_stddev_fields_possibleTypes = ['images_stddev_fields']
+const images_stddev_fields_possibleTypes = ["images_stddev_fields"]
 export const isimages_stddev_fields = (obj: { __typename: String }): obj is images_stddev_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_stddev_fields_possibleTypes.includes(obj.__typename)
 }
 
-const images_stddev_pop_fields_possibleTypes = ['images_stddev_pop_fields']
+const images_stddev_pop_fields_possibleTypes = ["images_stddev_pop_fields"]
 export const isimages_stddev_pop_fields = (obj: { __typename: String }): obj is images_stddev_pop_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_stddev_pop_fields_possibleTypes.includes(obj.__typename)
 }
 
-const images_stddev_samp_fields_possibleTypes = ['images_stddev_samp_fields']
+const images_stddev_samp_fields_possibleTypes = ["images_stddev_samp_fields"]
 export const isimages_stddev_samp_fields = (obj: { __typename: String }): obj is images_stddev_samp_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_stddev_samp_fields_possibleTypes.includes(obj.__typename)
 }
 
-const images_sum_fields_possibleTypes = ['images_sum_fields']
+const images_sum_fields_possibleTypes = ["images_sum_fields"]
 export const isimages_sum_fields = (obj: { __typename: String }): obj is images_sum_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_sum_fields_possibleTypes.includes(obj.__typename)
 }
 
-const images_var_pop_fields_possibleTypes = ['images_var_pop_fields']
+const images_var_pop_fields_possibleTypes = ["images_var_pop_fields"]
 export const isimages_var_pop_fields = (obj: { __typename: String }): obj is images_var_pop_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_var_pop_fields_possibleTypes.includes(obj.__typename)
 }
 
-const images_var_samp_fields_possibleTypes = ['images_var_samp_fields']
+const images_var_samp_fields_possibleTypes = ["images_var_samp_fields"]
 export const isimages_var_samp_fields = (obj: { __typename: String }): obj is images_var_samp_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_var_samp_fields_possibleTypes.includes(obj.__typename)
 }
 
-const images_variance_fields_possibleTypes = ['images_variance_fields']
+const images_variance_fields_possibleTypes = ["images_variance_fields"]
 export const isimages_variance_fields = (obj: { __typename: String }): obj is images_variance_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_variance_fields_possibleTypes.includes(obj.__typename)
 }
 
-const guilds_aggregate_possibleTypes = ['guilds_aggregate']
+const guilds_aggregate_possibleTypes = ["guilds_aggregate"]
 export const isguilds_aggregate = (obj: { __typename: String }): obj is guilds_aggregate => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return guilds_aggregate_possibleTypes.includes(obj.__typename)
 }
 
-const guilds_aggregate_fields_possibleTypes = ['guilds_aggregate_fields']
+const guilds_aggregate_fields_possibleTypes = ["guilds_aggregate_fields"]
 export const isguilds_aggregate_fields = (obj: { __typename: String }): obj is guilds_aggregate_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return guilds_aggregate_fields_possibleTypes.includes(obj.__typename)
 }
 
-const guilds_max_fields_possibleTypes = ['guilds_max_fields']
+const guilds_max_fields_possibleTypes = ["guilds_max_fields"]
 export const isguilds_max_fields = (obj: { __typename: String }): obj is guilds_max_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return guilds_max_fields_possibleTypes.includes(obj.__typename)
 }
 
-const guilds_min_fields_possibleTypes = ['guilds_min_fields']
+const guilds_min_fields_possibleTypes = ["guilds_min_fields"]
 export const isguilds_min_fields = (obj: { __typename: String }): obj is guilds_min_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return guilds_min_fields_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_possibleTypes = ['tag_counts']
+const tag_counts_possibleTypes = ["tag_counts"]
 export const istag_counts = (obj: { __typename: String }): obj is tag_counts => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_aggregate_possibleTypes = ['tag_counts_aggregate']
+const tag_counts_aggregate_possibleTypes = ["tag_counts_aggregate"]
 export const istag_counts_aggregate = (obj: { __typename: String }): obj is tag_counts_aggregate => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_aggregate_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_aggregate_fields_possibleTypes = ['tag_counts_aggregate_fields']
+const tag_counts_aggregate_fields_possibleTypes = ["tag_counts_aggregate_fields"]
 export const istag_counts_aggregate_fields = (obj: { __typename: String }): obj is tag_counts_aggregate_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_aggregate_fields_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_avg_fields_possibleTypes = ['tag_counts_avg_fields']
+const tag_counts_avg_fields_possibleTypes = ["tag_counts_avg_fields"]
 export const istag_counts_avg_fields = (obj: { __typename: String }): obj is tag_counts_avg_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_avg_fields_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_max_fields_possibleTypes = ['tag_counts_max_fields']
+const tag_counts_max_fields_possibleTypes = ["tag_counts_max_fields"]
 export const istag_counts_max_fields = (obj: { __typename: String }): obj is tag_counts_max_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_max_fields_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_min_fields_possibleTypes = ['tag_counts_min_fields']
+const tag_counts_min_fields_possibleTypes = ["tag_counts_min_fields"]
 export const istag_counts_min_fields = (obj: { __typename: String }): obj is tag_counts_min_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_min_fields_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_stddev_fields_possibleTypes = ['tag_counts_stddev_fields']
+const tag_counts_stddev_fields_possibleTypes = ["tag_counts_stddev_fields"]
 export const istag_counts_stddev_fields = (obj: { __typename: String }): obj is tag_counts_stddev_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_stddev_fields_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_stddev_pop_fields_possibleTypes = ['tag_counts_stddev_pop_fields']
+const tag_counts_stddev_pop_fields_possibleTypes = ["tag_counts_stddev_pop_fields"]
 export const istag_counts_stddev_pop_fields = (obj: { __typename: String }): obj is tag_counts_stddev_pop_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_stddev_pop_fields_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_stddev_samp_fields_possibleTypes = ['tag_counts_stddev_samp_fields']
+const tag_counts_stddev_samp_fields_possibleTypes = ["tag_counts_stddev_samp_fields"]
 export const istag_counts_stddev_samp_fields = (obj: { __typename: String }): obj is tag_counts_stddev_samp_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_stddev_samp_fields_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_sum_fields_possibleTypes = ['tag_counts_sum_fields']
+const tag_counts_sum_fields_possibleTypes = ["tag_counts_sum_fields"]
 export const istag_counts_sum_fields = (obj: { __typename: String }): obj is tag_counts_sum_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_sum_fields_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_var_pop_fields_possibleTypes = ['tag_counts_var_pop_fields']
+const tag_counts_var_pop_fields_possibleTypes = ["tag_counts_var_pop_fields"]
 export const istag_counts_var_pop_fields = (obj: { __typename: String }): obj is tag_counts_var_pop_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_var_pop_fields_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_var_samp_fields_possibleTypes = ['tag_counts_var_samp_fields']
+const tag_counts_var_samp_fields_possibleTypes = ["tag_counts_var_samp_fields"]
 export const istag_counts_var_samp_fields = (obj: { __typename: String }): obj is tag_counts_var_samp_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_var_samp_fields_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_variance_fields_possibleTypes = ['tag_counts_variance_fields']
+const tag_counts_variance_fields_possibleTypes = ["tag_counts_variance_fields"]
 export const istag_counts_variance_fields = (obj: { __typename: String }): obj is tag_counts_variance_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_variance_fields_possibleTypes.includes(obj.__typename)
 }
 
-const users_aggregate_possibleTypes = ['users_aggregate']
+const users_aggregate_possibleTypes = ["users_aggregate"]
 export const isusers_aggregate = (obj: { __typename: String }): obj is users_aggregate => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return users_aggregate_possibleTypes.includes(obj.__typename)
 }
 
-const users_aggregate_fields_possibleTypes = ['users_aggregate_fields']
+const users_aggregate_fields_possibleTypes = ["users_aggregate_fields"]
 export const isusers_aggregate_fields = (obj: { __typename: String }): obj is users_aggregate_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return users_aggregate_fields_possibleTypes.includes(obj.__typename)
 }
 
-const users_max_fields_possibleTypes = ['users_max_fields']
+const users_max_fields_possibleTypes = ["users_max_fields"]
 export const isusers_max_fields = (obj: { __typename: String }): obj is users_max_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return users_max_fields_possibleTypes.includes(obj.__typename)
 }
 
-const users_min_fields_possibleTypes = ['users_min_fields']
+const users_min_fields_possibleTypes = ["users_min_fields"]
 export const isusers_min_fields = (obj: { __typename: String }): obj is users_min_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return users_min_fields_possibleTypes.includes(obj.__typename)
 }
 
-const mutation_root_possibleTypes = ['mutation_root']
+const mutation_root_possibleTypes = ["mutation_root"]
 export const ismutation_root = (obj: { __typename: String }): obj is mutation_root => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return mutation_root_possibleTypes.includes(obj.__typename)
 }
 
-const auto_tags_mutation_response_possibleTypes = ['auto_tags_mutation_response']
+const auto_tags_mutation_response_possibleTypes = ["auto_tags_mutation_response"]
 export const isauto_tags_mutation_response = (obj: { __typename: String }): obj is auto_tags_mutation_response => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return auto_tags_mutation_response_possibleTypes.includes(obj.__typename)
 }
 
-const guilds_mutation_response_possibleTypes = ['guilds_mutation_response']
+const guilds_mutation_response_possibleTypes = ["guilds_mutation_response"]
 export const isguilds_mutation_response = (obj: { __typename: String }): obj is guilds_mutation_response => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return guilds_mutation_response_possibleTypes.includes(obj.__typename)
 }
 
-const image_channels_mutation_response_possibleTypes = ['image_channels_mutation_response']
+const image_channels_mutation_response_possibleTypes = ["image_channels_mutation_response"]
 export const isimage_channels_mutation_response = (obj: { __typename: String }): obj is image_channels_mutation_response => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_channels_mutation_response_possibleTypes.includes(obj.__typename)
 }
 
-const image_tags_mutation_response_possibleTypes = ['image_tags_mutation_response']
+const image_tags_mutation_response_possibleTypes = ["image_tags_mutation_response"]
 export const isimage_tags_mutation_response = (obj: { __typename: String }): obj is image_tags_mutation_response => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return image_tags_mutation_response_possibleTypes.includes(obj.__typename)
 }
 
-const images_mutation_response_possibleTypes = ['images_mutation_response']
+const images_mutation_response_possibleTypes = ["images_mutation_response"]
 export const isimages_mutation_response = (obj: { __typename: String }): obj is images_mutation_response => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return images_mutation_response_possibleTypes.includes(obj.__typename)
 }
 
-const tag_counts_mutation_response_possibleTypes = ['tag_counts_mutation_response']
+const tag_counts_mutation_response_possibleTypes = ["tag_counts_mutation_response"]
 export const istag_counts_mutation_response = (obj: { __typename: String }): obj is tag_counts_mutation_response => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return tag_counts_mutation_response_possibleTypes.includes(obj.__typename)
 }
 
-const users_mutation_response_possibleTypes = ['users_mutation_response']
+const users_mutation_response_possibleTypes = ["users_mutation_response"]
 export const isusers_mutation_response = (obj: { __typename: String }): obj is users_mutation_response => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return users_mutation_response_possibleTypes.includes(obj.__typename)
 }
 
-const subscription_root_possibleTypes = ['subscription_root']
+const subscription_root_possibleTypes = ["subscription_root"]
 export const issubscription_root = (obj: { __typename: String }): obj is subscription_root => {
-  if (!obj.__typename) throw new Error('__typename is missing')
+  if (!obj.__typename) { throw new Error("__typename is missing") }
   return subscription_root_possibleTypes.includes(obj.__typename)
 }
 

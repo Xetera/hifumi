@@ -1,15 +1,15 @@
-import { Client, ClientOptions } from 'graphql-typed-client'
+import { Client, ClientOptions } from "graphql-typed-client"
 import {
-  query_rootRequest,
-  query_rootPromiseChain,
-  query_root,
-  mutation_rootRequest,
-  mutation_rootPromiseChain,
   mutation_root,
-  subscription_rootRequest,
-  subscription_rootObservableChain,
+  mutation_rootPromiseChain,
+  mutation_rootRequest,
+  query_root,
+  query_rootPromiseChain,
+  query_rootRequest,
   subscription_root,
-} from './schema'
+  subscription_rootObservableChain,
+  subscription_rootRequest,
+} from "./schema"
 export declare const createClient: (
   options: ClientOptions,
 ) => Client<
