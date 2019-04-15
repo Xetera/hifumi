@@ -1,0 +1,6 @@
+- args:
+    relationship: auto_tags
+    table:
+      name: image_channels
+      schema: public
+  type: drop_relationship

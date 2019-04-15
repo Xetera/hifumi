@@ -1,0 +1,12 @@
+- args:
+    name: auto_tags
+    table:
+      name: image_channels
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: channel_id
+        table:
+          name: auto_tags
+          schema: public
+  type: create_array_relationship
