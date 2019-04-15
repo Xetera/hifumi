@@ -1,3 +1,4 @@
+/// <reference path="./graphql/createClient">
 import { Guild, User } from "discord.js";
 import gql from "gql-tag/dist";
 import { GraphQLClient } from "graphql-request";
@@ -7,12 +8,24 @@ import {
   Guilds_Insert_Input,
   Users_Insert_Input
 } from "./generated/graphql";
+import { createClient } from "./graphql/createClient";
 import { logger } from "./utils";
 
 const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
   headers: process.env.HASURA_ACCESS_KEY ? {
     "X-Hasura-Access-Key": process.env.HASURA_ACCESS_KEY
   } : {}
+});
+
+export const _client = createClient({
+  fetcher: ({ query, variables }, fetch) =>
+    fetch(process.env.HASURA_URL!, {
+      method: "POST",
+      body: JSON.stringify({ query, variables }),
+      headers: {
+        "X-Hasura-Admin-Secret": process.env.HASURA_ACCESS_KEY!
+      }
+    }).then((r: any) => r.json())
 });
 
 export const req = (q: string, vars?: Variables) => client.request(q, vars);

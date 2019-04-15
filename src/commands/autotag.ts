@@ -1,7 +1,6 @@
 import { Command } from "discord-akairo";
 import { Message } from "discord.js";
-import gql from "gql-tag/dist";
-import { req } from "../db";
+import { _client } from "../db";
 
 export default class extends Command {
   constructor() {
@@ -20,39 +19,66 @@ export default class extends Command {
 
   public async exec(message: Message, { channel, tags }: any) {
     if (!channel) {
-      return message.channel.send("No channel specified");
+      return message.channel.send("No channel selected");
     }
-    console.log(channel.id);
-    const { image_channels_by_pk: { channel_id } } = await req(gql`query($id: String!) {
-      image_channels_by_pk(channel_id: $id) {
-        channel_id
-      }
-    }`, { id: channel.id }) as any;
-    if (!channel_id) {
-      return message.channel.send("Only tracked channels can be autotagged, use `settings imageBoard add { channel }`");
+    const { data } = await _client.query({
+      image_channels_by_pk: [{
+        channel_id: channel.id
+      }, {
+        channel_id: 1
+      }]
+    });
+
+    if (!data!.image_channels_by_pk) {
+      return message.channel.send("That channel is not autosaving");
     }
     if (!tags) {
-      return message.channel.send("No tags were specified");
+      return message.channel.send("No tags specified");
     }
-    const tagArray = tags.split(",");
-
-    const resp = await req(gql`
-      mutation($input: [auto_tags_insert_input!]!) {
-        insert_auto_tags(
-          objects: $input
-        ) {
-            affected_rows
+    const tagArray: string[] = tags.split(",");
+    const existing = await _client.query({
+      auto_tags: [{
+        where: {
+          _or: tagArray.map((name: string) => ({
+            name: {
+              _eq: name
+            }
+          }))
         }
-      }
-    `);
-    console.log();
-    // const count = await ArchivedImage.countDocuments();
-    // const random = Math.floor(Math.random() * count);
-    // const image = await ArchivedImage.findOne().skip(random);
-    // if (!image) {
-    //   throw Error();
-    // }
-    // await message.channel.send(image.url);
-    // await Role.find({ id: role.id }).then(console.log);
+      }, {
+        name: 1
+      }]
+    });
+
+    if (!existing.data) {
+      console.log(existing.errors);
+      return message.channel.send(`There was an error`);
+    }
+
+    const { auto_tags } = existing.data;
+    const existingTagsArr = new Set(auto_tags.map((t) => t.name));
+    const toAdd = new Set(tagArray);
+    const uniqueTags = [...toAdd].filter((adding: string) => !existingTagsArr.has(adding));
+
+    if (!uniqueTags.length) {
+      return message.channel.send("All of those tags are already being auto-added");
+    }
+
+    const addedTags = await _client.mutation({
+      insert_auto_tags: [{
+        objects: uniqueTags.map((name: string) => ({
+          channel_id: channel.id,
+          name
+        }))
+      }, {
+        affected_rows: 1
+      }]
+    });
+    if (addedTags.errors) {
+      return message.channel.send(`There was an error adding those tags`);
+    }
+    return message.channel.send(
+      `Added tags: ${uniqueTags.map((name) => `\`${name}\``).join(", ")}`
+    );
   }
 }

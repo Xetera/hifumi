@@ -4,7 +4,7 @@
 		"tslint:recommended"
 	],
 	"linterOptions": {
-		"exclude": ["src/generated/*"]
+		"exclude": ["src/generated/*", "src/graphql/*"]
 	},
 	"jsRules": {},
 	"rules": {

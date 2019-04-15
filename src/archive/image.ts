@@ -1,9 +1,10 @@
 import { Channel, Guild, Message, MessageAttachment, TextChannel } from "discord.js";
 import gql from "gql-tag/dist";
-import { resolve } from "media-extractor"
-import { req } from "../db";
+import { resolve } from "media-extractor";
+import { _client, req } from "../db";
 import { Image_Channels } from "../generated/graphql";
 import { logger } from "../utils";
+
 const findArchiveChannels = (guild: Guild) => req(gql`
   query {
     image_channels(
@@ -18,23 +19,26 @@ const findArchiveChannels = (guild: Guild) => req(gql`
   }
 `);
 
-const upsertImage = (message: Message, att: MessageAttachment, src: string) => req(gql`
-  mutation {
-    insert_images(
-      objects: [{
-        message_id: "${message.id}"
-        url: "${src}"
-        file_name: "${att.filename}"
-        guild_id: "${message.guild.id}"
-        user_id: "${message.author.id}"
-      }]
-    ) {
-      returning {
-        id
-      }
+const upsertImage = (message: Message, att: MessageAttachment, url: string, tags: string[]) => _client.mutation({
+  insert_images: [{
+    objects: [{
+      message_id: message.id,
+      url,
+      image_tags: {
+        data: tags.map((tag) => ({
+          name: tag,
+        }))
+      },
+      file_name: att.filename,
+      guild_id: message.guild.id,
+      user_id: message.author.id
+    }]
+  }, {
+    returning: {
+      id: 1
     }
-  }
-`);
+  }]
+});
 
 const isArchiveChannel = async (channel: Channel) => {
   if (!(channel instanceof TextChannel)) {
@@ -51,7 +55,19 @@ const hasArchivableContent = async (message: Message) =>
 const archiveAttachments = async (message: Message) => {
   const uploads = message.attachments.map(async (att) => {
     const src = await resolve(att.url);
-    return upsertImage(message, att, src)
+    const tagsRes = await _client.query({
+      auto_tags: [{
+        where: {
+          channel_id: {
+            _eq: message.channel.id
+          }
+        }
+      }, {
+        name: 1
+      }]
+    });
+    const tags = tagsRes.data!.auto_tags.map((t) => t.name);
+    return upsertImage(message, att, src, tags);
   });
   return Promise.all(uploads);
 };
