@@ -1,0 +1,3 @@
+- args:
+    sql: DROP TABLE "public"."auto_tags"
+  type: run_sql
