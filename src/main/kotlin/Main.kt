@@ -7,12 +7,15 @@ import io.ktor.routing.*
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import org.slf4j.LoggerFactory
+import io.github.cdimascio.dotenv.dotenv
 
-const val datadogStats = "https://p.datadoghq.com/sb/71d9e3d68-233c63b5d43908deb0df73c63059cdb2"
+val dotenv = dotenv()
+
+val datadogStats = dotenv["DATADOG_STATS"].toString() // pesky nullable string warning
 
 fun main(args: Array<String>) {
     val logger = LoggerFactory.getLogger("Ktor.Router")
-    val port = Integer.parseInt(System.getenv("NEWGAME_PORT") ?: "3000")
+    val port = Integer.parseInt(dotenv["NEWGAME_PORT"] ?: "3000")
     val server = embeddedServer(Netty, port = port) {
         routing {
             route("bot") {
@@ -33,6 +36,11 @@ fun main(args: Array<String>) {
                     } else {
                         call.respondText(getGuildImages(id))
                     }
+                }
+            }
+            route("oauth") {
+                get {
+
                 }
             }
         }
