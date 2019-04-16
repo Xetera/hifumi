@@ -4,7 +4,7 @@ import gql from "gql-tag/dist";
 import { sendAnalytics, withDatadog } from "./analytics/datadog";
 import { processImage } from "./archive/image";
 import { ANALYTICS_INTERVAL } from "./constants";
-import { req, syncGuilds, syncUsers } from "./db";
+import { _client, req, syncGuilds, syncUsers } from "./db";
 import { addStar, removeStar } from "./starboard";
 import { boxContents, logger } from "./utils";
 
@@ -82,6 +82,18 @@ const onUserJoin = async (member: GuildMember) => {
     thumbnail: { url: member.user.displayAvatarURL }
   };
   channel.send({ embed });
+
+  await _client.mutation({
+    insert_users: [{
+      objects: [{
+        user_id: member.id,
+        avatar: member.user.displayAvatarURL,
+        name: member.user.username
+      }]
+    }, {
+      affected_rows: 1
+    }]
+  });
 };
 
 const handleError = (event: any) => {
