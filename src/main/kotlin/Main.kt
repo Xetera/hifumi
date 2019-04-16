@@ -40,7 +40,7 @@ fun main(args: Array<String>) {
             }
             route("oauth") {
                 get {
-
+                    // handle stuff ty
                 }
             }
         }
