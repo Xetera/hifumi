@@ -60,5 +60,5 @@ suspend fun callbackHandle(code: String): String {
                         "Content-Type" to CONTENT_TYPE,
                         "Authorization" to auth)
     val response = get("$API_ENDPOINT/users/@me", OAuthUserObj::class.java, headers)
-    return gson.toJson(response)
+    return gson.toJson(mapOf("id" to response.id, "access_token" to returnData.access_token, "refresh_token" to returnData.refresh_token))
 }
