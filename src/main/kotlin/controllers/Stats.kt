@@ -1,12 +1,13 @@
 package controllers
 
-import com.github.kittinunf.fuel.Fuel
-import com.github.kittinunf.fuel.coroutines.awaitStringResponse
 import com.google.gson.Gson
 import helpers.Cache
 import helpers.CacheOptions
+import helpers.get
 import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
+
+val gson = Gson()
 
 val logger = LoggerFactory.getLogger("Controller.Stats")
 
@@ -24,16 +25,6 @@ val statCache = Cache<String, Int>(
         expiry = 10_000L
     )
 )
-val gson = Gson()
-
-suspend fun <T> get(url: String, json: Class<T>): T {
-    logger.info("Fetching url: $url")
-    return gson.fromJson(
-        Fuel.get(url)
-            .header("User-Agent", USER_AGENT)
-            .awaitStringResponse().third, json
-    )
-}
 
 suspend fun getDiscordAsync(): Deferred<Int> = coroutineScope {
     async {
@@ -41,7 +32,7 @@ suspend fun getDiscordAsync(): Deferred<Int> = coroutineScope {
         if (existing != null) {
             existing
         } else {
-            val discord = get(discordURL, DiscordResponse::class.java)
+            val discord = get(discordURL, DiscordResponse::class.java, mapOf("User-Agent" to USER_AGENT))
             val members = discord.approximate_member_count
             statCache.set("discord", members)
             members
@@ -55,7 +46,7 @@ suspend fun getRedditAsync() = coroutineScope {
         if (existing != null) {
             existing
         } else {
-            val reddit = get(redditUrl, RedditResponse::class.java)
+            val reddit = get(redditUrl, RedditResponse::class.java, mapOf("User-Agent" to USER_AGENT))
             val members = reddit.data.subscribers
             statCache.set("reddit", members)
             members

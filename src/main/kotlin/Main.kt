@@ -1,5 +1,6 @@
 import controllers.getGuildImages
 import controllers.getStats
+import connection.callbackHandle
 import io.ktor.application.call
 import io.ktor.response.respondRedirect
 import io.ktor.response.respondText
@@ -38,9 +39,15 @@ fun main(args: Array<String>) {
                     }
                 }
             }
-            route("oauth") {
+            route("callback") {
                 get {
-                    // handle stuff ty
+                    val code = call.parameters["code"]
+                    val state = call.parameters["state"] // currently unused, here for future use.
+                    if (code == null) {
+                        call.respondText("Callback code is invalid and/or expired.\n\nPlease try again.")
+                    } else {
+                        call.respondText(callbackHandle(code))
+                    }
                 }
             }
         }
