@@ -6,12 +6,15 @@ services:
     image: moedevs/hasura
     ports:
       - 8080:8080
+    depends_on:
+      - postgres
     networks:
       - hifuminet
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://hifumi:uwu@postgres/hifumi
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: public
+      HASURA_GRAPHQL_AUTH_HOOK: http://localhost:4000/auth
   postgres:
     container_name: pg
     image: postgres
