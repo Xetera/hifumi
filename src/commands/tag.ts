@@ -77,8 +77,10 @@ export default class extends Command {
         insert_image_tags: { affected_rows: number }
       };
 
+      const s = (res.insert_image_tags.affected_rows === 1) ? "" : "s"
+
       return msg.channel.send(
-        `Added ${res.insert_image_tags.affected_rows} new tags to that image`
+        `Added ${res.insert_image_tags.affected_rows} new tag${s} to that image`
       );
     } else if (!tags) {
       return msg.channel.send(`That image is already saved`);

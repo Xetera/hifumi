@@ -28,7 +28,7 @@ export default class EvalCommand extends Command {
 
     try {
       // tslint:disable-next-line:no-eval
-      const out = await eval(code);
+      const out = `${await eval(code)}`;
       return message.channel.send(clean(out));
     } catch (e) {
       return message.channel.send(clean(e.message));
