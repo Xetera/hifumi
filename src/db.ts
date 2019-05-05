@@ -7,8 +7,8 @@ import { Variables } from "graphql-request/dist/src/types";
 import { GRAPHQL_ENDPOINT } from "./constants";
 import { Users_Insert_Input } from "./generated/graphql";
 import { createClient } from "./graphql/createClient";
-import { logger } from "./utils";
 import { guilds_constraint, guilds_update_column } from "./graphql/schema";
+import { logger } from "./utils";
 
 const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
   headers: process.env.HASURA_ACCESS_KEY ? {
