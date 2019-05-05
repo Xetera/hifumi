@@ -399,6 +399,7 @@ columns and relationships of "guilds"
 type guilds {
   enabled: Boolean
   guild_id: String!
+  icon: String
 
   """
   An array relationship
@@ -519,6 +520,66 @@ type guilds {
     """
     where: images_bool_exp
   ): images_aggregate!
+
+  """
+  An array relationship
+  """
+  members(
+    """
+    distinct select on columns
+    """
+    distinct_on: [members_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [members_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: members_bool_exp
+  ): [members!]!
+
+  """
+  An aggregated array relationship
+  """
+  members_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [members_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [members_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: members_bool_exp
+  ): members_aggregate!
   name: String!
   welcome_channel: String
 }
@@ -566,8 +627,10 @@ input guilds_bool_exp {
   _or: [guilds_bool_exp]
   enabled: boolean_comparison_exp
   guild_id: text_comparison_exp
+  icon: text_comparison_exp
   image_channels: image_channels_bool_exp
   images: images_bool_exp
+  members: members_bool_exp
   name: text_comparison_exp
   welcome_channel: text_comparison_exp
 }
@@ -588,8 +651,10 @@ input type for inserting data into table "guilds"
 input guilds_insert_input {
   enabled: Boolean
   guild_id: String
+  icon: String
   image_channels: image_channels_arr_rel_insert_input
   images: images_arr_rel_insert_input
+  members: members_arr_rel_insert_input
   name: String
   welcome_channel: String
 }
@@ -599,6 +664,7 @@ aggregate max on columns
 """
 type guilds_max_fields {
   guild_id: String
+  icon: String
   name: String
   welcome_channel: String
 }
@@ -608,6 +674,7 @@ order by max() on columns of table "guilds"
 """
 input guilds_max_order_by {
   guild_id: order_by
+  icon: order_by
   name: order_by
   welcome_channel: order_by
 }
@@ -617,6 +684,7 @@ aggregate min on columns
 """
 type guilds_min_fields {
   guild_id: String
+  icon: String
   name: String
   welcome_channel: String
 }
@@ -626,6 +694,7 @@ order by min() on columns of table "guilds"
 """
 input guilds_min_order_by {
   guild_id: order_by
+  icon: order_by
   name: order_by
   welcome_channel: order_by
 }
@@ -667,8 +736,10 @@ ordering options when selecting data from "guilds"
 input guilds_order_by {
   enabled: order_by
   guild_id: order_by
+  icon: order_by
   image_channels_aggregate: image_channels_aggregate_order_by
   images_aggregate: images_aggregate_order_by
+  members_aggregate: members_aggregate_order_by
   name: order_by
   welcome_channel: order_by
 }
@@ -690,6 +761,11 @@ enum guilds_select_column {
   """
   column name
   """
+  icon
+
+  """
+  column name
+  """
   name
 
   """
@@ -704,6 +780,7 @@ input type for updating data in table "guilds"
 input guilds_set_input {
   enabled: Boolean
   guild_id: String
+  icon: String
   name: String
   welcome_channel: String
 }
@@ -721,6 +798,11 @@ enum guilds_update_column {
   column name
   """
   guild_id
+
+  """
+  column name
+  """
+  icon
 
   """
   column name
@@ -1023,12 +1105,12 @@ type image_tags {
   image: images!
   image_id: Int!
   name: String!
-  tagger_id: String!
+  tagger_id: String
 
   """
   An object relationship
   """
-  user: users!
+  user: users
 }
 
 """
@@ -1902,6 +1984,355 @@ input integer_comparison_exp {
 }
 
 """
+columns and relationships of "members"
+"""
+type members {
+  """
+  An object relationship
+  """
+  guild: guilds!
+  guild_id: String!
+  id: Int!
+
+  """
+  An object relationship
+  """
+  user: users!
+  user_id: String!
+}
+
+"""
+aggregated selection of "members"
+"""
+type members_aggregate {
+  aggregate: members_aggregate_fields
+  nodes: [members!]!
+}
+
+"""
+aggregate fields of "members"
+"""
+type members_aggregate_fields {
+  avg: members_avg_fields
+  count(columns: [members_select_column!], distinct: Boolean): Int
+  max: members_max_fields
+  min: members_min_fields
+  stddev: members_stddev_fields
+  stddev_pop: members_stddev_pop_fields
+  stddev_samp: members_stddev_samp_fields
+  sum: members_sum_fields
+  var_pop: members_var_pop_fields
+  var_samp: members_var_samp_fields
+  variance: members_variance_fields
+}
+
+"""
+order by aggregate values of table "members"
+"""
+input members_aggregate_order_by {
+  avg: members_avg_order_by
+  count: order_by
+  max: members_max_order_by
+  min: members_min_order_by
+  stddev: members_stddev_order_by
+  stddev_pop: members_stddev_pop_order_by
+  stddev_samp: members_stddev_samp_order_by
+  sum: members_sum_order_by
+  var_pop: members_var_pop_order_by
+  var_samp: members_var_samp_order_by
+  variance: members_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "members"
+"""
+input members_arr_rel_insert_input {
+  data: [members_insert_input!]!
+  on_conflict: members_on_conflict
+}
+
+"""
+aggregate avg on columns
+"""
+type members_avg_fields {
+  id: Float
+}
+
+"""
+order by avg() on columns of table "members"
+"""
+input members_avg_order_by {
+  id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "members". All fields are combined with a logical 'AND'.
+"""
+input members_bool_exp {
+  _and: [members_bool_exp]
+  _not: members_bool_exp
+  _or: [members_bool_exp]
+  guild: guilds_bool_exp
+  guild_id: text_comparison_exp
+  id: integer_comparison_exp
+  user: users_bool_exp
+  user_id: text_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "members"
+"""
+enum members_constraint {
+  """
+  unique or primary key constraint
+  """
+  members_pkey
+}
+
+"""
+input type for incrementing integer columne in table "members"
+"""
+input members_inc_input {
+  id: Int
+}
+
+"""
+input type for inserting data into table "members"
+"""
+input members_insert_input {
+  guild: guilds_obj_rel_insert_input
+  guild_id: String
+  id: Int
+  user: users_obj_rel_insert_input
+  user_id: String
+}
+
+"""
+aggregate max on columns
+"""
+type members_max_fields {
+  guild_id: String
+  id: Int
+  user_id: String
+}
+
+"""
+order by max() on columns of table "members"
+"""
+input members_max_order_by {
+  guild_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type members_min_fields {
+  guild_id: String
+  id: Int
+  user_id: String
+}
+
+"""
+order by min() on columns of table "members"
+"""
+input members_min_order_by {
+  guild_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "members"
+"""
+type members_mutation_response {
+  """
+  number of affected rows by the mutation
+  """
+  affected_rows: Int!
+
+  """
+  data of the affected rows by the mutation
+  """
+  returning: [members!]!
+}
+
+"""
+input type for inserting object relation for remote table "members"
+"""
+input members_obj_rel_insert_input {
+  data: members_insert_input!
+  on_conflict: members_on_conflict
+}
+
+"""
+on conflict condition type for table "members"
+"""
+input members_on_conflict {
+  constraint: members_constraint!
+  update_columns: [members_update_column!]!
+}
+
+"""
+ordering options when selecting data from "members"
+"""
+input members_order_by {
+  guild: guilds_order_by
+  guild_id: order_by
+  id: order_by
+  user: users_order_by
+  user_id: order_by
+}
+
+"""
+select columns of table "members"
+"""
+enum members_select_column {
+  """
+  column name
+  """
+  guild_id
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  user_id
+}
+
+"""
+input type for updating data in table "members"
+"""
+input members_set_input {
+  guild_id: String
+  id: Int
+  user_id: String
+}
+
+"""
+aggregate stddev on columns
+"""
+type members_stddev_fields {
+  id: Float
+}
+
+"""
+order by stddev() on columns of table "members"
+"""
+input members_stddev_order_by {
+  id: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type members_stddev_pop_fields {
+  id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "members"
+"""
+input members_stddev_pop_order_by {
+  id: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type members_stddev_samp_fields {
+  id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "members"
+"""
+input members_stddev_samp_order_by {
+  id: order_by
+}
+
+"""
+aggregate sum on columns
+"""
+type members_sum_fields {
+  id: Int
+}
+
+"""
+order by sum() on columns of table "members"
+"""
+input members_sum_order_by {
+  id: order_by
+}
+
+"""
+update columns of table "members"
+"""
+enum members_update_column {
+  """
+  column name
+  """
+  guild_id
+
+  """
+  column name
+  """
+  id
+
+  """
+  column name
+  """
+  user_id
+}
+
+"""
+aggregate var_pop on columns
+"""
+type members_var_pop_fields {
+  id: Float
+}
+
+"""
+order by var_pop() on columns of table "members"
+"""
+input members_var_pop_order_by {
+  id: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type members_var_samp_fields {
+  id: Float
+}
+
+"""
+order by var_samp() on columns of table "members"
+"""
+input members_var_samp_order_by {
+  id: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type members_variance_fields {
+  id: Float
+}
+
+"""
+order by variance() on columns of table "members"
+"""
+input members_variance_order_by {
+  id: order_by
+}
+
+"""
 mutation root
 """
 type mutation_root {
@@ -1954,6 +2385,16 @@ type mutation_root {
     """
     where: images_bool_exp!
   ): images_mutation_response
+
+  """
+  delete data from the table: "members"
+  """
+  delete_members(
+    """
+    filter the rows which have to be deleted
+    """
+    where: members_bool_exp!
+  ): members_mutation_response
 
   """
   delete data from the table: "tag_counts"
@@ -2049,6 +2490,21 @@ type mutation_root {
     """
     on_conflict: images_on_conflict
   ): images_mutation_response
+
+  """
+  insert data into the table: "members"
+  """
+  insert_members(
+    """
+    the rows to be inserted
+    """
+    objects: [members_insert_input!]!
+
+    """
+    on conflict condition
+    """
+    on_conflict: members_on_conflict
+  ): members_mutation_response
 
   """
   insert data into the table: "tag_counts"
@@ -2169,6 +2625,26 @@ type mutation_root {
     """
     where: images_bool_exp!
   ): images_mutation_response
+
+  """
+  update data of the table: "members"
+  """
+  update_members(
+    """
+    increments the integer columns with given value of the filtered values
+    """
+    _inc: members_inc_input
+
+    """
+    sets the columns of the filtered rows to the given values
+    """
+    _set: members_set_input
+
+    """
+    filter the rows which have to be updated
+    """
+    where: members_bool_exp!
+  ): members_mutation_response
 
   """
   update data of the table: "tag_counts"
@@ -2571,6 +3047,211 @@ type query_root {
   images_by_pk(id: Int!): images
 
   """
+  fetch data from the table: "members"
+  """
+  members(
+    """
+    distinct select on columns
+    """
+    distinct_on: [members_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [members_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: members_bool_exp
+  ): [members!]!
+
+  """
+  fetch aggregated fields from the table: "members"
+  """
+  members_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [members_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [members_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: members_bool_exp
+  ): members_aggregate!
+
+  """
+  fetch data from the table: "members" using primary key columns
+  """
+  members_by_pk(id: Int!): members
+
+  """
+  execute function "random_image" which returns "images"
+  """
+  random_image(
+    """
+    input parameters for function "random_image"
+    """
+    args: random_image_args!
+
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): [images!]!
+
+  """
+  execute function "random_image" and query aggregates on result of table type "images"
+  """
+  random_image_aggregate(
+    """
+    input parameters for function "random_image"
+    """
+    args: random_image_args!
+
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): images_aggregate!
+
+  """
+  execute function "random_tagged_image" which returns "images"
+  """
+  random_tagged_image(
+    """
+    input parameters for function "random_tagged_image"
+    """
+    args: random_tagged_image_args!
+
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): [images!]!
+
+  """
+  execute function "random_tagged_image" and query aggregates on result of table type "images"
+  """
+  random_tagged_image_aggregate(
+    """
+    input parameters for function "random_tagged_image"
+    """
+    args: random_tagged_image_args!
+
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): images_aggregate!
+
+  """
   execute function "tag_count" which returns "tag_counts"
   """
   tag_count(
@@ -2759,6 +3440,14 @@ type query_root {
   fetch data from the table: "users" using primary key columns
   """
   users_by_pk(user_id: String!): users
+}
+
+input random_image_args {
+  tag: String!
+}
+
+input random_tagged_image_args {
+  tag: String!
 }
 
 """
@@ -3091,6 +3780,211 @@ type subscription_root {
   images_by_pk(id: Int!): images
 
   """
+  fetch data from the table: "members"
+  """
+  members(
+    """
+    distinct select on columns
+    """
+    distinct_on: [members_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [members_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: members_bool_exp
+  ): [members!]!
+
+  """
+  fetch aggregated fields from the table: "members"
+  """
+  members_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [members_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [members_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: members_bool_exp
+  ): members_aggregate!
+
+  """
+  fetch data from the table: "members" using primary key columns
+  """
+  members_by_pk(id: Int!): members
+
+  """
+  execute function "random_image" which returns "images"
+  """
+  random_image(
+    """
+    input parameters for function "random_image"
+    """
+    args: random_image_args!
+
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): [images!]!
+
+  """
+  execute function "random_image" and query aggregates on result of table type "images"
+  """
+  random_image_aggregate(
+    """
+    input parameters for function "random_image"
+    """
+    args: random_image_args!
+
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): images_aggregate!
+
+  """
+  execute function "random_tagged_image" which returns "images"
+  """
+  random_tagged_image(
+    """
+    input parameters for function "random_tagged_image"
+    """
+    args: random_tagged_image_args!
+
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): [images!]!
+
+  """
+  execute function "random_tagged_image" and query aggregates on result of table type "images"
+  """
+  random_tagged_image_aggregate(
+    """
+    input parameters for function "random_tagged_image"
+    """
+    args: random_tagged_image_args!
+
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): images_aggregate!
+
+  """
   execute function "tag_count" which returns "tag_counts"
   """
   tag_count(
@@ -3286,6 +4180,12 @@ columns and relationships of "tag_counts"
 """
 type tag_counts {
   count: bigint!
+
+  """
+  An object relationship
+  """
+  guild: guilds!
+  guild_id: String!
   name: String!
 }
 
@@ -3361,6 +4261,8 @@ input tag_counts_bool_exp {
   _not: tag_counts_bool_exp
   _or: [tag_counts_bool_exp]
   count: bigint_comparison_exp
+  guild: guilds_bool_exp
+  guild_id: text_comparison_exp
   name: text_comparison_exp
 }
 
@@ -3386,6 +4288,8 @@ input type for inserting data into table "tag_counts"
 """
 input tag_counts_insert_input {
   count: bigint
+  guild: guilds_obj_rel_insert_input
+  guild_id: String
   name: String
 }
 
@@ -3394,6 +4298,7 @@ aggregate max on columns
 """
 type tag_counts_max_fields {
   count: bigint
+  guild_id: String
   name: String
 }
 
@@ -3402,6 +4307,7 @@ order by max() on columns of table "tag_counts"
 """
 input tag_counts_max_order_by {
   count: order_by
+  guild_id: order_by
   name: order_by
 }
 
@@ -3410,6 +4316,7 @@ aggregate min on columns
 """
 type tag_counts_min_fields {
   count: bigint
+  guild_id: String
   name: String
 }
 
@@ -3418,6 +4325,7 @@ order by min() on columns of table "tag_counts"
 """
 input tag_counts_min_order_by {
   count: order_by
+  guild_id: order_by
   name: order_by
 }
 
@@ -3457,6 +4365,8 @@ ordering options when selecting data from "tag_counts"
 """
 input tag_counts_order_by {
   count: order_by
+  guild: guilds_order_by
+  guild_id: order_by
   name: order_by
 }
 
@@ -3472,6 +4382,11 @@ enum tag_counts_select_column {
   """
   column name
   """
+  guild_id
+
+  """
+  column name
+  """
   name
 }
 
@@ -3480,6 +4395,7 @@ input type for updating data in table "tag_counts"
 """
 input tag_counts_set_input {
   count: bigint
+  guild_id: String
   name: String
 }
 
@@ -3547,6 +4463,11 @@ enum tag_counts_update_column {
   column name
   """
   count
+
+  """
+  column name
+  """
+  guild_id
 
   """
   column name
@@ -3819,6 +4740,66 @@ type users {
     """
     where: images_bool_exp
   ): images_aggregate!
+
+  """
+  An array relationship
+  """
+  members(
+    """
+    distinct select on columns
+    """
+    distinct_on: [members_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [members_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: members_bool_exp
+  ): [members!]!
+
+  """
+  An aggregated array relationship
+  """
+  members_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [members_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [members_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: members_bool_exp
+  ): members_aggregate!
   name: String
   user_id: String!
 }
@@ -3868,6 +4849,7 @@ input users_bool_exp {
   image_channels: image_channels_bool_exp
   image_tags: image_tags_bool_exp
   images: images_bool_exp
+  members: members_bool_exp
   name: text_comparison_exp
   user_id: text_comparison_exp
 }
@@ -3890,6 +4872,7 @@ input users_insert_input {
   image_channels: image_channels_arr_rel_insert_input
   image_tags: image_tags_arr_rel_insert_input
   images: images_arr_rel_insert_input
+  members: members_arr_rel_insert_input
   name: String
   user_id: String
 }
@@ -3969,6 +4952,7 @@ input users_order_by {
   image_channels_aggregate: image_channels_aggregate_order_by
   image_tags_aggregate: image_tags_aggregate_order_by
   images_aggregate: images_aggregate_order_by
+  members_aggregate: members_aggregate_order_by
   name: order_by
   user_id: order_by
 }

@@ -86,5 +86,6 @@ dist/
 .idea/
 .vscode/
 data/
-.deploy/secret.txt
+src/graphql/*
+
 graphql.schema.json

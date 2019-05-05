@@ -4,7 +4,7 @@ import gql from "gql-tag/dist";
 import { sendAnalytics, withDatadog } from "./analytics/datadog";
 import { processImage } from "./archive/image";
 import { ANALYTICS_INTERVAL } from "./constants";
-import { _client, req, syncGuilds, syncUsers } from "./db";
+import { _client, req, syncAll, syncGuilds, syncUsers } from "./db";
 import { addStar, removeStar } from "./starboard";
 import { boxContents, logger } from "./utils";
 
@@ -41,7 +41,7 @@ const logStartup = (client: AkairoClient) => {
 const onReady = async (client: AkairoClient) => {
   logStartup(client);
   setInterval(() => sendAnalytics(client), ANALYTICS_INTERVAL);
-  return Promise.all([syncGuilds(client.guilds.array()), syncUsers(client.users.array())]);
+  return syncAll(client);
 };
 
 const onReactAdd = async (react: MessageReaction, user: User) => {

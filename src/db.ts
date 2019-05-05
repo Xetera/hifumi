@@ -1,15 +1,14 @@
 /// <reference path="./graphql/createClient">
-import { Guild, User } from "discord.js";
+import { AkairoClient } from "discord-akairo";
+import { Collection, Guild, GuildMember, User } from "discord.js";
 import gql from "gql-tag/dist";
 import { GraphQLClient } from "graphql-request";
 import { Variables } from "graphql-request/dist/src/types";
 import { GRAPHQL_ENDPOINT } from "./constants";
-import {
-  Guilds_Insert_Input,
-  Users_Insert_Input
-} from "./generated/graphql";
+import { Users_Insert_Input } from "./generated/graphql";
 import { createClient } from "./graphql/createClient";
 import { logger } from "./utils";
+import { guilds_constraint, guilds_update_column } from "./graphql/schema";
 
 const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
   headers: process.env.HASURA_ACCESS_KEY ? {
@@ -17,8 +16,18 @@ const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
   } : {}
 });
 
+export const syncAll = ({ guilds, users }: AkairoClient) => Promise.all([
+  syncGuilds(guilds.array()),
+  syncUsers(users.array()),
+  syncMembers(
+    new Collection<string, GuildMember>()
+      .concat(...guilds.map((guild) => guild.members))
+      .array()
+  )
+]);
+
 export const _client = createClient({
-  fetcher: ({ query, variables }, fetch) =>
+  fetcher: ({ query, variables }: { query: any, variables: any }, fetch: any) =>
     fetch(process.env.HASURA_URL!, {
       method: "POST",
       body: JSON.stringify({ query, variables }),
@@ -32,27 +41,24 @@ export const req = (q: string, vars?: Variables) => client.request(q, vars);
 
 export const syncGuilds = (guilds: Guild[]) => {
   logger.info("Synchronizing guilds");
-  const data = guilds.map((guild): Guilds_Insert_Input => ({
-    guild_id: guild.id,
-    name: guild.name,
-    enabled: true
-  }));
-  const query = gql`
-    mutation($data: [guilds_insert_input!]!) {
-      insert_guilds(
-        objects: $data
-        on_conflict: {
-          constraint: guilds_pkey
-          update_columns: [name]
-        }
-      ) {
-        returning {
-          guild_id
-        }
+  return _client.mutation({
+    insert_guilds: [{
+      objects: guilds.map((guild) => ({
+        guild_id: guild.id,
+        name: guild.name,
+        icon: guild.iconURL
+      })),
+      on_conflict: {
+        constraint: guilds_constraint.guilds_pkey,
+        update_columns: [
+          guilds_update_column.name,
+          guilds_update_column.icon
+        ]
       }
-    }
-  `;
-  return req(query, { data });
+    }, {
+      affected_rows: 1
+    }]
+  });
 };
 
 export const syncUsers = (users: User[]) => {
@@ -78,4 +84,18 @@ export const syncUsers = (users: User[]) => {
     }
   `;
   return req(query, { data });
+};
+
+const syncMembers = (members: GuildMember[]) => {
+  logger.info("Synchronizing members");
+  return _client.mutation({
+    insert_members: [{
+      objects: members.map((member: GuildMember) => ({
+        guild_id: member.guild.id,
+        user_id: member.user.id,
+      })),
+    }, {
+      affected_rows: 1
+    }]
+  });
 };
