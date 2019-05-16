@@ -1,5 +1,5 @@
 import { store } from "@/store";
-import { Snackbar } from "@/global";
+import { snackbar } from "../utils/ui";
 
 export const auth = requiresAuth => ({ meta: { requiresAuth } });
 
@@ -13,11 +13,7 @@ export const withDiscordAuth = {
   beforeEnter(to, from, next) {
     const { isAuthed } = store.state;
     if (!isAuthed) {
-      Snackbar.open({
-        message: "You are not logged in!",
-        type: "is-danger",
-        position: "is-bottom-left"
-      });
+      snackbar.requiresAuth();
     }
     next(isAuthed);
   }

@@ -1,37 +1,42 @@
 <template>
-  <div id="app">
-    <transition name="fade">
-      <video v-if="!ready" src="./assets/loading.webm" class="loading" autoplay loop></video>
-    </transition>
-    <div id="nav" v-if="ready">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <transition name="fade">
+    <LoadingScreen v-if="!ready" />
+    <div id="app" v-if="ready">
+      <div id="nav">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/about">About</router-link>
+      </div>
+      <router-view />
     </div>
-    <router-view />
-  </div>
+  </transition>
 </template>
 
 <script>
-import { Snackbar } from "./global";
+import LoadingScreen from "./components/LoadingScreen";
+import { snackbar } from "./utils/ui";
+
+const OOPS_MESSAGE_TIMEOUT = 6500;
 
 export default {
+  components: { LoadingScreen },
   mounted() {
-    this.yeet();
+    this.checkStatus();
+    setTimeout(this.handleTimeout, OOPS_MESSAGE_TIMEOUT);
   },
   methods: {
-    yeet() {
-      setTimeout(() => this.checkLoadingStatus(), 1000);
-    },
-    checkLoadingStatus() {
-      if (this.ready) {
-        return;
+    async checkStatus() {
+      try {
+        await this.$store.dispatch("checkLogin");
+        console.log(this.$store.isAuthed);
+      } catch (err) {
+        console.err(err);
       }
-      Snackbar.open({
-        indefinite: true,
-        position: "is-top",
-        message: "We can't connect to the Hifumi servers, maybe it's down? :(",
-        type: "is-danger"
-      });
+    },
+    handleTimeout() {
+      if (!this.ready) {
+        this.ready = true;
+        snackbar.serverDown();
+      }
     }
   },
   data() {
@@ -59,12 +64,5 @@ export default {
       color: #42b983;
     }
   }
-}
-.loading {
-  z-index: 100;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: 1s ease-in-out;
 }
 </style>
