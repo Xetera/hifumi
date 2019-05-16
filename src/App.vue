@@ -1,12 +1,46 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <transition name="fade">
+      <video v-if="!ready" src="./assets/loading.webm" class="loading" autoplay loop></video>
+    </transition>
+    <div id="nav" v-if="ready">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <router-view />
   </div>
 </template>
+
+<script>
+import { Snackbar } from "./global";
+
+export default {
+  mounted() {
+    this.yeet();
+  },
+  methods: {
+    yeet() {
+      setTimeout(() => this.checkLoadingStatus(), 1000);
+    },
+    checkLoadingStatus() {
+      if (this.ready) {
+        return;
+      }
+      Snackbar.open({
+        indefinite: true,
+        position: "is-top",
+        message: "We can't connect to the Hifumi servers, maybe it's down? :(",
+        type: "is-danger"
+      });
+    }
+  },
+  data() {
+    return {
+      ready: false
+    };
+  }
+};
+</script>
 
 <style lang="scss">
 #app {
@@ -25,5 +59,12 @@
       color: #42b983;
     }
   }
+}
+.loading {
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 1s ease-in-out;
 }
 </style>
