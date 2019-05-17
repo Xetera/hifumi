@@ -1,6 +1,10 @@
 <template>
   <div class="home">
-    <b-button label="Login" @click="toLogin"> </b-button>
+    <b-button v-if="!$store.state.isAuthed" label="Login" @click="toLogin">
+    </b-button>
+    <router-link v-if="$store.state.isAuthed" to="/dashboard"
+      ><a>To Dashboard</a></router-link
+    >
   </div>
 </template>
 

@@ -1,14 +1,10 @@
 <template>
-  <transition name="fade">
-    <LoadingScreen v-if="!ready" />
-    <div id="app" v-if="ready">
-      <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link>
-      </div>
-      <router-view />
-    </div>
-  </transition>
+  <div id="app">
+    <transition name="fade">
+      <LoadingScreen v-if="!ready" />
+    </transition>
+    <router-view />
+  </div>
 </template>
 
 <script>
@@ -19,29 +15,26 @@ const OOPS_MESSAGE_TIMEOUT = 6500;
 
 export default {
   components: { LoadingScreen },
-  mounted() {
+  created() {
     this.checkStatus();
     setTimeout(this.handleTimeout, OOPS_MESSAGE_TIMEOUT);
   },
   methods: {
     async checkStatus() {
-      try {
-        await this.$store.dispatch("checkLogin");
-        console.log(this.$store.isAuthed);
-      } catch (err) {
-        console.err(err);
-      }
+      await this.$store.dispatch("checkLogin");
+      this.ready = true;
     },
     handleTimeout() {
-      if (!this.ready) {
-        this.ready = true;
-        snackbar.serverDown();
+      if (this.ready) {
+        return;
       }
+      this.ready = true;
+      snackbar.serverDown();
     }
   },
   data() {
     return {
-      ready: false
+      ready: !this.$store.state.isAuthed
     };
   }
 };
@@ -49,7 +42,6 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

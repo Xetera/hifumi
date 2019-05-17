@@ -10,7 +10,8 @@ export const withoutDiscordAuth = {
 
 export const withDiscordAuth = {
   ...auth(true),
-  beforeEnter(to, from, next) {
+  async beforeEnter(to, from, next) {
+    await store.dispatch("checkLogin");
     const { isAuthed } = store.state;
     if (!isAuthed) {
       snackbar.requiresAuth();

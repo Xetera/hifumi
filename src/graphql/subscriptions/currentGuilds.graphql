@@ -1,0 +1,6 @@
+subscription  {
+  guilds {
+    guild_id
+    icon
+  }
+}
