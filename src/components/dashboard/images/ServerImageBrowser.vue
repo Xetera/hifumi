@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <div v-for="image in images" :key="image.url">
-      <ServerImage v-bind="image" />
-    </div>
+  <div class="image-grid">
+    <ServerImageGrid>
+      <div v-for="image in images" :key="image.url">
+        <ServerImage v-bind="image" />
+      </div>
+    </ServerImageGrid>
+    <ServerImagePaginator />
   </div>
 </template>
 
@@ -10,10 +13,12 @@
 import ServerImage from "./ServerImage";
 import gql from "graphql-tag";
 import { images } from "@/graphql/subscriptions";
+import ServerImageGrid from "@/components/dashboard/images/ServerImageGrid";
+import ServerImagePaginator from "@/components/dashboard/images/ServerImagePaginator";
 
 export default {
   name: "ServerImageBrowser",
-  components: { ServerImage },
+  components: { ServerImagePaginator, ServerImageGrid, ServerImage },
   data() {
     return {
       images: []
@@ -39,4 +44,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.image-grid {
+  width: 100%;
+}
+</style>

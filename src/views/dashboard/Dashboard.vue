@@ -1,13 +1,12 @@
 <template>
-  <div>
-    <div>Dashboard-sama</div>
+  <div class="dashboard">
     <DashboardServerList />
     <ServerImageBrowser />
   </div>
 </template>
 
 <script>
-import DashboardServerList from "@/components/dashboard/DashboardServerList";
+import DashboardServerList from "@/components/dashboard/DashboardMenu";
 import ServerImageBrowser from "@/components/dashboard/images/ServerImageBrowser";
 
 export default {
@@ -22,4 +21,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+</style>

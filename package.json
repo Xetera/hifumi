@@ -1,7 +1,6 @@
 {
   "name": "dashboard",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -27,7 +26,6 @@
     "vue-apollo": "^3.0.0-beta.29",
     "vue-burger-menu": "^2.0.1",
     "vue-router": "^3.0.3",
-    "vuejs-paginate": "^2.1.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
