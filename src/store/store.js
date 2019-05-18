@@ -1,13 +1,9 @@
-import Vue from "vue";
-import Vuex from "vuex";
 import { AUTH_URL } from "@/config";
 import { get } from "@/utils/http";
 import { client } from "@/graphql";
 import { currentGuilds } from "@/graphql/subscriptions";
 
-Vue.use(Vuex);
-
-export const store = new Vuex.Store({
+export const base = {
   debug: process.env.NODE_ENV !== "production",
   state: {
     isAuthed: Boolean(localStorage.getItem("loggedIn")),
@@ -34,4 +30,4 @@ export const store = new Vuex.Store({
       e.subscribe(({ data }) => ctx.commit("setGuilds", data.guilds));
     }
   }
-});
+};

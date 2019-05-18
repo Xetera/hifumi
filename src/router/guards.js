@@ -1,4 +1,4 @@
-import { store } from "@/store/store";
+import { store } from "@/store";
 import { snackbar } from "../utils/ui";
 
 export const auth = requiresAuth => ({ meta: { requiresAuth } });
