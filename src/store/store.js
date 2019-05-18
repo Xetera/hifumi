@@ -1,8 +1,8 @@
-import Vue from "vue/types";
-import Vuex from "vuex/types";
+import Vue from "vue";
+import Vuex from "vuex";
 import { AUTH_URL } from "../config";
 import { get } from "../utils/http";
-import { client } from "../vue-apollo";
+import { client } from "../graphql";
 import { currentGuilds } from "../graphql/subscriptions";
 
 Vue.use(Vuex);
@@ -10,7 +10,8 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   debug: process.env.NODE_ENV !== "production",
   state: {
-    isAuthed: Boolean(localStorage.getItem("loggedIn"))
+    isAuthed: Boolean(localStorage.getItem("loggedIn")),
+    guilds: []
   },
   mutations: {
     setAuth: (state, status) => {
@@ -20,16 +21,17 @@ export const store = new Vuex.Store({
       } else {
         localStorage.removeItem("loggedIn");
       }
-    }
+    },
+    setGuilds: (state, guilds) => (state.guilds = guilds)
   },
   actions: {
     checkLogin: ctx =>
       get(`${AUTH_URL}/auth`).then(({ authorized }) => {
         ctx.commit("setAuth", authorized);
       }),
-    subscribeGuilds: async () => {
+    subscribeGuilds: async ctx => {
       const e = await client.subscribe({ query: currentGuilds });
-      console.log(e);
+      e.subscribe(({ data }) => ctx.commit("setGuilds", data.guilds));
     }
   }
 });

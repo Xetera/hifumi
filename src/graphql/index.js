@@ -1,8 +1,5 @@
 import Vue from "vue";
 import VueApollo from "vue-apollo";
-
-// Install the vue plugin
-Vue.use(VueApollo);
 import { WebSocketLink } from "apollo-link-ws";
 import ApolloClient from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
@@ -10,6 +7,9 @@ import { split } from "apollo-link";
 import { getMainDefinition } from "apollo-utilities";
 import { HttpLink } from "apollo-link-http";
 import fetch from "isomorphic-fetch";
+
+// Install the vue plugin
+Vue.use(VueApollo);
 
 // websocket subscriptions connections do not work in a browser environment
 const wsLink = new WebSocketLink({

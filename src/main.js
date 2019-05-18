@@ -13,10 +13,10 @@ import "buefy/dist/buefy.css";
 import "./assets/css/main.css";
 
 /* Other Stuff */
-import "./vue-apollo";
-import "./registerServiceWorker";
+import "./graphql";
+import "./utils/registerServiceWorker";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { apolloProvider } from "./vue-apollo";
+import { apolloProvider } from "./graphql";
 
 Vue.config.productionTip = false;
 Vue.component("icon", FontAwesomeIcon);

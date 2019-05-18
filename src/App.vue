@@ -1,20 +1,20 @@
 <template>
   <div id="app">
     <transition name="fade">
-      <LoadingScreen v-if="!ready" />
+      <TheLoadingScreen v-if="!ready" />
     </transition>
     <router-view />
   </div>
 </template>
 
 <script>
-import LoadingScreen from "./components/LoadingScreen";
+import TheLoadingScreen from "./components/TheLoadingScreen";
 import { snackbar } from "./utils/ui";
 
 const OOPS_MESSAGE_TIMEOUT = 6500;
 
 export default {
-  components: { LoadingScreen },
+  components: { TheLoadingScreen },
   created() {
     this.checkStatus();
     setTimeout(this.handleTimeout, OOPS_MESSAGE_TIMEOUT);
@@ -34,7 +34,7 @@ export default {
   },
   data() {
     return {
-      ready: !this.$store.state.isAuthed
+      ready: false
     };
   }
 };
