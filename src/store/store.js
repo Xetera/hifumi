@@ -1,9 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { AUTH_URL } from "../config";
-import { get } from "../utils/http";
-import { client } from "../graphql";
-import { currentGuilds } from "../graphql/subscriptions";
+import { AUTH_URL } from "@/config";
+import { get } from "@/utils/http";
+import { client } from "@/graphql";
+import { currentGuilds } from "@/graphql/subscriptions";
 
 Vue.use(Vuex);
 

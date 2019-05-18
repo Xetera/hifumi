@@ -1,0 +1,5 @@
+subscription ImagesSubscription($where: images_bool_exp) {
+  images(where: $where) {
+    url
+  }
+}

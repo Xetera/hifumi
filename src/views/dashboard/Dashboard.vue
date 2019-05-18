@@ -1,16 +1,18 @@
 <template>
   <div>
     <div>Dashboard-sama</div>
-    <ServerList />
+    <DashboardServerList />
+    <ServerImageBrowser />
   </div>
 </template>
 
 <script>
-import ServerList from "../../components/dashboard/ServerList";
+import DashboardServerList from "@/components/dashboard/DashboardServerList";
+import ServerImageBrowser from "@/components/dashboard/images/ServerImageBrowser";
 
 export default {
   name: "Dashboard",
-  components: { ServerList },
+  components: { DashboardServerList, ServerImageBrowser },
   async created() {
     console.log("dashboard mounted");
 
