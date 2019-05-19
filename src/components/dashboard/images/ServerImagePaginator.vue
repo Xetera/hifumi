@@ -15,7 +15,7 @@ import gql from "graphql-tag";
 export default {
   name: "ServerImagePaginator",
   components: { BPagination },
-  computed: mapState("images", ["total", "current"]),
+  computed: mapState("images", ["total", "current", "where"]),
   apollo: {
     $subscribe: {
       image_tags: {
@@ -24,7 +24,7 @@ export default {
         `,
         variables() {
           return {
-            where: {}
+            where: this.where
           };
         },
         result({ data }) {

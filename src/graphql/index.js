@@ -7,6 +7,7 @@ import { split } from "apollo-link";
 import { getMainDefinition } from "apollo-utilities";
 import { HttpLink } from "apollo-link-http";
 import fetch from "isomorphic-fetch";
+import gql from "graphql-tag";
 
 // Install the vue plugin
 Vue.use(VueApollo);
@@ -52,3 +53,8 @@ export const apolloProvider = new VueApollo({
     console.error(error);
   }
 });
+
+export const graphql = q =>
+  gql`
+    ${q}
+  `;

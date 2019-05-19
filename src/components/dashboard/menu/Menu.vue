@@ -12,6 +12,7 @@
         Administration
       </p>
       <ul class="menu-list">
+        <MenuTags />
         <li><a>Team Settings</a></li>
         <li>
           <a class="is-active">Manage Your Team</a>
@@ -30,8 +31,10 @@
 </template>
 
 <script>
+import MenuTags from "@/components/dashboard/menu/MenuTags";
 export default {
-  name: "DashboardMenu"
+  name: "DashboardMenu",
+  components: { MenuTags }
 };
 </script>
 

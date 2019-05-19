@@ -1,0 +1,6 @@
+subscription ImageTags($limit: Int!) {
+  counts: tag_count(limit: $limit, order_by: { count: desc }) {
+    name
+    count
+  }
+}
