@@ -43,5 +43,6 @@ export default {
   padding: 10px;
   text-align: left;
   display: flex;
+  max-height: 100%;
 }
 </style>

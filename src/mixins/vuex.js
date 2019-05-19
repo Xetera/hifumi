@@ -10,3 +10,10 @@ export const makeAction = name => ({ commit }, target) => commit(name, target);
 export const addAction = name => ({
   [name]: makeAction(name)
 });
+
+export const createModule = ({ state, actions, mutations }) => ({
+  namespaced: true,
+  state,
+  actions,
+  mutations
+});

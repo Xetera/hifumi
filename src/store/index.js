@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import { base } from "@/store/store";
 import { settings } from "./modules/settings.store";
 import { images } from "./modules/images.store";
+import { tags } from "@/store/modules/tags.store";
 
 Vue.use(Vuex);
 
@@ -11,6 +12,7 @@ export const store = new Vuex.Store({
   ...base,
   modules: {
     settings,
-    images
+    images,
+    tags
   }
 });

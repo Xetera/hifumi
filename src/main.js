@@ -9,7 +9,7 @@ import { store } from "./store";
 import Buefy from "buefy";
 
 /* CSS */
-import "./assets/scss/variables.scss";
+import "./assets/scss/bulma.scss";
 import "./assets/scss/main.scss";
 
 /* Other Stuff */
