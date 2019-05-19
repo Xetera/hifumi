@@ -3,20 +3,17 @@
     <transition name="fade">
       <TheLoadingScreen v-if="!ready" />
     </transition>
-    <TheNavbar />
-    <router-view />
+    <router-view v-if="ready" />
   </div>
 </template>
 
 <script>
 import TheLoadingScreen from "./components/TheLoadingScreen";
 import { snackbar } from "./utils/ui";
-import TheNavbar from "@/components/dashboard/TheNavbar";
 
 const OOPS_MESSAGE_TIMEOUT = 6500;
-
 export default {
-  components: { TheLoadingScreen, TheNavbar },
+  components: { TheLoadingScreen },
   created() {
     this.checkStatus();
     setTimeout(this.handleTimeout, OOPS_MESSAGE_TIMEOUT);

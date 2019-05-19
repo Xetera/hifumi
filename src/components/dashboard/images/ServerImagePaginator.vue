@@ -1,15 +1,37 @@
 <template>
-  <b-pagination @change="change" total="20" />
+  <b-pagination
+    @change="change"
+    :total="total"
+    :current="current"
+    :per-page="limit"
+  />
 </template>
 
 <script>
 import BPagination from "buefy/src/components/pagination/Pagination";
+import { mapState } from "vuex";
+import { imagesAggregate } from "@/graphql/subscriptions";
+import gql from "graphql-tag";
 export default {
   name: "ServerImagePaginator",
   components: { BPagination },
-  props: {
-    total: Number,
-    change: Function
+  computed: mapState("images", ["total", "current"]),
+  apollo: {
+    $subscribe: {
+      image_tags: {
+        query: gql`
+          ${imagesAggregate}
+        `,
+        variables() {
+          return {
+            where: {}
+          };
+        },
+        result({ data }) {
+          console.log(data);
+        }
+      }
+    }
   }
 };
 </script>

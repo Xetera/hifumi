@@ -1,0 +1,7 @@
+subscription ImagesAggregate($where: images_bool_exp){
+  images: images_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}

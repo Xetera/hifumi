@@ -9,8 +9,8 @@ import { store } from "./store";
 import Buefy from "buefy";
 
 /* CSS */
-import "buefy/dist/buefy.css";
-import "./assets/css/main.css";
+import "./assets/scss/variables.scss";
+import "./assets/scss/main.scss";
 
 /* Other Stuff */
 import "./utils/registerServiceWorker";

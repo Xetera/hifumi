@@ -30,11 +30,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 export default {
-  name: "DashboardMenu",
-  computed: mapState(["guilds"])
+  name: "DashboardMenu"
 };
 </script>
 
