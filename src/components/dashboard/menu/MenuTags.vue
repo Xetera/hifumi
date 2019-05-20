@@ -15,11 +15,17 @@ import { mapState } from "vuex";
 
 export default {
   name: "MenuTags",
-  computed: mapState("tags", ["tags", "tagCount"]),
+  computed: {
+    ...mapState("tags", ["tags", "tagCount"]),
+    ...mapState("images", ["where"])
+  },
   apollo: {
     $subscribe: {
       image_tags: {
         query: graphql(imageTags),
+        variables() {
+          return { where: this.where };
+        },
         async result({ data }) {
           console.log("image tags");
           console.log(data);
@@ -28,6 +34,9 @@ export default {
       },
       max_image_tags: {
         query: graphql(imageTagsAggregate),
+        variables() {
+          return { where: this.where };
+        },
         result({ data }) {
           console.log("image tags aggregate");
           console.log(data);

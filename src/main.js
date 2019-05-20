@@ -12,15 +12,19 @@ import Buefy from "buefy";
 import "./assets/scss/bulma.scss";
 import "./assets/scss/main.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faTags } from "@fortawesome/free-solid-svg-icons";
 /* Other Stuff */
 import "./utils/registerServiceWorker";
 import { apolloProvider } from "./graphql";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons/faCog";
+import { faHome } from "@fortawesome/free-solid-svg-icons/faHome";
 
 Vue.config.productionTip = false;
 Vue.use(Buefy);
 
-library.add(faTags);
+Vue.component("fa", FontAwesomeIcon);
+library.add(faCog);
+library.add(faHome);
 
 new Vue({
   router,

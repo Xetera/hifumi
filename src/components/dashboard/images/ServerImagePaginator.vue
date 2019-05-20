@@ -19,7 +19,6 @@ export default {
   name: "ServerImagePaginator",
   components: { BPagination },
   computed: mapState("images", ["total", "current", "where", "limit"]),
-  methods() {},
   apollo: {
     $subscribe: {
       image_tags: {

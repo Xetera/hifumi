@@ -38,7 +38,7 @@ export default {
 <style scoped>
 .image-wrapper {
   display: flex;
-  padding: 10px 0;
+  margin: 20px 0;
   justify-content: center;
   max-height: 100%;
 }
