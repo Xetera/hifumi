@@ -1,27 +1,21 @@
 <template>
-  <div class="outside-wrapper">
-    <TheNavbar />
-    <div class="dashboard">
-      <DashboardServerList />
-      <ServerImageBrowser />
-    </div>
+  <div class="dashboard">
+    <MenuServerList />
+    <Menu />
+    <TheDashboardDisplay>
+      <router-view />
+    </TheDashboardDisplay>
   </div>
 </template>
 
 <script>
-import DashboardServerList from "@/components/dashboard/menu/Menu";
-import ServerImageBrowser from "@/components/dashboard/images/ServerImageBrowser";
-import TheNavbar from "@/components/dashboard/TheNavbar";
+import Menu from "@/components/dashboard/menu/Menu";
+import MenuServerList from "@/components/dashboard/menu/servers/ServerList";
+import TheDashboardDisplay from "@/components/dashboard/TheDashboardDisplay";
 
 export default {
   name: "Dashboard",
-  components: { DashboardServerList, ServerImageBrowser, TheNavbar },
-  async created() {
-    console.log("dashboard mounted");
-
-    await this.$store.dispatch("subscribeGuilds");
-    console.log(this.$store.state.guilds);
-  }
+  components: { TheDashboardDisplay, MenuServerList, Menu }
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="image-wrapper">
-    <img :src="proxyImage" alt="image" />
+    <img :src="proxyImage" alt="image" v-if="url" />
   </div>
 </template>
 
@@ -10,8 +10,7 @@ import { proxy } from "@/config";
 export default {
   name: "ServerImage",
   props: {
-    url: String,
-    image_tags: Array
+    url: String
   },
   computed: {
     proxyImage() {
@@ -21,8 +20,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.image-wrapper {
-  width: 200px;
-}
-</style>
+<style scoped></style>

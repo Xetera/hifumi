@@ -1,5 +1,5 @@
 <template>
-  <div class="image-grid">
+  <div class="grid-wrapper">
     <ServerImageGrid>
       <div v-for="image in images" :key="image.url">
         <ServerImage v-bind="image" />
@@ -10,17 +10,24 @@
 </template>
 
 <script>
-import ServerImage from "./ServerImage";
+import ServerImage from "../images/ServerImage";
 import gql from "graphql-tag";
 import { images } from "@/graphql/subscriptions";
 import ServerImageGrid from "@/components/dashboard/images/ServerImageGrid";
 import ServerImagePaginator from "@/components/dashboard/images/ServerImagePaginator";
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "ServerImageBrowser",
   components: { ServerImagePaginator, ServerImageGrid, ServerImage },
-  computed: mapState("images", ["images", "page", "where"]),
+  computed: {
+    ...mapState("images", ["images", "page"]),
+    ...mapGetters("images", ["where"]),
+    ...mapState(["guilds", "currentGuild"])
+  },
+  mounted() {
+    console.log(this.$store.getters["images/where"]);
+  },
   apollo: {
     $subscribe: {
       images: {
@@ -34,7 +41,7 @@ export default {
         },
         result({ data }) {
           console.log(data);
-          return this.$store.dispatch("images/setImages", data.images);
+          return this.$store.commit("images/setImages", data.images);
         }
       }
     }
@@ -43,7 +50,8 @@ export default {
 </script>
 
 <style scoped>
-.image-grid {
+.grid-wrapper {
   width: 100%;
+  max-height: 100%;
 }
 </style>

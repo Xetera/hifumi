@@ -1,9 +1,12 @@
 <template>
   <b-pagination
-    @change="change"
-    :total="total"
-    :current="current"
+    class="paginator"
+    order="is-centered"
+    :total="1000"
+    :current.sync="current"
     :per-page="limit"
+    aria-next-label="Next Page"
+    aria-previous-label="Previous Page"
   />
 </template>
 
@@ -15,7 +18,8 @@ import gql from "graphql-tag";
 export default {
   name: "ServerImagePaginator",
   components: { BPagination },
-  computed: mapState("images", ["total", "current", "where"]),
+  computed: mapState("images", ["total", "current", "where", "limit"]),
+  methods() {},
   apollo: {
     $subscribe: {
       image_tags: {
@@ -36,4 +40,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+@import "../../../assets/scss/_variables.scss";
+.paginator {
+  margin: 0 auto;
+  width: 80%;
+}
+.pagination-link {
+  color: $primary !important;
+}
+</style>

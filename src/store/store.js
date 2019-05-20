@@ -1,13 +1,13 @@
 import { AUTH_URL } from "@/config";
 import { get } from "@/utils/http";
-import { client } from "@/graphql";
-import { currentGuilds } from "@/graphql/subscriptions";
 
 export const base = {
   debug: process.env.NODE_ENV !== "production",
   state: {
     isAuthed: Boolean(localStorage.getItem("loggedIn")),
-    guilds: []
+    guilds: [],
+    currentGuild: 0,
+    modal: {}
   },
   mutations: {
     setAuth: (state, status) => {
@@ -18,16 +18,20 @@ export const base = {
         localStorage.removeItem("loggedIn");
       }
     },
-    setGuilds: (state, guilds) => (state.guilds = guilds)
+    setGuilds: (state, guilds) => (state.guilds = guilds),
+    setCurrentGuild: (state, guilds) => (state.currentGuild = guilds)
   },
   actions: {
     checkLogin: ctx =>
       get(`${AUTH_URL}/auth`).then(({ authorized }) => {
         ctx.commit("setAuth", authorized);
       }),
-    subscribeGuilds: async ctx => {
-      const e = await client.subscribe({ query: currentGuilds });
-      e.subscribe(({ data }) => ctx.commit("setGuilds", data.guilds));
+    setGuilds({ commit }, guilds) {
+      commit("setGuilds", guilds);
+    },
+    setCurrentGuild({ commit }, current) {
+      commit("images/reset");
+      commit("setCurrentGuild", current);
     }
   }
 };

@@ -1,6 +1,6 @@
-@import "~bulma/sass/utilities/all";
+@charset "utf-8";
+@import "~bulmaswatch/darkly/variables";
+@import "~bulma/bulma";
+@import "~bulmaswatch/darkly/overrides";
 
-$primary: red;
-
-@import "~bulma";
 @import "~buefy/src/scss/buefy";

@@ -14,6 +14,7 @@ export default {
 .image-grid {
   align-items: center;
   display: grid;
+  max-height: 100%;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 </style>

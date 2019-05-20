@@ -3,6 +3,7 @@ import Vue from "vue";
 import Home from "@/views/Home";
 import Dashboard from "@/views/dashboard/Dashboard";
 import { withDiscordAuth } from "./guards";
+import ServerImageBrowser from "@/components/dashboard/images/ServerImageBrowser";
 
 Vue.use(VueRouter);
 
@@ -14,7 +15,17 @@ const routes = [
   {
     ...withDiscordAuth,
     path: "/dashboard",
-    component: Dashboard
+    component: Dashboard,
+    children: [
+      {
+        path: "",
+        component: ServerImageBrowser
+      },
+      {
+        path: "images",
+        component: ServerImageBrowser
+      }
+    ]
   }
 ];
 

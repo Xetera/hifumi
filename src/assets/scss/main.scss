@@ -1,12 +1,14 @@
+@import "variables";
 @font-face {
   font-family: "Lato";
   src: url("../fonts/Lato-Regular.ttf") format("truetype")
 }
 
-h1, h2, h3, h4, h5, h6, p, span {
+h1, h2, h3, h4, h5, h6, p {
   font-family: "Lato", "Roboto", sans-serif !important;
 }
 
 body {
   height: 100vh;
+  background-color: $body-background-color;
 }

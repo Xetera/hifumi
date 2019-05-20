@@ -1,5 +1,5 @@
-subscription ImagesSubscription($where: images_bool_exp) {
-  images(where: $where, order_by: { created_at: desc_nulls_last }) {
+subscription ImagesSubscription($where: images_bool_exp, $limit: Int = 40) {
+  images(where: $where, order_by: { created_at: desc_nulls_last }, limit: $limit) {
     url
     image_tags {
       name
