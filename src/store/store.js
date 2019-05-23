@@ -8,13 +8,16 @@ export const base = {
   debug: process.env.NODE_ENV !== "production",
   state: {
     isAuthed: Boolean(localStorage.getItem("loggedIn")),
-    guilds: [],
+    guilds: {},
     currentGuild: null,
     modal: {}
   },
   getters: {
     guild(state) {
-      return state.guilds[state.currentGuild];
+      return state.guilds[state.route.params.guild_id];
+    },
+    guildArray(state) {
+      return Object.values(state.guilds);
     }
   },
   mutations: {
@@ -26,7 +29,15 @@ export const base = {
         localStorage.removeItem("loggedIn");
       }
     },
-    setGuilds: (state, guilds) => (state.guilds = guilds),
+    setGuilds: (state, guilds) => {
+      state.guilds = guilds.reduce(
+        (all, guild) => ({
+          ...all,
+          [guild.guild_id]: guild
+        }),
+        {}
+      );
+    },
     setCurrentGuild: (state, guilds) => (state.currentGuild = guilds)
   },
   actions: {
@@ -34,22 +45,14 @@ export const base = {
       get(`${AUTH_URL}/auth`).then(({ authorized }) => {
         ctx.commit("setAuth", authorized);
       }),
-    async subscribeGuilds({ commit, state }) {
+    async subscribeGuilds({ commit }) {
       const observable = await client.subscribe({
         query: graphql(currentGuilds)
       });
 
       observable.subscribe(({ data: { guilds } }) => {
         commit("setGuilds", guilds);
-        if (!state.currentGuild) {
-          commit("setCurrentGuild", 0);
-        }
       });
-    },
-    setCurrentGuild({ commit, dispatch }, current) {
-      commit("images/reset");
-      commit("setCurrentGuild", current);
-      dispatch("images/setWhereGuild");
     }
   }
 };

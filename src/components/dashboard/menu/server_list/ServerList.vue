@@ -33,13 +33,15 @@
 
 <script>
 import ServerListIcon from "@/components/dashboard/menu/server_list/ServerListIcon";
-import { mapState } from "vuex";
 import BTooltip from "buefy/src/components/tooltip/Tooltip";
+import { mapGetters } from "vuex";
 
 export default {
   name: "MenuServerList",
   components: { BTooltip, ServerListIcon },
-  computed: mapState(["guilds", "currentGuild"]),
+  computed: mapGetters({
+    guilds: "guildArray"
+  }),
   methods: {}
 };
 </script>

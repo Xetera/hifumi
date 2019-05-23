@@ -5,16 +5,11 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "MenuHeader",
-  computed: {
-    ...mapState(["guilds", "currentGuild"]),
-    guild() {
-      return this.guilds[this.currentGuild];
-    }
-  }
+  computed: mapGetters(["guild"])
 };
 </script>
 
