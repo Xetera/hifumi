@@ -10,11 +10,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../../../assets/scss/variables";
 .image-grid {
   align-items: center;
   display: grid;
   max-height: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax($image-width, 1fr));
 }
 </style>

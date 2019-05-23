@@ -1,6 +1,6 @@
 <template>
-  <div class="image-wrapper">
-    <img :src="proxyImage" alt="image" v-if="url" />
+  <div class="server-image-wrapper">
+    <img class="server-image" :src="proxyImage" alt="image" v-if="url" />
   </div>
 </template>
 
@@ -20,4 +20,19 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+@import "../../../assets/scss/variables";
+.server-image-wrapper {
+  cursor: pointer;
+  box-shadow: $shadow;
+  width: $image-width;
+  background-color: $background-darker;
+  padding: 5px;
+  height: $image-height + 50px;
+  display: flex;
+}
+.server-image {
+  width: $image-width;
+  height: $image-height;
+}
+</style>

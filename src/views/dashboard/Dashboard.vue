@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
-    <MenuServerList />
-    <Menu />
+    <MenuServerList class="is-hidden-mobile" />
+    <Menu class="is-hidden-mobile" />
     <TheDashboardDisplay>
       <router-view />
     </TheDashboardDisplay>
@@ -32,10 +32,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .dashboard {
   display: flex;
   flex-direction: row;
   height: 100%;
+}
+
+.sidebars {
+  @media (max-width: 767px) {
+    display: none;
+  }
 }
 </style>

@@ -44,9 +44,6 @@ export default {
 <style scoped lang="scss">
 @import "../../../assets/scss/variables";
 .menu {
-  @media (max-width: 767px) {
-    display: none;
-  }
   padding: 10px;
   text-align: left;
   display: flex;
@@ -66,8 +63,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1.5px 0 rgba(0, 0, 0, 0.05),
-    0 2px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: $bottom-shadow;
   background-color: $background-darker;
   z-index: 10;
 }

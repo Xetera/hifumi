@@ -1,11 +1,13 @@
 <template>
   <div class="grid-wrapper">
-    <ServerImageGrid>
-      <div v-for="image in images" :key="image.url">
-        <ServerImage v-bind="image" />
-      </div>
-    </ServerImageGrid>
-    <ServerImagePaginator />
+    <vue-custom-scrollbar>
+      <ServerImageGrid>
+        <div v-for="image in images" :key="image.url">
+          <ServerImage v-bind="image" />
+        </div>
+      </ServerImageGrid>
+    </vue-custom-scrollbar>
+    <ServerImagePaginator class="pagination-item" />
   </div>
 </template>
 
@@ -16,10 +18,16 @@ import { images } from "@/graphql/subscriptions";
 import ServerImageGrid from "@/components/dashboard/images/ServerImageGrid";
 import ServerImagePaginator from "@/components/dashboard/images/ServerImagePaginator";
 import { mapGetters, mapState } from "vuex";
+import VueCustomScrollbar from "vue-custom-scrollbar/src/vue-scrollbar";
 
 export default {
   name: "ServerImageBrowser",
-  components: { ServerImagePaginator, ServerImageGrid, ServerImage },
+  components: {
+    VueCustomScrollbar,
+    ServerImagePaginator,
+    ServerImageGrid,
+    ServerImage
+  },
   computed: {
     ...mapState("images", ["images", "page"]),
     ...mapGetters("images", ["where"]),
@@ -56,6 +64,10 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
   justify-content: space-between;
+}
+.pagination-item {
+  position: relative;
 }
 </style>
