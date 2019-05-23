@@ -1,10 +1,12 @@
+$loading-dark: #272727;
+$loading-light: #303030;
 .loading-animation {
   animation-duration: 10s;
   animation-fill-mode: forwards;
   animation-iteration-count: infinite;
   animation-name: placeholder-shimmer;
   animation-timing-function: linear;
-  background: linear-gradient(to right, #404040 8%, #494949 38%, #404040 54%);
+  background: linear-gradient(to right, $loading-dark 8%, $loading-light 38%, $loading-dark 54%);
   background-size: 300px 100px;
   position: relative;
 }

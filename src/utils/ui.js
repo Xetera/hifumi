@@ -5,7 +5,8 @@ export const snackbar = {
     Snackbar.open({
       indefinite: true,
       position: "is-bottom",
-      message: "We can't connect to the Hifumi servers, maybe it's down? :(",
+      message:
+        "We can't connect to the Hifumi server_list, maybe it's down? :(",
       type: "is-danger",
       actionText: "Sigh"
     }),

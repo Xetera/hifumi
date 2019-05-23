@@ -1,32 +1,17 @@
 import VueRouter from "vue-router";
 import Vue from "vue";
 import Home from "@/views/Home";
-import Dashboard from "@/views/dashboard/Dashboard";
-import { withDiscordAuth } from "./guards";
-import ServerImageBrowser from "@/components/dashboard/images/ServerImageBrowser";
+import dashboard from "@/router/dashboard";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
+    name: "bot-home",
     component: Home
   },
-  {
-    ...withDiscordAuth,
-    path: "/dashboard",
-    component: Dashboard,
-    children: [
-      {
-        path: "",
-        component: ServerImageBrowser
-      },
-      {
-        path: "images",
-        component: ServerImageBrowser
-      }
-    ]
-  }
+  dashboard
 ];
 
 export default new VueRouter({ routes, mode: "history", base: "/" });

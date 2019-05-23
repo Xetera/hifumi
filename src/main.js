@@ -18,11 +18,15 @@ import { apolloProvider } from "./graphql";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons/faCog";
 import { faHome } from "@fortawesome/free-solid-svg-icons/faHome";
+import { sync } from "vuex-router-sync";
+
+sync(store, router);
 
 Vue.config.productionTip = false;
 Vue.use(Buefy);
 
 Vue.component("fa", FontAwesomeIcon);
+
 library.add(faCog);
 library.add(faHome);
 

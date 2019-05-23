@@ -1,6 +1,6 @@
 <template>
   <div class="list-container">
-    <router-link to="dashboard/home">
+    <router-link :to="{ name: 'home' }">
       <div class="settings-icon-wrapper">
         <b-tooltip label="Settings" position="is-right">
           <fa icon="home" size="2x" class="settings-icon side-icon"></fa>
@@ -8,7 +8,7 @@
         Home
       </div>
     </router-link>
-    <router-link to="dashboard/settings">
+    <router-link :to="{ name: 'settings' }">
       <div class="settings-icon-wrapper">
         <b-tooltip label="Settings" position="is-right">
           <fa icon="cog" size="2x" class="settings-icon side-icon"></fa>
@@ -18,7 +18,9 @@
     </router-link>
     <hr />
     <div v-for="guild in guilds" :key="guild.name">
-      <router-link :to="`dashboard/server/${guild.guild_id}`">
+      <router-link
+        :to="{ name: 'guild-home', params: { guild_id: guild.guild_id } }"
+      >
         <ServerListIcon
           :icon="guild.icon"
           :name="guild.name"
@@ -30,14 +32,15 @@
 </template>
 
 <script>
-import ServerListIcon from "@/components/dashboard/menu/servers/ServerListIcon";
+import ServerListIcon from "@/components/dashboard/menu/server_list/ServerListIcon";
 import { mapState } from "vuex";
 import BTooltip from "buefy/src/components/tooltip/Tooltip";
 
 export default {
   name: "MenuServerList",
   components: { BTooltip, ServerListIcon },
-  computed: mapState(["guilds", "currentGuild"])
+  computed: mapState(["guilds", "currentGuild"]),
+  methods: {}
 };
 </script>
 

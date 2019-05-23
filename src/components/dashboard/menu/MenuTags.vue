@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <ul>
-      <li v-for="tag in tags" :key="tag.name">
-        <a>{{ tag.name }}</a>
-      </li>
-    </ul>
-  </div>
+  <ul>
+    <li v-for="tag in tags" :key="tag.name">
+      <a>{{ tag.name }}</a>
+    </li>
+  </ul>
 </template>
 
 <script>

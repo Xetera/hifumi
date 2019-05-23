@@ -6,13 +6,33 @@
         General
       </p>
       <ul class="menu-list">
-        <li><a>Dashboard</a></li>
-        <li><a>Customers</a></li>
+        <li>
+          <router-link
+            :to="{ name: 'guild-home', params: { guild_id: guild.guild_id } }"
+          >
+            <a>Home</a>
+          </router-link>
+        </li>
+        <li>
+          <router-link
+            :to="{
+              name: 'guild-settings',
+              params: { guild_id: guild.guild_id }
+            }"
+          >
+            <a>Server Settings</a>
+          </router-link>
+        </li>
       </ul>
       <p class="menu-label">
         Administration
       </p>
       <ul class="menu-list">
+        <li>
+          <a class="is-active">
+            Images
+          </a>
+        </li>
         <MenuTags />
         <li><a>Team Settings</a></li>
         <li>
@@ -35,9 +55,19 @@
 import MenuTags from "@/components/dashboard/menu/MenuTags";
 import VueCustomScrollbar from "vue-custom-scrollbar";
 import MenuHeader from "@/components/dashboard/menu/MenuHeader";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "Menu",
-  components: { MenuHeader, VueCustomScrollbar, MenuTags }
+  components: { MenuHeader, VueCustomScrollbar, MenuTags },
+  computed: {
+    ...mapState(["guilds", "currentGuild"]),
+    ...mapGetters(["guild"])
+  },
+  data() {
+    return {
+      route: this.$route
+    };
+  }
 };
 </script>
 
@@ -58,6 +88,9 @@ export default {
 .menu-label {
   color: #979797;
 }
+.menu-container {
+  height: 100%;
+}
 .menu-header {
   height: 52px;
   display: flex;
@@ -68,9 +101,14 @@ export default {
   z-index: 10;
 }
 .menu-wrapper {
-  max-height: 100%;
+  min-height: 100%;
+  min-width: 240px;
+  max-width: 240px;
   display: flex;
   flex-direction: column;
+}
+input:not(:checked) + ul {
+  display: none;
 }
 div.ps__thumb-y {
   background: $background-darkest !important;

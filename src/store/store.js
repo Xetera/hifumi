@@ -12,6 +12,11 @@ export const base = {
     currentGuild: null,
     modal: {}
   },
+  getters: {
+    guild(state) {
+      return state.guilds[state.currentGuild];
+    }
+  },
   mutations: {
     setAuth: (state, status) => {
       state.isAuthed = status;

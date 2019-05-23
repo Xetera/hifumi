@@ -37,6 +37,7 @@ export default {
 
 <style scoped>
 .image-wrapper {
+  transition: 1s ease-in-out;
   display: flex;
   margin: 20px 0;
   justify-content: center;
