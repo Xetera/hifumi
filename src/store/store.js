@@ -53,6 +53,15 @@ export const base = {
       observable.subscribe(({ data: { guilds } }) => {
         commit("setGuilds", guilds);
       });
+    },
+    async getUser() {
+      const observable = await client.subscribe({
+        query: graphql(currentGuilds)
+      });
+
+      observable.subscribe(({ data }) => {
+        console.log(data);
+      });
     }
   }
 };

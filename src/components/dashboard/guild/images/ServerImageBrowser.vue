@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import ServerImage from "../images/ServerImage";
+import ServerImage from "./ServerImage";
 import gql from "graphql-tag";
 import { images } from "@/graphql/subscriptions";
-import ServerImageGrid from "@/components/dashboard/images/ServerImageGrid";
-import ServerImagePaginator from "@/components/dashboard/images/ServerImagePaginator";
+import ServerImageGrid from "@/components/dashboard/guild/images/ServerImageGrid";
+import ServerImagePaginator from "@/components/dashboard/guild/images/ServerImagePaginator";
 import { mapGetters, mapState } from "vuex";
 import VueCustomScrollbar from "vue-custom-scrollbar/src/vue-scrollbar";
 

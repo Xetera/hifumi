@@ -14,7 +14,7 @@
 
 <script>
 import { proxy } from "@/config";
-import ServerImagePlaceholder from "@/components/dashboard/images/ServerImagePlaceholder";
+import ServerImagePlaceholder from "@/components/dashboard/guild/images/ServerImagePlaceholder";
 export default {
   name: "ServerImage",
   components: { ServerImagePlaceholder },
@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../../assets/scss/variables";
+@import "../../../../assets/scss/variables";
 .server-image-wrapper {
   cursor: pointer;
   box-shadow: $shadow;

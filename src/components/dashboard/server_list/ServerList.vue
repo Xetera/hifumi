@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import ServerListIcon from "@/components/dashboard/menu/server_list/ServerListIcon";
+import ServerListIcon from "@/components/dashboard/server_list/ServerListIcon";
 import BTooltip from "buefy/src/components/tooltip/Tooltip";
 import { mapGetters } from "vuex";
 
@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/variables";
+@import "~@/assets/scss/_variables.scss";
 .list-container {
   min-width: 72px;
   width: 72px;

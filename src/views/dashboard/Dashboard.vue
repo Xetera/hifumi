@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import Menu from "@/components/dashboard/menu/Menu";
-import MenuServerList from "@/components/dashboard/menu/server_list/ServerList";
+import Menu from "@/components/dashboard/guild/menu/Menu";
+import MenuServerList from "@/components/dashboard/server_list/ServerList";
 import TheDashboardDisplay from "@/components/dashboard/TheDashboardDisplay";
 
 export default {

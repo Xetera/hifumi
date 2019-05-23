@@ -52,9 +52,9 @@
 </template>
 
 <script>
-import MenuTags from "@/components/dashboard/menu/MenuTags";
+import MenuTags from "@/components/dashboard/guild/menu/MenuTags";
 import VueCustomScrollbar from "vue-custom-scrollbar";
-import MenuHeader from "@/components/dashboard/menu/MenuHeader";
+import MenuHeader from "@/components/dashboard/guild/menu/MenuHeader";
 import { mapGetters, mapState } from "vuex";
 export default {
   name: "Menu",
@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../../assets/scss/variables";
+@import "../../../../assets/scss/variables";
 .menu {
   padding: 10px;
   text-align: left;

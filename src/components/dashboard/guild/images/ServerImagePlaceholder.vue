@@ -12,8 +12,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../../assets/scss/variables";
-@import "../../../assets/scss/loading";
+@import "../../../../assets/scss/variables";
+@import "../../../../assets/scss/loading";
 .placeholder-wrapper {
   display: flex;
   flex-direction: column;
