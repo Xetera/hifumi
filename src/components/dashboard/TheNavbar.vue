@@ -6,7 +6,7 @@
           role="button"
           class="navbar-burger burger"
           aria-label="menu"
-          aria-expanded="false"
+          aria-expanded="true"
           data-target="navbarBasicExample"
         >
           <span aria-hidden="true"></span>
@@ -76,7 +76,7 @@ export default {
 .navbar {
   border-radius: 0;
   margin-bottom: 1rem;
-  background-color: $background;
+  background-color: $background-darkest;
 }
 .navbar-item:hover {
   color: unset;

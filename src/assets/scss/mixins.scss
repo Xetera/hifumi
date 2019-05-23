@@ -1,0 +1,40 @@
+@import "variables";
+
+/* Responsive Design */
+@mixin on-tablet {
+  @media (min-width: #{$mobile-width}){
+    @content
+  }
+}
+
+@mixin on-desktop {
+  @media (min-width: #{$tablet-width}) {
+    @content
+  }
+}
+
+/* Helpers */
+@mixin h-center {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin v-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin center {
+  @include v-center;
+  @include h-center;
+}
+
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}

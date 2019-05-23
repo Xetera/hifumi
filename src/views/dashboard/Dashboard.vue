@@ -1,5 +1,8 @@
 <template>
   <div class="dashboard">
+    <div class="is-hidden-tablet">
+      <TheNavbar />
+    </div>
     <MenuServerList class="is-hidden-mobile" />
     <Menu class="is-hidden-mobile" />
     <TheDashboardDisplay>
@@ -12,10 +15,11 @@
 import Menu from "@/components/dashboard/guild/menu/Menu";
 import MenuServerList from "@/components/dashboard/server_list/ServerList";
 import TheDashboardDisplay from "@/components/dashboard/TheDashboardDisplay";
+import TheNavbar from "@/components/dashboard/TheNavbar";
 
 export default {
   name: "Dashboard",
-  components: { TheDashboardDisplay, MenuServerList, Menu },
+  components: { TheNavbar, TheDashboardDisplay, MenuServerList, Menu },
   async mounted() {
     await this.$store.dispatch("subscribeGuilds");
   }
@@ -23,15 +27,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../../assets/scss/mixins";
 .dashboard {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-}
-
-.sidebars {
-  @media (max-width: 767px) {
-    display: none;
+  @include flex-col;
+  @include on-tablet {
+    flex-direction: row;
   }
+  height: 100%;
 }
 </style>
