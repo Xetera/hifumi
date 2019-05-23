@@ -40,7 +40,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../../../assets/scss/variables";
 .paginator {
   margin: 0 auto;
   width: 80%;

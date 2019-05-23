@@ -40,17 +40,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../../../assets/scss/variables";
 .server-image-wrapper {
+  @include shadowed;
   cursor: pointer;
-  box-shadow: $shadow;
   width: $image-width;
   background-color: $background-darker;
   height: $image-height + 50px;
   display: flex;
 }
 .server-image {
-  width: $image-width;
-  height: $image-height;
+  @include image-dimensions;
 }
 </style>

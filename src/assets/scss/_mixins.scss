@@ -38,3 +38,12 @@
   display: flex;
   flex-direction: column;
 }
+
+@mixin shadowed {
+  box-shadow: $shadow;
+}
+
+@mixin image-dimensions {
+  height: $image-height;
+  width: $image-width;
+}

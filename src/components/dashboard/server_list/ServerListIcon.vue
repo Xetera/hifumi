@@ -35,12 +35,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .image-wrapper {
+  @include h-center;
   transition: 1s ease-in-out;
-  display: flex;
   margin: 20px 0;
-  justify-content: center;
   max-height: 100%;
 }
 .server-icon {

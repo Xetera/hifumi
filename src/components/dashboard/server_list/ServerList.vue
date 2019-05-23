@@ -47,7 +47,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/_variables.scss";
 .list-container {
   min-width: 72px;
   width: 72px;
