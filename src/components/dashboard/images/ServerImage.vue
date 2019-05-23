@@ -1,20 +1,39 @@
 <template>
   <div class="server-image-wrapper">
-    <img class="server-image" :src="proxyImage" alt="image" v-if="url" />
+    <ServerImagePlaceholder v-if="!loaded"></ServerImagePlaceholder>
+    <img
+      class="server-image"
+      :src="proxyImage"
+      alt="image"
+      v-if="url"
+      :style="{ display: loaded ? 'block' : 'none' }"
+      @load="removePlaceholder"
+    />
   </div>
 </template>
 
 <script>
 import { proxy } from "@/config";
-
+import ServerImagePlaceholder from "@/components/dashboard/images/ServerImagePlaceholder";
 export default {
   name: "ServerImage",
+  components: { ServerImagePlaceholder },
   props: {
     url: String
+  },
+  data() {
+    return {
+      loaded: false
+    };
   },
   computed: {
     proxyImage() {
       return proxy(this.url);
+    }
+  },
+  methods: {
+    async removePlaceholder() {
+      this.loaded = true;
     }
   }
 };
@@ -27,7 +46,6 @@ export default {
   box-shadow: $shadow;
   width: $image-width;
   background-color: $background-darker;
-  padding: 5px;
   height: $image-height + 50px;
   display: flex;
 }

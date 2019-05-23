@@ -1,6 +1,6 @@
 <template>
   <div class="grid-wrapper">
-    <vue-custom-scrollbar>
+    <vue-custom-scrollbar class="scroller">
       <ServerImageGrid>
         <div v-for="image in images" :key="image.url">
           <ServerImage v-bind="image" />
@@ -66,6 +66,10 @@ export default {
   flex-direction: column;
   overflow-y: auto;
   justify-content: space-between;
+}
+
+.scroller {
+  overflow-x: hidden;
 }
 .pagination-item {
   position: relative;

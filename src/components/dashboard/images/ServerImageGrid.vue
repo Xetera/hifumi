@@ -16,7 +16,7 @@ export default {
   align-items: center;
   display: grid;
   max-height: 100%;
-  grid-gap: 8px;
+  grid-gap: 12px;
   grid-template-columns: repeat(auto-fit, minmax($image-width, 1fr));
 }
 </style>
