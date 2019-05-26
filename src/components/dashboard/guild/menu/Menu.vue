@@ -34,7 +34,10 @@
       <ul class="menu-list">
         <li>
           <router-link
-            :to="{ name: 'guild-images', params: { guild_id: guild.guild_id } }"
+            :to="{
+              name: 'guild-images',
+              params: { guild_id: guild.guild_id }
+            }"
           >
             <a>Images</a>
           </router-link>

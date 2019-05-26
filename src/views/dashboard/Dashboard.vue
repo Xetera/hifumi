@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import TheDashboardDisplay from "@/components/dashboard/TheDashboardDisplay";
+import TheDashboardDisplay from "@/views/dashboard/TheDashboardDisplay";
 import TheNavbar from "@/components/dashboard/TheNavbar";
 import ServerList from "@/components/dashboard/server_list/ServerList";
 

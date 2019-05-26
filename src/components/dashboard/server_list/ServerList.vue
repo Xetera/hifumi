@@ -48,6 +48,7 @@ export default {
 
 <style scoped lang="scss">
 .list-container {
+  z-index: 5;
   min-width: 72px;
   width: 72px;
   max-height: 100%;
