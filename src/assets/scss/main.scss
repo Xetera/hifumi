@@ -19,6 +19,13 @@ body {
   background-color: $body-background-color;
 }
 
+.disabled-link {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
 // Perfect scrollbar overrides
 div.ps__thumb-y {
   background: $background-darkest !important;

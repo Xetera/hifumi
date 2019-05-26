@@ -18,7 +18,7 @@
 }
 .loading {
   position: absolute;
-  width: 50%;
+  width: 65%;
 }
 @media (max-width: 767px) {
   .loading {

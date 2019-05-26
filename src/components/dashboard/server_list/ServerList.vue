@@ -59,6 +59,9 @@ export default {
   color: #dddddd;
   font-size: 12px;
 }
+.router-link-exact-active div {
+  box-shadow: $bottom-shadow;
+}
 hr {
   margin: 10px auto;
   width: 80%;

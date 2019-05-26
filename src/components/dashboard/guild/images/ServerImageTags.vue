@@ -9,11 +9,12 @@
 <script>
 import { imageTags, imageTagsAggregate } from "@/graphql/subscriptions";
 import { graphql } from "@/graphql";
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "MenuTags",
   computed: {
+    ...mapGetters(["guild"]),
     ...mapState("tags", ["tags", "tagCount"]),
     ...mapState("images", ["where"])
   },
