@@ -39,13 +39,6 @@
             <a>Images</a>
           </router-link>
         </li>
-        <li>
-          <ul>
-            <li><a>Tags</a></li>
-          </ul>
-        </li>
-        <li><a>Members</a></li>
-        <li><a>Auto-tag Channels</a></li>
       </ul>
     </vue-custom-scrollbar>
   </div>
@@ -75,8 +68,11 @@ export default {
   overflow-x: hidden;
 }
 .menu-list {
-  a:hover {
-    background-color: #494c54;
+  a {
+    padding: 4px;
+    &:hover {
+      background-color: #494c54;
+    }
   }
   max-height: 100%;
 }
@@ -96,6 +92,7 @@ export default {
   z-index: 10;
 }
 .menu-wrapper {
+  transition: 1s ease-in-out;
   min-height: 100%;
   min-width: 240px;
   max-width: 240px;

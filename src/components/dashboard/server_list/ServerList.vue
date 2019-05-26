@@ -37,7 +37,7 @@ import BTooltip from "buefy/src/components/tooltip/Tooltip";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "MenuServerList",
+  name: "ServerList",
   components: { BTooltip, ServerListIcon },
   computed: mapGetters({
     guilds: "guildArray"

@@ -5,6 +5,7 @@ import DashboardHome from "@/components/dashboard/DashboardHome";
 import Dashboard from "@/views/dashboard/Dashboard";
 import DashboardSettings from "@/components/dashboard/DashboardSettings";
 import GuildSettings from "@/components/dashboard/guild/GuildSettings";
+import Guild from "@/views/dashboard/Guild";
 
 export default {
   ...withDiscordAuth,
@@ -23,7 +24,7 @@ export default {
     },
     {
       path: ":guild_id",
-      component: ServerHome,
+      component: Guild,
       children: [
         {
           path: "",
