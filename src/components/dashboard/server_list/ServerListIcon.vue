@@ -2,15 +2,8 @@
   <div class="image-wrapper">
     <b-tooltip :label="name" position="is-right" class="image is-48x48">
       <img
-        class="server-icon is-rounded"
-        :src="proxyImage"
-        alt="image"
-        v-if="icon"
-      />
-      <img
         alt="placeholder"
         src="http://www.stickpng.com/assets/thumbs/5a4613ddd099a2ad03f9c994.png"
-        v-if="!icon"
       />
     </b-tooltip>
   </div>
@@ -24,7 +17,7 @@ export default {
   name: "ServerListIcon",
   components: { BTooltip },
   props: {
-    icon: String,
+    // icon: String,
     name: String
   },
   computed: {

@@ -46,12 +46,15 @@ export const base = {
         ctx.commit("setAuth", authorized);
       }),
     async subscribeGuilds({ commit }) {
-      const observable = await client.subscribe({
-        query: graphql(currentGuilds)
-      });
+      return new Promise(async res => {
+        const observable = await client.subscribe({
+          query: graphql(currentGuilds)
+        });
 
-      observable.subscribe(({ data: { guilds } }) => {
-        commit("setGuilds", guilds);
+        observable.subscribe(({ data: { guilds } }) => {
+          commit("setGuilds", guilds);
+          res();
+        });
       });
     },
     async getUser() {

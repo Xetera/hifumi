@@ -1,7 +1,6 @@
 subscription CurrentGuilds {
   guilds {
     guild_id
-    icon
     name
   }
 }

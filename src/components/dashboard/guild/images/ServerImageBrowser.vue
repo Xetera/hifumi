@@ -13,11 +13,9 @@
 
 <script>
 import ServerImage from "./ServerImage";
-import gql from "graphql-tag";
-import { images } from "@/graphql/subscriptions";
 import ServerImageGrid from "@/components/dashboard/guild/images/ServerImageGrid";
 import ServerImagePaginator from "@/components/dashboard/guild/images/ServerImagePaginator";
-import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 import VueCustomScrollbar from "vue-custom-scrollbar/src/vue-scrollbar";
 
 export default {
@@ -30,29 +28,7 @@ export default {
   },
   computed: {
     ...mapState("images", ["images", "page"]),
-    ...mapGetters("images", ["where"]),
     ...mapState(["guilds", "currentGuild"])
-  },
-  mounted() {
-    console.log(this.$store.getters["images/where"]);
-  },
-  apollo: {
-    $subscribe: {
-      images: {
-        query: gql`
-          ${images}
-        `,
-        variables() {
-          return {
-            where: this.where
-          };
-        },
-        result({ data }) {
-          console.log(data);
-          return this.$store.commit("images/setImages", data.images);
-        }
-      }
-    }
   }
 };
 </script>
@@ -60,6 +36,7 @@ export default {
 <style scoped lang="scss">
 .grid-wrapper {
   @include flex-col;
+  padding: 10px;
   width: 100%;
   max-height: 100%;
   height: 100%;

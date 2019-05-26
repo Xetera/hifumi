@@ -1,8 +1,9 @@
 import { addMutation, createModule } from "@/mixins/vuex";
 const state = {
   images: [],
-  limit: 30,
+  limit: 40,
   where: {},
+  offset: 0,
   page: 1,
   total: 1
 };
@@ -12,14 +13,15 @@ export const images = createModule({
   mutations: {
     ...addMutation("setImages", "images"),
     ...addMutation("setPage", "page"),
+    ...addMutation("setTotal", "total"),
     ...addMutation("setWhere", "where"),
+    ...addMutation("setOffset", "offset"),
     // eslint-disable-next-line
-    reset: ctx => (ctx = state)
+    reset: ctx => Object.assign(ctx, state)
   },
   actions: {
-    setWhereGuild({ commit, rootState }) {
-      const currentGuild = rootState.guilds[rootState.currentGuild];
-      console.log(currentGuild);
+    setWhereGuild({ commit, rootState }, id) {
+      const currentGuild = rootState.guilds[String(id)];
       let where;
       if (currentGuild) {
         where = {
@@ -32,6 +34,10 @@ export const images = createModule({
         where = state.where;
       }
       return commit("setWhere", where);
+    },
+    setPage({ commit, state }, page) {
+      commit("setPage", page);
+      return commit("setOffset", (page - 1) * state.limit);
     }
   }
 });

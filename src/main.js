@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons/faCog";
 import { faHome } from "@fortawesome/free-solid-svg-icons/faHome";
 import { sync } from "vuex-router-sync";
+import { faLock } from "@fortawesome/free-solid-svg-icons/faLock";
 
 sync(store, router);
 
@@ -28,6 +29,7 @@ Vue.use(Buefy);
 Vue.component("fa", FontAwesomeIcon);
 
 library.add(faCog);
+library.add(faLock);
 library.add(faHome);
 
 new Vue({

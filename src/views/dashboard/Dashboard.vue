@@ -4,7 +4,7 @@
       <TheNavbar />
     </div>
     <ServerList class="is-hidden-mobile" />
-    <TheDashboardDisplay>
+    <TheDashboardDisplay v-if="ready">
       <router-view />
     </TheDashboardDisplay>
   </div>
@@ -18,8 +18,14 @@ import ServerList from "@/components/dashboard/server_list/ServerList";
 export default {
   name: "Dashboard",
   components: { TheNavbar, TheDashboardDisplay, ServerList },
-  async mounted() {
+  data() {
+    return {
+      ready: false
+    };
+  },
+  async created() {
     await this.$store.dispatch("subscribeGuilds");
+    this.ready = true;
   }
 };
 </script>

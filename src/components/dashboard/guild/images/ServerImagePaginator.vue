@@ -2,9 +2,10 @@
   <b-pagination
     class="paginator"
     order="is-centered"
-    :total="1000"
-    :current.sync="current"
+    :total="total"
+    :current="page"
     :per-page="limit"
+    @change="change"
     aria-next-label="Next Page"
     aria-previous-label="Previous Page"
   />
@@ -13,27 +14,13 @@
 <script>
 import BPagination from "buefy/src/components/pagination/Pagination";
 import { mapState } from "vuex";
-import { imagesAggregate } from "@/graphql/subscriptions";
-import gql from "graphql-tag";
 export default {
   name: "ServerImagePaginator",
   components: { BPagination },
-  computed: mapState("images", ["total", "current", "where", "limit"]),
-  apollo: {
-    $subscribe: {
-      image_tags: {
-        query: gql`
-          ${imagesAggregate}
-        `,
-        variables() {
-          return {
-            where: this.where
-          };
-        },
-        result({ data }) {
-          console.log(data);
-        }
-      }
+  computed: mapState("images", ["total", "current", "where", "limit", "page"]),
+  methods: {
+    change(count) {
+      this.$store.dispatch("images/setPage", count);
     }
   }
 };

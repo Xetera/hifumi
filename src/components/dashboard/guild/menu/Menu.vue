@@ -3,30 +3,29 @@
     <MenuHeader class="menu-header" />
     <vue-custom-scrollbar class="menu-container menu" tagname="aside">
       <ul class="menu-list">
-        <li>
-          <router-link
-            class="router-link"
-            :to="{ name: 'guild-home', params: { guild_id: guild.guild_id } }"
-          >
-            <a>Home</a>
-          </router-link>
-        </li>
+        <router-link
+          class="router-link"
+          tag="li"
+          :to="{ name: 'guild-home', params: { guild_id: guild.guild_id } }"
+        >
+          <a>Home</a>
+        </router-link>
       </ul>
       <p class="menu-label">
         Administration
       </p>
       <ul class="menu-list">
-        <li>
-          <router-link
-            class="router-link"
-            :to="{
-              name: 'guild-settings',
-              params: { guild_id: guild.guild_id }
-            }"
-          >
-            <a>Server Settings</a>
-          </router-link>
-        </li>
+        <router-link
+          class="router-link"
+          tag="li"
+          :to="{
+            name: 'guild-settings',
+            params: { guild_id: guild.guild_id }
+          }"
+        >
+          <fa icon="lock" />
+          <a>Server Settings</a>
+        </router-link>
       </ul>
       <p class="menu-label">
         Media
@@ -72,7 +71,8 @@ export default {
 }
 .menu-list {
   a {
-    padding: 4px;
+    padding: 7px;
+    width: 100%;
     &:hover {
       background-color: #494c54;
     }
@@ -118,8 +118,8 @@ export default {
   background-color: #494c54;
 }
 
-.menu-list li a.is-active {
-  /*background-color: #2c3e50;*/
+.menu-list li {
+  @include v-center;
 }
 
 div.ps__thumb-y {
