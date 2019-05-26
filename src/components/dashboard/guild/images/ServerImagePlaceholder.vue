@@ -1,7 +1,6 @@
 <template>
   <div class="placeholder-wrapper">
     <div class="placeholder-image loading-animation"></div>
-    <div class="placeholder-tags loading-animation"></div>
   </div>
 </template>
 
