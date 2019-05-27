@@ -28,25 +28,16 @@ private const val SCOPE_TYPE = "identify"
 
 data class HasuraResponse(
   /**
-   * The name of the
+   * the Discord ID of the logged in user
    */
-  @SerializedName("X-Hasura-User-Id") val userId: String
-  /**
-   * The guilds the user is a part of in a stringified form
-   *
-   * important: This has to be implemented like this and not as
-   * an array of strings because hasura currently does not support
-   * permission checks on arrays
-   * https://github.com/hasura/graphql-engine/issues/1333
-   * @example "123456,1951617112,684582342"
-   */
-//  @SerializedName("X-Hasura-Guilds") val guilds: String
+  @SerializedName("X-Hasura-User-Id") val userId: String,
+  @SerializedName("X-Hasura-Role") val role: String
 )
 
+data class AuthorizedResponse(val authorized: Boolean)
+
 data class UserCache(
-//  val oauth: OAuthResponse,
   val user: OAuthUserObj
-//  val guilds: List<UserGuild>
 )
 
 data class UserGuild(
@@ -55,9 +46,12 @@ data class UserGuild(
   val icon: String,
   val id: String,
   val name: String
-) {
-  override fun toString(): String = this.id
-}
+)
+
+data class User(
+  val name: String,
+  val id: String
+)
 
 data class OAuthResponse(
   val access_token: String,
@@ -92,23 +86,27 @@ fun getParams(code: String): List<Pair<String, Any?>> = listOf(
 suspend fun getData(code: String): OAuthResponse {
   val headers = mapOf("User-Agent" to USER_AGENT, "Content-Type" to CONTENT_TYPE)
   val parameters = getParams(code)
-  return post(API_ENDPOINT + API_TOKEN, OAuthResponse::class.java, parameters, headers)
+  val endpoint = API_ENDPOINT + API_TOKEN
+  return post(endpoint, OAuthResponse::class.java, parameters, headers)
 }
 
 suspend fun getGuilds(headers: Map<String, String>): List<UserGuild> =
-  get("$API_ENDPOINT/users/@me/guilds", Array<UserGuild>::class.java, headers).toList()
+  get("$API_ENDPOINT/users/@me/guilds", Array<UserGuild>::class.java, headers)
+    .toList()
 
 suspend fun callbackHandle(code: String, ctx: PipelineContext<Unit, ApplicationCall>): String {
-  val e = ctx.call.sessions.get<OAuthUserObj>()
-  println(e)
   val returnData = getData(code)
   val auth = "${returnData.token_type} ${returnData.access_token}"
-  val headers = mapOf("User-Agent" to USER_AGENT,
+
+  val headers = mapOf(
+    "User-Agent" to USER_AGENT,
     "Content-Type" to CONTENT_TYPE,
-    "Authorization" to auth)
+    "Authorization" to auth
+  )
+
   val response = get("$API_ENDPOINT/users/@me", OAuthUserObj::class.java, headers)
 
-  val cache = UserCache(user = response)
+  val cache = UserCache(response)
   ctx.call.sessions.set(response)
 
   return gson.toJson(cache)
@@ -122,5 +120,16 @@ suspend fun callbackHandle(code: String, ctx: PipelineContext<Unit, ApplicationC
  */
 fun authorize(session: CurrentSession): HasuraResponse? {
   val sess = session.get<OAuthUserObj>() ?: return null
-  return HasuraResponse(sess.id)
+  return HasuraResponse(sess.id, role = "user")
 }
+
+fun retrieveLoginStatus(session: CurrentSession): AuthorizedResponse {
+  val sess = session.get<OAuthUserObj>()
+  return AuthorizedResponse(sess != null)
+}
+
+//fun retreiveUser(session: CurrentSession): User? {
+//  val sess = session.get<OAuthUserObj>() ?: return null
+//
+//  return User(sess)
+//}

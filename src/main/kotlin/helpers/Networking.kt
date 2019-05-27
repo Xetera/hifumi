@@ -11,7 +11,8 @@ suspend fun <T> get(url: String, json: Class<T>, headers: Map<String, Any>?): T 
   return gson.fromJson(
     Fuel.get(url)
       .header(headers ?: defaultHeaders)
-      .awaitStringResponse().third, json
+      .awaitStringResponse().third,
+    json
   )
 }
 
