@@ -1,6 +1,6 @@
 {
-  "name": "dashboard",
-  "short_name": "dashboard",
+  "name": "Hifumi Images",
+  "short_name": "Hifumi",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
