@@ -10,6 +10,7 @@ subscription ImagesSubscription(
     offset: $offset
   ) {
     url
+    created_at
     user {
       name
       avatar

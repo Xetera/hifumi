@@ -25,7 +25,12 @@
     </div>
     <div v-if="loaded" class="image-bottom">
       <div class="image-user">
-        <img class="image-user-avatar" :src="user.avatar" alt="user-avatar" />
+        <img
+          class="image-user-avatar"
+          :src="avatar"
+          alt="user-avatar"
+          @error="imageLoadError"
+        />
         <div>
           <p class="image-user-name">{{ user.name }}</p>
         </div>
@@ -36,6 +41,7 @@
 
 <script>
 import { proxy } from "@/config";
+import placeholder from "@/assets/logo.png";
 import ServerImagePlaceholder from "@/components/dashboard/guild/images/ImagePlaceholder";
 import ImageTag from "@/components/dashboard/guild/images/ImageTag";
 export default {
@@ -44,10 +50,12 @@ export default {
   props: {
     url: String,
     image_tags: Array,
-    user: Object
+    user: Object,
+    created_at: String
   },
   data() {
     return {
+      avatar: this.user.avatar,
       loaded: false,
       hovering: false
     };
@@ -69,6 +77,9 @@ export default {
     },
     setHover(state) {
       this.hovering = state;
+    },
+    imageLoadError() {
+      this.avatar = placeholder;
     }
   }
 };
