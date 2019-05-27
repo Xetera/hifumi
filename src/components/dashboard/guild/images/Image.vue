@@ -1,5 +1,5 @@
 <template>
-  <div class="server-image-wrapper">
+  <div class="server-image-wrapper" @click="$emit('open-modal', $props)">
     <ServerImagePlaceholder v-if="!loaded"></ServerImagePlaceholder>
     <div
       class="overlay-anchor"
@@ -17,6 +17,17 @@
       <div v-if="loaded && hovering" class="image-tags">
         <div v-for="tag in relevantTags" :key="tag.name">
           <ImageTag :name="tag.name" />
+        </div>
+        <div v-if="remainingTags > 0">
+          <ImageTag :name="`${remainingTags} more tags`" />
+        </div>
+      </div>
+    </div>
+    <div v-if="loaded" class="image-bottom">
+      <div class="image-user">
+        <img class="image-user-avatar" :src="user.avatar" alt="user-avatar" />
+        <div>
+          <p class="image-user-name">{{ user.name }}</p>
         </div>
       </div>
     </div>
@@ -47,6 +58,9 @@ export default {
     },
     relevantTags() {
       return this.image_tags.slice(0, 4);
+    },
+    remainingTags() {
+      return this.image_tags.slice(4).length;
     }
   },
   methods: {
@@ -61,21 +75,41 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$image-bottom-height: 40px;
+
 .server-image-wrapper {
   @include shadowed;
+  @include flex-col;
   cursor: pointer;
   width: $image-width;
-  background-color: $background-darker;
-  height: $image-height + 50px;
-  display: flex;
+  background-color: $background-semidark;
+  height: $image-height + $image-bottom-height;
 }
 .server-image {
   @include image-dimensions;
   position: absolute;
 }
+
+.image-user {
+  @include flex-row;
+  @include center;
+  justify-content: flex-start;
+  height: $image-bottom-height;
+}
+.image-user-avatar {
+  @include rounded;
+  margin: 0 10px;
+  max-height: 50%;
+  max-width: 50%;
+}
+.image-user-name {
+  color: #dddddd;
+  font-size: 13px;
+}
 .overlay-anchor {
   width: $image-width;
   height: $image-height;
+  min-height: $image-height;
   position: relative;
 }
 .image-tags {

@@ -43,6 +43,10 @@
   box-shadow: $shadow;
 }
 
+@mixin rounded {
+  border-radius: 99999px;
+}
+
 @mixin image-dimensions {
   height: $image-height;
   width: $image-width;

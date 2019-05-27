@@ -1,24 +1,29 @@
 <template>
-  <div class="text">
+  <span class="text">
     {{ name }}
-  </div>
+  </span>
 </template>
 
 <script>
 export default {
   name: "ImageTag",
   props: {
-    name: String
+    name: String,
+    color: {
+      type: String,
+      optional: true
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
 .text {
-  padding: 1px;
+  transition: 1s ease-in-out;
+  padding: 3px;
   margin: 2px;
-  background-color: #fff;
-  color: #36393f;
+  background-color: rgba($background-darker, 0.7);
+  color: #dcdcdc;
   opacity: 1;
   font-size: 12px;
 }

@@ -85,15 +85,6 @@ export default {
 .menu-container {
   height: 100%;
 }
-.menu-header {
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: $bottom-shadow;
-  background-color: $background-darker;
-  z-index: 10;
-}
 .menu-wrapper {
   transition: 1s ease-in-out;
   min-height: 100%;

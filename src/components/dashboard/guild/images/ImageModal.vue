@@ -1,10 +1,16 @@
 <template>
-  <div></div>
+  <div>
+    <img :src="url" alt="modal-image" />
+  </div>
 </template>
 
 <script>
 export default {
-  name: "ImageModal"
+  name: "ImageModal",
+  props: {
+    user: Object,
+    url: String
+  }
 };
 </script>
 
