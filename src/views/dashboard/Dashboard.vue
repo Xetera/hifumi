@@ -13,7 +13,7 @@
 <script>
 import TheDashboardDisplay from "@/views/dashboard/TheDashboardDisplay";
 import TheNavbar from "@/components/dashboard/TheNavbar";
-import ServerList from "@/components/dashboard/server_list/ServerList";
+import ServerList from "@/components/dashboard/server_list/GuildList";
 
 export default {
   name: "Dashboard",

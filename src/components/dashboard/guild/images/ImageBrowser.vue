@@ -12,14 +12,14 @@
 </template>
 
 <script>
-import ServerImage from "./ServerImage";
-import ServerImageGrid from "@/components/dashboard/guild/images/ServerImageGrid";
-import ServerImagePaginator from "@/components/dashboard/guild/images/ServerImagePaginator";
+import ServerImage from "./Image";
+import ServerImageGrid from "@/components/dashboard/guild/images/ImageGrid";
+import ServerImagePaginator from "@/components/dashboard/guild/images/ImagePaginator";
 import { mapState } from "vuex";
 import VueCustomScrollbar from "vue-custom-scrollbar/src/vue-scrollbar";
 
 export default {
-  name: "ServerImageBrowser",
+  name: "ImageBrowser",
   components: {
     VueCustomScrollbar,
     ServerImagePaginator,

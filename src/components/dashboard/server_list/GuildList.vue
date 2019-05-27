@@ -32,12 +32,12 @@
 </template>
 
 <script>
-import ServerListIcon from "@/components/dashboard/server_list/ServerListIcon";
+import ServerListIcon from "@/components/dashboard/server_list/GuildListIcon";
 import BTooltip from "buefy/src/components/tooltip/Tooltip";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "ServerList",
+  name: "GuildList",
   components: { BTooltip, ServerListIcon },
   computed: mapGetters({
     guilds: "guildArray"

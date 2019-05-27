@@ -10,6 +10,10 @@ subscription ImagesSubscription(
     offset: $offset
   ) {
     url
+    user {
+      name
+      avatar
+    }
     image_tags {
       name
     }

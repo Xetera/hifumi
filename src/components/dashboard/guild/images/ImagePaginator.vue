@@ -15,7 +15,7 @@
 import BPagination from "buefy/src/components/pagination/Pagination";
 import { mapState } from "vuex";
 export default {
-  name: "ServerImagePaginator",
+  name: "ImagePaginator",
   components: { BPagination },
   computed: mapState("images", ["total", "current", "where", "limit", "page"]),
   methods: {

@@ -12,7 +12,7 @@ import { graphql } from "@/graphql";
 import { mapGetters, mapState } from "vuex";
 
 export default {
-  name: "MenuTags",
+  name: "ImageTags",
   computed: {
     ...mapGetters(["guild"]),
     ...mapState("tags", ["tags", "tagCount"]),

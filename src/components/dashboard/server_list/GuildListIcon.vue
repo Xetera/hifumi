@@ -14,7 +14,7 @@ import { proxy } from "@/config";
 import BTooltip from "buefy/src/components/tooltip/Tooltip";
 
 export default {
-  name: "ServerListIcon",
+  name: "GuildListIcon",
   components: { BTooltip },
   props: {
     // icon: String,
