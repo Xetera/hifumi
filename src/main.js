@@ -23,6 +23,9 @@ import { faLock } from "@fortawesome/free-solid-svg-icons/faLock";
 import { faStar } from "@fortawesome/free-solid-svg-icons/faStar";
 import { faCircle } from "@fortawesome/free-regular-svg-icons/faCircle";
 import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons/faCalendarAlt";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons/faAngleLeft";
+import { faEdit } from "@fortawesome/free-solid-svg-icons/faEdit";
 
 sync(store, router);
 
@@ -31,7 +34,17 @@ Vue.use(Buefy);
 
 Vue.component("fa", FontAwesomeIcon);
 
-library.add(faCog, faLock, faStar, faHome, faCircle, faCalendarAlt);
+library.add(
+  faCog,
+  faLock,
+  faStar,
+  faHome,
+  faCircle,
+  faCalendarAlt,
+  faAngleRight,
+  faAngleLeft,
+  faEdit
+);
 
 new Vue({
   router,

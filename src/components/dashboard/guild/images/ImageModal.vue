@@ -5,7 +5,7 @@
         <img
           class="user-avatar"
           :src="avatar"
-          @error="onLoadFail"
+          @error="onAvatarLoadFail"
           alt="user-avatar"
         />
         <div class="modal-top-text">
@@ -17,27 +17,61 @@
         </div>
       </div>
       <div class="modal-stars">
-        <button class="button star-button">
-          <a class="star-button">
+        <b-tooltip
+          label="Starring isn't implemented yet, check back later!"
+          type="is-danger"
+          size="is-small"
+          position="is-left"
+          multilined
+          animated
+        >
+          <b-button class="button" disabled>
             <fa icon="star" />
             Star This
-          </a>
-        </button>
+          </b-button>
+        </b-tooltip>
       </div>
     </div>
     <vue-custom-scrollbar class="modal-image-middle">
-      <div v-if="!loaded" class="modal-placeholder">
+      <div v-if="imageFailed">
+        <b-notification
+          :active="true"
+          type="is-danger"
+          class="error-notification"
+          aria-close-label="Close alert"
+          role="alert"
+          message="Huh? That image couldn't load, someone must have deleted it."
+        />
+        <img :src="loadError" class="error-image" alt="error-image" />
+      </div>
+      <div v-if="!loaded && !imageFailed" class="modal-placeholder">
         <b-loading :is-full-page="false" :active="!loaded" />
       </div>
       <img
+        v-if="!imageFailed"
         class="modal-image"
         :src="url"
         alt="modal-image"
         @load="replacePlaceholder"
+        @error="onImageLoadFail"
       />
     </vue-custom-scrollbar>
     <div class="modal-image-bottom">
       <div class="modal-bottom-left">
+        <div class="modal-image-edit-buttons">
+          <b-tooltip
+            label="Image editing is on its way soon!"
+            type="is-danger"
+            size="is-small"
+            position="is-right"
+            animated
+          >
+            <b-button class="button edit-button" disabled>
+              <fa icon="edit" />
+              Edit
+            </b-button>
+          </b-tooltip>
+        </div>
         <div class="modal-image-tags">
           <span
             class="modal-image-tag"
@@ -67,9 +101,20 @@
 import VueCustomScrollbar from "vue-custom-scrollbar/src/vue-scrollbar";
 import placeholder from "@/assets/logo.png";
 import BLoading from "buefy/src/components/loading/Loading";
+import BButton from "buefy/src/components/button/Button";
+import BTooltip from "buefy/src/components/tooltip/Tooltip";
+import loadError from "@/assets/hifumi-scared.gif";
+import BNotification from "buefy/src/components/notification/Notification";
+
 export default {
   name: "ImageModal",
-  components: { BLoading, VueCustomScrollbar },
+  components: {
+    BNotification,
+    BTooltip,
+    BButton,
+    BLoading,
+    VueCustomScrollbar
+  },
   props: {
     user: Object,
     url: String,
@@ -79,7 +124,9 @@ export default {
   data() {
     const date = new Date(this.created_at);
     return {
+      loadError,
       avatar: this.user.avatar,
+      imageFailed: false,
       loaded: false,
       date: date.toDateString()
     };
@@ -88,8 +135,12 @@ export default {
     replacePlaceholder() {
       this.loaded = true;
     },
-    onLoadFail() {
+    onAvatarLoadFail() {
       this.avatar = placeholder;
+    },
+    onImageLoadFail() {
+      this.loaded = true;
+      this.imageFailed = true;
     }
   }
 };
@@ -127,15 +178,17 @@ $section-height: 80px;
   height: $section-height;
   min-height: $section-height;
   display: flex;
-  .star-button {
-    svg {
-      color: #f6ac34;
-      margin-right: 5px;
-    }
-    color: whitesmoke;
-    border: 0;
-    background: $background-dark;
+}
+
+.button {
+  svg {
+    color: #f6ac34;
+    margin-right: 5px;
   }
+  @include v-center;
+  color: whitesmoke;
+  border: 0;
+  background: $background-dark;
 }
 .modal-image-bottom {
   @include flex-row;
@@ -170,30 +223,41 @@ $section-height: 80px;
 }
 .modal-bottom-right,
 .modal-bottom-left {
-  color: #cecece;
+  margin: auto 0;
+  font-size: 12px;
+  @include on-tablet {
+    font-size: 13px;
+  }
+  color: #c3c3c3;
   display: flex;
   align-items: center;
-  height: 100%;
+  height: 70%;
   padding: 0 5%;
 }
 
+.modal-bottom-left {
+  width: 100%;
+}
+
 .modal-bottom-right {
-  font-size: 14px;
+  white-space: nowrap;
   div svg {
     color: white;
     margin-right: 5px;
   }
   text-align: left;
   align-items: flex-start;
-  height: 70%;
-  margin: auto 0;
   justify-content: space-around;
   @include flex-col;
+}
+.modal-image-edit-buttons {
 }
 
 .modal-image-tags {
   line-height: 1.28;
   height: 100%;
+  width: 100%;
+  overflow-y: auto;
   @include flex-col;
   justify-content: center;
   flex-wrap: wrap;
@@ -207,5 +271,19 @@ $section-height: 80px;
 }
 .tag-circle {
   max-width: 7px;
+}
+.error-image {
+  max-height: 200px;
+  border: 2px red;
+}
+.edit-button {
+  margin-right: 10px;
+  svg {
+    color: #f6ac34;
+  }
+}
+.error-notification {
+  margin: 0 !important;
+  border-radius: 0;
 }
 </style>

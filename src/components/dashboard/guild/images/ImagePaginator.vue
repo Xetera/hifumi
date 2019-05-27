@@ -3,6 +3,7 @@
     <b-pagination
       size="is-small"
       class="paginator"
+      icon-pack="fas"
       order="is-centered"
       :total="total"
       :current="page"
