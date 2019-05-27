@@ -69,5 +69,6 @@ export default {
 }
 .pagination-item {
   position: relative;
+  height: 100%;
 }
 </style>

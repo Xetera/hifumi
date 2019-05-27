@@ -1,14 +1,16 @@
 <template>
-  <b-pagination
-    class="paginator"
-    order="is-centered"
-    :total="total"
-    :current="page"
-    :per-page="limit"
-    @change="change"
-    aria-next-label="Next Page"
-    aria-previous-label="Previous Page"
-  />
+  <div class="wrapper">
+    <b-pagination
+      class="paginator"
+      order="is-centered"
+      :total="total"
+      :current="page"
+      :per-page="limit"
+      @change="change"
+      aria-next-label="Next Page"
+      aria-previous-label="Previous Page"
+    />
+  </div>
 </template>
 
 <script>
@@ -33,5 +35,8 @@ export default {
 }
 .pagination-link {
   color: $primary !important;
+}
+.wrapper {
+  @include center;
 }
 </style>

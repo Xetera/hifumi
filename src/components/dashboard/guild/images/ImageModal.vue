@@ -9,7 +9,7 @@
           alt="user-avatar"
         />
         <div class="modal-top-text">
-          <a rel="nofollow" target="_blank" :href="url">Open Original</a>
+          <a rel="nofollow" target="_blank" :href="url">View Original</a>
           <span>
             by
             <span class="user-name">{{ user.name }}</span>
@@ -98,6 +98,11 @@ export default {
 <style scoped lang="scss">
 $section-height: 80px;
 .modal-container {
+  max-height: 400px;
+  @include on-tablet {
+    max-height: 700px;
+  }
+  margin: 0 10px;
   @include flex-col;
 }
 .modal-image-middle {
@@ -120,6 +125,7 @@ $section-height: 80px;
   background: $background-darker;
   width: 100%;
   height: $section-height;
+  min-height: $section-height;
   display: flex;
   .star-button {
     svg {
@@ -137,6 +143,7 @@ $section-height: 80px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   background: $background-darker;
+  min-height: $section-height;
   height: $section-height;
 }
 .modal-user {
@@ -199,6 +206,6 @@ $section-height: 80px;
   }
 }
 .tag-circle {
-  max-width: 5px;
+  max-width: 7px;
 }
 </style>
