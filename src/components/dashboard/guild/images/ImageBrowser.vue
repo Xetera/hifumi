@@ -66,9 +66,10 @@ export default {
 
 .scroller {
   overflow-x: hidden;
+  height: 100%;
 }
 .pagination-item {
   position: relative;
-  height: 100%;
+  height: 60px;
 }
 </style>

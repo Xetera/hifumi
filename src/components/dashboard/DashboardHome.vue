@@ -1,5 +1,7 @@
 <template>
-  <div>{{ $route.path }}</div>
+  <div>
+    Dashboard Home
+  </div>
 </template>
 
 <script>

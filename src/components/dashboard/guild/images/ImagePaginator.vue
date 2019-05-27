@@ -1,14 +1,13 @@
 <template>
   <div class="wrapper">
     <b-pagination
+      size="is-small"
       class="paginator"
       order="is-centered"
       :total="total"
       :current="page"
       :per-page="limit"
       @change="change"
-      aria-next-label="Next Page"
-      aria-previous-label="Previous Page"
     />
   </div>
 </template>

@@ -153,7 +153,7 @@ $section-height: 80px;
 }
 .modal-top-text {
   @include flex-col;
-  margin-left: 2%;
+  margin-left: 10px;
   text-align: left;
 }
 .user-name {
