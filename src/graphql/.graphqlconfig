@@ -1,0 +1,15 @@
+{
+  "name": "Graphql Schema",
+  "schemaPath": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Hasura": {
+        "url": "http://localhost:8080/v1alpha1/graphql",
+        "headers": {
+          "X-Hasura-Admin-Secret": "test"
+        },
+        "introspect": true
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+@import "variables";
+@font-face {
+  font-family: "Lato";
+  src: url("../fonts/Lato-Regular.ttf") format("truetype");
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-family: "Lato", "Roboto", sans-serif !important;
+}
+
+.is-vue-green {
+  background-color: $vue-green !important;
+}
+
+html {
+  overflow-y: hidden;
+}
+
+body {
+  height: 100vh;
+  background-color: $background-dark;
+}
+
+.disabled-link {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
+// Perfect scrollbar overrides
+div.ps__thumb-y {
+  background: $background-darkest !important;
+}
+
+.ps .ps__rail-x.ps--clicking,
+.ps .ps__rail-x:focus,
+.ps .ps__rail-x:hover,
+.ps .ps__rail-y.ps--clicking,
+.ps .ps__rail-y:focus,
+.ps .ps__rail-y:hover {
+  background: transparent !important;
+}
