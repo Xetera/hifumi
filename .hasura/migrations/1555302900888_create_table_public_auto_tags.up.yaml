@@ -1,9 +1,0 @@
-- args:
-    sql: CREATE TABLE "public"."auto_tags"("channel_id" text NOT NULL, "id" serial
-      NOT NULL UNIQUE, "name" text NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("channel_id")
-      REFERENCES "image_channels"("channel_id") ON UPDATE restrict ON DELETE restrict);
-  type: run_sql
-- args:
-    name: auto_tags
-    schema: public
-  type: add_existing_table_or_view

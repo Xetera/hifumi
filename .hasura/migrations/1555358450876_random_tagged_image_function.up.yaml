@@ -1,8 +1,0 @@
-- args:
-    cascade: false
-    sql: "CREATE OR REPLACE FUNCTION \npublic.random_tagged_image(tag Text) RETURNS
-      SETOF images \nLANGUAGE sql STABLE \nAS $function$\n   WITH results AS (\n        SELECT
-      images FROM images\n        LEFT OUTER JOIN image_tags \n            ON image_tags.image_id
-      = images.id\n        WHERE image_tags.name = tag\n    ) SELECT * FROM results
-      OFFSET floor(random()* (SELECT COUNT(*) FROM results)) LIMIT 1;\n$function$\n\n"
-  type: run_sql

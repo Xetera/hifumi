@@ -1,8 +1,0 @@
-- args:
-    name: image_channel
-    table:
-      name: auto_tags
-      schema: public
-    using:
-      foreign_key_constraint_on: channel_id
-  type: create_object_relationship
