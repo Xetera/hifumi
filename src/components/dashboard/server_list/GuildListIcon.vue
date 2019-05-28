@@ -1,10 +1,7 @@
 <template>
   <div class="image-wrapper">
     <b-tooltip :label="name" position="is-right" class="image is-48x48">
-      <img
-        alt="placeholder"
-        src="http://www.stickpng.com/assets/thumbs/5a4613ddd099a2ad03f9c994.png"
-      />
+      <img alt="placeholder" :src="placeholder" />
     </b-tooltip>
   </div>
 </template>
@@ -12,6 +9,7 @@
 <script>
 import { proxy } from "@/config";
 import BTooltip from "buefy/src/components/tooltip/Tooltip";
+import placeholder from "@/assets/logo.png";
 
 export default {
   name: "GuildListIcon",
@@ -19,6 +17,11 @@ export default {
   props: {
     // icon: String,
     name: String
+  },
+  data() {
+    return {
+      placeholder
+    };
   },
   computed: {
     proxyImage() {
