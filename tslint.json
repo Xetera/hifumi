@@ -1,0 +1,37 @@
+{
+	"defaultSeverity": "error",
+	"extends": [
+		"tslint:recommended"
+	],
+	"linterOptions": {
+		"exclude": ["src/generated/*", "src/graphql/*"]
+	},
+	"jsRules": {},
+	"rules": {
+		"interface-name": false,
+		"semicolon": [2, "always"],
+		"trailing-comma": false,
+		"prefer-object-spread": true,
+		"prefer-const": true,
+		"prefer-template": true,
+		"only-arrow-functions": true,
+		"no-eval": true,
+		"variable-name": false,
+		"no-parameter-reassignment": true,
+		"no-var-keyword": true,
+		"no-arg": true,
+		"no-var-requires": true,
+		"no-console": [true, "warn"],
+		"object-literal-sort-keys": false,
+		"no-magic-numbers": [
+			true,
+			{
+				"allowed-numbers": [
+					0,
+					1
+				]
+			}
+		]
+	},
+	"rulesDirectory": []
+}

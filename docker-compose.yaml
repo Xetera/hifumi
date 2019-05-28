@@ -1,0 +1,32 @@
+# development compose file
+version: "3.5"
+services:
+  hasura:
+    container_name: hasura
+    image: moedevs/hasura
+    restart: always
+    network_mode: host
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    environment:
+      HASURA_GRAPHQL_PORT: 8080
+      HASURA_GRAPHQL_DATABASE_URL: postgres://hifumi:uwu@localhost:5432/hifumi
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_ACCESS_KEY: test
+      HASURA_GRAPHQL_AUTH_HOOK: http://localhost:4000/hasura
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: hifumi
+      POSTGRES_PASSWORD: uwu
+      POSTGRES_DB: hifumi
+networks:
+  hifuminet:
+    name: hifuminet

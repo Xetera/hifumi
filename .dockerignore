@@ -1,0 +1,7 @@
+dist/
+data/
+node_modules/
+.deploy/
+README.md
+.editorcofig
+tslint.json
