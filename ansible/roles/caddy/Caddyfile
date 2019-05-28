@@ -1,0 +1,36 @@
+https://api.hifumi.io {
+  proxy / api:3000 {
+    transparent
+  }
+  tls {
+    dns cloudflare
+  }
+}
+
+https://docker.hifumi.io {
+  proxy / portainer:9000 {
+    transparent
+  }
+  tls {
+    dns cloudflare
+  }
+}
+
+https://logs.hifumi.io {
+  proxy / kibana:5601 {
+    transparent
+  }
+  tls {
+    dns cloudflare
+  }
+}
+
+https://db.hifumi.io {
+  proxy / hasura:8080 {
+    transparent
+  }
+  tls {
+    dns cloudflare
+  }
+}
+

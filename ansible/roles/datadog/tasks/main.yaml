@@ -1,0 +1,36 @@
+---
+- name: Ensure hifuminet is created
+  docker_network:
+    name: hifuminet
+
+- name: Ensure elknet is created
+  docker_network:
+    name: elknet
+
+- name: Ensure ddg config exists
+  file:
+    path: ~/.ddg/conf.d
+    state: directory
+
+- name: Copy configuration files
+  template:
+    src: "{{ item }}"
+    dest: "~/.ddg/conf.d/{{ item | basename | regex_replace('\\.j2', '') }}"
+  with_fileglob:
+    - ../templates/conf.d/*.j2
+
+- name: Creating datadog-agent
+  docker_container:
+    name: datadog-agent
+    image: datadog/agent:latest
+    pull: yes
+    env:
+      DD_API_KEY: "{{ hifumi.datadog_api_key }}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+      - ~/.ddg/conf.d:/conf.d:ro
+    networks:
+      - name: elknet
+      - name: hifuminet

@@ -1,0 +1,76 @@
+---
+- include_vars: secret.yaml
+
+- name: Ensure docker is installed
+  pip:
+    name:
+      - docker
+
+- name: Ensure hifuminet is created
+  docker_network:
+    name: hifuminet
+
+- name: Ensure pgdata is created
+  docker_volume:
+    name: pgdata
+
+- name: Copy analytics config
+  copy:
+    src: monitoring.sql
+    dest: "{{ postgres.mount_point }}"
+
+- name: Creating database
+  docker_container:
+    name: postgres
+    image: postgres
+    env:
+      POSTGRES_PASSWORD: "{{ postgres.password }}"
+      POSTGRES_USER: "{{ postgres.username }}"
+      POSTGRES_DB: "{{ postgres.database }}"
+    volumes:
+      - pgdata:/data/db
+    networks:
+      - name: hifuminet
+
+- name: Creating hasura
+  docker_container:
+    name: hasura
+    image: moedevs/hasura
+    env:
+      HASURA_GRAPHQL_DATABASE_URL: "postgres://{{ postgres.username }}:{{ postgres.password }}@postgres:5432/{{ postgres.database }}"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: "{{ hasura.admin_secret }}"
+    ports:
+      - 8080:8080
+    networks:
+      - name: hifuminet
+
+- name: Creating the API
+  docker_container:
+    name: api
+    image: moedevs/yun
+    pull: yes
+    env:
+      OAUTH_ID: "{{ yun.oauth_id }}"
+      OAUTH_SECRET: "{{ yun.oauth_secret }}"
+      NEWGAME_PORT: "3000"
+    ports:
+      - 3000:3000
+
+
+- name: Updating hifumi's image
+  docker_container:
+    name: hifumi
+    image: moedevs/hifumi
+    pull: yes
+    env:
+      HASURA_ACCESS_KEY: "{{ hasura.admin_secret }}"
+      HASURA_URL: "http://hasura:8080/v1alpha1/graphql"
+      TOKEN: "{{ hifumi.token }}"
+      PREFIX: $
+      OWNERS: "{{ hifumi.owners }}"
+      DATADOG_API_KEY: "{{ hifumi.datadog_api_key }}"
+      DATABASE_URL: mongodb://mongo/hifumi
+      NODE_ENV: production
+    networks:
+      - name: hifuminet

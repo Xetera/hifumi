@@ -1,0 +1,11 @@
+---
+- name: Starting up ELK
+  hosts: all
+  gather_facts: true
+  pre_tasks:
+    - name: Ensure python 2 is installed
+      raw: apt install python -y
+  vars_files:
+    - hifumi.yaml
+  roles:
+    - efk

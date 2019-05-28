@@ -1,0 +1,29 @@
+---
+- include_vars: secret.yaml
+
+- name: Copy Caddy config
+  copy:
+    src: roles/caddy/Caddyfile
+    dest: ~/.caddy/Caddyfile
+
+- name: Setup caddy
+  docker_container:
+    name: caddy
+    image: moedevs/caddy
+    pull: true
+    log_driver: "json-file"
+    env:
+      CADDYPATH: /etc/caddycerts
+      CLOUDFLARE_API_KEY: "{{ cloudflare.api_key }}"
+      CLOUDFLARE_EMAIL: "{{ cloudflare.email }}"
+      ACME_AGREE: "true"
+    networks:
+      - name: hifuminet
+    ports:
+      - 2015:2015
+      - 443:443
+      - 80:80
+    volumes:
+      - ~/.caddy/Caddyfile:/etc/Caddyfile
+      - ~/.caddy:/etc/caddycerts
+

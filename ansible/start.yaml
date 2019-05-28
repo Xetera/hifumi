@@ -1,0 +1,13 @@
+---
+- name: Starting all processes
+  hosts: all
+  gather_facts: true
+  vars_files:
+    - host_vars/hifumi.yaml
+  roles:
+#    - role: nickjj.docker
+#    - caddy
+    - efk
+    - portainer
+    - create
+    - { role: datadog, tags: ['datadog'] }

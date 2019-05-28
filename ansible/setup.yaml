@@ -1,0 +1,6 @@
+---
+- hosts: all
+  gather_facts: true
+  roles:
+    - name: docker
+      src: nickjj.docker

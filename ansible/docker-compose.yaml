@@ -1,0 +1,27 @@
+# this is only here to allow quick changes to hasura
+version: "3.5"
+services:
+  hasura:
+    container_name: hasura
+    image: moedevs/hasura
+    ports:
+      - 8080:8080
+    networks:
+      - hifuminet
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://hifumi:uwu@postgres/hifumi
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: public
+  postgres:
+    container_name: pg
+    image: postgres
+    networks:
+      - hifuminet
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: hifumi
+      POSTGRES_PASSWORD: uwu
+      POSTGRES_DB: hifumi
