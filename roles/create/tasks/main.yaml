@@ -51,6 +51,8 @@
     image: moedevs/yun
     pull: yes
     env:
+      OAUTH_ID: "{{ yun.oauth_id }}"
+      OAUTH_SECRET: "{{ yun.oauth_secret }}"
       NEWGAME_PORT: "3000"
     ports:
       - 3000:3000
