@@ -23,7 +23,7 @@ export const syncAll = ({ guilds, users }: AkairoClient) =>
     syncGuilds(guilds.array()),
     syncUsers(users.array()),
     syncMembers(
-      guilds.map(guild => guild.members.array())
+      guilds.map((guild) => guild.members.array())
         .reduce((a, b) => a.concat(b))
     )
   ]);
@@ -46,7 +46,7 @@ export const syncGuilds = (guilds: Guild[]) => {
   return _client.mutation({
     insert_guilds: [
       {
-        objects: guilds.map(guild => ({
+        objects: guilds.map((guild) => ({
           guild_id: guild.id,
           name: guild.name,
           icon: guild.iconURL
