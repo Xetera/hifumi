@@ -1,0 +1,6 @@
+.stack-work/
+untitled.cabal
+.idea/
+out/
+*.iml
+*~

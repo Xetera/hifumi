@@ -1,0 +1,48 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - setup_remote_docker
+      - restore_cache:
+          name: Restore Cached Dependencies
+          keys:
+            - yun-{{ checksum "package.yaml" }}-{{ checksum "stack.yaml" }}
+          paths:
+            - ".stack-work"
+            - "~/.stack"
+      - run: docker build -t moedevs/yun:latest .
+      - run:
+          name: Resolve/Update Dependencies
+          command: stack setup
+      - save_cache:
+          name: Cache Dependencies
+          key: yun-{{ checksum "package.yaml" }}-{{ checksum "stack.yaml" }}
+          paths:
+            - "~/.stack"
+      - persist_to_workspace:
+          root: .
+          paths: .
+  push_container:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - setup_remote_docker
+      - attach_workspace:
+          at: .
+      - run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+      - run: docker push moedevs/yun:latest
+workflows:
+  version: 2
+  pipeline:
+    jobs:
+      - build
+      - push_container:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build
