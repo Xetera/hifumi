@@ -1,15 +1,15 @@
 [submodule "hifumi.io"]
 	path = hifumi.io
-	url = git@https://github.com/moedevs/hifumi.io
+	url = https://github.com/moedevs/hifumi.io
 [submodule "hifumi-bot"]
 	path = hifumi-bot
-	url = git@https://github.com/moedevs/hifumi-bot
+	url = https://github.com/moedevs/hifumi-bot
 [submodule "shiro"]
 	path = shiro
-	url = git@https://github.com/moedevs/shiro
+	url = https://github.com/moedevs/shiro
 [submodule "yun"]
 	path = yun
-	url = git@https://github.com/moedevs/yun
+	url = https://github.com/moedevs/yun
 [submodule "media-extractor"]
 	path = media-extractor
-	url = git@https://github.com/moedevs/media-extractor
+	url = https://github.com/moedevs/media-extractor
