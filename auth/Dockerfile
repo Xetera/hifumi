@@ -1,21 +1,29 @@
-FROM haskell as build-env
+FROM maven:3-alpine as build
 
-WORKDIR /opt/server
-ENV executable=newgame-exe
+MAINTAINER Xetera
 
-COPY package.yaml .
-COPY stack.yaml .
-RUN stack install --only-dependencies -j4
-ADD . .
-RUN stack install
+RUN mkdir /app
+WORKDIR /app
 
-FROM ubuntu
+ADD pom.xml /app
 
-WORKDIR /opt/server
-COPY --from=build-env /root/.local/bin/newgame-exe ./newgame-exe
-COPY --from=build-env ./views ./views
+RUN mvn dependency:go-offline -B
 
-RUN apt-get update
-RUN apt-get install netbase ca-certificates -y
+COPY src /app/src
+COPY ./.env /app/.env
 
-CMD ./newgame-exe
+RUN mvn package
+
+VOLUME ["/kotlin-data"]
+
+EXPOSE 3000
+
+# multistage build
+FROM openjdk:9
+
+ENV JARFILE yun-1.0-SNAPSHOT-jar-with-dependencies.jar
+COPY --from=build /app/target/$JARFILE .
+COPY --from=build /app/.env .
+
+CMD java -jar $JARFILE
+

@@ -1,6 +1,4 @@
-.stack-work/
-untitled.cabal
-.idea/
-out/
 *.iml
-*~
+.idea/
+target/
+.env
