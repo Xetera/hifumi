@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.moedevs</groupId>
+    <groupId>com.github.moedevs</groupId>
     <artifactId>yun</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -38,11 +38,6 @@
             <groupId>com.github.kittinunf.fuel</groupId>
             <artifactId>fuel-coroutines</artifactId>
             <version>2.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.litote.kmongo</groupId>
-            <artifactId>kmongo-coroutine</artifactId>
-            <version>3.10.0</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -89,7 +84,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>MainKt</mainClass>
+                                    <mainClass>com.github.moedevs.MainKt</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>

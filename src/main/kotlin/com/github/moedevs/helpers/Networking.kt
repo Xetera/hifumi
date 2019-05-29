@@ -1,4 +1,4 @@
-package helpers
+package com.github.moedevs.helpers
 
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitStringResponse

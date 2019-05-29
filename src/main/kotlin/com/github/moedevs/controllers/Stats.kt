@@ -1,9 +1,9 @@
-package controllers
+package com.github.moedevs.controllers
 
 import com.google.gson.Gson
-import helpers.Cache
-import helpers.CacheOptions
-import helpers.get
+import com.github.moedevs.helpers.Cache
+import com.github.moedevs.helpers.CacheOptions
+import com.github.moedevs.helpers.get
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll

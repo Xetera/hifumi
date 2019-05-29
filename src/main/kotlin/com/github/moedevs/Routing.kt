@@ -1,8 +1,10 @@
-import controllers.authorize
-import controllers.callbackHandle
-import controllers.getStats
-import controllers.retrieveLoginStatus
-import helpers.gson
+package com.github.moedevs
+
+import com.github.moedevs.controllers.authorize
+import com.github.moedevs.controllers.callbackHandle
+import com.github.moedevs.controllers.getStats
+import com.github.moedevs.controllers.retrieveLoginStatus
+import com.github.moedevs.helpers.gson
 import io.ktor.application.call
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
@@ -11,8 +13,6 @@ import io.ktor.response.respondText
 import io.ktor.routing.Routing
 import io.ktor.routing.get
 import io.ktor.sessions.sessions
-import main.datadogStats
-import main.dotenv
 
 private val redirectUrl = dotenv["REDIRECT_URL"] ?: "http://localhost:4040/dashboard"
 
@@ -38,6 +38,7 @@ fun setupRouting(router: Routing) {
   router.get("callback") {
     val code = call.parameters["code"]
     val state = call.parameters["state"] // currently unused, here for future use.
+    println(code)
     if (code == null) {
       call.respondText("Callback code is invalid and/or expired.\n\nPlease try again.")
     } else {

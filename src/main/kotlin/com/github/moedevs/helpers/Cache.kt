@@ -1,4 +1,4 @@
-package helpers
+package com.github.moedevs.helpers
 
 import org.slf4j.LoggerFactory
 import java.util.*

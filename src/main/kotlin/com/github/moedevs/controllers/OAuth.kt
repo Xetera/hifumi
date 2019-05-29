@@ -1,9 +1,9 @@
-package controllers
+package com.github.moedevs.controllers
 
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import helpers.get
-import helpers.post
+import com.github.moedevs.helpers.get
+import com.github.moedevs.helpers.post
 import io.github.cdimascio.dotenv.dotenv
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
