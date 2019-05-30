@@ -1,9 +1,6 @@
 package com.github.moedevs
 
-import com.github.moedevs.controllers.authorize
-import com.github.moedevs.controllers.callbackHandle
-import com.github.moedevs.controllers.getStats
-import com.github.moedevs.controllers.retrieveLoginStatus
+import com.github.moedevs.controllers.*
 import com.github.moedevs.helpers.gson
 import io.ktor.application.call
 import io.ktor.http.HttpStatusCode
@@ -12,22 +9,20 @@ import io.ktor.response.respondRedirect
 import io.ktor.response.respondText
 import io.ktor.routing.Routing
 import io.ktor.routing.get
-import io.ktor.sessions.sessions
+import io.ktor.routing.options
 
 private val redirectUrl = dotenv["REDIRECT_URL"] ?: "http://localhost:4040/dashboard"
 
 fun setupRouting(router: Routing) {
+  router.options("*") {
+    call.respond(HttpStatusCode.Accepted)
+  }
   router.get("/auth") {
-    call.respond(gson.toJson(retrieveLoginStatus(call.sessions)))
+    val auth = call.request.headers["Authorization"]
+    call.respond(gson.toJson(retrieveLoginStatus(auth ?: "no-auth")))
   }
   router.get("/hasura") {
-    println("Accessed /hasura")
-    val output = authorize(call.sessions)
-    if (output == null) {
-      call.respond(HttpStatusCode(401, "Unauthorized"))
-    } else {
-      call.respondText(gson.toJson(output))
-    }
+    getHasura(call)
   }
   router.get("bot/stats") {
     call.respondRedirect(datadogStats)
@@ -40,10 +35,11 @@ fun setupRouting(router: Routing) {
     val state = call.parameters["state"] // currently unused, here for future use.
     println(code)
     if (code == null) {
-      call.respondText("Callback code is invalid and/or expired.\n\nPlease try again.")
+      call.respondText("Callback code is invalid and/or expired.\nPlease try again.")
     } else {
-      callbackHandle(code, this)
-      call.respondRedirect(redirectUrl)
+      val jwt = callbackHandle(code, this)
+      val redirect = "$redirectUrl?code=$jwt"
+      call.respondRedirect(redirect)
     }
   }
 }
