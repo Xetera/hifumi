@@ -1,13 +1,13 @@
 <img src="https://media.discordapp.net/attachments/453354438267240458/583465156223172610/hifumi-banner-less-lewd.png">
 
-<span align="center">
+<div align="center">
   <img src="https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg" alt="WIP">
   <a href="https://discord.gg/RM6KUrf">
     <img src="https://img.shields.io/discord/414334929002823680.svg?color=rgb%28216%2C%20115%2C%20215%29&label=Support%20Server" alt="discord">
   </a>
   <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license">
   <img src="https://img.shields.io/website/https/hifumi.io.svg?label=hifumi.io">
-</span>
+</div>
 
 Hifumi is a service for tagging, ranking and serving images, powered by your favorite Discord communities. Keep track of your memes, anime waifus and fandom gifs by categorizing them under familiar tags and manage them with a web interface!
 
