@@ -1,7 +1,6 @@
-# Hifumi
-Hifumi is a bot that helps you organize your big mess of memes, anime waifus and whatever other images you send on Discord into categories of tags!
-
 ## Setting up Hifumi
+
+> Possibly outdated
 
 1. run: `git clone https://github.com/moedevs/hifumi.git`
 2. copy `.env.example` to `.env` and add your bot token
@@ -15,10 +14,3 @@ Hifumi is a bot that helps you organize your big mess of memes, anime waifus and
 ## Contributing
 Read the [Contributing guide](CONTRIBUTING.md) for more info.
 
-Not a programmer? No problem, We would still love to get your input!
-
-<a href="https://discord.gg/ZWW5CJw">
-  <img width="250" src="https://i.imgur.com/GlEHVES.png"></img>
-</a>
-
-##### Made with <3 by the /r/NewGame community
