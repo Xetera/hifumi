@@ -21,7 +21,6 @@ export default {
   methods: {
     async checkStatus() {
       await this.$store.dispatch("checkLogin");
-      await this.$store.dispatch("getUser");
       this.ready = true;
     },
     handleTimeout() {

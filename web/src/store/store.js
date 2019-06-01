@@ -23,11 +23,6 @@ export const base = {
   mutations: {
     setAuth: (state, status) => {
       state.isAuthed = status;
-      if (status) {
-        localStorage.setItem("loggedIn", "dab");
-      } else {
-        localStorage.removeItem("loggedIn");
-      }
     },
     setGuilds: (state, guilds) => {
       state.guilds = guilds.reduce(
@@ -41,10 +36,19 @@ export const base = {
     setCurrentGuild: (state, guilds) => (state.currentGuild = guilds)
   },
   actions: {
-    checkLogin: ctx =>
-      get(`${AUTH_URL}/auth`).then(({ authorized }) => {
+    checkLogin: ctx => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return ctx.commit("setAuth", false);
+      }
+      return get(`${AUTH_URL}/auth`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(({ authorized }) => {
         ctx.commit("setAuth", authorized);
-      }),
+      });
+    },
     async subscribeGuilds({ commit }) {
       return new Promise(async res => {
         const observable = await client.subscribe({
@@ -55,15 +59,6 @@ export const base = {
           commit("setGuilds", guilds);
           res();
         });
-      });
-    },
-    async getUser() {
-      const observable = await client.subscribe({
-        query: graphql(currentGuilds)
-      });
-
-      observable.subscribe(({ data }) => {
-        console.log(data);
       });
     }
   }

@@ -10,6 +10,14 @@ import Guild from "@/views/dashboard/Guild";
 export default {
   ...withDiscordAuth,
   path: "/dashboard",
+  beforeEnter(to, from, next) {
+    const { code } = to.query;
+    if (code) {
+      localStorage.setItem("token", code);
+    }
+    console.log(from);
+    next();
+  },
   component: Dashboard,
   children: [
     {

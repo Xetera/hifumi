@@ -34,6 +34,9 @@ export default {
     }
   },
   async created() {
+    // eslint-disable-next-line no-unused-vars
+    const { code, ...query } = { ...this.$route.query };
+    this.$router.replace({ query });
     await this.$store.dispatch("subscribeGuilds");
     this.ready = true;
   }

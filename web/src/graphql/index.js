@@ -19,7 +19,8 @@ const wsLink = new WebSocketLink({
   options: {
     connectionParams: {
       headers: {
-        cookie: document.cookie
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+        // cookie: document.cookie
       }
     },
     reconnect: true
@@ -27,7 +28,6 @@ const wsLink = new WebSocketLink({
 });
 
 const httpLink = new HttpLink({
-  credentials: "include",
   uri: process.env.VUE_APP_GRAPHQL_HTTP,
   fetch
 });

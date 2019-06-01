@@ -21,6 +21,7 @@ val members = mutableMapOf<String, OAuthUserObj>()
 val OAUTH_ID = dotenv["YUN_OAUTH_ID"].toString()
 val OAUTH_SECRET = dotenv["YUN_OAUTH_SECRET"].toString()
 val OAUTH_CALLBACK = dotenv["YUN_OAUTH_CALLBACK"].toString()
+val OAUTH_REDIRECT = dotenv["YUN_OAUTH_REDIRECT"].toString()
 
 private const val API_ENDPOINT = "https://discordapp.com/api/v6"
 private const val API_TOKEN = "/oauth2/token"
@@ -61,7 +62,7 @@ suspend fun callbackHandle(call: ApplicationCall) {
   members[response.id] = response
 
   val jwt = signUser(response.id)
-  call.respondRedirect("$")
+  call.respondRedirect("$OAUTH_REDIRECT?code=$jwt")
 }
 
 suspend fun getHasura(call: ApplicationCall) {
