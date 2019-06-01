@@ -24,7 +24,7 @@ export default class EvalCommand extends Command {
     if (!isOwner) {
       return;
     }
-    const clean = (s: string) => s.replace(process.env.TOKEN!, "[REDACTED]");
+    const clean = (s: string) => s.replace(process.env.HIFUMI_TOKEN!, "[REDACTED]");
 
     try {
       // tslint:disable-next-line:no-eval

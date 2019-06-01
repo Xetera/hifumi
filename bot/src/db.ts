@@ -11,9 +11,9 @@ import { guilds_constraint, guilds_update_column } from "./graphql/schema";
 import { logger } from "./utils";
 
 const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
-  headers: process.env.HASURA_ACCESS_KEY
+  headers: process.env.HIFUMI_HASURA_ACCESS_KEY
     ? {
-        "X-Hasura-Access-Key": process.env.HASURA_ACCESS_KEY
+        "X-Hasura-Access-Key": process.env.HIFUMI_HASURA_ACCESS_KEY
       }
     : {}
 });
@@ -30,11 +30,11 @@ export const syncAll = ({ guilds, users }: AkairoClient) =>
 
 export const _client = createClient({
   fetcher: ({ query, variables }: { query: any; variables: any }, fetch: any) =>
-    fetch(process.env.HASURA_URL!, {
+    fetch(process.env.HIFUMI_HASURA_URL!, {
       method: "POST",
       body: JSON.stringify({ query, variables }),
       headers: {
-        "X-Hasura-Admin-Secret": process.env.HASURA_ACCESS_KEY!
+        "X-Hasura-Admin-Secret": process.env.HIFUMI_HASURA_ACCESS_KEY!
       }
     }).then((r: any) => r.json())
 });

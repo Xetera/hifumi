@@ -6,8 +6,8 @@ import { logger } from "./utils";
 
 import "./db";
 
-const prefix = process.env.PREFIX || "$";
-const owners = process.env.OWNERS || "";
+const prefix = process.env.HIFUMI_PREFIX || "$";
+const owners = process.env.HIFUMI_OWNERS || "";
 
 const client = new AkairoClient({
   prefix,
@@ -23,4 +23,4 @@ logger.debug(`Logging in...`);
 handleEvents(client);
 
 // TODO: check token first
-client.login(process.env.TOKEN!);
+client.login(process.env.HIFUMI_TOKEN!);
