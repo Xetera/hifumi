@@ -1,5 +1,6 @@
 package com.github.moedevs.controllers
 
+import arrow.core.flatMap
 import com.github.moedevs.helpers.*
 import com.github.moedevs.models.AuthorizedResponse
 import com.github.moedevs.models.HasuraResponse
@@ -9,10 +10,7 @@ import com.google.gson.Gson
 import io.github.cdimascio.dotenv.dotenv
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpStatusCode
-import io.ktor.response.header
-import io.ktor.response.respond
-import io.ktor.response.respondText
-import io.ktor.util.pipeline.PipelineContext
+import io.ktor.response.respondRedirect
 import kotlin.collections.set
 
 private val gson = Gson()
@@ -30,7 +28,7 @@ private const val USER_AGENT = "discord-api:/r/NewGame (by /u/whamer100)"
 private const val CONTENT_TYPE = "application/x-www-form-urlencoded"
 private const val SCOPE_TYPE = "identify"
 
-fun getParams(code: String): List<Pair<String, Any?>> = listOf(
+fun getParams(code: String): List<Pair<String, String>> = listOf(
   "client_id" to OAUTH_ID,
   "client_secret" to OAUTH_SECRET,
   "grant_type" to "authorization_code",
@@ -46,7 +44,9 @@ suspend fun getData(code: String): OAuthResponse {
   return post(endpoint, OAuthResponse::class.java, parameters, headers)
 }
 
-suspend fun callbackHandle(code: String, ctx: PipelineContext<Unit, ApplicationCall>): String {
+suspend fun callbackHandle(call: ApplicationCall) {
+  val code = call.request.queryParameters["code"]
+    ?: return
   val returnData = getData(code)
   val auth = "${returnData.token_type} ${returnData.access_token}"
 
@@ -60,26 +60,18 @@ suspend fun callbackHandle(code: String, ctx: PipelineContext<Unit, ApplicationC
 
   members[response.id] = response
 
-  return signUser(response.id)
+  val jwt = signUser(response.id)
+  call.respondRedirect("$")
 }
 
 suspend fun getHasura(call: ApplicationCall) {
-  val is401 = HttpStatusCode(401, "Unauthorized")
-  println("Accessed /hasura")
-  val auth = call.request.headers["Authorization"]
-  if (auth == null) {
-    call.response.header("WWW-Authenticate", "Bearer")
-    return call.respond(is401)
-  }
-  if (auth.split(" ").size < 2) {
-    return call.respond(HttpStatusCode(400, "A 'Bearer' authorization schema is required"))
-  }
-  val (method, key) = auth.split(" ")
-  if (method != "Bearer") {
-    return call.respond(HttpStatusCode(400, "$method is not a valid schema, only 'Bearer' is allowed"))
-  }
-  val output = authorize(key)
-  call.respondText(gson.toJson(output))
+  logger.info("Accessed /hasura")
+
+  val auth = extractHeader(call.request.headers, "Authorization")
+  val result = auth
+    .flatMap { withAuthorizationHeader(it, ::authorize) }
+    .mapLeft { HttpStatusCode.Unauthorized }
+  call.respondEither(result)
 }
 
 /**
@@ -93,5 +85,10 @@ fun authorize(jwt: String): HasuraResponse {
   return HasuraResponse(userId, role = "user")
 }
 
-fun retrieveLoginStatus(jwt: String): AuthorizedResponse =
-  AuthorizedResponse(isValid(jwt))
+fun retrieveLoginStatus(call: ApplicationCall): AuthorizedResponse =
+  AuthorizedResponse(
+    extractHeader(call.request.headers, "Authorization")
+      .flatMap { withAuthorizationHeader(it, ::isValidJWT) }
+      .fold({ false }) { it }
+  )
+

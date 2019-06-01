@@ -20,6 +20,18 @@
         <artifactId>jjwt-api</artifactId>
         <version>0.10.5</version>
       </dependency>
+      <!-- arrow-core -->
+      <dependency>
+        <groupId>io.arrow-kt</groupId>
+        <artifactId>arrow-core</artifactId>
+        <version>0.8.2</version>
+      </dependency>
+      <!-- arrow-core-extensions -->
+      <dependency>
+        <groupId>io.arrow-kt</groupId>
+        <artifactId>arrow-core-extensions</artifactId>
+        <version>0.9.0</version>
+      </dependency>
       <dependency>
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt-impl</artifactId>
@@ -37,6 +49,12 @@
             <artifactId>ktor-server-core</artifactId>
             <version>${ktor.version}</version>
         </dependency>
+      <dependency>
+        <groupId>io.ktor</groupId>
+        <artifactId>ktor-gson</artifactId>
+        <version>${ktor.version}</version>
+        <scope>compile</scope>
+      </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-server-netty</artifactId>

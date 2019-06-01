@@ -56,8 +56,7 @@ suspend fun getRedditAsync() = coroutineScope {
   }
 }
 
-suspend fun getStats(): String {
+suspend fun getStats(): StatResponse {
   val (discord, reddit) = awaitAll(getDiscordAsync(), getRedditAsync())
-  val out = StatResponse(discord, reddit)
-  return gson.toJson(out)
+  return StatResponse(discord, reddit)
 }

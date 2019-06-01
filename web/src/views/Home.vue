@@ -1,10 +1,6 @@
 <template>
   <div class="home">
-    <b-button
-      v-if="!$store.state.isAuthed"
-      label="Login"
-      @click="toLogin"
-    ></b-button>
+    <a :href="loginUrl">Login</a>
     <router-link v-if="$store.state.isAuthed" to="/dashboard">
       <a>To Dashboard</a>
     </router-link>
@@ -12,16 +8,17 @@
 </template>
 
 <script>
-import BButton from "buefy/src/components/button/Button";
 import { DISCORD_OAUTH_URL } from "@/config";
 
 export default {
   name: "home",
-  methods: {
-    toLogin: () => (window.location.href = DISCORD_OAUTH_URL)
+  data() {
+    return {
+      loginUrl: DISCORD_OAUTH_URL
+    };
   },
-  components: {
-    BButton
+  mounted() {
+    console.log(DISCORD_OAUTH_URL);
   }
 };
 </script>
