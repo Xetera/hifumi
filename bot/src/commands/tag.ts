@@ -2,14 +2,9 @@ import { Command } from "discord-akairo";
 import { Message, TextChannel } from "discord.js";
 import gql from "gql-tag/dist";
 import { resolve } from "media-extractor";
-import { req } from "../db";
-import {
-  Image_Tags,
-  Image_Tags_Insert_Input,
-  Images,
-  Images_Bool_Exp,
-  Images_Insert_Input
-} from "../generated/graphql";
+import { _client, req } from "../db";
+import { images_insert_input } from "../graphql/schema";
+import { image_tags_insert_input, images_bool_exp } from "./../graphql/schema";
 
 export default class extends Command {
   constructor() {
@@ -38,14 +33,16 @@ export default class extends Command {
     if (!targetMsg) {
       return msg.channel.send(`Couldn't find a message with an image`);
     }
-    const tags: Image_Tags_Insert_Input[] =
-      rest && rest.trim().split(",").map((name: string): Image_Tags_Insert_Input => ({
+
+    const tags: image_tags_insert_input[] =
+      rest && rest.trim().split(",").map((name: string) => ({
         name,
         tagger_id: targetMsg.author.id
       }));
+
     const url = await resolve(this.fetchMedia(targetMsg));
 
-    const where: Images_Bool_Exp = {
+    const where: images_bool_exp = {
       _and: [{
         user_id: { _eq: targetMsg.author.id }
       }, {
@@ -53,22 +50,28 @@ export default class extends Command {
       }]
     };
 
-    const { images } = await req(gql`query($where: images_bool_exp){
-      images(where: $where) {
-        id
-        image_tags {
-          name
+    const { data } = await _client.query({
+      images: [{
+        where
+      }, {
+        id: 1,
+        image_tags: {
+          name: 1
         }
-      }
-    }`, { where }) as { images: Images[], image_tags: Image_Tags[] };
-
-    const imageExists = images.length;
+      }]
+    })
+    if (!data) {
+      return;
+    }
+    const imageExists = data.images.length;
     if (imageExists && tags) {
-      const [existing] = images;
-      const updatedTags = tags.map((t: Image_Tags_Insert_Input): Image_Tags_Insert_Input => ({
+      const [existing] = data.images;
+
+      const updatedTags = tags.map((t) => ({
         ...t,
         image_id: existing.id
-      })).filter((e: Image_Tags_Insert_Input) => existing.image_tags.every((t) => t.name !== e.name));
+      })).filter((e) => existing.image_tags.every((t) => t.name !== e.name));
+
       const res = await req(gql`mutation($tags: [image_tags_insert_input!]!) {
         insert_image_tags(objects: $tags) {
           affected_rows
@@ -87,7 +90,7 @@ export default class extends Command {
     }
 
     const { filename } = targetMsg.attachments.first() || { filename: null };
-    const image: Images_Insert_Input = {
+    const image: images_insert_input = {
       file_name: filename,
       user_id: targetMsg.author.id,
       message_id: targetMsg.id,

@@ -1,13 +1,11 @@
-/// <reference path="./graphql/createClient">
 import { AkairoClient } from "discord-akairo";
 import { Collection, Guild, GuildMember, User } from "discord.js";
 import gql from "gql-tag/dist";
 import { GraphQLClient } from "graphql-request";
 import { Variables } from "graphql-request/dist/src/types";
 import { GRAPHQL_ENDPOINT } from "./constants";
-import { Users_Insert_Input } from "./generated/graphql";
 import { createClient } from "./graphql/createClient";
-import { guilds_constraint, guilds_update_column } from "./graphql/schema";
+import { guilds_constraint, guilds_update_column, users_insert_input } from "./graphql/schema";
 import { logger } from "./utils";
 
 const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
@@ -66,7 +64,7 @@ export const syncGuilds = (guilds: Guild[]) => {
 export const syncUsers = (users: User[]) => {
   logger.info("Synchronizing users");
   const data = users.map(
-    (user): Users_Insert_Input => ({
+    (user): users_insert_input => ({
       user_id: user.id,
       name: user.username,
       avatar: user.displayAvatarURL
