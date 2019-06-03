@@ -10,7 +10,6 @@ ADD pom.xml /app
 RUN mvn dependency:go-offline -B
 
 COPY src /app/src
-COPY ./.env /app/.env
 
 RUN mvn package
 
@@ -23,7 +22,7 @@ FROM openjdk:9
 
 ENV JARFILE yun-1.0-SNAPSHOT-jar-with-dependencies.jar
 COPY --from=build /app/target/$JARFILE .
-COPY --from=build /app/.env .
+RUN touch .env
 
 CMD java -jar $JARFILE
 
