@@ -17,11 +17,11 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 
 val dotenv = dotenv()
-const val DEFAULT_PORT = "3000"
+const val DEFAULT_PORT = "4000"
 val datadogStats = dotenv["DATADOG_STATS"].toString() // pesky nullable string warning
 
 fun main() {
-  val portInput = dotenv["NEWGAME_PORT"]
+  val portInput = dotenv["YUN_PORT"]
   val port = Integer.parseInt(portInput ?: DEFAULT_PORT)
   val server = embeddedServer(Netty, port = port) {
     install(ContentNegotiation) {

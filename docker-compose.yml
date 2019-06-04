@@ -8,33 +8,26 @@ services:
       dockerfile: Dockerfile
     restart: always
     network_mode: host
+    env_file: .env
     ports:
       - 8080:8080
     depends_on:
       - postgres
-    environment:
-      HASURA_GRAPHQL_PORT: 8080
-      HASURA_GRAPHQL_DATABASE_URL: postgres://hifumi:uwu@localhost:5432/hifumi
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
-      HASURA_GRAPHQL_ACCESS_KEY: test
-      HASURA_GRAPHQL_AUTH_HOOK: http://localhost:4000/hasura
   postgres:
     container_name: postgres
     image: postgres
     ports:
       - 5432:5432
     volumes:
-      - pgdata
-    environment:
-      POSTGRES_USER: hifumi
-      POSTGRES_PASSWORD: uwu
-      POSTGRES_DB: hifumi
+      - pgdata:/data
+    env_file: .env
   auth:
     container_name: auth
     build:
       context: auth
       dockerfile: Dockerfile
     restart: always
+    env_file: .env
     ports:
       - 4000:4000
 networks:
