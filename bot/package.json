@@ -29,6 +29,7 @@
 		"@graphql-codegen/introspection": "^1.0.3",
 		"@graphql-codegen/typescript": "1.0.3",
 		"@graphql-codegen/typescript-resolvers": "1.0.3",
+		"@playlyfe/gql": "^2.6.1",
 		"@types/datadog-metrics": "^0.6.0",
 		"@types/debug": "^4.1.2",
 		"@types/dotenv": "^6.1.0",
