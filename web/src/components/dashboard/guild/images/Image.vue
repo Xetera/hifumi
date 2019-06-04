@@ -24,7 +24,7 @@
       </div>
     </div>
     <div v-if="loaded" class="image-bottom">
-      <div class="image-user">
+      <div class="bottom-left">
         <img
           class="image-user-avatar"
           :src="avatar"
@@ -35,6 +35,9 @@
           <p class="image-user-name">{{ user.name }}</p>
         </div>
       </div>
+      <router-link :to="{ name: 'image', params: id }" class="bottom-right">
+        View
+      </router-link>
     </div>
   </div>
 </template>
@@ -48,6 +51,7 @@ export default {
   name: "Image",
   components: { ImageTag, ServerImagePlaceholder },
   props: {
+    id: String,
     url: String,
     image_tags: Array,
     user: Object,
@@ -93,6 +97,7 @@ $image-bottom-height: 40px;
   @include flex-col;
   cursor: pointer;
   width: $image-width;
+  max-width: $image-width;
   background-color: $background-semidark;
   height: $image-height + $image-bottom-height;
 }
@@ -101,7 +106,7 @@ $image-bottom-height: 40px;
   position: absolute;
 }
 
-.image-user {
+.bottom-left {
   @include flex-row;
   @include center;
   justify-content: flex-start;
@@ -109,12 +114,12 @@ $image-bottom-height: 40px;
 }
 .image-user-avatar {
   @include rounded;
-  margin: 0 10px;
   max-height: 50%;
   max-width: 50%;
 }
 .image-user-name {
   color: #dddddd;
+  margin-left: 8px;
   font-size: 13px;
 }
 .overlay-anchor {
@@ -133,5 +138,17 @@ $image-bottom-height: 40px;
   * {
     opacity: 1;
   }
+}
+.image-bottom {
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.bottom-right {
+  font-size: 12px;
+  @include v-center;
+  height: 100%;
+  text-align: right;
 }
 </style>

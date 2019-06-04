@@ -5,9 +5,12 @@
     </b-modal>
     <vue-custom-scrollbar class="scroller">
       <ServerImageGrid>
-        <div v-for="image in images" :key="image.url">
-          <ServerImage v-bind="image" @open-modal="openModal" />
-        </div>
+        <ServerImage
+          v-for="image in images"
+          :key="image.url"
+          v-bind="image"
+          @open-modal="openModal"
+        />
       </ServerImageGrid>
     </vue-custom-scrollbar>
     <ServerImagePaginator class="pagination-item" />

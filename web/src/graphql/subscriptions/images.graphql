@@ -9,6 +9,7 @@ subscription ImagesSubscription(
     limit: $limit
     offset: $offset
   ) {
+    id
     url
     created_at
     user {

@@ -45,9 +45,13 @@ export const base = {
         headers: {
           Authorization: `Bearer ${token}`
         }
-      }).then(({ authorized }) => {
-        ctx.commit("setAuth", authorized);
-      });
+      })
+        .then(({ authorized }) => {
+          ctx.commit("setAuth", authorized);
+        })
+        .catch(() => {
+          ctx.commit("setAuth", false);
+        });
     },
     async subscribeGuilds({ commit }) {
       return new Promise(async res => {

@@ -6,6 +6,7 @@ import Dashboard from "@/views/dashboard/Dashboard";
 import DashboardSettings from "@/components/dashboard/DashboardSettings";
 import GuildSettings from "@/components/dashboard/guild/GuildSettings";
 import Guild from "@/views/dashboard/Guild";
+import ImageView from "@/views/dashboard/ImageView";
 
 export default {
   ...withDiscordAuth,
@@ -34,6 +35,11 @@ export default {
       path: ":guild_id",
       component: Guild,
       children: [
+        {
+          path: "image/:id",
+          name: "image",
+          component: ImageView
+        },
         {
           path: "",
           name: "guild-home",

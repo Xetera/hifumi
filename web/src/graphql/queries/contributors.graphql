@@ -1,0 +1,7 @@
+query ($image: images_bool_exp){
+  images_aggregate(distinct_on: [user_id], where: $image) {
+    aggregate {
+      count
+    }
+  }
+}

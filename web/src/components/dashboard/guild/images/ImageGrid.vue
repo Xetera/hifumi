@@ -12,10 +12,11 @@ export default {
 
 <style scoped lang="scss">
 .image-grid {
+  justify-content: center;
   align-items: center;
   display: grid;
   max-height: 100%;
   grid-gap: 12px;
-  grid-template-columns: repeat(auto-fit, minmax($image-width, 1fr));
+  grid-template-columns: repeat(auto-fill, $image-width);
 }
 </style>
