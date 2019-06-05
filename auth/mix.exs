@@ -13,11 +13,15 @@ defmodule Testmeme.MixProject do
 
   # Run "mix help compile.app" to learn about applications.
   def application do
-    [
-      applications: [:oauth2, :poison, :plug_cowboy],
-      extra_applications: [:logger],
-      mod: {Yun, []}
-    ]
+    [applications: applications(Mix.env()), extra_applications: [:logger], mod: {Yun, []}]
+  end
+
+  defp applications(:dev) do
+    applications(:all) ++ [:remix]
+  end
+
+  defp applications(_otherwise) do
+    [:oauth2, :poison, :plug_cowboy, :corsica]
   end
 
   # Run "mix help deps" to learn about dependencies.
@@ -27,7 +31,11 @@ defmodule Testmeme.MixProject do
       {:poison, "~>3.1"},
       {:plug, "~>1.5"},
       {:plug_cowboy, "~>1.0"},
-      {:cowboy, "~>1.0.3"}
+      {:cowboy, "~>1.0.3"},
+      {:joken, "~>2.0"},
+      {:corsica, "~>1.0"},
+      # dev
+      {:remix, "~>0.0.1", only: :dev}
     ]
   end
 end

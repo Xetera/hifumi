@@ -1,16 +1,17 @@
 defmodule Yun do
   @moduledoc """
-    Yun supervisor
+  Yun supervisor
   """
   use Application
-
   require Logger
 
-  @envs ["YUN_OAUTH_SECRET","YUN_OAUTH_ID", "YUN_OAUTH_REDIRECT", "YUN_WEBSITE_CALLBACK"]
+  @envs ["YUN_OAUTH_SECRET", "YUN_OAUTH_ID", "YUN_OAUTH_REDIRECT", "YUN_WEBSITE_CALLBACK"]
+
   defp check_env do
     missing = Enum.find(@envs, fn env -> !System.get_env(env) end)
+
     if missing != nil do
-      IO.puts "Environment variable '#{missing}' is missing, aborting..."
+      IO.puts("Environment variable '#{missing}' is missing, aborting...")
       exit("Env variable #{missing} is missing")
     end
   end
