@@ -1,5 +1,6 @@
 defmodule Yun.Handler do
   use Plug.Router
+  use Plug.ErrorHandler
   require Logger
 
   if Mix.env() == :dev do
@@ -49,29 +50,23 @@ defmodule Yun.Handler do
     [{:code, code}, {:scope, @scope}, {:client_secret, @oauth_secret}]
   end
 
-  @spec with_authorization(Plug.Conn.t(), (String.t() -> any)) :: any
-  defp with_authorization(conn, f) do
-    auth = get_req_header(conn, "authorization")
-
-    if Enum.empty?(auth) do
-      send_resp(conn, 401, "Missing authorization")
-    else
-      auth = List.first(auth)
-      parts = String.split(auth, " ")
-
-      cond do
-        Enum.count(parts) < 2 ->
-          send_resp(conn, 401, "Invalid token")
-
-        List.first(parts) != "Bearer" ->
-          send_resp(conn, 401, "Invalid auth type")
-
-        true ->
-          [_type, token] = parts
-          f.(token)
-      end
+@spec with_authorization(Plug.Conn.t(), (String.t() -> any)) :: any
+defp with_authorization(conn, f) do
+  auth = get_req_header(conn, "authorization")
+  if Enum.empty?(auth) do
+    send_resp(conn, 401, "Missing authorization")
+  else
+    parts =
+      List.first(auth)
+      |> String.split(" ")
+    case parts do
+      [_, _, _| _] -> send_resp(conn, 401, "Invalid token")
+      ["Bearer", token] -> f.(token)
+      [] -> send_resp(conn, 401, "Missing authorization header")
+      _ -> send_resp(conn, 401, "Invalid auth type")
     end
   end
+end
 
   options "*_" do
     send_resp(conn, 202, [])
@@ -111,7 +106,7 @@ defmodule Yun.Handler do
     end
   end
 
-  @spec get_user(Plug.Conn.t(), String.t()) :: String.t() | nil
+  @spec get_user(Plug.Conn.t, String.t) :: String.t | nil
   defp get_user(client, token) do
     {:ok, %OAuth2.Response{:body => body}} =
       client
@@ -123,8 +118,9 @@ defmodule Yun.Handler do
 
   get "/hasura" do
     with_authorization(conn, fn token ->
+      IO.inspect token
       if !Yun.JWT.is_valid?(token) do
-        send_resp(conn, 401, token)
+        send_resp(conn, 401, "Invalid JWT")
       else
         IO.inspect(token)
         claims = Yun.JWT.get_claims(token)

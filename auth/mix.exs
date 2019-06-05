@@ -7,7 +7,8 @@ defmodule Testmeme.MixProject do
       version: "0.1.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      main: Yun
     ]
   end
 
@@ -21,7 +22,7 @@ defmodule Testmeme.MixProject do
   end
 
   defp applications(_otherwise) do
-    [:oauth2, :poison, :plug_cowboy, :corsica]
+    [:oauth2, :poison, :plug_cowboy, :corsica, :joken]
   end
 
   # Run "mix help deps" to learn about dependencies.
@@ -35,6 +36,7 @@ defmodule Testmeme.MixProject do
       {:joken, "~>2.0"},
       {:corsica, "~>1.0"},
       # dev
+      {:distillery, "~>1.5.2", only: :dev},
       {:remix, "~>0.0.1", only: :dev}
     ]
   end
