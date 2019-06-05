@@ -18,7 +18,7 @@ defmodule Yun.Handler do
   @oauth_secret System.get_env("YUN_OAUTH_SECRET")
   @oauth_id System.get_env("YUN_OAUTH_ID")
   @oauth_redirect System.get_env("YUN_OAUTH_REDIRECT")
-  @oauth_callback System.get_env("YUN_OAUTH_CALLBACK")
+  @website_callback System.get_env("YUN_WEBSITE_CALLBACK")
 
   def init(options) do
     options
@@ -57,7 +57,11 @@ defmodule Yun.Handler do
 
       e = get_user(client, token)
       IO.inspect(e)
-      send_resp(conn, 200, "dab")
+
+      conn
+      |> put_resp_header("Location", @website_callback)
+      |> resp(302, "You are being redirected")
+      |> halt()
     end
   end
 
