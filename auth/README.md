@@ -1,6 +1,21 @@
-# Yun API
+# Yun
 
-* /bot/stats -> datadog redirect for hifumi bot
-* /social/stats -> discord + reddit stats
-* /callback -> oauth callback
-* /auth -> check current auth status on the server (based on session ID)
+**TODO: Add description**
+
+## Installation
+
+If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+by adding `yun` to your list of dependencies in `mix.exs`:
+
+```elixir
+def deps do
+  [
+    {:yun, "~> 0.1.0"}
+  ]
+end
+```
+
+Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
+and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
+be found at [https://hexdocs.pm/yun](https://hexdocs.pm/yun).
+
