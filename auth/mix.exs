@@ -16,7 +16,7 @@ defmodule Testmeme.MixProject do
     [
       applications: [:oauth2, :poison, :plug_cowboy],
       extra_applications: [:logger],
-      mod: { Yun, []}
+      mod: {Yun, []}
     ]
   end
 
@@ -25,9 +25,9 @@ defmodule Testmeme.MixProject do
     [
       {:oauth2, "~>1.0.1"},
       {:poison, "~>3.1"},
-      {:plug, "~>1.5" },
-      {:plug_cowboy, "~>1.0" },
-      {:cowboy, "~>1.0.3" }
+      {:plug, "~>1.5"},
+      {:plug_cowboy, "~>1.0"},
+      {:cowboy, "~>1.0.3"}
     ]
   end
 end

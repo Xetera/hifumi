@@ -13,6 +13,7 @@ defmodule Yun do
     children = [
       Plug.Cowboy.child_spec(scheme: :http, plug: Yun.Handler, options: [port: 4000])
     ]
+
     opts = [strategy: :one_for_one, name: HexVersion.Supervisor]
     Supervisor.start_link(children, opts)
   end
