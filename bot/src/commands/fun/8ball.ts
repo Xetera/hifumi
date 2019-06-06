@@ -60,7 +60,7 @@ export default class extends Command {
     const yunpout = "<:YunPout:312013539164291073>"; // non-committal case
     const rinpout = "<:RinPout:585464497221926913>";
     const aobarage = "<:aobaRAGE:557354027499651082>"; // negative case
-    const yunrage = ""; // pls
+    const yunrage = "<:YunREEE:585791281205084177>"; // pls
 
     const cases = [
       {
