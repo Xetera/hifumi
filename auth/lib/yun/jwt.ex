@@ -3,11 +3,11 @@ defmodule Yun.JWT do
     JWT handler for incoming requests from hasura
   """
   use Joken.Config
-  @secret System.get_env("YUN_JWT_SECRET")
+  defp secret, do: System.get_env("YUN_JWT_SECRET")
 
   @spec signer :: Joken.Signer.t()
   defp signer do
-    Joken.Signer.create("HS256", @secret)
+    Joken.Signer.create("HS256", secret())
   end
 
   @spec create(%{binary => any}) :: String.t()

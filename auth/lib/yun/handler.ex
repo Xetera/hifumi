@@ -27,10 +27,10 @@ defmodule Yun.Handler do
   @headers [{"User-Agent", @user_agent}, {"Content-Type", @content_type}, {"Accept", @accept}]
 
   # request options
-  @oauth_secret System.get_env("YUN_OAUTH_SECRET")
-  @oauth_id System.get_env("YUN_OAUTH_ID")
-  @oauth_redirect System.get_env("YUN_OAUTH_REDIRECT")
-  @website_callback System.get_env("YUN_WEBSITE_CALLBACK")
+  defp oauth_secret, do: System.get_env("YUN_OAUTH_SECRET")
+  defp oauth_id, do: System.get_env("YUN_OAUTH_ID")
+  defp oauth_redirect, do: System.get_env("YUN_OAUTH_REDIRECT")
+  defp website_callback, do: System.get_env("YUN_WEBSITE_CALLBACK")
 
   def init(options) do
     options
@@ -38,6 +38,7 @@ defmodule Yun.Handler do
 
   @spec start_link :: {:ok, pid}
   def start_link do
+    IO.puts "Starting auth server..."
     {:ok, _} = Plug.Adapters.Cowboy.http(__MODULE__, [])
   end
 
@@ -47,7 +48,7 @@ defmodule Yun.Handler do
   end
 
   defp oauth_body(code) do
-    [{:code, code}, {:scope, @scope}, {:client_secret, @oauth_secret}]
+    [{:code, code}, {:scope, @scope}, {:client_secret, oauth_secret()}]
   end
 
 @spec with_authorization(Plug.Conn.t(), (String.t() -> any)) :: any
@@ -79,11 +80,11 @@ end
   get "/callback" do
     client =
       OAuth2.Client.new(
-        client_id: @oauth_id,
-        client_secret: @oauth_secret,
+        client_id: oauth_id(),
+        client_secret: oauth_secret(),
         site: "https://discordapp.com/api/v6",
         token_url: "https://discordapp.com/api/v6/oauth2/token",
-        redirect_uri: @oauth_redirect
+        redirect_uri: oauth_redirect()
       )
       |> OAuth2.Client.put_headers(@headers)
       |> OAuth2.Client.put_serializer("application/json", Poison)
@@ -97,7 +98,7 @@ end
       %{:token => %{:access_token => token}} = OAuth2.Client.get_token!(client, body)
       user_id = get_user(client, token)
       jwt = Yun.JWT.create(%{user_id: user_id})
-      redirect = "#{@website_callback}?code=#{jwt}"
+      redirect = "#{website_callback()}?code=#{jwt}"
 
       conn
       |> put_resp_header("location", redirect)
@@ -122,7 +123,6 @@ end
       if !Yun.JWT.is_valid?(token) do
         send_resp(conn, 401, "Invalid JWT")
       else
-        IO.inspect(token)
         claims = Yun.JWT.get_claims(token)
         payload = Yun.Hasura.generate_hasura_resp(Map.get(claims, "user_id"))
         send_resp(conn, 200, Poison.encode!(payload))

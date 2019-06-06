@@ -7,14 +7,14 @@ defmodule Testmeme.MixProject do
       version: "0.1.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
-      deps: deps(),
-      main: Yun
+      deps: deps()
     ]
   end
 
   # Run "mix help compile.app" to learn about applications.
   def application do
-    [applications: applications(Mix.env()), extra_applications: [:logger], mod: {Yun, []}]
+    env = System.get_env("MIX_ENV")
+    [applications: applications(env), extra_applications: [:logger], mod: {Yun, []}]
   end
 
   defp applications(:dev) do
