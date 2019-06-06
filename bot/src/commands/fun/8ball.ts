@@ -65,9 +65,9 @@ export default class extends Command {
     const cases = [
       {
         left: `${blobber} ${clapR}`, right: `${clapL} ${aoooba}`
-      },{
+      }, {
         left: `${yunpout} ${clapR}`, right: `${clapL} ${rinpout}`
-      },{
+      }, {
         left: `${yunrage} ${spacer}`, right: `${spacer} ${aobarage}`
       }
     ]
