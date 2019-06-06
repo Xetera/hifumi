@@ -59,8 +59,8 @@ export default class extends Command {
     const spacer = "<:hb3:585702957744652293>";
     const yunpout = "<:YunPout:312013539164291073>"; // non-committal case
     const rinpout = "<:RinPout:585464497221926913>";
-    const aobarage = "<:aobaRAGE:557354027499651082>"; // negative case
-    const yunrage = "<:YunREEE:585791281205084177>"; // pls
+    const aobarage = "<:AobaRage:557354027499651082>"; // negative case
+    const yunrage = "<:YunRage:585791281205084177>";
 
     const cases = [
       {
