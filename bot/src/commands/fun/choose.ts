@@ -12,6 +12,13 @@ export default class extends Command {
 
   public exec(msg: Message, { input }: any) {
     const options = `${input}`.split(",").map((str) => str.trim());
+
+    if (options.length < 1) {
+      msg.channel.send(`${msg.author}, you have not provided any options to choose from.`
+      + `*Example: $choose option 1, option 2, option 3*`)
+      return
+    }
+
     const choice = Math.floor(Math.random() * options.length);
     msg.channel.send(`${msg.author}, I choose **${options[choice]}**`);
   }
