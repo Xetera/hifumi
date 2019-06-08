@@ -57,6 +57,8 @@
       YUN_OAUTH_CALLBACK: "https://api.hifumi.io/callback"
       YUN_OAUTH_SECRET: "{{ yun.oauth_secret }}"
       YUN_WEBSITE_REDIRECT: "{{ yun.website_redirect }}"
+    networks:
+      - name: hifuminet
     ports:
       - 3000:3000
 
