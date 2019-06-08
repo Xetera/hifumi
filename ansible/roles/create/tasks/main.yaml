@@ -57,6 +57,7 @@
       YUN_OAUTH_CALLBACK: "https://api.hifumi.io/callback"
       YUN_OAUTH_SECRET: "{{ yun.oauth_secret }}"
       YUN_WEBSITE_REDIRECT: "{{ yun.website_redirect }}"
+      NODE_ENV: prod
     networks:
       - name: hifuminet
     ports:

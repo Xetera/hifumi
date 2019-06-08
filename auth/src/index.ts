@@ -51,7 +51,7 @@ passport.deserializeUser((id, done) => {
 app.use(
   cors({
     credentials: true,
-    origin: /(localhost|hifumi\.io)/,
+    origin: process.env.NODE_ENV === "prod" ? ".hifumi.io" : "http://localhost:4040",
     allowedHeaders: ["Authorization"]
   })
 );
