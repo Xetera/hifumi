@@ -1,7 +1,7 @@
 <template>
   <div class="image-wrapper">
     <b-tooltip :label="name" position="is-right" class="image is-48x48">
-      <img alt="placeholder" :src="placeholder" />
+      <img alt="placeholder" :src="icon || placeholder" />
     </b-tooltip>
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
   name: "GuildListIcon",
   components: { BTooltip },
   props: {
-    // icon: String,
+    icon: String,
     name: String
   },
   data() {
@@ -40,5 +40,8 @@ export default {
 }
 .server-icon {
   max-height: 100%;
+  img {
+    @include rounded;
+  }
 }
 </style>

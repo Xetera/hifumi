@@ -2,22 +2,18 @@ import { Channel, Guild, Message, MessageAttachment, TextChannel } from "discord
 import gql from "gql-tag/dist";
 import { resolve } from "media-extractor";
 import { _client, req } from "../db";
-import { Image_Channels } from "../generated/graphql";
 import { logger } from "../utils";
 
-const findArchiveChannels = (guild: Guild) => req(gql`
-  query {
-    image_channels(
-      where: {
-        guild_id: {
-          _eq: "${guild.id}"
-        }
+const findArchiveChannels = (guild: Guild) =>
+  _client.query({
+    image_channels: [{where: {
+      guild_id: {
+        _eq: guild.id
       }
-    ) {
-      channel_id
-    }
-  }
-`);
+    }}, {
+      channel_id: 1
+    }]
+  });
 
 const upsertImage = (message: Message, att: MessageAttachment, url: string, tags: string[]) => _client.mutation({
   insert_images: [{
@@ -45,8 +41,11 @@ const isArchiveChannel = async (channel: Channel) => {
     return false;
   }
 
-  const res = await findArchiveChannels(channel.guild) as { image_channels: Image_Channels[] };
-  return res.image_channels.some((chan) => chan.channel_id === channel.id);
+  const res = await findArchiveChannels(channel.guild);
+  if (res.errors && res.errors.length || !res.data) {
+    return logger.error("Error finding archive channels", res.errors);
+  }
+  return res.data.image_channels.some((chan) => chan.channel_id === channel.id);
 };
 
 const hasArchivableContent = async (message: Message) =>

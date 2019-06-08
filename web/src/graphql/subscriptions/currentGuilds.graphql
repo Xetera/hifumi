@@ -2,5 +2,6 @@ subscription CurrentGuilds {
   guilds {
     guild_id
     name
+    icon
   }
 }

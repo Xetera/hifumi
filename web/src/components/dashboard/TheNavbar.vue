@@ -3,6 +3,7 @@
     <div class="container">
       <div class="navbar-brand">
         <a
+          @click="flipMenu"
           role="button"
           class="navbar-burger burger"
           aria-label="menu"
@@ -67,7 +68,12 @@
 
 <script>
 export default {
-  name: "TheNavbar"
+  name: "TheNavbar",
+  methods: {
+    flipMenu() {
+      return this.$store.dispatch("flipMenu");
+    }
+  }
 };
 </script>
 

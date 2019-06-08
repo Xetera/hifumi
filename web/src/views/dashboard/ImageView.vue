@@ -1,10 +1,10 @@
 <template>
-  <div></div>
+  <div>All image details will show up here soon!</div>
 </template>
 
 <script>
 export default {
-  name: "DashboardImage"
+  name: "ImageView"
 };
 </script>
 

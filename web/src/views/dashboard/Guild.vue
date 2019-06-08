@@ -37,9 +37,8 @@ export default {
       image_tags: {
         query: graphql(imagesAggregate),
         variables() {
-          const { where } = this;
           return {
-            where
+            where: this.where
           };
         },
         result({ data }) {

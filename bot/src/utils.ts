@@ -50,7 +50,7 @@ interface CreateCommand extends CommandOptions {
   id: string;
 }
 
-export const isOwner = (id: string) => (process.env.OWNERS || "140862798832861184")
+export const isOwner = (id: string) => (process.env.HIFUMI_OWNERS || "140862798832861184")
   .split(",")
   .some(R.equals(id));
 

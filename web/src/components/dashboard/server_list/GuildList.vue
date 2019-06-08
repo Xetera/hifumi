@@ -41,8 +41,7 @@ export default {
   components: { BTooltip, ServerListIcon },
   computed: mapGetters({
     guilds: "guildArray"
-  }),
-  methods: {}
+  })
 };
 </script>
 

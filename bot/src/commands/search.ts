@@ -1,8 +1,6 @@
 import { Command } from "discord-akairo";
-import { GuildMember, Message, MessageReaction, RichEmbedOptions, User } from "discord.js";
-import gql from "gql-tag/dist";
-import { _client, req } from "../db";
-import { Images } from "../generated/graphql";
+import { GuildMember, Message, RichEmbedOptions } from "discord.js";
+import { _client } from "../db";
 
 export default class extends Command {
   constructor() {

@@ -1,0 +1,147 @@
+version: 2.1
+commands:
+  node-run-with-cache:
+    description: "Runs a command with cached dependencies"
+    parameters:
+      command:
+        type: string
+    steps:
+      - checkout:
+          path: ~/hifumi
+      - restore_cache:
+          key: hifumi-{{ checksum "package.json" }}
+      - run: npm install
+      - run: << parameters.command >>
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: hifumi-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: .
+          paths: .
+  docker-push:
+    description: "Builds and pushes a docker image"
+    parameters:
+      container-name:
+        type: string
+    steps:
+      - checkout:
+          path: ~/hifumi
+      - setup_remote_docker
+      - run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+      - run:
+          name: "Building and pushing docker image"
+          command: |
+            image_tag=""
+            case $CIRCLE_BRANCH in
+              master) image_tag="latest"         ;;
+              *)      image_tag="$CIRCLE_BRANCH" ;;
+            esac
+            docker build -t moedevs/<< parameters.container-name >>:$image_tag .
+            docker push moedevs/<< parameters.container-name >>:$image_tag
+docker: &docker
+  docker:
+    - image: docker:17.05.0-ce-git
+bot: &bot
+  docker:
+    - image: circleci/node:10
+  working_directory: ~/hifumi/bot
+checkout: &checkout
+  checkout:
+    path: ~/hifumi
+jobs:
+  # Auth
+  auth-build:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/hifumi/auth
+    steps:
+      - checkout:
+          path: ~/hifumi
+      - restore_cache:
+          key: hifumi-auth-{{ checksum "package.json" }}
+      - run: npm install
+      - save_cache:
+          paths:
+          - ~/.m2
+          key: hifumi-auth-{{ checksum "package.json" }}
+      - run: npm run build
+  auth-image:
+    docker:
+      - image: docker:17.05.0-ce-git
+    working_directory: ~/hifumi/auth
+    steps:
+      - docker-push:
+          container-name: yun
+  # Bot
+  bot-build:
+    <<: *bot
+    steps:
+      - node-run-with-cache:
+          command: npm run build
+  bot-lint:
+    <<: *bot
+    steps:
+      - checkout:
+          path: ~/hifumi
+      - attach_workspace:
+          at: .
+      - run: npm install tslint
+      - run: npm run lint
+  bot-image:
+    <<: *bot
+    steps:
+      - docker-push:
+          container-name: hifumi
+  # Web
+  web-build:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/hifumi/web
+    steps:
+      - node-run-with-cache:
+          command: npm run build
+  # Hasura
+  hasura:
+    <<: *docker
+    working_directory: ~/hifumi/hasura
+    steps:
+      - <<: *checkout
+      - docker-push:
+          container-name: hasura
+  # Ansible
+  ansible-deploy:
+    docker:
+      - image: ansible/ansible
+        environment:
+          ANSIBLE_HOST_KEY_CHECKING: False
+    working_directory: ~/hifumi/ansible
+    steps:
+      - <<: *checkout
+      - add_ssh_keys
+      - run: echo "$ANSIBLE_PASS" >> secret.txt && ansible-playbook --vault-password-file secret.txt start.yaml -i production.yaml
+workflows:
+  version: 2.1
+  hifumi:
+    jobs:
+      - auth-build
+      - auth-image:
+          requires:
+            - auth-build
+      - bot-build
+      - bot-lint
+      - bot-image:
+          requires:
+            - bot-build
+            - bot-lint
+      - web-build
+      - hasura
+      - ansible-deploy:
+          filters:
+            branches:
+              only: master
+          requires:
+            - bot-image
+            - auth-image
+            - hasura
+            - web-build

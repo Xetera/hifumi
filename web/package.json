@@ -52,10 +52,5 @@
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-apollo": "^0.20.0",
     "vue-template-compiler": "^2.5.21"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
-    }
   }
 }
