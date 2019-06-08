@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-<!--    <transition name="fade">-->
-<!--      <TheLoadingScreen v-if="!isAuthed" />-->
-<!--    </transition>-->
+    <!--    <transition name="fade">-->
+    <!--      <TheLoadingScreen v-if="!isAuthed" />-->
+    <!--    </transition>-->
     <router-view v-if="ready" />
   </div>
 </template>
