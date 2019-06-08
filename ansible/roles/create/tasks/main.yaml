@@ -61,7 +61,7 @@
     networks:
       - name: hifuminet
     ports:
-      - 3000:3000
+      - "{{ yun.port }}:{{ yun.port }}"
 
 
 - name: Updating hifumi's image

@@ -20,6 +20,7 @@ app.use(
     saveUninitialized: true,
     name: "yunsid",
     cookie: {
+      domain: ".hifumi.io",
       secure: process.env.NODE_ENV === "prod",
       httpOnly: true
     }
@@ -51,7 +52,7 @@ passport.deserializeUser((id, done) => {
 app.use(
   cors({
     credentials: true,
-    origin: process.env.NODE_ENV === "prod" ? ".hifumi.io" : "http://localhost:4040",
+    origin: process.env.NODE_ENV === "prod" ? "https://web.hifumi.io" : "http://localhost:4040",
     allowedHeaders: ["Authorization"]
   })
 );
