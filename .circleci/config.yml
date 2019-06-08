@@ -60,12 +60,12 @@ jobs:
           path: ~/hifumi
       - restore_cache:
           key: hifumi-auth-{{ checksum "package.json" }}
-      - run: mvn -B dependency:go-offline
+      - run: npm install
       - save_cache:
           paths:
           - ~/.m2
           key: hifumi-auth-{{ checksum "package.json" }}
-      - run: npm install && npm run build
+      - run: npm run build
   auth-image:
     docker:
       - image: docker:17.05.0-ce-git

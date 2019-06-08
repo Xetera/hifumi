@@ -1,4 +1,4 @@
-import { discordAuthGuard, withDiscordAuth } from "./guards";
+import { withDiscordAuth } from "./guards";
 import ServerImageBrowser from "@/components/dashboard/guild/images/ImageBrowser";
 import ServerHome from "@/components/dashboard/guild/GuildHome";
 import DashboardHome from "@/components/dashboard/DashboardHome";
