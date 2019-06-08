@@ -1,19 +1,17 @@
-/// <reference path="./graphql/createClient">
 import { AkairoClient } from "discord-akairo";
 import { Collection, Guild, GuildMember, User } from "discord.js";
 import gql from "gql-tag/dist";
 import { GraphQLClient } from "graphql-request";
 import { Variables } from "graphql-request/dist/src/types";
 import { GRAPHQL_ENDPOINT } from "./constants";
-import { Users_Insert_Input } from "./generated/graphql";
 import { createClient } from "./graphql/createClient";
-import { guilds_constraint, guilds_update_column } from "./graphql/schema";
+import { guilds_constraint, guilds_update_column, users_insert_input } from "./graphql/schema";
 import { logger } from "./utils";
 
 const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
-  headers: process.env.HASURA_ACCESS_KEY
+  headers: process.env.HIFUMI_HASURA_ACCESS_KEY
     ? {
-        "X-Hasura-Access-Key": process.env.HASURA_ACCESS_KEY
+        "X-Hasura-Access-Key": process.env.HIFUMI_HASURA_ACCESS_KEY
       }
     : {}
 });
@@ -30,11 +28,11 @@ export const syncAll = ({ guilds, users }: AkairoClient) =>
 
 export const _client = createClient({
   fetcher: ({ query, variables }: { query: any; variables: any }, fetch: any) =>
-    fetch(process.env.HASURA_URL!, {
+    fetch(process.env.HIFUMI_HASURA_URL!, {
       method: "POST",
       body: JSON.stringify({ query, variables }),
       headers: {
-        "X-Hasura-Admin-Secret": process.env.HASURA_ACCESS_KEY!
+        "X-Hasura-Admin-Secret": process.env.HIFUMI_HASURA_ACCESS_KEY!
       }
     }).then((r: any) => r.json())
 });
@@ -66,7 +64,7 @@ export const syncGuilds = (guilds: Guild[]) => {
 export const syncUsers = (users: User[]) => {
   logger.info("Synchronizing users");
   const data = users.map(
-    (user): Users_Insert_Input => ({
+    (user): users_insert_input => ({
       user_id: user.id,
       name: user.username,
       avatar: user.displayAvatarURL

@@ -1,4 +1,5 @@
-*.iml
+dist/
+node_modules/
+.vscode/
 .idea/
-target/
 .env

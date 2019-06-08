@@ -39,6 +39,7 @@
     env:
       HASURA_GRAPHQL_DATABASE_URL: "postgres://{{ postgres.username }}:{{ postgres.password }}@postgres:5432/{{ postgres.database }}"
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_AUTH_HOOK: "{{ hasura.auth_hook }}"
       HASURA_GRAPHQL_ADMIN_SECRET: "{{ hasura.admin_secret }}"
     ports:
       - 8080:8080
@@ -51,9 +52,11 @@
     image: moedevs/yun
     pull: yes
     env:
-      OAUTH_ID: "{{ yun.oauth_id }}"
-      OAUTH_SECRET: "{{ yun.oauth_secret }}"
-      NEWGAME_PORT: "3000"
+      YUN_PORT: "{{ yun.port }}"
+      YUN_OAUTH_ID: "{{ yun.oauth_id }}"
+      YUN_OAUTH_CALLBACK: "https://api.hifumi.io/callback"
+      YUN_OAUTH_SECRET: "{{ yun.oauth_secret }}"
+      YUN_WEBSITE_REDIRECT: "{{ yun.website_redirect }}"
     ports:
       - 3000:3000
 
@@ -64,13 +67,12 @@
     image: moedevs/hifumi
     pull: yes
     env:
-      HASURA_ACCESS_KEY: "{{ hasura.admin_secret }}"
-      HASURA_URL: "http://hasura:8080/v1alpha1/graphql"
-      TOKEN: "{{ hifumi.token }}"
-      PREFIX: $
-      OWNERS: "{{ hifumi.owners }}"
-      DATADOG_API_KEY: "{{ hifumi.datadog_api_key }}"
-      DATABASE_URL: mongodb://mongo/hifumi
-      NODE_ENV: production
+      HIFUMI_HASURA_ACCESS_KEY: "{{ hasura.admin_secret }}"
+      HIFUMI_HASURA_URL: "http://hasura:8080/v1/graphql"
+      HIFUMI_TOKEN: "{{ hifumi.token }}"
+      HIFUMI_PREFIX: $
+      HIFUMI_OWNERS: "{{ hifumi.owners }}"
+      HIFUMI_DATADOG_API_KEY: "{{ hifumi.datadog_api_key }}"
+      NODE_ENV: prod
     networks:
       - name: hifuminet

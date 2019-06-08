@@ -1,1 +1,2 @@
 hasura/migrations/* linguist-vendored
+bot/src/graphql/* linguist-vendored

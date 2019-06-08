@@ -1,0 +1,11 @@
+
+{
+  "watch": [
+    "*"
+  ],
+  "ext": "ts",
+  "ignore": [
+    "src/**/*.spec.ts"
+  ],
+  "exec": "tsc --skipLibCheck & node dist/index.js"
+}

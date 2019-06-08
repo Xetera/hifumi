@@ -3,14 +3,17 @@ import { get } from "@/utils/http";
 import { client } from "@/graphql";
 import { graphql } from "@/graphql";
 import { currentGuilds } from "@/graphql/subscriptions";
+import { addMutation } from "@/mixins/vuex";
 
 export const base = {
   debug: process.env.NODE_ENV !== "production",
   state: {
-    isAuthed: Boolean(localStorage.getItem("loggedIn")),
+    isAuthed: Boolean(localStorage.getItem("token")),
     guilds: {},
     currentGuild: null,
-    modal: {}
+    modal: {},
+    contributors: 0,
+    menuOpen: false
   },
   getters: {
     guild(state) {
@@ -21,13 +24,10 @@ export const base = {
     }
   },
   mutations: {
+    ...addMutation("setContributors", "contributors"),
+    ...addMutation("setMenuOpen", "menuOpen"),
     setAuth: (state, status) => {
       state.isAuthed = status;
-      if (status) {
-        localStorage.setItem("loggedIn", "dab");
-      } else {
-        localStorage.removeItem("loggedIn");
-      }
     },
     setGuilds: (state, guilds) => {
       state.guilds = guilds.reduce(
@@ -37,14 +37,20 @@ export const base = {
         }),
         {}
       );
-    },
-    setCurrentGuild: (state, guilds) => (state.currentGuild = guilds)
+    }
   },
   actions: {
-    checkLogin: ctx =>
-      get(`${AUTH_URL}/auth`).then(({ authorized }) => {
-        ctx.commit("setAuth", authorized);
-      }),
+    checkLogin: ({ commit }) => {
+      return get(`${AUTH_URL}/auth`)
+        .then(({ authorized }) => {
+          console.log("successfuly logged in ");
+          commit("setAuth", authorized);
+        })
+        .catch(() => {
+          commit("setAuth", false);
+          localStorage.removeItem("token");
+        });
+    },
     async subscribeGuilds({ commit }) {
       return new Promise(async res => {
         const observable = await client.subscribe({
@@ -57,14 +63,8 @@ export const base = {
         });
       });
     },
-    async getUser() {
-      const observable = await client.subscribe({
-        query: graphql(currentGuilds)
-      });
-
-      observable.subscribe(({ data }) => {
-        console.log(data);
-      });
+    flipMenu({ commit, state }) {
+      return commit("setMenuOpen", !state.menuOpen);
     }
   }
 };

@@ -1,0 +1,47 @@
+# development compose file
+version: "3.5"
+services:
+  hasura:
+    container_name: hasura
+    build: 
+      context: hasura
+      dockerfile: Dockerfile
+    restart: always
+    network_mode: host
+    env_file: .env
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/data
+    env_file: .env
+  auth:
+    container_name: auth
+    build:
+      context: auth
+      dockerfile: Dockerfile
+    restart: always
+    env_file: .env
+    ports:
+      - 4000:4000
+  bot:
+    container_name: bot
+    depends_on:
+      - hasura
+    build:
+      context: bot
+      dockerfile: Dockerfile
+    restart: always
+    network_mode: host
+    env_file: .env
+networks:
+  hifuminet:
+    name: hifuminet
+volumes:
+  pgdata:

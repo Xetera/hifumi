@@ -4,11 +4,17 @@
       <ImageModal v-bind="modal" />
     </b-modal>
     <vue-custom-scrollbar class="scroller">
-      <ServerImageGrid>
-        <div v-for="image in images" :key="image.url">
-          <ServerImage v-bind="image" @open-modal="openModal" />
-        </div>
+      <ServerImageGrid v-if="images.length > 0">
+        <ServerImage
+          v-for="image in images"
+          :key="image.url"
+          v-bind="image"
+          @open-modal="openModal"
+        />
       </ServerImageGrid>
+      <div v-if="images.length === 0">
+        <p>Looks like this server hasn't tagged any images yet</p>
+      </div>
     </vue-custom-scrollbar>
     <ServerImagePaginator class="pagination-item" />
   </div>
@@ -55,8 +61,10 @@ export default {
 
 <style scoped lang="scss">
 .grid-wrapper {
+  @include on-desktop {
+    padding: 10px;
+  }
   @include flex-col;
-  padding: 10px;
   width: 100%;
   max-height: 100%;
   height: 100%;
