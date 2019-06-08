@@ -59,7 +59,6 @@ export default {
 <style scoped lang="scss">
 .grid-wrapper {
   @include flex-col;
-  padding: 10px;
   width: 100%;
   max-height: 100%;
   height: 100%;

@@ -3,7 +3,8 @@ export const toText = r => r.text();
 
 export const get = (url, opts) => {
   const args = {
-    ...opts
+    ...opts,
+    credentials: "include"
   };
   return fetch(url, args).then(toJson);
 };

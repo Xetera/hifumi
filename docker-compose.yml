@@ -30,6 +30,16 @@ services:
     env_file: .env
     ports:
       - 4000:4000
+  bot:
+    container_name: bot
+    depends_on:
+      - hasura
+    build:
+      context: bot
+      dockerfile: Dockerfile
+    restart: always
+    network_mode: host
+    env_file: .env
 networks:
   hifuminet:
     name: hifuminet

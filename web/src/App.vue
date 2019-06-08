@@ -1,23 +1,25 @@
 <template>
   <div id="app">
-    <transition name="fade">
-      <TheLoadingScreen v-if="!ready" />
-    </transition>
+<!--    <transition name="fade">-->
+<!--      <TheLoadingScreen v-if="!isAuthed" />-->
+<!--    </transition>-->
     <router-view v-if="ready" />
   </div>
 </template>
 
 <script>
-import TheLoadingScreen from "./components/TheLoadingScreen";
+// import TheLoadingScreen from "./components/TheLoadingScreen";
 import { snackbar } from "./utils/ui";
+import { mapState } from "vuex";
 
 const OOPS_MESSAGE_TIMEOUT = 6500;
 export default {
-  components: { TheLoadingScreen },
+  // components: { TheLoadingScreen },
   created() {
     this.checkStatus();
     setTimeout(this.handleTimeout, OOPS_MESSAGE_TIMEOUT);
   },
+  computed: mapState(["isAuthed"]),
   methods: {
     async checkStatus() {
       await this.$store.dispatch("checkLogin");

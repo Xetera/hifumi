@@ -4,12 +4,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "ImageGrid"
-};
-</script>
-
 <style scoped lang="scss">
 .image-grid {
   justify-content: center;
@@ -17,6 +11,6 @@ export default {
   display: grid;
   max-height: 100%;
   grid-gap: 12px;
-  grid-template-columns: repeat(auto-fill, $image-width);
+  grid-template-columns: repeat(auto-fill, var(--image-width));
 }
 </style>

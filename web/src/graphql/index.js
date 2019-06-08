@@ -17,19 +17,17 @@ const wsLink = new WebSocketLink({
   uri: process.env.VUE_APP_GRAPHQL_WS,
   fetch,
   options: {
-    connectionParams: {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-        // cookie: document.cookie
-      }
-    },
     reconnect: true
   }
 });
 
 const httpLink = new HttpLink({
   uri: process.env.VUE_APP_GRAPHQL_HTTP,
-  fetch
+  fetch,
+  fetchOptions: {
+    credentials: "include",
+    cache: "no-cache"
+  }
 });
 
 const link = split(

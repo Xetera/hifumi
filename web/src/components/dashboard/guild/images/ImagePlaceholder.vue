@@ -18,8 +18,8 @@ export default {
   padding: 0;
 }
 .placeholder-image {
-  width: $image-width;
-  height: $image-height;
+  width: var(--image-width);
+  height: var(--image-height);
   background-color: silver;
 }
 .placeholder-tags {

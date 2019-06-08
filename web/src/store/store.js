@@ -3,14 +3,16 @@ import { get } from "@/utils/http";
 import { client } from "@/graphql";
 import { graphql } from "@/graphql";
 import { currentGuilds } from "@/graphql/subscriptions";
+import { addMutation } from "@/mixins/vuex";
 
 export const base = {
   debug: process.env.NODE_ENV !== "production",
   state: {
-    isAuthed: Boolean(localStorage.getItem("loggedIn")),
+    isAuthed: Boolean(localStorage.getItem("token")),
     guilds: {},
     currentGuild: null,
-    modal: {}
+    modal: {},
+    contributors: 0
   },
   getters: {
     guild(state) {
@@ -21,6 +23,7 @@ export const base = {
     }
   },
   mutations: {
+    ...addMutation("setContributors", "contributors"),
     setAuth: (state, status) => {
       state.isAuthed = status;
     },
@@ -32,25 +35,18 @@ export const base = {
         }),
         {}
       );
-    },
-    setCurrentGuild: (state, guilds) => (state.currentGuild = guilds)
+    }
   },
   actions: {
-    checkLogin: ctx => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        return ctx.commit("setAuth", false);
-      }
-      return get(`${AUTH_URL}/auth`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+    checkLogin: ({ commit }) => {
+      return get(`${AUTH_URL}/auth`)
         .then(({ authorized }) => {
-          ctx.commit("setAuth", authorized);
+          console.log("successfuly logged in ");
+          commit("setAuth", authorized);
         })
         .catch(() => {
-          ctx.commit("setAuth", false);
+          commit("setAuth", false);
+          localStorage.removeItem("token");
         });
     },
     async subscribeGuilds({ commit }) {

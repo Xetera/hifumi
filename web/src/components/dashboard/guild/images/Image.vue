@@ -35,7 +35,7 @@
           <p class="image-user-name">{{ user.name }}</p>
         </div>
       </div>
-      <router-link :to="{ name: 'image', params: id }" class="bottom-right">
+      <router-link :to="{ name: 'image', params: { id } }" class="bottom-right">
         View
       </router-link>
     </div>
@@ -51,7 +51,7 @@ export default {
   name: "Image",
   components: { ImageTag, ServerImagePlaceholder },
   props: {
-    id: String,
+    id: Number,
     url: String,
     image_tags: Array,
     user: Object,
@@ -90,16 +90,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$image-bottom-height: 40px;
-
 .server-image-wrapper {
   @include shadowed;
   @include flex-col;
   cursor: pointer;
-  width: $image-width;
-  max-width: $image-width;
+  width: var(--image-width);
+  max-width: var(--image-width);
   background-color: $background-semidark;
-  height: $image-height + $image-bottom-height;
+  height: var(--image-height) + var(--image-bottom-height);
 }
 .server-image {
   @include image-dimensions;
@@ -110,7 +108,7 @@ $image-bottom-height: 40px;
   @include flex-row;
   @include center;
   justify-content: flex-start;
-  height: $image-bottom-height;
+  height: var(--image-bottom-height);
 }
 .image-user-avatar {
   @include rounded;
@@ -123,9 +121,9 @@ $image-bottom-height: 40px;
   font-size: 13px;
 }
 .overlay-anchor {
-  width: $image-width;
-  height: $image-height;
-  min-height: $image-height;
+  width: var(--image-width);
+  height: var(--image-height);
+  min-height: var(--image-height);
   position: relative;
 }
 .image-tags {

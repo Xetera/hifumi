@@ -1,0 +1,31 @@
+{
+  "name": "yun",
+  "version": "1.0.0",
+  "description": "Hifumi's authentication module",
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.16.1",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-discord": "^0.1.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.5",
+    "@types/express-session": "^1.15.12",
+    "@types/morgan": "^1.7.35",
+    "@types/node": "^12.0.7",
+    "@types/passport": "^1.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --skipLibCheck",
+    "start": "npm run build && node dist/index.js",
+    "dev": "nodemon"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

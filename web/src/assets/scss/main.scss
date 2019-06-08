@@ -4,6 +4,12 @@
   src: url("../fonts/Lato-Regular.ttf") format("truetype");
 }
 
+:root {
+  --image-width: 150px;
+  --image-height: 150px;
+  --image-bottom-height: 40px;
+}
+
 h1,
 h2,
 h3,

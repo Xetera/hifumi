@@ -1,4 +1,4 @@
-import { withDiscordAuth } from "./guards";
+import { discordAuthGuard, withDiscordAuth } from "./guards";
 import ServerImageBrowser from "@/components/dashboard/guild/images/ImageBrowser";
 import ServerHome from "@/components/dashboard/guild/GuildHome";
 import DashboardHome from "@/components/dashboard/DashboardHome";
@@ -11,14 +11,6 @@ import ImageView from "@/views/dashboard/ImageView";
 export default {
   ...withDiscordAuth,
   path: "/dashboard",
-  beforeEnter(to, from, next) {
-    const { code } = to.query;
-    if (code) {
-      localStorage.setItem("token", code);
-    }
-    console.log(from);
-    next();
-  },
   component: Dashboard,
   children: [
     {

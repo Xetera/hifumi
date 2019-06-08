@@ -34,7 +34,11 @@ Image search is supported through both the bot and the web UI.
 Moderators of your server will have the option to mark your images as public which will allow [image moderators](#image-moderators) to review them. If approved, your images will be publicly viewable but the image tags will be managed by image mods.
 
 ## Setting up Hifumi
-> TBA
+1. Copy `.env.example` to `.env`
+2. Fill out the variables of modules you need
+3. Run `docker-compose up [modules separated by spaces]`
+  * Bot mode: `docker-compose up bot hasura postgres`
+  * Website mode: `docker-compose up hasura postgres auth`
 
 ## Modules
 

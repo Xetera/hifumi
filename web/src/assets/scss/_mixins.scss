@@ -48,6 +48,6 @@
 }
 
 @mixin image-dimensions {
-  height: $image-height;
-  width: $image-width;
+  height: var(--image-height);
+  width: var(--image-width);
 }
