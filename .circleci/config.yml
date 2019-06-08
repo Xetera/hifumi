@@ -110,9 +110,9 @@ jobs:
       - docker-push:
           container-name: hasura
   # Ansible
-  ansible-deploy:
+  deploy:
     docker:
-      - image: ansible/ansible
+      - image: trinitronx/ansible-base
         environment:
           ANSIBLE_HOST_KEY_CHECKING: False
     working_directory: ~/hifumi/ansible
@@ -136,7 +136,7 @@ workflows:
             - bot-lint
       - web-build
       - hasura
-      - ansible-deploy:
+      - deploy:
           filters:
             branches:
               only: master
