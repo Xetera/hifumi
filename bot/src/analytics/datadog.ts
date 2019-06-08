@@ -2,10 +2,10 @@ import { BufferedMetricsLogger } from "datadog-metrics";
 import { AkairoClient } from "discord-akairo";
 import { countMembers, logger } from "../utils";
 
-const { DATADOG_API_KEY } = process.env;
+const { HIFUMI_DATADOG_API_KEY } = process.env;
 
 const _dd = new BufferedMetricsLogger({
-  apiKey: DATADOG_API_KEY || "disabled in development",
+  apiKey: HIFUMI_DATADOG_API_KEY || "disabled in development",
   host: "hifumi",
   prefix: "hifumi.",
   // allows us to buffer stats and send them in bulk
@@ -17,7 +17,7 @@ const _dd = new BufferedMetricsLogger({
  * @param func
  */
 export const withDatadog = (func: (client: BufferedMetricsLogger) => void): void => {
-  if (DATADOG_API_KEY) {
+  if (HIFUMI_DATADOG_API_KEY) {
     func(_dd);
   }
 };

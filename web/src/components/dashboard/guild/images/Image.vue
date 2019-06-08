@@ -108,6 +108,7 @@ export default {
   @include flex-row;
   @include center;
   justify-content: flex-start;
+  width: 70%;
   height: var(--image-bottom-height);
 }
 .image-user-avatar {
@@ -117,6 +118,10 @@ export default {
 }
 .image-user-name {
   color: #dddddd;
+  max-height: 100%;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  white-space: nowrap;
   margin-left: 8px;
   font-size: 13px;
 }
@@ -145,7 +150,8 @@ export default {
 }
 .bottom-right {
   font-size: 12px;
-  @include v-center;
+  @include center;
+  width: 30%;
   height: 100%;
   text-align: right;
 }

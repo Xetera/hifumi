@@ -19,7 +19,6 @@ export default {
 }
 .placeholder-image {
   width: var(--image-width);
-  height: var(--image-height);
   background-color: silver;
 }
 .placeholder-tags {

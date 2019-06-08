@@ -149,8 +149,11 @@ export default {
 <style scoped lang="scss">
 $section-height: 80px;
 .modal-container {
-  max-height: 400px;
+  max-height: 350px;
   @include on-tablet {
+    max-height: 400px;
+  }
+  @include on-desktop {
     max-height: 700px;
   }
   margin: 0 10px;

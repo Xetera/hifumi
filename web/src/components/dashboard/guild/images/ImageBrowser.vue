@@ -61,6 +61,9 @@ export default {
 
 <style scoped lang="scss">
 .grid-wrapper {
+  @include on-desktop {
+    padding: 10px;
+  }
   @include flex-col;
   width: 100%;
   max-height: 100%;

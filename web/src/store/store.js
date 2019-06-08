@@ -12,7 +12,8 @@ export const base = {
     guilds: {},
     currentGuild: null,
     modal: {},
-    contributors: 0
+    contributors: 0,
+    menuOpen: false
   },
   getters: {
     guild(state) {
@@ -24,6 +25,7 @@ export const base = {
   },
   mutations: {
     ...addMutation("setContributors", "contributors"),
+    ...addMutation("setMenuOpen", "menuOpen"),
     setAuth: (state, status) => {
       state.isAuthed = status;
     },
@@ -60,6 +62,9 @@ export const base = {
           res();
         });
       });
+    },
+    flipMenu({ commit, state }) {
+      return commit("setMenuOpen", !state.menuOpen);
     }
   }
 };

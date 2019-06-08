@@ -48,12 +48,14 @@ passport.deserializeUser((id, done) => {
   done(null, id);
 });
 
-app.use(cors({
-  credentials: true,
-  origin: /(localhost|hifumi.io)/,
-  allowedHeaders: ["Authorization"]
-}));
-app.use(morgan('tiny'));
+app.use(
+  cors({
+    credentials: true,
+    origin: /(localhost|hifumi\.io)/,
+    allowedHeaders: ["Authorization"]
+  })
+);
+app.use(morgan(process.env.NODE_ENV === "prod" ? "short" : "dev"));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -63,11 +65,15 @@ app.get("/", (req, res) => {
 
 app.get("/login", passport.authenticate("discord"));
 app.get("/callback", passport.authenticate("discord"), (req, res) => {
-  res.redirect("http://localhost:4040/dashboard");
+  res.redirect(
+    process.env.YUN_WEBSITE_REDIRECT || "http://localhost:4040/dashboard"
+  );
 });
 
 app.get("/auth", (req, res) =>
-  res.send({ authorized: Boolean(req.session.passport && req.session.passport.user) })
+  res.send({
+    authorized: Boolean(req.session.passport && req.session.passport.user)
+  })
 );
 
 app.get("/hasura", (req, res) => {

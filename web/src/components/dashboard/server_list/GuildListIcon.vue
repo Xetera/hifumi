@@ -40,5 +40,8 @@ export default {
 }
 .server-icon {
   max-height: 100%;
+  img {
+    @include rounded;
+  }
 }
 </style>
