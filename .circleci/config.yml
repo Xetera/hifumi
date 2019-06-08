@@ -29,11 +29,11 @@ commands:
           path: ~/hifumi
       - setup_remote_docker
       - run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-      - run: 
+      - run:
           name: "Building and pushing docker image"
           command: |
             image_tag=""
-            case $CIRCLE_BRANCH in 
+            case $CIRCLE_BRANCH in
               master) image_tag="latest"         ;;
               *)      image_tag="$CIRCLE_BRANCH" ;;
             esac
@@ -43,7 +43,7 @@ docker: &docker
   docker:
     - image: docker:17.05.0-ce-git
 bot: &bot
-  docker: 
+  docker:
     - image: circleci/node:10
   working_directory: ~/hifumi/bot
 checkout: &checkout
@@ -53,19 +53,19 @@ jobs:
   # Auth
   auth-build:
     docker:
-      - image: circleci/openjdk
+      - image: circleci/node:10
     working_directory: ~/hifumi/auth
     steps:
       - checkout:
           path: ~/hifumi
       - restore_cache:
-          key: hifumi-auth-{{ checksum "pom.xml" }}
+          key: hifumi-auth-{{ checksum "package.json" }}
       - run: mvn -B dependency:go-offline
       - save_cache:
           paths:
           - ~/.m2
-          key: hifumi-auth-{{ checksum "pom.xml" }}
-      - run: mvn -B verify
+          key: hifumi-auth-{{ checksum "package.json" }}
+      - run: npm install && npm run build
   auth-image:
     docker:
       - image: docker:17.05.0-ce-git

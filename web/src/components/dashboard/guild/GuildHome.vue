@@ -3,7 +3,7 @@
     <div>
       <p>{{ guild.name }}</p>
     </div>
-    <div>contributors</div>
+    <div>{{ contributors }} contributors</div>
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
           guild: this.guild.guild_id
         };
       },
-      data({ data }) {
+      result({ data }) {
         console.log(data);
         this.$store.commit(
           "guild/setContributors",

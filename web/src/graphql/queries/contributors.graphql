@@ -1,9 +1,8 @@
-query Contributors($guild: String!){
-  images_aggregate(distinct_on: [user_id], where: {
-    guild_id: {
-      _eq: $guild
-    }
-  }) {
+query Contributors($guild: String!) {
+  images_aggregate(
+    distinct_on: [user_id]
+    where: { guild_id: { _eq: $guild } }
+  ) {
     aggregate {
       count
     }

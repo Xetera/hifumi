@@ -4,7 +4,7 @@
       <ImageModal v-bind="modal" />
     </b-modal>
     <vue-custom-scrollbar class="scroller">
-      <ServerImageGrid>
+      <ServerImageGrid v-if="images.length > 0">
         <ServerImage
           v-for="image in images"
           :key="image.url"
@@ -12,6 +12,9 @@
           @open-modal="openModal"
         />
       </ServerImageGrid>
+      <div v-if="images.length === 0">
+        <p>Looks like this server hasn't tagged any images yet</p>
+      </div>
     </vue-custom-scrollbar>
     <ServerImagePaginator class="pagination-item" />
   </div>
