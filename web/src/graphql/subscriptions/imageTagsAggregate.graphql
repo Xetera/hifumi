@@ -1,4 +1,4 @@
-subscription ImageTags {
+query ImageTags {
   tags: image_tags_aggregate(distinct_on: name) {
     aggregate {
       max: count

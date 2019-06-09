@@ -1,4 +1,4 @@
-subscription ImagesSubscription(
+query ImagesSubscription(
   $where: images_bool_exp
   $limit: Int
   $offset: Int

@@ -1,4 +1,4 @@
-subscription CurrentGuilds {
+query CurrentGuilds {
   guilds {
     guild_id
     name
