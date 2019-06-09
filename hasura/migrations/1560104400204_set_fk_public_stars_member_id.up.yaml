@@ -1,0 +1,5 @@
+- args:
+    sql: alter table "public"."stars" add constraint "stars_member_id_fkey" foreign
+      key ("member_id") references "public"."members"("id") on update cascade on delete
+      cascade;
+  type: run_sql

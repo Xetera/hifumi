@@ -1,0 +1,12 @@
+- args:
+    name: stars
+    table:
+      name: images
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: image_id
+        table:
+          name: stars
+          schema: public
+  type: create_array_relationship
