@@ -1,0 +1,10 @@
+- args:
+    sql: CREATE TABLE "public"."stars"("image_id" integer NOT NULL, "member_id" integer
+      NOT NULL, "starred_at" timestamptz NOT NULL DEFAULT now(), "starred_from" text
+      NOT NULL DEFAULT 'bot', PRIMARY KEY ("image_id","member_id") , FOREIGN KEY ("image_id")
+      REFERENCES "public"."images"("id") ON UPDATE cascade ON DELETE cascade);
+  type: run_sql
+- args:
+    name: stars
+    schema: public
+  type: add_existing_table_or_view
