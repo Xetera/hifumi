@@ -5,7 +5,6 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router/index";
 import { store } from "./store";
-import Buefy from "buefy";
 /* CSS */
 import "./assets/scss/bulma.scss";
 import "./assets/scss/main.scss";
@@ -24,11 +23,12 @@ import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons/faCalendarAlt
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons/faAngleLeft";
 import { faEdit } from "@fortawesome/free-solid-svg-icons/faEdit";
+import { Snackbar } from "buefy/src/components/snackbar";
 
 sync(store, router);
 
 Vue.config.productionTip = false;
-Vue.use(Buefy);
+Vue.use(Snackbar);
 
 Vue.component("fa", FontAwesomeIcon);
 

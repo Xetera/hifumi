@@ -1,8 +1,5 @@
 @import "variables";
-@font-face {
-  font-family: "Lato";
-  src: url("../fonts/Lato-Regular.ttf") format("truetype");
-}
+@import url("http://fonts.googleapis.com/css?family=Roboto");
 
 :root {
   --image-width: 150px;

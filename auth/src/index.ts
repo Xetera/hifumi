@@ -20,8 +20,8 @@ app.use(
     saveUninitialized: true,
     name: "yunsid",
     cookie: {
-      domain: ".hifumi.io",
-      secure: process.env.NODE_ENV === "prod",
+      domain: "hifumi.io",
+      secure: false,
       httpOnly: true
     }
   })
