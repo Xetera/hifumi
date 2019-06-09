@@ -53,7 +53,8 @@ app.use(
   cors({
     credentials: true,
     origin: process.env.NODE_ENV === "prod" ? "https://web.hifumi.io" : "http://localhost:4040",
-    allowedHeaders: ["Authorization"]
+    allowedHeaders: ["Authorization", "Content-Type"],
+    maxAge: 60 * 60 * 24 * 7
   })
 );
 app.use(morgan(process.env.NODE_ENV === "prod" ? "short" : "dev"));
