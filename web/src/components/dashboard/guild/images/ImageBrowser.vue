@@ -5,6 +5,7 @@
     </b-modal>
     <vue-custom-scrollbar class="scroller">
       <ServerImageGrid v-if="images.length > 0">
+        <b-loading :active.sync="loading" />
         <ServerImage
           v-for="image in images"
           :key="image.url"
@@ -28,10 +29,12 @@ import { mapState } from "vuex";
 import VueCustomScrollbar from "vue-custom-scrollbar/src/vue-scrollbar";
 import BModal from "buefy/src/components/modal/Modal";
 import ImageModal from "@/components/dashboard/guild/images/ImageModal";
+import BLoading from "buefy/src/components/loading/Loading";
 
 export default {
   name: "ImageBrowser",
   components: {
+    BLoading,
     ImageModal,
     BModal,
     VueCustomScrollbar,
@@ -46,7 +49,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("images", ["images", "page"]),
+    ...mapState("images", ["images", "page", "loading"]),
     ...mapState(["guilds", "currentGuild"])
   },
   methods: {

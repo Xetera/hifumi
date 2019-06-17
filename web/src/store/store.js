@@ -4,10 +4,13 @@ import { client } from "@/graphql";
 import { graphql } from "@/graphql";
 import { currentGuilds } from "@/graphql/subscriptions";
 import { addMutation } from "@/mixins/vuex";
+import { kickToFrontPage } from "../router/guards";
+import router from "../router";
 
 export const base = {
   debug: process.env.NODE_ENV !== "production",
   state: {
+    user: {},
     isAuthed: Boolean(localStorage.getItem("token")),
     guilds: {},
     currentGuild: null,
@@ -48,7 +51,7 @@ export const base = {
         })
         .catch(() => {
           commit("setAuth", false);
-          localStorage.removeItem("token");
+          kickToFrontPage({ name: this.route.from.name }, router.push);
         });
     },
     async subscribeGuilds({ commit }) {

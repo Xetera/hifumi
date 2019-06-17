@@ -22,7 +22,8 @@ export default {
   computed: mapState("images", ["total", "current", "where", "limit", "page"]),
   methods: {
     change(count) {
-      this.$store.dispatch("images/setPage", count);
+      this.$store.commit("images/loading");
+      return this.$store.dispatch("images/setPage", count);
     }
   }
 };

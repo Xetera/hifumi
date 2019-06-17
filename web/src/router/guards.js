@@ -1,36 +1,36 @@
-import { store } from "@/store";
 import { snackbar } from "../utils/ui";
 
 export const auth = requiresAuth => ({ meta: { requiresAuth } });
 export const clearToken = () => localStorage.removeItem("token");
 
-export const withoutDiscordAuth = {
-  ...auth(false),
-  beforeEnter: async (to, from, next) => {
-    const authed = await isAuthed();
-    if (authed) {
-      return next(true);
-    } else {
-      return next({ name: from.name });
-    }
-  }
+export const kickToFrontPage = (destination, next) => {
+  clearToken();
+  snackbar.requiresAuth();
+  next(destination || { name: "bot-home" });
 };
 
-export const isAuthed = () =>
-  store.dispatch("checkLogin").then(() => store.state.isAuthed);
-
 export async function discordAuthGuard(to, from, next) {
-  const redirect = () => next({ name: from.name || "bot-home" });
   try {
-    const authed = await isAuthed();
-    if (!authed) {
-      clearToken();
-      snackbar.requiresAuth();
-      redirect();
+    const hasSavedToken = localStorage.getItem("token");
+    const { token } = to.query;
+    if (token) {
+      localStorage.setItem("token", token);
     }
-    next(true);
+    /**
+     * If we have a token query param or we have
+     * a previously we just assume that we're authenticated
+     *
+     * The token param is removed on each successful navigation
+     * to the dashboard automatically
+     */
+
+    if (!hasSavedToken && !token) {
+      return kickToFrontPage(from, next);
+    }
+    return next(true);
   } catch (err) {
-    redirect();
+    console.error(err);
+    return kickToFrontPage(from, next);
   }
 }
 

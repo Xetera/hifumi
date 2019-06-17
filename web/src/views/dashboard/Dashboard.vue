@@ -19,14 +19,16 @@ import TheNavbar from "@/components/dashboard/TheNavbar";
 import ServerList from "@/components/dashboard/server_list/GuildList";
 import { Slide } from "vue-burger-menu";
 import { mapState } from "vuex";
+import { deleteToken } from "../../router/utils";
 
 export default {
   name: "Dashboard",
   components: { TheNavbar, TheDashboardDisplay, ServerList, Slide },
   computed: mapState(["menuOpen"]),
   mounted() {
-    return this.$store.dispatch("subscribeGuilds")
-  }
+    deleteToken(this.$router);
+    return this.$store.dispatch("subscribeGuilds");
+  },
 };
 </script>
 

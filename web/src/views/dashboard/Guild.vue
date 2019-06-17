@@ -56,6 +56,7 @@ export default {
           };
         },
         result({ data }) {
+          this.$store.commit("images/setLoading", false);
           return this.$store.commit("images/setImages", data.images);
         }
       }
