@@ -6,12 +6,18 @@ import { currentGuilds } from "@/graphql/subscriptions";
 import { addMutation } from "@/mixins/vuex";
 import { kickToFrontPage } from "../router/guards";
 import router from "../router";
+import { guild } from "./modules/guild.store";
+
+// const defaultGuild = {
+//   name: "Home",
+//   guild_id: "414334929002823680",
+//   icon:
+// };
 
 export const base = {
   debug: process.env.NODE_ENV !== "production",
   state: {
     user: {},
-    isAuthed: Boolean(localStorage.getItem("token")),
     guilds: {},
     currentGuild: null,
     modal: {},
@@ -19,8 +25,12 @@ export const base = {
     menuOpen: false
   },
   getters: {
+    isAuthed() {
+      return Boolean(localStorage.getItem("token"));
+    },
     guild(state) {
-      return state.guilds[state.route.params.guild_id];
+      const guildId = state.route.params.guild_id;
+      return state.guilds[guildId];
     },
     guildArray(state) {
       return Object.values(state.guilds);

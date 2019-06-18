@@ -9,9 +9,9 @@ export const snackbar = {
       type: "is-danger",
       actionText: "Sigh"
     }),
-  requiresAuth: () =>
+  requiresAuth: message =>
     Snackbar.open({
-      message: "You are not logged in!",
+      message: message || "You are not logged in!",
       type: "is-danger",
       position: "is-bottom-left"
     })

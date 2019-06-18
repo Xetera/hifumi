@@ -1,10 +1,11 @@
 <template>
-  <div id="app">
+  <v-app dark>
     <!--    <transition name="fade">-->
     <!--      <TheLoadingScreen v-if="!isAuthed" />-->
     <!--    </transition>-->
+
     <router-view v-if="ready" />
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -14,7 +15,6 @@ import { mapState } from "vuex";
 
 const OOPS_MESSAGE_TIMEOUT = 6500;
 export default {
-  // components: { TheLoadingScreen },
   created() {
     this.checkStatus();
     setTimeout(this.handleTimeout, OOPS_MESSAGE_TIMEOUT);

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <a :href="loginUrl">Login</a>
-    <router-link v-if="$store.state.isAuthed" to="/dashboard">
+    <a v-if="!$store.getters.isAuthed" :href="loginUrl">Login</a>
+    <router-link v-if="$store.getters.isAuthed" to="/dashboard">
       <a>To Dashboard</a>
     </router-link>
   </div>
@@ -18,7 +18,14 @@ export default {
     };
   },
   mounted() {
-    console.log(DISCORD_OAUTH_URL);
+    console.log(this.$store.getters.isAuthed);
   }
 };
 </script>
+<style>
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

@@ -46,6 +46,10 @@ export default {
           path: "images",
           name: "guild-images",
           component: ServerImageBrowser
+        },
+        {
+          path: "tags",
+          name: "guild-tags"
         }
       ]
     }

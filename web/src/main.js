@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 /* Vue Related */
 import Vue from "vue";
+import "./plugins/vuetify";
 import App from "./App.vue";
 import router from "./router/index";
 import { store } from "./store";
@@ -24,11 +25,13 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons/faAngleLeft";
 import { faEdit } from "@fortawesome/free-solid-svg-icons/faEdit";
 import { Snackbar } from "buefy/src/components/snackbar";
+import Vuetify from "vuetify";
 
 sync(store, router);
 
 Vue.config.productionTip = false;
 Vue.use(Snackbar);
+Vue.use(Vuetify);
 
 Vue.component("fa", FontAwesomeIcon);
 
