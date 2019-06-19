@@ -21,7 +21,7 @@ passport.use(
       scope: ["identify"]
     },
     (_, __, profile, cb) => {
-      cb(null, profile.id);
+      cb(null, profile);
     }
   )
 );
@@ -49,7 +49,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/", (req, res) => {
-  res.send({ test: "yes" });
+  res.send(
+    `<style>body{ margin: 0 }</style></style><video>
+        <source src="https://streamable.com/s/0hrdh/rvrwfr">
+        </source>
+    </video>`
+  );
+});
+
+app.get("/me", passport.authenticate("jwt", { session: false }), (req, res) => {
+  res.send(req.user);
 });
 
 app.get("/login", passport.authenticate("discord"));
@@ -57,12 +66,14 @@ app.get("/callback", passport.authenticate("discord"), (req, res) => {
   const destination =
     process.env.YUN_WEBSITE_REDIRECT || "http://localhost:4040/dashboard";
 
+  const { accessToken, ...response } = req.user;
+
   if (!req.user) {
     res.status(403);
     res.redirect(destination);
   }
 
-  const token = issueJwt(req.user);
+  const token = issueJwt(response);
   res.header("Authorization", `Bearer ${token}`);
   const redirect = new URL(destination);
 
@@ -79,9 +90,9 @@ app.get(
   "/hasura",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { userId } = req.user;
+    const { user: { id } } = req.user;
     return res.send({
-      "X-Hasura-User-Id": userId,
+      "X-Hasura-User-Id": id,
       "X-Hasura-Role": "user"
     });
   }

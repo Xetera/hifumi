@@ -16,8 +16,8 @@ export const JwtStrategy = new Strategy({
   done(null, payload);
 });
 
-export const issueJwt = (userId: string) => {
-  return jwt.sign({ userId }, jwtSecret, {
+export const issueJwt = (user: object) => {
+  return jwt.sign({ user }, jwtSecret, {
     expiresIn: Number.MAX_SAFE_INTEGER
   });
 };
