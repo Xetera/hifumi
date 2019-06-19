@@ -39,13 +39,16 @@ export default {
           icon: "TagIcon",
           to: { name: "guild-tags" }
         }
-      ],
+      ]
     };
   }
 };
 </script>
 
 <style scoped>
+.sidebar-guild-menu-wrapper {
+  overflow-y: auto;
+}
 .list-item {
   height: 45px;
 }

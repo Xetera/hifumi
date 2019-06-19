@@ -5,7 +5,7 @@
         :name="menu.name"
         :icon="menu.icon"
         :to="menu.to"
-        :background="menu.style"
+        :background="menu.background"
       />
     </div>
   </SidebarList>
@@ -40,7 +40,7 @@ export default {
           icon: "HeartOutlineIcon",
           to: { name: "donate" },
           background:
-            "linear-gradient(89.43deg, #F947DC -0.94%, rgba(255, 0, 46, 0.75) -0.93%, rgba(255, 0, 0, 0) 100.52%);"
+            "linear-gradient(89.43deg, #F947DC -0.94%, rgba(255, 0, 46, 0.75) -0.93%, rgba(255, 0, 0, 0) 100.52%)"
         },
         {
           name: "Logout",

@@ -9,7 +9,7 @@
       </p>
     </div>
     <div class="sidebar-bottom-section">
-      <img :src="guild.icon" alt="server image" class="sidebar-guild-image" />
+      <img :src="guild.icon" alt="server image" class="sidebar-image" />
       <h2 class="sidebar-guild-name">{{ guild.name }}</h2>
     </div>
   </div>
@@ -32,10 +32,6 @@ export default {
   font-size: 16px;
   font-weight: normal;
   color: #ececec;
-}
-.sidebar-guild-image {
-  max-height: 45px;
-  border-radius: 9999px;
 }
 .sidebar-top-section {
   display: flex;

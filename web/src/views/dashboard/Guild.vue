@@ -6,14 +6,12 @@
 </template>
 
 <script>
-import Menu from "@/components/dashboard/guild/menu/Menu";
 import { images, imagesAggregate } from "@/graphql/subscriptions";
 import { graphql } from "@/graphql";
 import { mapState } from "vuex";
 
 export default {
   name: "Guild",
-  components: { Menu },
   computed: {
     ...mapState("images", ["limit", "offset", "where"])
   },

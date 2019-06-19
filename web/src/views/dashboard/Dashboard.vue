@@ -11,18 +11,23 @@
 <!--      <router-view />-->
 <!--    </TheDashboardDisplay>-->
 <!--  </div>-->
-  <Sidebar />
-
+  <div class="dashboard">
+    <Sidebar />
+    <TheDashboardDisplay>
+      <router-view />
+    </TheDashboardDisplay>
+  </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import { deleteToken } from "@/router/utils";
 import Sidebar from "@/components/dashboard/sidebar/Sidebar";
+import TheDashboardDisplay from "./TheDashboardDisplay";
 
 export default {
   name: "Dashboard",
-  components: { Sidebar },
+  components: { TheDashboardDisplay, Sidebar },
   computed: mapState(["menuOpen"]),
   mounted() {
     deleteToken(this.$router);
@@ -44,6 +49,7 @@ export default {
 
 <style scoped lang="scss">
 .dashboard {
+  background: $background !important;
   @include flex-col;
   @include on-tablet {
     flex-direction: row;

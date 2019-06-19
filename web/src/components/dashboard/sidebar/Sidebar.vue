@@ -6,7 +6,10 @@
       </div>
       <SidebarMenuGuild />
     </div>
-    <SidebarMenuStatic />
+    <div>
+      <SidebarMenuStatic />
+      <SidebarUser />
+    </div>
   </div>
 </template>
 
@@ -14,17 +17,19 @@
 import SidebarGuild from "./SidebarGuild";
 import SidebarMenuStatic from "./SidebarMenuStatic";
 import SidebarMenuGuild from "./SidebarMenuGuild";
+import SidebarUser from "./SidebarUser";
 export default {
   name: "Sidebar",
-  components: { SidebarMenuGuild, SidebarMenuStatic, SidebarGuild }
+  components: { SidebarUser, SidebarMenuGuild, SidebarMenuStatic, SidebarGuild }
 };
 </script>
 
 <style scoped lang="scss">
 .sidebar-guild-wrapper {
-  height: 120px;
+  height: 110px;
 }
 .sidebar {
+  z-index: 2;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
   background: $sidebar-color;
   width: 250px;

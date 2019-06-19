@@ -17,17 +17,18 @@ p {
   font-family: "Lato", "Roboto", sans-serif !important;
 }
 
-.is-vue-green {
-  background-color: $vue-green !important;
-}
-
 html {
   overflow-y: hidden;
 }
 
 body {
   height: 100vh;
-  background-color: $background-dark;
+  background-color: $background;
+}
+
+.sidebar-image {
+  max-height: 45px;
+  border-radius: 9999px;
 }
 
 .disabled-link {

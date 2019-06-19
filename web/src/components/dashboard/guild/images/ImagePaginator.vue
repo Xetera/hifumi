@@ -35,7 +35,7 @@ export default {
   width: 80%;
 }
 .pagination-link {
-  color: $primary !important;
+  color: whitesmoke !important;
 }
 .wrapper {
   @include center;
