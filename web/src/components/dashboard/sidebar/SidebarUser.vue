@@ -2,18 +2,21 @@
   <div class="sidebar-user-wrapper">
     <img
       class="sidebar-image sidebar-avatar"
-      src="https://cdn.discordapp.com/avatars/140862798832861184/a_aff9dd814944fb8723635d74efd61f18.png?size=128"
+      :src="avatar"
     />
     <div class="sidebar-user-info">
-      <span class="sidebar-user-name">Xetera</span>
-      <span class="sidebar-user-discriminator">#0001</span>
+      <span class="sidebar-user-name">{{ username }}</span>
+      <span class="sidebar-user-discriminator">{{ discriminator }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
-  name: "SidebarUser"
+  name: "SidebarUser",
+  computed: mapState("user", ["avatar", "username", "discriminator"])
 };
 </script>
 

@@ -5,6 +5,7 @@ import { settings } from "./modules/settings.store";
 import { images } from "./modules/images.store";
 import { tags } from "./modules/tags.store";
 import { modal } from "./modules/modal.store";
+import { user } from "./modules/user.store";
 import { guild } from "@/store/modules/guild.store";
 
 Vue.use(Vuex);
@@ -15,6 +16,7 @@ export const store = new Vuex.Store({
   modules: {
     guild,
     settings,
+    user,
     images,
     tags,
     modal

@@ -25,6 +25,7 @@
     "core-js": "^2.6.5",
     "dotenv": "^8.0.0",
     "isomorphic-fetch": "^2.2.1",
+    "jsonwebtoken": "^8.5.1",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-apollo": "^3.0.0-beta.29",

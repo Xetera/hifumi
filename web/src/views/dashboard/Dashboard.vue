@@ -31,6 +31,7 @@ export default {
   computed: mapState(["menuOpen"]),
   mounted() {
     deleteToken(this.$router);
+    this.$store.commit("user/setUser");
     return this.$store.dispatch("subscribeGuilds");
   },
   // beforeRouteEnter(to, from, next) {

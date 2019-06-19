@@ -49,10 +49,4 @@ export default {
 .sidebar-guild-menu-wrapper {
   overflow-y: auto;
 }
-.list-item {
-  height: 45px;
-}
-.link-wrapper:not(:nth-child(1)) {
-  margin-top: 10px;
-}
 </style>

@@ -1,5 +1,7 @@
 <template>
   <div class="grid-wrapper">
+    <SearchTitle search="Something" />
+    <SearchBar />
     <b-modal :active.sync="modalOpen">
       <ImageModal v-bind="modal" />
     </b-modal>
@@ -30,10 +32,14 @@ import VueCustomScrollbar from "vue-custom-scrollbar/src/vue-scrollbar";
 import BModal from "buefy/src/components/modal/Modal";
 import ImageModal from "@/components/dashboard/guild/images/ImageModal";
 import BLoading from "buefy/src/components/loading/Loading";
+import SearchBar from "./SearchBar";
+import SearchTitle from "./SearchTitle";
 
 export default {
   name: "ImageBrowser",
   components: {
+    SearchTitle,
+    SearchBar,
     BLoading,
     ImageModal,
     BModal,
@@ -64,9 +70,7 @@ export default {
 
 <style scoped lang="scss">
 .grid-wrapper {
-  @include on-desktop {
-    padding: 10px;
-  }
+  padding: 10px;
   @include flex-col;
   width: 100%;
   max-height: 100%;

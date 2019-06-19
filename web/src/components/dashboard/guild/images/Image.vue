@@ -149,6 +149,7 @@ export default {
   justify-content: space-between;
 }
 .bottom-right {
+  color: $link-color;
   font-size: 12px;
   @include center;
   width: 30%;
