@@ -29,7 +29,7 @@ export default {
   line-height: 19px;
   text-align: left;
   margin-left: 15px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: normal;
   color: #ececec;
 }
@@ -58,6 +58,7 @@ export default {
 }
 
 .sidebar-top-text {
+  font-weight: 300;
   font-size: 12px;
 }
 

@@ -25,7 +25,7 @@ export default {
           to: { name: "guild-home" }
         },
         {
-          name: "Settings",
+          name: "Server",
           icon: "LockIcon",
           to: { name: "guild-settings" }
         },

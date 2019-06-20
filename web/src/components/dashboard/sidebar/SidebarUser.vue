@@ -6,7 +6,7 @@
     />
     <div class="sidebar-user-info">
       <span class="sidebar-user-name">{{ username }}</span>
-      <span class="sidebar-user-discriminator">{{ discriminator }}</span>
+      <span class="sidebar-user-discriminator">#{{ discriminator }}</span>
     </div>
   </div>
 </template>

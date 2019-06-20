@@ -9,11 +9,9 @@
     <!--    </div>-->
     <div class="sidebar-list-item-content">
       <div class="sidebar-list-item-icon">
-        <component :is="icon" :size="16" />
+        <component :is="icon" :size="iconSize" />
       </div>
-      <div class="sidebar-list-item-name">
-        {{ name }}
-      </div>
+      <span class="sidebar-list-item-name">{{ name }}</span>
     </div>
   </router-link>
 </template>
@@ -51,6 +49,11 @@ export default {
       optional: false,
       type: String
     }
+  },
+  data() {
+    return {
+      iconSize: 18
+    };
   }
 };
 </script>
@@ -58,7 +61,7 @@ export default {
 <style lang="scss" scoped>
 .router-link-exact-active {
   background: $sidebar-selected-tab !important;
-  // fix this
+  // fix this play button thingy
   &.sidebar-list-item-content:before {
     display: flex;
     position: absolute;
@@ -95,7 +98,8 @@ span.material-design-icon {
   margin: 0 20px;
 }
 .sidebar-list-item-name {
-  margin-left: 10px;
+  margin-left: 15px;
   font-size: 18px;
+  display: flex;
 }
 </style>

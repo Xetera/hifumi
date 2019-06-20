@@ -1,6 +1,6 @@
 <template>
   <div class="label">
-    <slot></slot>
+    <p><slot></slot></p>
   </div>
 </template>
 
@@ -10,11 +10,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .label {
+  margin-bottom: 8px !important;
+  color: $font-light;
   font-weight: 300;
   font-size: 16px;
-  display: flex;
-  align-items: center;
 }
 </style>

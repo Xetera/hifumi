@@ -32,7 +32,7 @@
           @error="imageLoadError"
         />
         <div>
-          <p class="image-user-name">{{ user.name }}</p>
+          <p class="image-user-name">{{ name }}</p>
         </div>
       </div>
       <router-link :to="{ name: 'image', params: { id } }" class="bottom-right">
@@ -45,6 +45,7 @@
 <script>
 import { proxy } from "@/config";
 import placeholder from "@/assets/logo.png";
+
 import ServerImagePlaceholder from "@/components/dashboard/guild/images/ImagePlaceholder";
 import ImageTag from "@/components/dashboard/guild/images/ImageTag";
 export default {
@@ -65,6 +66,9 @@ export default {
     };
   },
   computed: {
+    name() {
+      return this.user && this.user.name || "Unknown"
+    },
     proxyImage() {
       return proxy(this.url);
     },
@@ -83,6 +87,7 @@ export default {
       this.hovering = state;
     },
     imageLoadError() {
+      console.log("image loading errored");
       this.avatar = placeholder;
     }
   }
@@ -94,6 +99,7 @@ export default {
   @include shadowed;
   @include flex-col;
   cursor: pointer;
+  margin: 0 auto;
   width: var(--image-width);
   max-width: var(--image-width);
   background-color: $background-semidark;

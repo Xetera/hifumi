@@ -33,6 +33,7 @@ export default {
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
   background: $sidebar-color;
   width: 250px;
+  min-width: 250px;
   height: 100vh;
   max-height: 100vh;
   display: flex;

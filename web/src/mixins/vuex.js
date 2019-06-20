@@ -1,6 +1,15 @@
 export const makeMutation = (name, stateName) => (state, target) =>
   (state[stateName] = target);
 
+export const addMutations = actions =>
+  actions.reduce(
+    (all, [name, dest]) => ({
+      ...all,
+      ...addMutation(name, dest)
+    }),
+    {}
+  );
+
 export const addMutation = (name, state) => ({
   [name]: makeMutation(name, state)
 });

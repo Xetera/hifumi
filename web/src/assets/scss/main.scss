@@ -8,6 +8,7 @@
 }
 
 button,
+div,
 h1,
 h2,
 h3,
@@ -27,6 +28,16 @@ body {
   background-color: $background;
 }
 
+.tag {
+  height: 40px;
+  flex-direction: row;
+  border-radius: 999px;
+  background: $tag-color;
+  display: inline-flex;
+  align-content: flex-start;
+  align-items: center;
+  flex-shrink: 1;
+}
 .sidebar-image {
   max-height: 45px;
   border-radius: 9999px;

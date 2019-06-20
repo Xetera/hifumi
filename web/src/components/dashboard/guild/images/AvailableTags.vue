@@ -1,18 +1,24 @@
 <template>
-  <ul>
-    <li v-for="tag in tags" :key="tag.name">
-      <a>{{ tag.name }}</a>
-    </li>
-  </ul>
+  <div>
+    <Label>Available Tags - {{ tags.length }}</Label>
+    <div class="available-tags">
+      <div class="available-tag-wrapper" v-for="tag in tags" :key="tag.name">
+        <AvailableTag :name="tag.name" :count="tag.count" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { imageTags, imageTagsAggregate } from "@/graphql/subscriptions";
+import { imageTags } from "@/graphql/subscriptions";
 import { graphql } from "@/graphql";
 import { mapGetters, mapState } from "vuex";
+import AvailableTag from "./AvailableTag";
+import Label from "../../Label";
 
 export default {
-  name: "ImageTags",
+  name: "AvailableTags",
+  components: { Label, AvailableTag },
   computed: {
     ...mapGetters(["guild"]),
     ...mapState("tags", ["tags", "tagCount"]),
@@ -30,20 +36,19 @@ export default {
           console.log(data);
           await this.$store.dispatch("tags/setTags", data.tags);
         }
-      },
-      max_image_tags: {
-        query: graphql(imageTagsAggregate),
-        variables() {
-          return { where: this.where };
-        },
-        result({ data }) {
-          console.log("image tags aggregate");
-          console.log(data);
-        }
       }
     }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.available-tag-wrapper {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+.available-tags {
+  display: flex;
+  flex-flow: row wrap;
+}
+</style>

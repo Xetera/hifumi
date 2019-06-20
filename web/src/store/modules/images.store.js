@@ -16,7 +16,6 @@ export const images = createModule({
     ...addMutation("setTotal", "total"),
     ...addMutation("setWhere", "where"),
     ...addMutation("setOffset", "offset"),
-    // eslint-disable-next-line
     reset: ctx => Object.assign(ctx, state)
   },
   actions: {
