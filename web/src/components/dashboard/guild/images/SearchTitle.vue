@@ -1,7 +1,12 @@
 <template>
   <div class="images-title-wrapper">
-    <h1 class="images-title">{{ searchString }}</h1>
-<!--    <p v-if="results" class="images-count">{{ results }} results</p>-->
+    <h1 class="images-title">
+      Image Search
+      <!--      {{ searchString }}-->
+    </h1>
+    <p v-if="results !== undefined" class="images-count">
+      {{ results }} results
+    </p>
   </div>
 </template>
 
@@ -50,7 +55,8 @@ export default {
   font-size: 24px;
   font-weight: 300;
 }
-  .images-count {
-    font-size: 20px;
-  }
+.images-count {
+  margin-left: 10px;
+  font-size: 20px;
+}
 </style>

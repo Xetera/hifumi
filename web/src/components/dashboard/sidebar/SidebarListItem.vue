@@ -70,11 +70,6 @@ export default {
     background: url(../../../assets/svg/play.svg);
   }
 }
-// centering overrides for the icons
-span.material-design-icon {
-  display: flex;
-  align-items: center;
-}
 .sidebar-selected-icon {
   text-align: left;
   font-size: 2em;

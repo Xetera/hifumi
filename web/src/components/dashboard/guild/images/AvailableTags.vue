@@ -2,7 +2,15 @@
   <div>
     <Label>Available Tags - {{ tags.length }}</Label>
     <div class="available-tags">
-      <div class="available-tag-wrapper" v-for="tag in tags" :key="tag.name">
+      <div v-if="!tags.length">
+        Looks like you don't have any tagged images
+      </div>
+      <div
+        class="available-tag-wrapper"
+        v-for="tag in tags"
+        :key="tag.name"
+        @click="add(tag)"
+      >
         <AvailableTag :name="tag.name" :count="tag.count" />
       </div>
     </div>
@@ -21,8 +29,12 @@ export default {
   components: { Label, AvailableTag },
   computed: {
     ...mapGetters(["guild"]),
-    ...mapState("tags", ["tags", "tagCount"]),
-    ...mapState("images", ["where"])
+    ...mapState("images", ["where", "tags"])
+  },
+  methods: {
+    add(tag) {
+      this.$store.dispatch("images/addSelected", tag.name)
+    }
   },
   apollo: {
     $subscribe: {
@@ -34,7 +46,7 @@ export default {
         async result({ data }) {
           console.log("image tags");
           console.log(data);
-          await this.$store.dispatch("tags/setTags", data.tags);
+          await this.$store.dispatch("images/setTags", data.tags);
         }
       }
     }

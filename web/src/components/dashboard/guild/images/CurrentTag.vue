@@ -1,6 +1,6 @@
 <template>
   <div class="tag">
-    <div class="icon tag-remove-icon">
+    <div class="icon tag-remove-icon" @click="$emit('close', name)">
       <CloseIcon :size="16" class="icon" />
     </div>
     <p class="tag-content">

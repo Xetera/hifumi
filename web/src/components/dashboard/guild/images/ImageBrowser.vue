@@ -1,30 +1,32 @@
 <template>
   <vue-custom-scrollbar class="scroller">
     <div class="grid-wrapper">
-      <div class="images-filter-field">
-        <SearchTitle
-          search="Newgame"
-          :tags="['hifumi', 'cute']"
-          :results="images.length"
-        />
-        <div class="margin-top image-page-search">
-          <SearchBar class="padding-top" />
-        </div>
+      <transition name="fade">
+        <div class="images-filter-field">
+          <SearchTitle
+            search="Newgame"
+            :tags="['hifumi', 'cute']"
+            :results="images.length"
+          />
+          <div class="margin-top image-page-search">
+            <SearchBar class="padding-top" />
+          </div>
 
-        <div class="margin-top">
-          <CurrentTags />
-        </div>
+          <div class="margin-top">
+            <CurrentTags />
+          </div>
 
-        <div class="margin-top">
-          <AvailableTags />
+          <div class="margin-top">
+            <AvailableTags />
+          </div>
         </div>
-      </div>
+      </transition>
 
       <b-modal :active.sync="modalOpen">
         <ImageModal v-bind="modal" />
       </b-modal>
       <div class="margin-top">
-        <ServerImageGrid v-if="images.length > 0" >
+        <ServerImageGrid v-if="images.length > 0">
           <!--        <b-loading :active.sync="loading" />-->
           <ServerImage
             v-for="image in images"
@@ -34,9 +36,10 @@
           />
         </ServerImageGrid>
       </div>
-      <div v-if="images.length === 0">
-        <p>Looks like this server hasn't tagged any images yet</p>
-      </div>
+
+<!--      <div v-if="images.length === 0">-->
+<!--        <p>Looks like this server hasn't tagged any images yet</p>-->
+<!--      </div>-->
     </div>
   </vue-custom-scrollbar>
 </template>
@@ -88,7 +91,7 @@ export default {
 
 <style scoped lang="scss">
 .images-filter-field {
-  background: #202226;
+  background: #2a2b2c;
   box-shadow: $shadow;
   padding: 3%;
 }

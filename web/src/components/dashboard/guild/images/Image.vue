@@ -1,44 +1,53 @@
 <template>
   <div class="server-image-wrapper" @click="$emit('open-modal', $props)">
     <ServerImagePlaceholder v-if="!loaded"></ServerImagePlaceholder>
-    <div
-      class="overlay-anchor"
-      @mouseenter="setHover(true)"
-      @mouseleave="setHover(false)"
-    >
+    <div :class="{ 'overlay-anchor': loaded }">
       <img
         class="server-image"
+        :class="{ 'image-errored': errored }"
         :src="proxyImage"
         alt="image"
         v-if="url"
         :style="{ display: loaded ? 'block' : 'none' }"
+        @error="imageLoadError"
         @load="removePlaceholder"
       />
-      <div v-if="loaded && hovering" class="image-tags">
-        <div v-for="tag in relevantTags" :key="tag.name">
+      <div v-if="loaded && !errored" class="image-tags">
+        <div
+          v-for="tag in relevantTags"
+          :key="tag.name"
+        >
           <ImageTag :name="tag.name" />
         </div>
         <div v-if="remainingTags > 0">
           <ImageTag :name="`${remainingTags} more tags`" />
         </div>
       </div>
-    </div>
-    <div v-if="loaded" class="image-bottom">
-      <div class="bottom-left">
-        <img
-          class="image-user-avatar"
-          :src="avatar"
-          alt="user-avatar"
-          @error="imageLoadError"
-        />
-        <div>
-          <p class="image-user-name">{{ name }}</p>
-        </div>
+      <div v-if="loaded && errored" class="image-error-message">
+        Oops
       </div>
-      <router-link :to="{ name: 'image', params: { id } }" class="bottom-right">
-        View
-      </router-link>
     </div>
+    <transition name="slide-fade">
+      <div v-if="loaded" class="image-bottom">
+        <div class="bottom-left">
+          <img
+            class="image-user-avatar"
+            :src="avatar"
+            alt="user-avatar"
+            @error="avatarLoadError"
+          />
+          <div>
+            <p class="image-user-name">{{ name }}</p>
+          </div>
+        </div>
+        <router-link
+          :to="{ name: 'image', params: { id } }"
+          class="bottom-right"
+        >
+          View
+        </router-link>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -49,7 +58,7 @@ import placeholder from "@/assets/logo.png";
 import ServerImagePlaceholder from "@/components/dashboard/guild/images/ImagePlaceholder";
 import ImageTag from "@/components/dashboard/guild/images/ImageTag";
 export default {
-  name: "Image",
+  name: "GuildImage",
   components: { ImageTag, ServerImagePlaceholder },
   props: {
     id: Number,
@@ -62,14 +71,17 @@ export default {
     return {
       avatar: this.user.avatar,
       loaded: false,
-      hovering: false
+      errored: false
     };
   },
   computed: {
     name() {
-      return this.user && this.user.name || "Unknown"
+      return this.user ? this.user.name : "Unknown";
     },
     proxyImage() {
+      if (this.errored) {
+        return placeholder;
+      }
       return proxy(this.url);
     },
     relevantTags() {
@@ -80,22 +92,36 @@ export default {
     }
   },
   methods: {
+    addTag( tag) {
+      this.$store.dispatch("images/addSelected", tag);
+    },
     async removePlaceholder() {
       this.loaded = true;
     },
-    setHover(state) {
-      this.hovering = state;
+    avatarLoadError() {
+      this.avatar = placeholder;
     },
     imageLoadError() {
-      console.log("image loading errored");
-      this.avatar = placeholder;
+      this.errored = true;
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
+@import "@/assets/scss/animations.scss";
+.image-error-message {
+}
+.image-errored {
+  border-bottom: 1px red solid;
+}
 .server-image-wrapper {
+  &:hover {
+    .image-error-message,
+    .image-tags {
+      display: flex !important;
+    }
+  }
   @include shadowed;
   @include flex-col;
   cursor: pointer;
@@ -138,7 +164,8 @@ export default {
   position: relative;
 }
 .image-tags {
-  display: flex;
+  transition: all 0.8s ease;
+  display: none;
   flex-wrap: wrap;
   width: 100%;
   background-color: rgba($background-darker, 0.7);

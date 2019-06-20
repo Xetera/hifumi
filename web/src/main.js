@@ -14,13 +14,11 @@ import "./utils/registerServiceWorker";
 import { apolloProvider } from "./graphql";
 import { sync } from "vuex-router-sync";
 import { Snackbar } from "buefy/src/components/snackbar";
-import Vuetify from "vuetify";
 
 sync(store, router);
 
 Vue.config.productionTip = false;
 Vue.use(Snackbar);
-Vue.use(Vuetify);
 
 new Vue({
   router,

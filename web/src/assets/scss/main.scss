@@ -19,6 +19,10 @@ p {
   font-family: "Lato", "Roboto", sans-serif !important;
 }
 
+a {
+  color: $link-color;
+}
+
 html {
   overflow-y: hidden;
 }
@@ -62,4 +66,9 @@ div.ps__thumb-y {
 .ps .ps__rail-y:focus,
 .ps .ps__rail-y:hover {
   background: transparent !important;
+}
+// centering overrides for the icons
+.material-design-icon {
+  display: inline-flex;
+  align-items: center;
 }

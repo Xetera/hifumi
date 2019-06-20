@@ -1,18 +1,22 @@
 <template>
-  <div class="images-search-bar">
-    <MagnifyIcon size="16" class="icon" />
-    <input
-      placeholder="Search through tags, channels and users..."
-      class="images-search-bar-input"
-    />
-  </div>
+    <div class="images-search-bar">
+      <BTooltip label="Search feature coming soon!" style="width: 100%;">
+      <MagnifyIcon size="16" class="icon" />
+      <input
+        disabled
+        placeholder="Search through tags, channels and users..."
+        class="images-search-bar-input"
+      />
+      </BTooltip>
+    </div>
 </template>
 
 <script>
 import MagnifyIcon from "vue-material-design-icons/Magnify";
+import BTooltip from "buefy/src/components/tooltip/Tooltip";
 export default {
   name: "SearchBar",
-  components: { MagnifyIcon }
+  components: { BTooltip, MagnifyIcon }
 };
 </script>
 
@@ -29,6 +33,7 @@ export default {
   /*background: green;*/
 }
 .images-search-bar-input {
+  cursor: not-allowed;
   outline: none;
   color: white;
   &::placeholder {

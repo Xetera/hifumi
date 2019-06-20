@@ -1,11 +1,9 @@
 <template>
-  <v-app dark>
     <!--    <transition name="fade">-->
     <!--      <TheLoadingScreen v-if="!isAuthed" />-->
     <!--    </transition>-->
 
-    <router-view v-if="ready" />
-  </v-app>
+    <router-view/>
 </template>
 
 <script>
@@ -35,7 +33,7 @@ export default {
   },
   data() {
     return {
-      ready: false
+      ready: true
     };
   }
 };
@@ -48,15 +46,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   height: 100vh;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>

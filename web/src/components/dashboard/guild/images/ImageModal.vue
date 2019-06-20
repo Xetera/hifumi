@@ -26,7 +26,7 @@
           animated
         >
           <b-button class="button" disabled>
-            <fa icon="star" />
+            <StarIcon size="16" />
             Star This
           </b-button>
         </b-tooltip>
@@ -47,14 +47,16 @@
       <div v-if="!loaded && !imageFailed" class="modal-placeholder">
         <b-loading :is-full-page="false" :active="!loaded" />
       </div>
-      <img
-        v-if="!imageFailed"
-        class="modal-image"
-        :src="url"
-        alt="modal-image"
-        @load="replacePlaceholder"
-        @error="onImageLoadFail"
-      />
+      <div class="modal-image-wrapper">
+        <img
+          v-if="!imageFailed"
+          class="modal-image"
+          :src="url"
+          alt="modal-image"
+          @load="replacePlaceholder"
+          @error="onImageLoadFail"
+        />
+      </div>
     </vue-custom-scrollbar>
     <div class="modal-image-bottom">
       <div class="modal-bottom-left">
@@ -67,29 +69,29 @@
             animated
           >
             <b-button class="button edit-button" disabled>
-              <fa icon="edit" />
+              <FileDocumentEditIcon size="16" />
               Edit
             </b-button>
           </b-tooltip>
         </div>
         <div class="modal-image-tags">
           <span
-            class="modal-image-tag"
+            class="modal-image-tag icon-centered"
             v-for="tag of image_tags"
             :key="tag.name"
           >
-            <fa :icon="['far', 'circle']" class="tag-circle" />
+            <CircleOutlineIcon size="10" />
             {{ tag.name }}
           </span>
         </div>
       </div>
       <div class="modal-bottom-right">
-        <div>
-          <fa :icon="['far', 'calendar-alt']" />
+        <div class="icon-centered">
+          <CalendarBlankIcon size="16" />
           {{ date }}
         </div>
-        <div>
-          <fa icon="star" />
+        <div class="icon-centered">
+          <StarIcon size="16" />
           0 Stars
         </div>
       </div>
@@ -105,10 +107,20 @@ import BButton from "buefy/src/components/button/Button";
 import BTooltip from "buefy/src/components/tooltip/Tooltip";
 import loadError from "@/assets/hifumi-scared.gif";
 import BNotification from "buefy/src/components/notification/Notification";
+import CalendarBlankIcon from "vue-material-design-icons/CalendarBlank";
+import StarIcon from "vue-material-design-icons/Star";
+import FileDocumentEditIcon from "vue-material-design-icons/FileDocumentEdit";
+import CircleOutlineIcon from "vue-material-design-icons/CircleOutline";
+import BIcon from "buefy/src/components/icon/Icon";
 
 export default {
   name: "ImageModal",
   components: {
+    BIcon,
+    CircleOutlineIcon,
+    FileDocumentEditIcon,
+    StarIcon,
+    CalendarBlankIcon,
     BNotification,
     BTooltip,
     BButton,
@@ -161,12 +173,15 @@ $section-height: 80px;
 }
 .modal-image-middle {
   transition: 0.3s ease-in;
-  max-width: 100%;
   background-color: $background-dark;
   max-height: 600px;
-  /*overflow: hidden;*/
+  overflow-y: auto;
+}
+.modal-image-wrapper {
+  display: flex;
 }
 .modal-image {
+  margin: 0 auto;
   transition: 0.3s ease-in;
   object-fit: cover;
 }
@@ -181,6 +196,12 @@ $section-height: 80px;
   height: $section-height;
   min-height: $section-height;
   display: flex;
+}
+
+.icon-centered {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
 }
 
 .button {
