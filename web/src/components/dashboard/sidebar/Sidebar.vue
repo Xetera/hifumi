@@ -1,10 +1,27 @@
 <template>
   <div class="sidebar">
     <div>
-      <div class="sidebar-guild-wrapper">
-        <SidebarGuild />
+      <SidebarHead />
+      <div
+        class="sidebar-guild-wrapper"
+        v-for="guild in guilds"
+        :key="`${guild.name}:${guild.icon}`"
+      >
+        <router-link
+          :to="{ name: 'guild-home', params: { guild_id: guild.guild_id } }"
+        >
+          <SidebarGuild :name="guild.name" :image="guild.icon" />
+        </router-link>
       </div>
-      <SidebarMenuGuild />
+      <div class="sidebar-guild-wrapper">
+        <router-link :to="{ name: 'support-server' }" v-if="!inSupportServer">
+          <SidebarGuild
+            name="Hifumin"
+            image="https://cdn.discordapp.com/icons/414334929002823680/056c781a4e471ae34bf2af73294542ca.png"
+            disabled
+          />
+        </router-link>
+      </div>
     </div>
     <div>
       <SidebarMenuStatic />
@@ -16,17 +33,35 @@
 <script>
 import SidebarGuild from "./SidebarGuild";
 import SidebarMenuStatic from "./SidebarMenuStatic";
-import SidebarMenuGuild from "./SidebarMenuGuild";
 import SidebarUser from "./SidebarUser";
+import { mapGetters } from "vuex";
+import SidebarHead from "./SidebarHead";
 export default {
   name: "Sidebar",
-  components: { SidebarUser, SidebarMenuGuild, SidebarMenuStatic, SidebarGuild }
+  components: {
+    SidebarHead,
+    SidebarUser,
+    SidebarMenuStatic,
+    SidebarGuild
+  },
+  computed: {
+    ...mapGetters({
+      guilds: "guildsArray"
+    }),
+    inSupportServer() {
+      return this.guilds.includes("414334929002823680");
+    }
+  }
 };
 </script>
 
 <style scoped lang="scss">
+a.router-link-active .sidebar-top {
+  background: $sidebar-selected-tab !important;
+}
 .sidebar-guild-wrapper {
-  height: 110px;
+  margin-top: 10px;
+  height: 65px;
 }
 .sidebar {
   z-index: 2;

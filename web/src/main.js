@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 dotenv.config();
 /* Vue Related */
 import Vue from "vue";
-import "./plugins/vuetify";
 import App from "./App.vue";
 import router from "./router/index";
 import { store } from "./store";

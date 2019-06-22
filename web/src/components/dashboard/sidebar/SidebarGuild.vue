@@ -1,26 +1,45 @@
 <template>
   <div class="sidebar-top">
-    <div class="sidebar-top-section">
-      <p class="sidebar-top-text">
-        Current Server
-      </p>
-      <p class="sidebar-top-text thin">
-        Click to change
-      </p>
-    </div>
     <div class="sidebar-bottom-section">
-      <img :src="guild.icon" alt="server image" class="sidebar-image" />
-      <h2 class="sidebar-guild-name">{{ guild.name }}</h2>
+      <img
+        :src="guildIcon"
+        alt="server image"
+        class="sidebar-image"
+        :class="{ disabled }"
+        @error="replaceImage"
+      />
+      <h2 class="sidebar-guild-name" :class="{ 'disabled-text': disabled }">
+        {{ name }}
+      </h2>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
+import placeholder from "@/assets/logo.png";
 export default {
   name: "SidebarGuild",
-  computed: mapGetters(["guild"])
+  data() {
+    return {
+      guildIcon: this.image || placeholder
+    };
+  },
+  props: {
+    name: String,
+    image: {
+      type: String,
+      default: placeholder
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    replaceImage() {
+      this.guildIcon = placeholder;
+    }
+  }
 };
 </script>
 
@@ -29,14 +48,9 @@ export default {
   line-height: 19px;
   text-align: left;
   margin-left: 15px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: normal;
   color: #ececec;
-}
-.sidebar-top-section {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
 .sidebar-bottom-section {
   padding: 10px 10px;
@@ -49,20 +63,19 @@ export default {
 }
 .sidebar-top {
   height: 100%;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   padding: 10px;
   font-size: 12px;
-  background: $sidebar-guild-section-color;
   color: $font-light;
-}
-
-.sidebar-top-text {
-  font-weight: 300;
-  font-size: 12px;
 }
 
 .thin {
   font-weight: 200;
+}
+.disabled {
+  filter: grayscale(80%);
+}
+.disabled-text {
+  color: #919191;
 }
 </style>

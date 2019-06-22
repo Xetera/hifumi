@@ -7,6 +7,7 @@ import DashboardSettings from "@/components/dashboard/DashboardSettings";
 import GuildSettings from "@/components/dashboard/guild/GuildSettings";
 import Guild from "@/views/dashboard/Guild";
 import ImageView from "@/views/dashboard/ImageView";
+import SupportServer from "../views/dashboard/SupportServer";
 
 export default {
   ...withDiscordAuth,
@@ -17,6 +18,11 @@ export default {
       path: "",
       name: "home",
       component: DashboardHome
+    },
+    {
+      path: "invite",
+      name: "support-server",
+      component: SupportServer
     },
     {
       path: "settings",
@@ -31,6 +37,18 @@ export default {
           path: "image/:id",
           name: "image",
           component: ImageView
+        },
+        {
+          path: "contributors",
+          name: "guild-contributors",
+        },
+        {
+          path: "stars",
+          name: "guild-stars"
+        },
+        {
+          path: "tags",
+          name: "guild-tags"
         },
         {
           path: "",

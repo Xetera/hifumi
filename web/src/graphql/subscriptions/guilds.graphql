@@ -3,5 +3,6 @@ subscription CurrentGuilds {
     guild_id
     name
     icon
+    banner
   }
 }

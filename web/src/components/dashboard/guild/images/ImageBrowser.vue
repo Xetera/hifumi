@@ -1,47 +1,45 @@
 <template>
-  <vue-custom-scrollbar class="scroller">
-    <div class="grid-wrapper">
-      <transition name="fade">
-        <div class="images-filter-field">
-          <SearchTitle
-            search="Newgame"
-            :tags="['hifumi', 'cute']"
-            :results="images.length"
-          />
-          <div class="margin-top image-page-search">
-            <SearchBar class="padding-top" />
-          </div>
+  <div class="grid-wrapper">
+    <transition name="fade">
+      <div class="images-filter-field">
+<!--        <SearchTitle-->
+<!--          search="Newgame"-->
+<!--          :tags="['hifumi', 'cute']"-->
+<!--          :results="images.length"-->
+<!--        />-->
+<!--        <div class="margin-top image-page-search">-->
+<!--          <SearchBar class="padding-top" />-->
+<!--        </div>-->
 
-          <div class="margin-top">
-            <CurrentTags />
-          </div>
-
-          <div class="margin-top">
-            <AvailableTags />
-          </div>
+        <div class="margin-top">
+          <CurrentTags />
         </div>
-      </transition>
 
-      <b-modal :active.sync="modalOpen">
-        <ImageModal v-bind="modal" />
-      </b-modal>
-      <div class="margin-top">
-        <ServerImageGrid v-if="images.length > 0">
-          <!--        <b-loading :active.sync="loading" />-->
-          <ServerImage
-            v-for="image in images"
-            :key="image.url"
-            v-bind="image"
-            @open-modal="openModal"
-          />
-        </ServerImageGrid>
+        <div class="margin-top">
+          <AvailableTags />
+        </div>
       </div>
+    </transition>
 
-<!--      <div v-if="images.length === 0">-->
-<!--        <p>Looks like this server hasn't tagged any images yet</p>-->
-<!--      </div>-->
+    <b-modal :active.sync="modalOpen">
+      <ImageModal v-bind="modal" />
+    </b-modal>
+    <div class="margin-top">
+      <ServerImageGrid v-if="images.length > 0">
+        <!--        <b-loading :active.sync="loading" />-->
+        <ServerImage
+          v-for="image in images"
+          :key="image.url"
+          v-bind="image"
+          @open-modal="openModal"
+        />
+      </ServerImageGrid>
     </div>
-  </vue-custom-scrollbar>
+
+    <!--      <div v-if="images.length === 0">-->
+    <!--        <p>Looks like this server hasn't tagged any images yet</p>-->
+    <!--      </div>-->
+  </div>
 </template>
 
 <script>
@@ -110,10 +108,6 @@ export default {
   overflow-y: auto;
 }
 
-.scroller {
-  overflow-x: hidden;
-  height: 100%;
-}
 .pagination-item {
   position: relative;
   height: 60px;

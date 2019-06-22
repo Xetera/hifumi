@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <Menu class="is-hidden-mobile menu-transition" />
+    <GuildHeader :banner="guild.banner" :server-image="guild.icon" :name="guild.name" />
     <router-view class="fullwidth"></router-view>
   </div>
 </template>
@@ -8,11 +8,14 @@
 <script>
 import { images, imagesAggregate } from "@/graphql/subscriptions";
 import { graphql } from "@/graphql";
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
+import GuildHeader from "../../components/dashboard/guild/GuildHeader";
 
 export default {
   name: "Guild",
+  components: { GuildHeader },
   computed: {
+    ...mapGetters(["guild"]),
     ...mapState("images", ["limit", "offset", "where"])
   },
   props: {
@@ -54,7 +57,6 @@ export default {
           };
         },
         result({ data }) {
-          this.$store.commit("images/setLoading", false);
           return this.$store.commit("images/setImages", data.images);
         }
       }
@@ -67,17 +69,10 @@ export default {
 .menu-transition {
   animation: slide-down 0.3s ease-in-out;
 }
-.fullwidth {
-  width: 100%;
-}
 .dashboard {
-  display: flex;
-  justify-content: space-between;
-  @include on-tablet {
-    flex-direction: row;
-  }
+  @include flex-col;
   width: 100%;
-  height: 100%;
+  overflow-y: auto;
 }
 @keyframes slide-down {
   0% {

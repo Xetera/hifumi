@@ -2,7 +2,7 @@ import { AUTH_URL } from "@/config";
 import { get } from "@/utils/http";
 import { client } from "@/graphql";
 import { graphql } from "@/graphql";
-import { currentGuilds } from "@/graphql/subscriptions";
+import { guilds } from "@/graphql/subscriptions";
 import { addMutation } from "@/mixins/vuex";
 import { kickToFrontPage } from "../router/guards";
 import router from "../router";
@@ -32,7 +32,7 @@ export const base = {
       const guildId = state.route.params.guild_id;
       return state.guilds[guildId];
     },
-    guildArray(state) {
+    guildsArray(state) {
       return Object.values(state.guilds);
     }
   },
@@ -67,7 +67,7 @@ export const base = {
     async subscribeGuilds({ commit }) {
       return new Promise(async res => {
         const observable = await client.subscribe({
-          query: graphql(currentGuilds)
+          query: graphql(guilds)
         });
 
         observable.subscribe(({ data: { guilds } }) => {

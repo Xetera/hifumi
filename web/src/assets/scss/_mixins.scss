@@ -39,6 +39,10 @@
   flex-direction: column;
 }
 
+@mixin text-shadowed {
+  text-shadow: $shadow;
+}
+
 @mixin shadowed {
   box-shadow: $shadow;
 }

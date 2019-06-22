@@ -26,7 +26,7 @@
           animated
         >
           <b-button class="button" disabled>
-            <StarIcon size="16" />
+            <StarIcon :size="16" />
             Star This
           </b-button>
         </b-tooltip>
@@ -42,10 +42,12 @@
           role="alert"
           message="Huh? That image couldn't load, someone must have deleted it."
         />
-        <img :src="loadError" class="error-image" alt="error-image" />
-      </div>
-      <div v-if="!loaded && !imageFailed" class="modal-placeholder">
-        <b-loading :is-full-page="false" :active="!loaded" />
+        <div class="image-modal-wrapper">
+          <img :src="loadError" class="error-image" alt="error-image" />
+          <div v-if="!loaded && !imageFailed" class="modal-placeholder">
+            <b-loading :is-full-page="false" :active="!loaded" />
+          </div>
+        </div>
       </div>
       <div class="modal-image-wrapper">
         <img
@@ -69,7 +71,7 @@
             animated
           >
             <b-button class="button edit-button" disabled>
-              <FileDocumentEditIcon size="16" />
+              <FileDocumentEditIcon :size="16" />
               Edit
             </b-button>
           </b-tooltip>
@@ -80,18 +82,18 @@
             v-for="tag of image_tags"
             :key="tag.name"
           >
-            <CircleOutlineIcon size="10" />
+            <CircleOutlineIcon :size="10" />
             {{ tag.name }}
           </span>
         </div>
       </div>
       <div class="modal-bottom-right">
         <div class="icon-centered">
-          <CalendarBlankIcon size="16" />
+          <CalendarBlankIcon :size="16" />
           {{ date }}
         </div>
         <div class="icon-centered">
-          <StarIcon size="16" />
+          <StarIcon :size="16" />
           0 Stars
         </div>
       </div>
@@ -116,7 +118,6 @@ import BIcon from "buefy/src/components/icon/Icon";
 export default {
   name: "ImageModal",
   components: {
-    BIcon,
     CircleOutlineIcon,
     FileDocumentEditIcon,
     StarIcon,
