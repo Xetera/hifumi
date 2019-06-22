@@ -1,0 +1,23 @@
+- args:
+    role: user
+    table:
+      name: guilds
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: true
+      columns:
+      - guild_id
+      - name
+      - icon
+      filter:
+        members:
+          user_id:
+            _eq: X-Hasura-User-Id
+      limit: 100
+    role: user
+    table:
+      name: guilds
+      schema: public
+  type: create_select_permission

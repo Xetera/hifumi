@@ -1,0 +1,8 @@
+- args:
+    name: favorite_guild
+    table:
+      name: users
+      schema: public
+    using:
+      foreign_key_constraint_on: favorite_guild_id
+  type: create_object_relationship

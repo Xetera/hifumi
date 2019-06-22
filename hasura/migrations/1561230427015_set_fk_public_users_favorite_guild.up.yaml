@@ -1,0 +1,5 @@
+- args:
+    sql: alter table "public"."users" add constraint "users_favorite_guild_fkey" foreign
+      key ("favorite_guild") references "public"."guilds"("guild_id") on update cascade
+      on delete cascade;
+  type: run_sql

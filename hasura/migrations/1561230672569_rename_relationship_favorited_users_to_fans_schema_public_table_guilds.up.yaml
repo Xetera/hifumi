@@ -1,0 +1,7 @@
+- args:
+    name: favorited_users
+    new_name: fans
+    table:
+      name: guilds
+      schema: public
+  type: rename_relationship

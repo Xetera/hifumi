@@ -1,0 +1,12 @@
+- args:
+    name: favorited_users
+    table:
+      name: guilds
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: favorite_guild
+        table:
+          name: users
+          schema: public
+  type: create_array_relationship

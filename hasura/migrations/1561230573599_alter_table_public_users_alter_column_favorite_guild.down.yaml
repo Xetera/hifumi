@@ -1,0 +1,6 @@
+- args:
+    sql: COMMENT ON COLUMN "public"."users"."favorite_guild" IS 'null'
+  type: run_sql
+- args:
+    sql: alter table "public"."users" rename column "favorite_guild_id" to "favorite_guild";
+  type: run_sql
