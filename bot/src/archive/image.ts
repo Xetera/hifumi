@@ -27,7 +27,7 @@ const upsertImage = (message: Message, att: MessageAttachment, url: string, tags
       },
       file_name: att.filename,
       guild_id: message.guild.id,
-      user_id: message.author.id
+      member_id: message.author.id
     }]
   }, {
     returning: {

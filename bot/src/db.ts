@@ -1,11 +1,17 @@
 import { AkairoClient } from "discord-akairo";
-import { Collection, Guild, GuildMember, User } from "discord.js";
+import { Guild, GuildMember, User } from "discord.js";
 import gql from "gql-tag/dist";
 import { GraphQLClient } from "graphql-request";
 import { Variables } from "graphql-request/dist/src/types";
 import { GRAPHQL_ENDPOINT } from "./constants";
 import { createClient } from "./graphql/createClient";
-import { guilds_constraint, guilds_update_column, users_insert_input } from "./graphql/schema";
+import {
+  guilds_constraint,
+  guilds_update_column,
+  members_constraint,
+  members_update_column,
+  users_insert_input
+} from "./graphql/schema";
 import { logger } from "./utils";
 
 const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
@@ -16,15 +22,16 @@ const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
     : {}
 });
 
-export const syncAll = ({ guilds, users }: AkairoClient) =>
+export const syncAll = ({ guilds, users }: AkairoClient) => {
+  const members =
+    guilds.map((guild) => guild.members.array())
+      .reduce((a, b) => a.concat(b), []);
   Promise.all([
     syncGuilds(guilds.array()),
     syncUsers(users.array()),
-    syncMembers(
-      guilds.map((guild) => guild.members.array())
-        .reduce((a, b) => a.concat(b))
-    )
+    syncMembers(members)
   ]);
+ }
 
 export const _client = createClient({
   fetcher: ({ query, variables }: { query: any; variables: any }, fetch: any) =>
@@ -93,7 +100,11 @@ const syncMembers = (members: GuildMember[]) => {
         objects: members.map((member: GuildMember) => ({
           guild_id: member.guild.id,
           user_id: member.user.id
-        }))
+        })),
+        on_conflict: {
+          constraint: members_constraint.members_pkey,
+          update_columns: []
+        }
       },
       {
         affected_rows: 1

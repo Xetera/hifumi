@@ -47,7 +47,7 @@ export default class extends Command {
         image_tags: {
           name: 1
         },
-        user_id: 1
+        member_id: 1
       }]
     });
     const { images: [first] } = res.data!;
@@ -58,7 +58,7 @@ export default class extends Command {
       image: {
         url: first.url
       },
-      description: `**Posted By:** <@!${first.user_id}>\n${first.image_tags.length ?
+      description: `**Posted By:** <@!${first.member_id}>\n${first.image_tags.length ?
         `**Tags**: ${first.image_tags.map((tag) => tag.name).join(", ")}` : ""}`
     };
     return msg.channel.send({ embed });

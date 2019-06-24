@@ -46,6 +46,12 @@ export interface query_root {
   random_tagged_image: images[]
   /** execute function "random_tagged_image" and query aggregates on result of table type "images" */
   random_tagged_image_aggregate: images_aggregate
+  /** fetch data from the table: "tag_categories" */
+  tag_categories: tag_categories[]
+  /** fetch aggregated fields from the table: "tag_categories" */
+  tag_categories_aggregate: tag_categories_aggregate
+  /** fetch data from the table: "tag_categories" using primary key columns */
+  tag_categories_by_pk: tag_categories | null
   /** execute function "tag_count" which returns "tag_counts" */
   tag_count: tag_counts[]
   /** execute function "tag_count" and query aggregates on result of table type "tag_counts" */
@@ -56,6 +62,12 @@ export interface query_root {
   tag_counts_aggregate: tag_counts_aggregate
   /** fetch data from the table: "tag_counts" using primary key columns */
   tag_counts_by_pk: tag_counts | null
+  /** fetch data from the table: "tags" */
+  tags: tags[]
+  /** fetch aggregated fields from the table: "tags" */
+  tags_aggregate: tags_aggregate
+  /** fetch data from the table: "tags" using primary key columns */
+  tags_by_pk: tags | null
   /** fetch data from the table: "users" */
   users: users[]
   /** fetch aggregated fields from the table: "users" */
@@ -101,6 +113,8 @@ export type String = string
 export type Boolean = boolean
 
 export type timestamptz = any
+
+export type date = any
 
 /** columns and relationships of "auto_tags" */
 export interface auto_tags {
@@ -220,7 +234,12 @@ export interface auto_tags_variance_fields {
 
 /** columns and relationships of "guilds" */
 export interface guilds {
+  banner: String | null
   enabled: Boolean | null
+  /** An array relationship */
+  fans: users[]
+  /** An aggregated array relationship */
+  fans_aggregate: users_aggregate
   guild_id: String
   icon: String | null
   /** An array relationship */
@@ -231,12 +250,44 @@ export interface guilds {
   images: images[]
   /** An aggregated array relationship */
   images_aggregate: images_aggregate
+  joined_at: date
   /** An array relationship */
   members: members[]
   /** An aggregated array relationship */
   members_aggregate: members_aggregate
   name: String
   welcome_channel: String | null
+  __typename: String
+}
+
+/** select columns of table "users" */
+export enum users_select_column {
+  /** column name */
+  avatar = 'avatar',
+  /** column name */
+  favorite_guild_id = 'favorite_guild_id',
+  /** column name */
+  name = 'name',
+  /** column name */
+  user_id = 'user_id',
+}
+
+/** columns and relationships of "users" */
+export interface users {
+  avatar: String | null
+  /** An object relationship */
+  favorite_guild: guilds | null
+  favorite_guild_id: String | null
+  /** An array relationship */
+  image_channels: image_channels[]
+  /** An aggregated array relationship */
+  image_channels_aggregate: image_channels_aggregate
+  /** An array relationship */
+  members: members[]
+  /** An aggregated array relationship */
+  members_aggregate: members_aggregate
+  name: String | null
+  user_id: String
   __typename: String
 }
 
@@ -281,6 +332,87 @@ export interface image_channels_min_fields {
   __typename: String
 }
 
+/** select columns of table "members" */
+export enum members_select_column {
+  /** column name */
+  guild_id = 'guild_id',
+  /** column name */
+  user_id = 'user_id',
+}
+
+/** columns and relationships of "members" */
+export interface members {
+  /** An object relationship */
+  guild: guilds
+  guild_id: String
+  /** An object relationship */
+  user: users
+  user_id: String
+  __typename: String
+}
+
+/** aggregated selection of "members" */
+export interface members_aggregate {
+  aggregate: members_aggregate_fields | null
+  nodes: members[]
+  __typename: String
+}
+
+/** aggregate fields of "members" */
+export interface members_aggregate_fields {
+  count: Int | null
+  max: members_max_fields | null
+  min: members_min_fields | null
+  __typename: String
+}
+
+/** aggregate max on columns */
+export interface members_max_fields {
+  guild_id: String | null
+  user_id: String | null
+  __typename: String
+}
+
+/** aggregate min on columns */
+export interface members_min_fields {
+  guild_id: String | null
+  user_id: String | null
+  __typename: String
+}
+
+/** aggregated selection of "users" */
+export interface users_aggregate {
+  aggregate: users_aggregate_fields | null
+  nodes: users[]
+  __typename: String
+}
+
+/** aggregate fields of "users" */
+export interface users_aggregate_fields {
+  count: Int | null
+  max: users_max_fields | null
+  min: users_min_fields | null
+  __typename: String
+}
+
+/** aggregate max on columns */
+export interface users_max_fields {
+  avatar: String | null
+  favorite_guild_id: String | null
+  name: String | null
+  user_id: String | null
+  __typename: String
+}
+
+/** aggregate min on columns */
+export interface users_min_fields {
+  avatar: String | null
+  favorite_guild_id: String | null
+  name: String | null
+  user_id: String | null
+  __typename: String
+}
+
 /** select columns of table "images" */
 export enum images_select_column {
   /** column name */
@@ -292,13 +424,13 @@ export enum images_select_column {
   /** column name */
   id = 'id',
   /** column name */
+  member_id = 'member_id',
+  /** column name */
   message_id = 'message_id',
   /** column name */
   public = 'public',
   /** column name */
   url = 'url',
-  /** column name */
-  user_id = 'user_id',
 }
 
 /** columns and relationships of "images" */
@@ -313,61 +445,38 @@ export interface images {
   image_tags: image_tags[]
   /** An aggregated array relationship */
   image_tags_aggregate: image_tags_aggregate
+  member_id: String | null
   message_id: String | null
   public: Boolean
   url: String
-  /** An object relationship */
-  user: users | null
-  user_id: String | null
   __typename: String
 }
 
 /** select columns of table "image_tags" */
 export enum image_tags_select_column {
   /** column name */
+  guild_id = 'guild_id',
+  /** column name */
   id = 'id',
   /** column name */
   image_id = 'image_id',
   /** column name */
-  name = 'name',
+  member_id = 'member_id',
   /** column name */
-  tagger_id = 'tagger_id',
+  name = 'name',
 }
 
 /** columns and relationships of "image_tags" */
 export interface image_tags {
+  guild_id: String | null
   id: Int
   /** An object relationship */
   image: images
   image_id: Int
-  name: String
-  tagger_id: String | null
   /** An object relationship */
-  user: users | null
-  __typename: String
-}
-
-/** columns and relationships of "users" */
-export interface users {
-  avatar: String | null
-  /** An array relationship */
-  image_channels: image_channels[]
-  /** An aggregated array relationship */
-  image_channels_aggregate: image_channels_aggregate
-  /** An array relationship */
-  image_tags: image_tags[]
-  /** An aggregated array relationship */
-  image_tags_aggregate: image_tags_aggregate
-  /** An array relationship */
-  images: images[]
-  /** An aggregated array relationship */
-  images_aggregate: images_aggregate
-  /** An array relationship */
-  members: members[]
-  /** An aggregated array relationship */
-  members_aggregate: members_aggregate
-  name: String | null
-  user_id: String
+  member: members | null
+  member_id: String | null
+  name: String
   __typename: String
 }
 
@@ -403,19 +512,21 @@ export interface image_tags_avg_fields {
 
 /** aggregate max on columns */
 export interface image_tags_max_fields {
+  guild_id: String | null
   id: Int | null
   image_id: Int | null
+  member_id: String | null
   name: String | null
-  tagger_id: String | null
   __typename: String
 }
 
 /** aggregate min on columns */
 export interface image_tags_min_fields {
+  guild_id: String | null
   id: Int | null
   image_id: Int | null
+  member_id: String | null
   name: String | null
-  tagger_id: String | null
   __typename: String
 }
 
@@ -503,9 +614,9 @@ export interface images_max_fields {
   file_name: String | null
   guild_id: String | null
   id: Int | null
+  member_id: String | null
   message_id: String | null
   url: String | null
-  user_id: String | null
   __typename: String
 }
 
@@ -515,9 +626,9 @@ export interface images_min_fields {
   file_name: String | null
   guild_id: String | null
   id: Int | null
+  member_id: String | null
   message_id: String | null
   url: String | null
-  user_id: String | null
   __typename: String
 }
 
@@ -563,123 +674,18 @@ export interface images_variance_fields {
   __typename: String
 }
 
-/** select columns of table "members" */
-export enum members_select_column {
-  /** column name */
-  guild_id = 'guild_id',
-  /** column name */
-  id = 'id',
-  /** column name */
-  user_id = 'user_id',
-}
-
-/** columns and relationships of "members" */
-export interface members {
-  /** An object relationship */
-  guild: guilds
-  guild_id: String
-  id: Int
-  /** An object relationship */
-  user: users
-  user_id: String
-  __typename: String
-}
-
-/** aggregated selection of "members" */
-export interface members_aggregate {
-  aggregate: members_aggregate_fields | null
-  nodes: members[]
-  __typename: String
-}
-
-/** aggregate fields of "members" */
-export interface members_aggregate_fields {
-  avg: members_avg_fields | null
-  count: Int | null
-  max: members_max_fields | null
-  min: members_min_fields | null
-  stddev: members_stddev_fields | null
-  stddev_pop: members_stddev_pop_fields | null
-  stddev_samp: members_stddev_samp_fields | null
-  sum: members_sum_fields | null
-  var_pop: members_var_pop_fields | null
-  var_samp: members_var_samp_fields | null
-  variance: members_variance_fields | null
-  __typename: String
-}
-
-/** aggregate avg on columns */
-export interface members_avg_fields {
-  id: Float | null
-  __typename: String
-}
-
-/** aggregate max on columns */
-export interface members_max_fields {
-  guild_id: String | null
-  id: Int | null
-  user_id: String | null
-  __typename: String
-}
-
-/** aggregate min on columns */
-export interface members_min_fields {
-  guild_id: String | null
-  id: Int | null
-  user_id: String | null
-  __typename: String
-}
-
-/** aggregate stddev on columns */
-export interface members_stddev_fields {
-  id: Float | null
-  __typename: String
-}
-
-/** aggregate stddev_pop on columns */
-export interface members_stddev_pop_fields {
-  id: Float | null
-  __typename: String
-}
-
-/** aggregate stddev_samp on columns */
-export interface members_stddev_samp_fields {
-  id: Float | null
-  __typename: String
-}
-
-/** aggregate sum on columns */
-export interface members_sum_fields {
-  id: Int | null
-  __typename: String
-}
-
-/** aggregate var_pop on columns */
-export interface members_var_pop_fields {
-  id: Float | null
-  __typename: String
-}
-
-/** aggregate var_samp on columns */
-export interface members_var_samp_fields {
-  id: Float | null
-  __typename: String
-}
-
-/** aggregate variance on columns */
-export interface members_variance_fields {
-  id: Float | null
-  __typename: String
-}
-
 /** select columns of table "guilds" */
 export enum guilds_select_column {
+  /** column name */
+  banner = 'banner',
   /** column name */
   enabled = 'enabled',
   /** column name */
   guild_id = 'guild_id',
   /** column name */
   icon = 'icon',
+  /** column name */
+  joined_at = 'joined_at',
   /** column name */
   name = 'name',
   /** column name */
@@ -703,8 +709,10 @@ export interface guilds_aggregate_fields {
 
 /** aggregate max on columns */
 export interface guilds_max_fields {
+  banner: String | null
   guild_id: String | null
   icon: String | null
+  joined_at: date | null
   name: String | null
   welcome_channel: String | null
   __typename: String
@@ -712,10 +720,61 @@ export interface guilds_max_fields {
 
 /** aggregate min on columns */
 export interface guilds_min_fields {
+  banner: String | null
   guild_id: String | null
   icon: String | null
+  joined_at: date | null
   name: String | null
   welcome_channel: String | null
+  __typename: String
+}
+
+/** select columns of table "tag_categories" */
+export enum tag_categories_select_column {
+  /** column name */
+  added_by = 'added_by',
+  /** column name */
+  created_at = 'created_at',
+  /** column name */
+  name = 'name',
+}
+
+/** columns and relationships of "tag_categories" */
+export interface tag_categories {
+  added_by: String
+  created_at: date
+  name: String
+  __typename: String
+}
+
+/** aggregated selection of "tag_categories" */
+export interface tag_categories_aggregate {
+  aggregate: tag_categories_aggregate_fields | null
+  nodes: tag_categories[]
+  __typename: String
+}
+
+/** aggregate fields of "tag_categories" */
+export interface tag_categories_aggregate_fields {
+  count: Int | null
+  max: tag_categories_max_fields | null
+  min: tag_categories_min_fields | null
+  __typename: String
+}
+
+/** aggregate max on columns */
+export interface tag_categories_max_fields {
+  added_by: String | null
+  created_at: date | null
+  name: String | null
+  __typename: String
+}
+
+/** aggregate min on columns */
+export interface tag_categories_min_fields {
+  added_by: String | null
+  created_at: date | null
+  name: String | null
   __typename: String
 }
 
@@ -828,44 +887,52 @@ export interface tag_counts_variance_fields {
   __typename: String
 }
 
-/** select columns of table "users" */
-export enum users_select_column {
+/** select columns of table "tags" */
+export enum tags_select_column {
   /** column name */
-  avatar = 'avatar',
+  created_at = 'created_at',
+  /** column name */
+  guild_id = 'guild_id',
   /** column name */
   name = 'name',
-  /** column name */
-  user_id = 'user_id',
 }
 
-/** aggregated selection of "users" */
-export interface users_aggregate {
-  aggregate: users_aggregate_fields | null
-  nodes: users[]
+/** columns and relationships of "tags" */
+export interface tags {
+  created_at: date
+  guild_id: String
+  name: String
   __typename: String
 }
 
-/** aggregate fields of "users" */
-export interface users_aggregate_fields {
+/** aggregated selection of "tags" */
+export interface tags_aggregate {
+  aggregate: tags_aggregate_fields | null
+  nodes: tags[]
+  __typename: String
+}
+
+/** aggregate fields of "tags" */
+export interface tags_aggregate_fields {
   count: Int | null
-  max: users_max_fields | null
-  min: users_min_fields | null
+  max: tags_max_fields | null
+  min: tags_min_fields | null
   __typename: String
 }
 
 /** aggregate max on columns */
-export interface users_max_fields {
-  avatar: String | null
+export interface tags_max_fields {
+  created_at: date | null
+  guild_id: String | null
   name: String | null
-  user_id: String | null
   __typename: String
 }
 
 /** aggregate min on columns */
-export interface users_min_fields {
-  avatar: String | null
+export interface tags_min_fields {
+  created_at: date | null
+  guild_id: String | null
   name: String | null
-  user_id: String | null
   __typename: String
 }
 
@@ -883,8 +950,12 @@ export interface mutation_root {
   delete_images: images_mutation_response | null
   /** delete data from the table: "members" */
   delete_members: members_mutation_response | null
+  /** delete data from the table: "tag_categories" */
+  delete_tag_categories: tag_categories_mutation_response | null
   /** delete data from the table: "tag_counts" */
   delete_tag_counts: tag_counts_mutation_response | null
+  /** delete data from the table: "tags" */
+  delete_tags: tags_mutation_response | null
   /** delete data from the table: "users" */
   delete_users: users_mutation_response | null
   /** insert data into the table: "auto_tags" */
@@ -899,8 +970,12 @@ export interface mutation_root {
   insert_images: images_mutation_response | null
   /** insert data into the table: "members" */
   insert_members: members_mutation_response | null
+  /** insert data into the table: "tag_categories" */
+  insert_tag_categories: tag_categories_mutation_response | null
   /** insert data into the table: "tag_counts" */
   insert_tag_counts: tag_counts_mutation_response | null
+  /** insert data into the table: "tags" */
+  insert_tags: tags_mutation_response | null
   /** insert data into the table: "users" */
   insert_users: users_mutation_response | null
   /** update data of the table: "auto_tags" */
@@ -915,8 +990,12 @@ export interface mutation_root {
   update_images: images_mutation_response | null
   /** update data of the table: "members" */
   update_members: members_mutation_response | null
+  /** update data of the table: "tag_categories" */
+  update_tag_categories: tag_categories_mutation_response | null
   /** update data of the table: "tag_counts" */
   update_tag_counts: tag_counts_mutation_response | null
+  /** update data of the table: "tags" */
+  update_tags: tags_mutation_response | null
   /** update data of the table: "users" */
   update_users: users_mutation_response | null
   __typename: String
@@ -976,12 +1055,30 @@ export interface members_mutation_response {
   __typename: String
 }
 
+/** response of any mutation on the table "tag_categories" */
+export interface tag_categories_mutation_response {
+  /** number of affected rows by the mutation */
+  affected_rows: Int
+  /** data of the affected rows by the mutation */
+  returning: tag_categories[]
+  __typename: String
+}
+
 /** response of any mutation on the table "tag_counts" */
 export interface tag_counts_mutation_response {
   /** number of affected rows by the mutation */
   affected_rows: Int
   /** data of the affected rows by the mutation */
   returning: tag_counts[]
+  __typename: String
+}
+
+/** response of any mutation on the table "tags" */
+export interface tags_mutation_response {
+  /** number of affected rows by the mutation */
+  affected_rows: Int
+  /** data of the affected rows by the mutation */
+  returning: tags[]
   __typename: String
 }
 
@@ -1026,6 +1123,38 @@ export enum image_channels_update_column {
   guild_id = 'guild_id',
 }
 
+/** unique or primary key constraints on table "users" */
+export enum users_constraint {
+  /** unique or primary key constraint */
+  users_pkey = 'users_pkey',
+}
+
+/** update columns of table "users" */
+export enum users_update_column {
+  /** column name */
+  avatar = 'avatar',
+  /** column name */
+  favorite_guild_id = 'favorite_guild_id',
+  /** column name */
+  name = 'name',
+  /** column name */
+  user_id = 'user_id',
+}
+
+/** unique or primary key constraints on table "members" */
+export enum members_constraint {
+  /** unique or primary key constraint */
+  members_pkey = 'members_pkey',
+}
+
+/** update columns of table "members" */
+export enum members_update_column {
+  /** column name */
+  guild_id = 'guild_id',
+  /** column name */
+  user_id = 'user_id',
+}
+
 /** unique or primary key constraints on table "images" */
 export enum images_constraint {
   /** unique or primary key constraint */
@@ -1043,45 +1172,13 @@ export enum images_update_column {
   /** column name */
   id = 'id',
   /** column name */
+  member_id = 'member_id',
+  /** column name */
   message_id = 'message_id',
   /** column name */
   public = 'public',
   /** column name */
   url = 'url',
-  /** column name */
-  user_id = 'user_id',
-}
-
-/** unique or primary key constraints on table "members" */
-export enum members_constraint {
-  /** unique or primary key constraint */
-  members_pkey = 'members_pkey',
-}
-
-/** update columns of table "members" */
-export enum members_update_column {
-  /** column name */
-  guild_id = 'guild_id',
-  /** column name */
-  id = 'id',
-  /** column name */
-  user_id = 'user_id',
-}
-
-/** unique or primary key constraints on table "users" */
-export enum users_constraint {
-  /** unique or primary key constraint */
-  users_pkey = 'users_pkey',
-}
-
-/** update columns of table "users" */
-export enum users_update_column {
-  /** column name */
-  avatar = 'avatar',
-  /** column name */
-  name = 'name',
-  /** column name */
-  user_id = 'user_id',
 }
 
 /** unique or primary key constraints on table "image_tags" */
@@ -1093,13 +1190,15 @@ export enum image_tags_constraint {
 /** update columns of table "image_tags" */
 export enum image_tags_update_column {
   /** column name */
+  guild_id = 'guild_id',
+  /** column name */
   id = 'id',
   /** column name */
   image_id = 'image_id',
   /** column name */
-  name = 'name',
+  member_id = 'member_id',
   /** column name */
-  tagger_id = 'tagger_id',
+  name = 'name',
 }
 
 /** unique or primary key constraints on table "guilds" */
@@ -1111,15 +1210,35 @@ export enum guilds_constraint {
 /** update columns of table "guilds" */
 export enum guilds_update_column {
   /** column name */
+  banner = 'banner',
+  /** column name */
   enabled = 'enabled',
   /** column name */
   guild_id = 'guild_id',
   /** column name */
   icon = 'icon',
   /** column name */
+  joined_at = 'joined_at',
+  /** column name */
   name = 'name',
   /** column name */
   welcome_channel = 'welcome_channel',
+}
+
+/** unique or primary key constraints on table "tag_categories" */
+export enum tag_categories_constraint {
+  /** unique or primary key constraint */
+  tag_categories_pkey = 'tag_categories_pkey',
+}
+
+/** update columns of table "tag_categories" */
+export enum tag_categories_update_column {
+  /** column name */
+  added_by = 'added_by',
+  /** column name */
+  created_at = 'created_at',
+  /** column name */
+  name = 'name',
 }
 
 /** unique or primary key constraints on table "tag_counts" */
@@ -1132,6 +1251,22 @@ export enum tag_counts_constraint {
 export enum tag_counts_update_column {
   /** column name */
   count = 'count',
+  /** column name */
+  guild_id = 'guild_id',
+  /** column name */
+  name = 'name',
+}
+
+/** unique or primary key constraints on table "tags" */
+export enum tags_constraint {
+  /** unique or primary key constraint */
+  tags_pkey = 'tags_pkey',
+}
+
+/** update columns of table "tags" */
+export enum tags_update_column {
+  /** column name */
+  created_at = 'created_at',
   /** column name */
   guild_id = 'guild_id',
   /** column name */
@@ -1184,6 +1319,12 @@ export interface subscription_root {
   random_tagged_image: images[]
   /** execute function "random_tagged_image" and query aggregates on result of table type "images" */
   random_tagged_image_aggregate: images_aggregate
+  /** fetch data from the table: "tag_categories" */
+  tag_categories: tag_categories[]
+  /** fetch aggregated fields from the table: "tag_categories" */
+  tag_categories_aggregate: tag_categories_aggregate
+  /** fetch data from the table: "tag_categories" using primary key columns */
+  tag_categories_by_pk: tag_categories | null
   /** execute function "tag_count" which returns "tag_counts" */
   tag_count: tag_counts[]
   /** execute function "tag_count" and query aggregates on result of table type "tag_counts" */
@@ -1194,6 +1335,12 @@ export interface subscription_root {
   tag_counts_aggregate: tag_counts_aggregate
   /** fetch data from the table: "tag_counts" using primary key columns */
   tag_counts_by_pk: tag_counts | null
+  /** fetch data from the table: "tags" */
+  tags: tags[]
+  /** fetch aggregated fields from the table: "tags" */
+  tags_aggregate: tags_aggregate
+  /** fetch data from the table: "tags" using primary key columns */
+  tags_by_pk: tags | null
   /** fetch data from the table: "users" */
   users: users[]
   /** fetch aggregated fields from the table: "users" */
@@ -1443,7 +1590,7 @@ export interface query_rootRequest {
       ]
     | members_aggregateRequest
   /** fetch data from the table: "members" using primary key columns */
-  members_by_pk?: [{ id: Int }, membersRequest]
+  members_by_pk?: [{ guild_id: String; user_id: String }, membersRequest]
   /** execute function "random_image" which returns "images" */
   random_image?: [
     {
@@ -1516,6 +1663,44 @@ export interface query_rootRequest {
     },
     images_aggregateRequest
   ]
+  /** fetch data from the table: "tag_categories" */
+  tag_categories?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: tag_categories_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: tag_categories_order_by[] | null
+          /** filter the rows returned */
+          where?: tag_categories_bool_exp | null
+        },
+        tag_categoriesRequest
+      ]
+    | tag_categoriesRequest
+  /** fetch aggregated fields from the table: "tag_categories" */
+  tag_categories_aggregate?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: tag_categories_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: tag_categories_order_by[] | null
+          /** filter the rows returned */
+          where?: tag_categories_bool_exp | null
+        },
+        tag_categories_aggregateRequest
+      ]
+    | tag_categories_aggregateRequest
+  /** fetch data from the table: "tag_categories" using primary key columns */
+  tag_categories_by_pk?: [{ name: String }, tag_categoriesRequest]
   /** execute function "tag_count" which returns "tag_counts" */
   tag_count?:
     | [
@@ -1590,6 +1775,44 @@ export interface query_rootRequest {
     | tag_counts_aggregateRequest
   /** fetch data from the table: "tag_counts" using primary key columns */
   tag_counts_by_pk?: [{ name: String }, tag_countsRequest]
+  /** fetch data from the table: "tags" */
+  tags?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: tags_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: tags_order_by[] | null
+          /** filter the rows returned */
+          where?: tags_bool_exp | null
+        },
+        tagsRequest
+      ]
+    | tagsRequest
+  /** fetch aggregated fields from the table: "tags" */
+  tags_aggregate?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: tags_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: tags_order_by[] | null
+          /** filter the rows returned */
+          where?: tags_bool_exp | null
+        },
+        tags_aggregateRequest
+      ]
+    | tags_aggregateRequest
+  /** fetch data from the table: "tags" using primary key columns */
+  tags_by_pk?: [{ guild_id: String; name: String }, tagsRequest]
   /** fetch data from the table: "users" */
   users?:
     | [
@@ -1721,14 +1944,40 @@ export interface auto_tags_variance_order_by {
 
 /** ordering options when selecting data from "guilds" */
 export interface guilds_order_by {
+  banner?: order_by | null
   enabled?: order_by | null
+  fans_aggregate?: users_aggregate_order_by | null
   guild_id?: order_by | null
   icon?: order_by | null
   image_channels_aggregate?: image_channels_aggregate_order_by | null
   images_aggregate?: images_aggregate_order_by | null
+  joined_at?: order_by | null
   members_aggregate?: members_aggregate_order_by | null
   name?: order_by | null
   welcome_channel?: order_by | null
+}
+
+/** order by aggregate values of table "users" */
+export interface users_aggregate_order_by {
+  count?: order_by | null
+  max?: users_max_order_by | null
+  min?: users_min_order_by | null
+}
+
+/** order by max() on columns of table "users" */
+export interface users_max_order_by {
+  avatar?: order_by | null
+  favorite_guild_id?: order_by | null
+  name?: order_by | null
+  user_id?: order_by | null
+}
+
+/** order by min() on columns of table "users" */
+export interface users_min_order_by {
+  avatar?: order_by | null
+  favorite_guild_id?: order_by | null
+  name?: order_by | null
+  user_id?: order_by | null
 }
 
 /** order by aggregate values of table "image_channels" */
@@ -1778,9 +2027,9 @@ export interface images_max_order_by {
   file_name?: order_by | null
   guild_id?: order_by | null
   id?: order_by | null
+  member_id?: order_by | null
   message_id?: order_by | null
   url?: order_by | null
-  user_id?: order_by | null
 }
 
 /** order by min() on columns of table "images" */
@@ -1789,9 +2038,9 @@ export interface images_min_order_by {
   file_name?: order_by | null
   guild_id?: order_by | null
   id?: order_by | null
+  member_id?: order_by | null
   message_id?: order_by | null
   url?: order_by | null
-  user_id?: order_by | null
 }
 
 /** order by stddev() on columns of table "images" */
@@ -1831,161 +2080,32 @@ export interface images_variance_order_by {
 
 /** order by aggregate values of table "members" */
 export interface members_aggregate_order_by {
-  avg?: members_avg_order_by | null
   count?: order_by | null
   max?: members_max_order_by | null
   min?: members_min_order_by | null
-  stddev?: members_stddev_order_by | null
-  stddev_pop?: members_stddev_pop_order_by | null
-  stddev_samp?: members_stddev_samp_order_by | null
-  sum?: members_sum_order_by | null
-  var_pop?: members_var_pop_order_by | null
-  var_samp?: members_var_samp_order_by | null
-  variance?: members_variance_order_by | null
-}
-
-/** order by avg() on columns of table "members" */
-export interface members_avg_order_by {
-  id?: order_by | null
 }
 
 /** order by max() on columns of table "members" */
 export interface members_max_order_by {
   guild_id?: order_by | null
-  id?: order_by | null
   user_id?: order_by | null
 }
 
 /** order by min() on columns of table "members" */
 export interface members_min_order_by {
   guild_id?: order_by | null
-  id?: order_by | null
   user_id?: order_by | null
-}
-
-/** order by stddev() on columns of table "members" */
-export interface members_stddev_order_by {
-  id?: order_by | null
-}
-
-/** order by stddev_pop() on columns of table "members" */
-export interface members_stddev_pop_order_by {
-  id?: order_by | null
-}
-
-/** order by stddev_samp() on columns of table "members" */
-export interface members_stddev_samp_order_by {
-  id?: order_by | null
-}
-
-/** order by sum() on columns of table "members" */
-export interface members_sum_order_by {
-  id?: order_by | null
-}
-
-/** order by var_pop() on columns of table "members" */
-export interface members_var_pop_order_by {
-  id?: order_by | null
-}
-
-/** order by var_samp() on columns of table "members" */
-export interface members_var_samp_order_by {
-  id?: order_by | null
-}
-
-/** order by variance() on columns of table "members" */
-export interface members_variance_order_by {
-  id?: order_by | null
 }
 
 /** ordering options when selecting data from "users" */
 export interface users_order_by {
   avatar?: order_by | null
+  favorite_guild?: guilds_order_by | null
+  favorite_guild_id?: order_by | null
   image_channels_aggregate?: image_channels_aggregate_order_by | null
-  image_tags_aggregate?: image_tags_aggregate_order_by | null
-  images_aggregate?: images_aggregate_order_by | null
   members_aggregate?: members_aggregate_order_by | null
   name?: order_by | null
   user_id?: order_by | null
-}
-
-/** order by aggregate values of table "image_tags" */
-export interface image_tags_aggregate_order_by {
-  avg?: image_tags_avg_order_by | null
-  count?: order_by | null
-  max?: image_tags_max_order_by | null
-  min?: image_tags_min_order_by | null
-  stddev?: image_tags_stddev_order_by | null
-  stddev_pop?: image_tags_stddev_pop_order_by | null
-  stddev_samp?: image_tags_stddev_samp_order_by | null
-  sum?: image_tags_sum_order_by | null
-  var_pop?: image_tags_var_pop_order_by | null
-  var_samp?: image_tags_var_samp_order_by | null
-  variance?: image_tags_variance_order_by | null
-}
-
-/** order by avg() on columns of table "image_tags" */
-export interface image_tags_avg_order_by {
-  id?: order_by | null
-  image_id?: order_by | null
-}
-
-/** order by max() on columns of table "image_tags" */
-export interface image_tags_max_order_by {
-  id?: order_by | null
-  image_id?: order_by | null
-  name?: order_by | null
-  tagger_id?: order_by | null
-}
-
-/** order by min() on columns of table "image_tags" */
-export interface image_tags_min_order_by {
-  id?: order_by | null
-  image_id?: order_by | null
-  name?: order_by | null
-  tagger_id?: order_by | null
-}
-
-/** order by stddev() on columns of table "image_tags" */
-export interface image_tags_stddev_order_by {
-  id?: order_by | null
-  image_id?: order_by | null
-}
-
-/** order by stddev_pop() on columns of table "image_tags" */
-export interface image_tags_stddev_pop_order_by {
-  id?: order_by | null
-  image_id?: order_by | null
-}
-
-/** order by stddev_samp() on columns of table "image_tags" */
-export interface image_tags_stddev_samp_order_by {
-  id?: order_by | null
-  image_id?: order_by | null
-}
-
-/** order by sum() on columns of table "image_tags" */
-export interface image_tags_sum_order_by {
-  id?: order_by | null
-  image_id?: order_by | null
-}
-
-/** order by var_pop() on columns of table "image_tags" */
-export interface image_tags_var_pop_order_by {
-  id?: order_by | null
-  image_id?: order_by | null
-}
-
-/** order by var_samp() on columns of table "image_tags" */
-export interface image_tags_var_samp_order_by {
-  id?: order_by | null
-  image_id?: order_by | null
-}
-
-/** order by variance() on columns of table "image_tags" */
-export interface image_tags_variance_order_by {
-  id?: order_by | null
-  image_id?: order_by | null
 }
 
 /** Boolean expression to filter rows from the table "auto_tags". All fields are combined with a logical 'AND'. */
@@ -2049,11 +2169,14 @@ export interface guilds_bool_exp {
   _and?: (guilds_bool_exp | null)[] | null
   _not?: guilds_bool_exp | null
   _or?: (guilds_bool_exp | null)[] | null
+  banner?: text_comparison_exp | null
   enabled?: boolean_comparison_exp | null
+  fans?: users_bool_exp | null
   guild_id?: text_comparison_exp | null
   icon?: text_comparison_exp | null
   image_channels?: image_channels_bool_exp | null
   images?: images_bool_exp | null
+  joined_at?: date_comparison_exp | null
   members?: members_bool_exp | null
   name?: text_comparison_exp | null
   welcome_channel?: text_comparison_exp | null
@@ -2072,6 +2195,31 @@ export interface boolean_comparison_exp {
   _nin?: (Boolean | null)[] | null
 }
 
+/** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
+export interface users_bool_exp {
+  _and?: (users_bool_exp | null)[] | null
+  _not?: users_bool_exp | null
+  _or?: (users_bool_exp | null)[] | null
+  avatar?: text_comparison_exp | null
+  favorite_guild?: guilds_bool_exp | null
+  favorite_guild_id?: text_comparison_exp | null
+  image_channels?: image_channels_bool_exp | null
+  members?: members_bool_exp | null
+  name?: text_comparison_exp | null
+  user_id?: text_comparison_exp | null
+}
+
+/** Boolean expression to filter rows from the table "members". All fields are combined with a logical 'AND'. */
+export interface members_bool_exp {
+  _and?: (members_bool_exp | null)[] | null
+  _not?: members_bool_exp | null
+  _or?: (members_bool_exp | null)[] | null
+  guild?: guilds_bool_exp | null
+  guild_id?: text_comparison_exp | null
+  user?: users_bool_exp | null
+  user_id?: text_comparison_exp | null
+}
+
 /** Boolean expression to filter rows from the table "images". All fields are combined with a logical 'AND'. */
 export interface images_bool_exp {
   _and?: (images_bool_exp | null)[] | null
@@ -2083,11 +2231,10 @@ export interface images_bool_exp {
   guild_id?: text_comparison_exp | null
   id?: integer_comparison_exp | null
   image_tags?: image_tags_bool_exp | null
+  member_id?: text_comparison_exp | null
   message_id?: text_comparison_exp | null
   public?: boolean_comparison_exp | null
   url?: text_comparison_exp | null
-  user?: users_bool_exp | null
-  user_id?: text_comparison_exp | null
 }
 
 /** expression to compare columns of type timestamptz. All fields are combined with logical 'AND'. */
@@ -2108,38 +2255,26 @@ export interface image_tags_bool_exp {
   _and?: (image_tags_bool_exp | null)[] | null
   _not?: image_tags_bool_exp | null
   _or?: (image_tags_bool_exp | null)[] | null
+  guild_id?: text_comparison_exp | null
   id?: integer_comparison_exp | null
   image?: images_bool_exp | null
   image_id?: integer_comparison_exp | null
+  member?: members_bool_exp | null
+  member_id?: text_comparison_exp | null
   name?: text_comparison_exp | null
-  tagger_id?: text_comparison_exp | null
-  user?: users_bool_exp | null
 }
 
-/** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
-export interface users_bool_exp {
-  _and?: (users_bool_exp | null)[] | null
-  _not?: users_bool_exp | null
-  _or?: (users_bool_exp | null)[] | null
-  avatar?: text_comparison_exp | null
-  image_channels?: image_channels_bool_exp | null
-  image_tags?: image_tags_bool_exp | null
-  images?: images_bool_exp | null
-  members?: members_bool_exp | null
-  name?: text_comparison_exp | null
-  user_id?: text_comparison_exp | null
-}
-
-/** Boolean expression to filter rows from the table "members". All fields are combined with a logical 'AND'. */
-export interface members_bool_exp {
-  _and?: (members_bool_exp | null)[] | null
-  _not?: members_bool_exp | null
-  _or?: (members_bool_exp | null)[] | null
-  guild?: guilds_bool_exp | null
-  guild_id?: text_comparison_exp | null
-  id?: integer_comparison_exp | null
-  user?: users_bool_exp | null
-  user_id?: text_comparison_exp | null
+/** expression to compare columns of type date. All fields are combined with logical 'AND'. */
+export interface date_comparison_exp {
+  _eq?: date | null
+  _gt?: date | null
+  _gte?: date | null
+  _in?: (date | null)[] | null
+  _is_null?: Boolean | null
+  _lt?: date | null
+  _lte?: date | null
+  _neq?: date | null
+  _nin?: (date | null)[] | null
 }
 
 /** columns and relationships of "auto_tags" */
@@ -2303,7 +2438,44 @@ export interface auto_tags_variance_fieldsRequest {
 
 /** columns and relationships of "guilds" */
 export interface guildsRequest {
+  banner?: boolean | number
   enabled?: boolean | number
+  /** An array relationship */
+  fans?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: users_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: users_order_by[] | null
+          /** filter the rows returned */
+          where?: users_bool_exp | null
+        },
+        usersRequest
+      ]
+    | usersRequest
+  /** An aggregated array relationship */
+  fans_aggregate?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: users_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: users_order_by[] | null
+          /** filter the rows returned */
+          where?: users_bool_exp | null
+        },
+        users_aggregateRequest
+      ]
+    | users_aggregateRequest
   guild_id?: boolean | number
   icon?: boolean | number
   /** An array relationship */
@@ -2378,6 +2550,7 @@ export interface guildsRequest {
         images_aggregateRequest
       ]
     | images_aggregateRequest
+  joined_at?: boolean | number
   /** An array relationship */
   members?:
     | [
@@ -2420,6 +2593,90 @@ export interface guildsRequest {
   __scalar?: boolean | number
 }
 
+/** columns and relationships of "users" */
+export interface usersRequest {
+  avatar?: boolean | number
+  /** An object relationship */
+  favorite_guild?: guildsRequest
+  favorite_guild_id?: boolean | number
+  /** An array relationship */
+  image_channels?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: image_channels_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: image_channels_order_by[] | null
+          /** filter the rows returned */
+          where?: image_channels_bool_exp | null
+        },
+        image_channelsRequest
+      ]
+    | image_channelsRequest
+  /** An aggregated array relationship */
+  image_channels_aggregate?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: image_channels_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: image_channels_order_by[] | null
+          /** filter the rows returned */
+          where?: image_channels_bool_exp | null
+        },
+        image_channels_aggregateRequest
+      ]
+    | image_channels_aggregateRequest
+  /** An array relationship */
+  members?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: members_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: members_order_by[] | null
+          /** filter the rows returned */
+          where?: members_bool_exp | null
+        },
+        membersRequest
+      ]
+    | membersRequest
+  /** An aggregated array relationship */
+  members_aggregate?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: members_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: members_order_by[] | null
+          /** filter the rows returned */
+          where?: members_bool_exp | null
+        },
+        members_aggregateRequest
+      ]
+    | members_aggregateRequest
+  name?: boolean | number
+  user_id?: boolean | number
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
 /** aggregated selection of "image_channels" */
 export interface image_channels_aggregateRequest {
   aggregate?: image_channels_aggregate_fieldsRequest
@@ -2455,6 +2712,96 @@ export interface image_channels_min_fieldsRequest {
   __scalar?: boolean | number
 }
 
+/** ordering options when selecting data from "members" */
+export interface members_order_by {
+  guild?: guilds_order_by | null
+  guild_id?: order_by | null
+  user?: users_order_by | null
+  user_id?: order_by | null
+}
+
+/** columns and relationships of "members" */
+export interface membersRequest {
+  /** An object relationship */
+  guild?: guildsRequest
+  guild_id?: boolean | number
+  /** An object relationship */
+  user?: usersRequest
+  user_id?: boolean | number
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** aggregated selection of "members" */
+export interface members_aggregateRequest {
+  aggregate?: members_aggregate_fieldsRequest
+  nodes?: membersRequest
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** aggregate fields of "members" */
+export interface members_aggregate_fieldsRequest {
+  count?: [{ columns?: members_select_column[] | null; distinct?: Boolean | null }] | boolean | number
+  max?: members_max_fieldsRequest
+  min?: members_min_fieldsRequest
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** aggregate max on columns */
+export interface members_max_fieldsRequest {
+  guild_id?: boolean | number
+  user_id?: boolean | number
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** aggregate min on columns */
+export interface members_min_fieldsRequest {
+  guild_id?: boolean | number
+  user_id?: boolean | number
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** aggregated selection of "users" */
+export interface users_aggregateRequest {
+  aggregate?: users_aggregate_fieldsRequest
+  nodes?: usersRequest
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** aggregate fields of "users" */
+export interface users_aggregate_fieldsRequest {
+  count?: [{ columns?: users_select_column[] | null; distinct?: Boolean | null }] | boolean | number
+  max?: users_max_fieldsRequest
+  min?: users_min_fieldsRequest
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** aggregate max on columns */
+export interface users_max_fieldsRequest {
+  avatar?: boolean | number
+  favorite_guild_id?: boolean | number
+  name?: boolean | number
+  user_id?: boolean | number
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** aggregate min on columns */
+export interface users_min_fieldsRequest {
+  avatar?: boolean | number
+  favorite_guild_id?: boolean | number
+  name?: boolean | number
+  user_id?: boolean | number
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
 /** ordering options when selecting data from "images" */
 export interface images_order_by {
   created_at?: order_by | null
@@ -2463,11 +2810,91 @@ export interface images_order_by {
   guild_id?: order_by | null
   id?: order_by | null
   image_tags_aggregate?: image_tags_aggregate_order_by | null
+  member_id?: order_by | null
   message_id?: order_by | null
   public?: order_by | null
   url?: order_by | null
-  user?: users_order_by | null
-  user_id?: order_by | null
+}
+
+/** order by aggregate values of table "image_tags" */
+export interface image_tags_aggregate_order_by {
+  avg?: image_tags_avg_order_by | null
+  count?: order_by | null
+  max?: image_tags_max_order_by | null
+  min?: image_tags_min_order_by | null
+  stddev?: image_tags_stddev_order_by | null
+  stddev_pop?: image_tags_stddev_pop_order_by | null
+  stddev_samp?: image_tags_stddev_samp_order_by | null
+  sum?: image_tags_sum_order_by | null
+  var_pop?: image_tags_var_pop_order_by | null
+  var_samp?: image_tags_var_samp_order_by | null
+  variance?: image_tags_variance_order_by | null
+}
+
+/** order by avg() on columns of table "image_tags" */
+export interface image_tags_avg_order_by {
+  id?: order_by | null
+  image_id?: order_by | null
+}
+
+/** order by max() on columns of table "image_tags" */
+export interface image_tags_max_order_by {
+  guild_id?: order_by | null
+  id?: order_by | null
+  image_id?: order_by | null
+  member_id?: order_by | null
+  name?: order_by | null
+}
+
+/** order by min() on columns of table "image_tags" */
+export interface image_tags_min_order_by {
+  guild_id?: order_by | null
+  id?: order_by | null
+  image_id?: order_by | null
+  member_id?: order_by | null
+  name?: order_by | null
+}
+
+/** order by stddev() on columns of table "image_tags" */
+export interface image_tags_stddev_order_by {
+  id?: order_by | null
+  image_id?: order_by | null
+}
+
+/** order by stddev_pop() on columns of table "image_tags" */
+export interface image_tags_stddev_pop_order_by {
+  id?: order_by | null
+  image_id?: order_by | null
+}
+
+/** order by stddev_samp() on columns of table "image_tags" */
+export interface image_tags_stddev_samp_order_by {
+  id?: order_by | null
+  image_id?: order_by | null
+}
+
+/** order by sum() on columns of table "image_tags" */
+export interface image_tags_sum_order_by {
+  id?: order_by | null
+  image_id?: order_by | null
+}
+
+/** order by var_pop() on columns of table "image_tags" */
+export interface image_tags_var_pop_order_by {
+  id?: order_by | null
+  image_id?: order_by | null
+}
+
+/** order by var_samp() on columns of table "image_tags" */
+export interface image_tags_var_samp_order_by {
+  id?: order_by | null
+  image_id?: order_by | null
+}
+
+/** order by variance() on columns of table "image_tags" */
+export interface image_tags_variance_order_by {
+  id?: order_by | null
+  image_id?: order_by | null
 }
 
 /** columns and relationships of "images" */
@@ -2514,189 +2941,36 @@ export interface imagesRequest {
         image_tags_aggregateRequest
       ]
     | image_tags_aggregateRequest
+  member_id?: boolean | number
   message_id?: boolean | number
   public?: boolean | number
   url?: boolean | number
-  /** An object relationship */
-  user?: usersRequest
-  user_id?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
 }
 
 /** ordering options when selecting data from "image_tags" */
 export interface image_tags_order_by {
+  guild_id?: order_by | null
   id?: order_by | null
   image?: images_order_by | null
   image_id?: order_by | null
+  member?: members_order_by | null
+  member_id?: order_by | null
   name?: order_by | null
-  tagger_id?: order_by | null
-  user?: users_order_by | null
 }
 
 /** columns and relationships of "image_tags" */
 export interface image_tagsRequest {
+  guild_id?: boolean | number
   id?: boolean | number
   /** An object relationship */
   image?: imagesRequest
   image_id?: boolean | number
-  name?: boolean | number
-  tagger_id?: boolean | number
   /** An object relationship */
-  user?: usersRequest
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
-/** columns and relationships of "users" */
-export interface usersRequest {
-  avatar?: boolean | number
-  /** An array relationship */
-  image_channels?:
-    | [
-        {
-          /** distinct select on columns */
-          distinct_on?: image_channels_select_column[] | null
-          /** limit the nuber of rows returned */
-          limit?: Int | null
-          /** skip the first n rows. Use only with order_by */
-          offset?: Int | null
-          /** sort the rows by one or more columns */
-          order_by?: image_channels_order_by[] | null
-          /** filter the rows returned */
-          where?: image_channels_bool_exp | null
-        },
-        image_channelsRequest
-      ]
-    | image_channelsRequest
-  /** An aggregated array relationship */
-  image_channels_aggregate?:
-    | [
-        {
-          /** distinct select on columns */
-          distinct_on?: image_channels_select_column[] | null
-          /** limit the nuber of rows returned */
-          limit?: Int | null
-          /** skip the first n rows. Use only with order_by */
-          offset?: Int | null
-          /** sort the rows by one or more columns */
-          order_by?: image_channels_order_by[] | null
-          /** filter the rows returned */
-          where?: image_channels_bool_exp | null
-        },
-        image_channels_aggregateRequest
-      ]
-    | image_channels_aggregateRequest
-  /** An array relationship */
-  image_tags?:
-    | [
-        {
-          /** distinct select on columns */
-          distinct_on?: image_tags_select_column[] | null
-          /** limit the nuber of rows returned */
-          limit?: Int | null
-          /** skip the first n rows. Use only with order_by */
-          offset?: Int | null
-          /** sort the rows by one or more columns */
-          order_by?: image_tags_order_by[] | null
-          /** filter the rows returned */
-          where?: image_tags_bool_exp | null
-        },
-        image_tagsRequest
-      ]
-    | image_tagsRequest
-  /** An aggregated array relationship */
-  image_tags_aggregate?:
-    | [
-        {
-          /** distinct select on columns */
-          distinct_on?: image_tags_select_column[] | null
-          /** limit the nuber of rows returned */
-          limit?: Int | null
-          /** skip the first n rows. Use only with order_by */
-          offset?: Int | null
-          /** sort the rows by one or more columns */
-          order_by?: image_tags_order_by[] | null
-          /** filter the rows returned */
-          where?: image_tags_bool_exp | null
-        },
-        image_tags_aggregateRequest
-      ]
-    | image_tags_aggregateRequest
-  /** An array relationship */
-  images?:
-    | [
-        {
-          /** distinct select on columns */
-          distinct_on?: images_select_column[] | null
-          /** limit the nuber of rows returned */
-          limit?: Int | null
-          /** skip the first n rows. Use only with order_by */
-          offset?: Int | null
-          /** sort the rows by one or more columns */
-          order_by?: images_order_by[] | null
-          /** filter the rows returned */
-          where?: images_bool_exp | null
-        },
-        imagesRequest
-      ]
-    | imagesRequest
-  /** An aggregated array relationship */
-  images_aggregate?:
-    | [
-        {
-          /** distinct select on columns */
-          distinct_on?: images_select_column[] | null
-          /** limit the nuber of rows returned */
-          limit?: Int | null
-          /** skip the first n rows. Use only with order_by */
-          offset?: Int | null
-          /** sort the rows by one or more columns */
-          order_by?: images_order_by[] | null
-          /** filter the rows returned */
-          where?: images_bool_exp | null
-        },
-        images_aggregateRequest
-      ]
-    | images_aggregateRequest
-  /** An array relationship */
-  members?:
-    | [
-        {
-          /** distinct select on columns */
-          distinct_on?: members_select_column[] | null
-          /** limit the nuber of rows returned */
-          limit?: Int | null
-          /** skip the first n rows. Use only with order_by */
-          offset?: Int | null
-          /** sort the rows by one or more columns */
-          order_by?: members_order_by[] | null
-          /** filter the rows returned */
-          where?: members_bool_exp | null
-        },
-        membersRequest
-      ]
-    | membersRequest
-  /** An aggregated array relationship */
-  members_aggregate?:
-    | [
-        {
-          /** distinct select on columns */
-          distinct_on?: members_select_column[] | null
-          /** limit the nuber of rows returned */
-          limit?: Int | null
-          /** skip the first n rows. Use only with order_by */
-          offset?: Int | null
-          /** sort the rows by one or more columns */
-          order_by?: members_order_by[] | null
-          /** filter the rows returned */
-          where?: members_bool_exp | null
-        },
-        members_aggregateRequest
-      ]
-    | members_aggregateRequest
+  member?: membersRequest
+  member_id?: boolean | number
   name?: boolean | number
-  user_id?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
 }
@@ -2736,20 +3010,22 @@ export interface image_tags_avg_fieldsRequest {
 
 /** aggregate max on columns */
 export interface image_tags_max_fieldsRequest {
+  guild_id?: boolean | number
   id?: boolean | number
   image_id?: boolean | number
+  member_id?: boolean | number
   name?: boolean | number
-  tagger_id?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
 }
 
 /** aggregate min on columns */
 export interface image_tags_min_fieldsRequest {
+  guild_id?: boolean | number
   id?: boolean | number
   image_id?: boolean | number
+  member_id?: boolean | number
   name?: boolean | number
-  tagger_id?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
 }
@@ -2848,9 +3124,9 @@ export interface images_max_fieldsRequest {
   file_name?: boolean | number
   guild_id?: boolean | number
   id?: boolean | number
+  member_id?: boolean | number
   message_id?: boolean | number
   url?: boolean | number
-  user_id?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
 }
@@ -2861,9 +3137,9 @@ export interface images_min_fieldsRequest {
   file_name?: boolean | number
   guild_id?: boolean | number
   id?: boolean | number
+  member_id?: boolean | number
   message_id?: boolean | number
   url?: boolean | number
-  user_id?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
 }
@@ -2917,127 +3193,6 @@ export interface images_variance_fieldsRequest {
   __scalar?: boolean | number
 }
 
-/** ordering options when selecting data from "members" */
-export interface members_order_by {
-  guild?: guilds_order_by | null
-  guild_id?: order_by | null
-  id?: order_by | null
-  user?: users_order_by | null
-  user_id?: order_by | null
-}
-
-/** columns and relationships of "members" */
-export interface membersRequest {
-  /** An object relationship */
-  guild?: guildsRequest
-  guild_id?: boolean | number
-  id?: boolean | number
-  /** An object relationship */
-  user?: usersRequest
-  user_id?: boolean | number
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
-/** aggregated selection of "members" */
-export interface members_aggregateRequest {
-  aggregate?: members_aggregate_fieldsRequest
-  nodes?: membersRequest
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
-/** aggregate fields of "members" */
-export interface members_aggregate_fieldsRequest {
-  avg?: members_avg_fieldsRequest
-  count?: [{ columns?: members_select_column[] | null; distinct?: Boolean | null }] | boolean | number
-  max?: members_max_fieldsRequest
-  min?: members_min_fieldsRequest
-  stddev?: members_stddev_fieldsRequest
-  stddev_pop?: members_stddev_pop_fieldsRequest
-  stddev_samp?: members_stddev_samp_fieldsRequest
-  sum?: members_sum_fieldsRequest
-  var_pop?: members_var_pop_fieldsRequest
-  var_samp?: members_var_samp_fieldsRequest
-  variance?: members_variance_fieldsRequest
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
-/** aggregate avg on columns */
-export interface members_avg_fieldsRequest {
-  id?: boolean | number
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
-/** aggregate max on columns */
-export interface members_max_fieldsRequest {
-  guild_id?: boolean | number
-  id?: boolean | number
-  user_id?: boolean | number
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
-/** aggregate min on columns */
-export interface members_min_fieldsRequest {
-  guild_id?: boolean | number
-  id?: boolean | number
-  user_id?: boolean | number
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
-/** aggregate stddev on columns */
-export interface members_stddev_fieldsRequest {
-  id?: boolean | number
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
-/** aggregate stddev_pop on columns */
-export interface members_stddev_pop_fieldsRequest {
-  id?: boolean | number
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
-/** aggregate stddev_samp on columns */
-export interface members_stddev_samp_fieldsRequest {
-  id?: boolean | number
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
-/** aggregate sum on columns */
-export interface members_sum_fieldsRequest {
-  id?: boolean | number
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
-/** aggregate var_pop on columns */
-export interface members_var_pop_fieldsRequest {
-  id?: boolean | number
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
-/** aggregate var_samp on columns */
-export interface members_var_samp_fieldsRequest {
-  id?: boolean | number
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
-/** aggregate variance on columns */
-export interface members_variance_fieldsRequest {
-  id?: boolean | number
-  __typename?: boolean | number
-  __scalar?: boolean | number
-}
-
 /** aggregated selection of "guilds" */
 export interface guilds_aggregateRequest {
   aggregate?: guilds_aggregate_fieldsRequest
@@ -3057,8 +3212,10 @@ export interface guilds_aggregate_fieldsRequest {
 
 /** aggregate max on columns */
 export interface guilds_max_fieldsRequest {
+  banner?: boolean | number
   guild_id?: boolean | number
   icon?: boolean | number
+  joined_at?: boolean | number
   name?: boolean | number
   welcome_channel?: boolean | number
   __typename?: boolean | number
@@ -3067,8 +3224,10 @@ export interface guilds_max_fieldsRequest {
 
 /** aggregate min on columns */
 export interface guilds_min_fieldsRequest {
+  banner?: boolean | number
   guild_id?: boolean | number
   icon?: boolean | number
+  joined_at?: boolean | number
   name?: boolean | number
   welcome_channel?: boolean | number
   __typename?: boolean | number
@@ -3081,6 +3240,67 @@ export interface random_image_args {
 
 export interface random_tagged_image_args {
   tag: String
+}
+
+/** ordering options when selecting data from "tag_categories" */
+export interface tag_categories_order_by {
+  added_by?: order_by | null
+  created_at?: order_by | null
+  name?: order_by | null
+}
+
+/** Boolean expression to filter rows from the table "tag_categories". All fields are combined with a logical 'AND'. */
+export interface tag_categories_bool_exp {
+  _and?: (tag_categories_bool_exp | null)[] | null
+  _not?: tag_categories_bool_exp | null
+  _or?: (tag_categories_bool_exp | null)[] | null
+  added_by?: text_comparison_exp | null
+  created_at?: date_comparison_exp | null
+  name?: text_comparison_exp | null
+}
+
+/** columns and relationships of "tag_categories" */
+export interface tag_categoriesRequest {
+  added_by?: boolean | number
+  created_at?: boolean | number
+  name?: boolean | number
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** aggregated selection of "tag_categories" */
+export interface tag_categories_aggregateRequest {
+  aggregate?: tag_categories_aggregate_fieldsRequest
+  nodes?: tag_categoriesRequest
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** aggregate fields of "tag_categories" */
+export interface tag_categories_aggregate_fieldsRequest {
+  count?: [{ columns?: tag_categories_select_column[] | null; distinct?: Boolean | null }] | boolean | number
+  max?: tag_categories_max_fieldsRequest
+  min?: tag_categories_min_fieldsRequest
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** aggregate max on columns */
+export interface tag_categories_max_fieldsRequest {
+  added_by?: boolean | number
+  created_at?: boolean | number
+  name?: boolean | number
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** aggregate min on columns */
+export interface tag_categories_min_fieldsRequest {
+  added_by?: boolean | number
+  created_at?: boolean | number
+  name?: boolean | number
+  __typename?: boolean | number
+  __scalar?: boolean | number
 }
 
 /** ordering options when selecting data from "tag_counts" */
@@ -3225,37 +3445,63 @@ export interface tag_counts_variance_fieldsRequest {
   __scalar?: boolean | number
 }
 
-/** aggregated selection of "users" */
-export interface users_aggregateRequest {
-  aggregate?: users_aggregate_fieldsRequest
-  nodes?: usersRequest
+/** ordering options when selecting data from "tags" */
+export interface tags_order_by {
+  created_at?: order_by | null
+  guild_id?: order_by | null
+  name?: order_by | null
+}
+
+/** Boolean expression to filter rows from the table "tags". All fields are combined with a logical 'AND'. */
+export interface tags_bool_exp {
+  _and?: (tags_bool_exp | null)[] | null
+  _not?: tags_bool_exp | null
+  _or?: (tags_bool_exp | null)[] | null
+  created_at?: date_comparison_exp | null
+  guild_id?: text_comparison_exp | null
+  name?: text_comparison_exp | null
+}
+
+/** columns and relationships of "tags" */
+export interface tagsRequest {
+  created_at?: boolean | number
+  guild_id?: boolean | number
+  name?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
 }
 
-/** aggregate fields of "users" */
-export interface users_aggregate_fieldsRequest {
-  count?: [{ columns?: users_select_column[] | null; distinct?: Boolean | null }] | boolean | number
-  max?: users_max_fieldsRequest
-  min?: users_min_fieldsRequest
+/** aggregated selection of "tags" */
+export interface tags_aggregateRequest {
+  aggregate?: tags_aggregate_fieldsRequest
+  nodes?: tagsRequest
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** aggregate fields of "tags" */
+export interface tags_aggregate_fieldsRequest {
+  count?: [{ columns?: tags_select_column[] | null; distinct?: Boolean | null }] | boolean | number
+  max?: tags_max_fieldsRequest
+  min?: tags_min_fieldsRequest
   __typename?: boolean | number
   __scalar?: boolean | number
 }
 
 /** aggregate max on columns */
-export interface users_max_fieldsRequest {
-  avatar?: boolean | number
+export interface tags_max_fieldsRequest {
+  created_at?: boolean | number
+  guild_id?: boolean | number
   name?: boolean | number
-  user_id?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
 }
 
 /** aggregate min on columns */
-export interface users_min_fieldsRequest {
-  avatar?: boolean | number
+export interface tags_min_fieldsRequest {
+  created_at?: boolean | number
+  guild_id?: boolean | number
   name?: boolean | number
-  user_id?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
 }
@@ -3310,6 +3556,14 @@ export interface mutation_rootRequest {
     },
     members_mutation_responseRequest
   ]
+  /** delete data from the table: "tag_categories" */
+  delete_tag_categories?: [
+    {
+      /** filter the rows which have to be deleted */
+      where: tag_categories_bool_exp
+    },
+    tag_categories_mutation_responseRequest
+  ]
   /** delete data from the table: "tag_counts" */
   delete_tag_counts?: [
     {
@@ -3317,6 +3571,14 @@ export interface mutation_rootRequest {
       where: tag_counts_bool_exp
     },
     tag_counts_mutation_responseRequest
+  ]
+  /** delete data from the table: "tags" */
+  delete_tags?: [
+    {
+      /** filter the rows which have to be deleted */
+      where: tags_bool_exp
+    },
+    tags_mutation_responseRequest
   ]
   /** delete data from the table: "users" */
   delete_users?: [
@@ -3386,6 +3648,16 @@ export interface mutation_rootRequest {
     },
     members_mutation_responseRequest
   ]
+  /** insert data into the table: "tag_categories" */
+  insert_tag_categories?: [
+    {
+      /** the rows to be inserted */
+      objects: tag_categories_insert_input[]
+      /** on conflict condition */
+      on_conflict?: tag_categories_on_conflict | null
+    },
+    tag_categories_mutation_responseRequest
+  ]
   /** insert data into the table: "tag_counts" */
   insert_tag_counts?: [
     {
@@ -3395,6 +3667,16 @@ export interface mutation_rootRequest {
       on_conflict?: tag_counts_on_conflict | null
     },
     tag_counts_mutation_responseRequest
+  ]
+  /** insert data into the table: "tags" */
+  insert_tags?: [
+    {
+      /** the rows to be inserted */
+      objects: tags_insert_input[]
+      /** on conflict condition */
+      on_conflict?: tags_on_conflict | null
+    },
+    tags_mutation_responseRequest
   ]
   /** insert data into the table: "users" */
   insert_users?: [
@@ -3465,14 +3747,22 @@ export interface mutation_rootRequest {
   /** update data of the table: "members" */
   update_members?: [
     {
-      /** increments the integer columns with given value of the filtered values */
-      _inc?: members_inc_input | null
       /** sets the columns of the filtered rows to the given values */
       _set?: members_set_input | null
       /** filter the rows which have to be updated */
       where: members_bool_exp
     },
     members_mutation_responseRequest
+  ]
+  /** update data of the table: "tag_categories" */
+  update_tag_categories?: [
+    {
+      /** sets the columns of the filtered rows to the given values */
+      _set?: tag_categories_set_input | null
+      /** filter the rows which have to be updated */
+      where: tag_categories_bool_exp
+    },
+    tag_categories_mutation_responseRequest
   ]
   /** update data of the table: "tag_counts" */
   update_tag_counts?: [
@@ -3485,6 +3775,16 @@ export interface mutation_rootRequest {
       where: tag_counts_bool_exp
     },
     tag_counts_mutation_responseRequest
+  ]
+  /** update data of the table: "tags" */
+  update_tags?: [
+    {
+      /** sets the columns of the filtered rows to the given values */
+      _set?: tags_set_input | null
+      /** filter the rows which have to be updated */
+      where: tags_bool_exp
+    },
+    tags_mutation_responseRequest
   ]
   /** update data of the table: "users" */
   update_users?: [
@@ -3560,12 +3860,32 @@ export interface members_mutation_responseRequest {
   __scalar?: boolean | number
 }
 
+/** response of any mutation on the table "tag_categories" */
+export interface tag_categories_mutation_responseRequest {
+  /** number of affected rows by the mutation */
+  affected_rows?: boolean | number
+  /** data of the affected rows by the mutation */
+  returning?: tag_categoriesRequest
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
 /** response of any mutation on the table "tag_counts" */
 export interface tag_counts_mutation_responseRequest {
   /** number of affected rows by the mutation */
   affected_rows?: boolean | number
   /** data of the affected rows by the mutation */
   returning?: tag_countsRequest
+  __typename?: boolean | number
+  __scalar?: boolean | number
+}
+
+/** response of any mutation on the table "tags" */
+export interface tags_mutation_responseRequest {
+  /** number of affected rows by the mutation */
+  affected_rows?: boolean | number
+  /** data of the affected rows by the mutation */
+  returning?: tagsRequest
   __typename?: boolean | number
   __scalar?: boolean | number
 }
@@ -3624,14 +3944,34 @@ export interface guilds_obj_rel_insert_input {
 
 /** input type for inserting data into table "guilds" */
 export interface guilds_insert_input {
+  banner?: String | null
   enabled?: Boolean | null
+  fans?: users_arr_rel_insert_input | null
   guild_id?: String | null
   icon?: String | null
   image_channels?: image_channels_arr_rel_insert_input | null
   images?: images_arr_rel_insert_input | null
+  joined_at?: date | null
   members?: members_arr_rel_insert_input | null
   name?: String | null
   welcome_channel?: String | null
+}
+
+/** input type for inserting array relation for remote table "users" */
+export interface users_arr_rel_insert_input {
+  data: users_insert_input[]
+  on_conflict?: users_on_conflict | null
+}
+
+/** input type for inserting data into table "users" */
+export interface users_insert_input {
+  avatar?: String | null
+  favorite_guild?: guilds_obj_rel_insert_input | null
+  favorite_guild_id?: String | null
+  image_channels?: image_channels_arr_rel_insert_input | null
+  members?: members_arr_rel_insert_input | null
+  name?: String | null
+  user_id?: String | null
 }
 
 /** input type for inserting array relation for remote table "image_channels" */
@@ -3644,6 +3984,38 @@ export interface image_channels_arr_rel_insert_input {
 export interface image_channels_on_conflict {
   constraint: image_channels_constraint
   update_columns: image_channels_update_column[]
+}
+
+/** input type for inserting array relation for remote table "members" */
+export interface members_arr_rel_insert_input {
+  data: members_insert_input[]
+  on_conflict?: members_on_conflict | null
+}
+
+/** input type for inserting data into table "members" */
+export interface members_insert_input {
+  guild?: guilds_obj_rel_insert_input | null
+  guild_id?: String | null
+  user?: users_obj_rel_insert_input | null
+  user_id?: String | null
+}
+
+/** input type for inserting object relation for remote table "users" */
+export interface users_obj_rel_insert_input {
+  data: users_insert_input
+  on_conflict?: users_on_conflict | null
+}
+
+/** on conflict condition type for table "users" */
+export interface users_on_conflict {
+  constraint: users_constraint
+  update_columns: users_update_column[]
+}
+
+/** on conflict condition type for table "members" */
+export interface members_on_conflict {
+  constraint: members_constraint
+  update_columns: members_update_column[]
 }
 
 /** input type for inserting array relation for remote table "images" */
@@ -3660,11 +4032,10 @@ export interface images_insert_input {
   guild_id?: String | null
   id?: Int | null
   image_tags?: image_tags_arr_rel_insert_input | null
+  member_id?: String | null
   message_id?: String | null
   public?: Boolean | null
   url?: String | null
-  user?: users_obj_rel_insert_input | null
-  user_id?: String | null
 }
 
 /** input type for inserting array relation for remote table "image_tags" */
@@ -3675,12 +4046,13 @@ export interface image_tags_arr_rel_insert_input {
 
 /** input type for inserting data into table "image_tags" */
 export interface image_tags_insert_input {
+  guild_id?: String | null
   id?: Int | null
   image?: images_obj_rel_insert_input | null
   image_id?: Int | null
+  member?: members_obj_rel_insert_input | null
+  member_id?: String | null
   name?: String | null
-  tagger_id?: String | null
-  user?: users_obj_rel_insert_input | null
 }
 
 /** input type for inserting object relation for remote table "images" */
@@ -3695,48 +4067,10 @@ export interface images_on_conflict {
   update_columns: images_update_column[]
 }
 
-/** input type for inserting object relation for remote table "users" */
-export interface users_obj_rel_insert_input {
-  data: users_insert_input
-  on_conflict?: users_on_conflict | null
-}
-
-/** input type for inserting data into table "users" */
-export interface users_insert_input {
-  avatar?: String | null
-  image_channels?: image_channels_arr_rel_insert_input | null
-  image_tags?: image_tags_arr_rel_insert_input | null
-  images?: images_arr_rel_insert_input | null
-  members?: members_arr_rel_insert_input | null
-  name?: String | null
-  user_id?: String | null
-}
-
-/** input type for inserting array relation for remote table "members" */
-export interface members_arr_rel_insert_input {
-  data: members_insert_input[]
+/** input type for inserting object relation for remote table "members" */
+export interface members_obj_rel_insert_input {
+  data: members_insert_input
   on_conflict?: members_on_conflict | null
-}
-
-/** input type for inserting data into table "members" */
-export interface members_insert_input {
-  guild?: guilds_obj_rel_insert_input | null
-  guild_id?: String | null
-  id?: Int | null
-  user?: users_obj_rel_insert_input | null
-  user_id?: String | null
-}
-
-/** on conflict condition type for table "members" */
-export interface members_on_conflict {
-  constraint: members_constraint
-  update_columns: members_update_column[]
-}
-
-/** on conflict condition type for table "users" */
-export interface users_on_conflict {
-  constraint: users_constraint
-  update_columns: users_update_column[]
 }
 
 /** on conflict condition type for table "image_tags" */
@@ -3749,6 +4083,19 @@ export interface image_tags_on_conflict {
 export interface guilds_on_conflict {
   constraint: guilds_constraint
   update_columns: guilds_update_column[]
+}
+
+/** input type for inserting data into table "tag_categories" */
+export interface tag_categories_insert_input {
+  added_by?: String | null
+  created_at?: date | null
+  name?: String | null
+}
+
+/** on conflict condition type for table "tag_categories" */
+export interface tag_categories_on_conflict {
+  constraint: tag_categories_constraint
+  update_columns: tag_categories_update_column[]
 }
 
 /** input type for inserting data into table "tag_counts" */
@@ -3765,6 +4112,19 @@ export interface tag_counts_on_conflict {
   update_columns: tag_counts_update_column[]
 }
 
+/** input type for inserting data into table "tags" */
+export interface tags_insert_input {
+  created_at?: date | null
+  guild_id?: String | null
+  name?: String | null
+}
+
+/** on conflict condition type for table "tags" */
+export interface tags_on_conflict {
+  constraint: tags_constraint
+  update_columns: tags_update_column[]
+}
+
 /** input type for incrementing integer columne in table "auto_tags" */
 export interface auto_tags_inc_input {
   id?: Int | null
@@ -3779,9 +4139,11 @@ export interface auto_tags_set_input {
 
 /** input type for updating data in table "guilds" */
 export interface guilds_set_input {
+  banner?: String | null
   enabled?: Boolean | null
   guild_id?: String | null
   icon?: String | null
+  joined_at?: date | null
   name?: String | null
   welcome_channel?: String | null
 }
@@ -3801,10 +4163,11 @@ export interface image_tags_inc_input {
 
 /** input type for updating data in table "image_tags" */
 export interface image_tags_set_input {
+  guild_id?: String | null
   id?: Int | null
   image_id?: Int | null
+  member_id?: String | null
   name?: String | null
-  tagger_id?: String | null
 }
 
 /** input type for incrementing integer columne in table "images" */
@@ -3818,22 +4181,23 @@ export interface images_set_input {
   file_name?: String | null
   guild_id?: String | null
   id?: Int | null
+  member_id?: String | null
   message_id?: String | null
   public?: Boolean | null
   url?: String | null
-  user_id?: String | null
-}
-
-/** input type for incrementing integer columne in table "members" */
-export interface members_inc_input {
-  id?: Int | null
 }
 
 /** input type for updating data in table "members" */
 export interface members_set_input {
   guild_id?: String | null
-  id?: Int | null
   user_id?: String | null
+}
+
+/** input type for updating data in table "tag_categories" */
+export interface tag_categories_set_input {
+  added_by?: String | null
+  created_at?: date | null
+  name?: String | null
 }
 
 /** input type for incrementing integer columne in table "tag_counts" */
@@ -3848,9 +4212,17 @@ export interface tag_counts_set_input {
   name?: String | null
 }
 
+/** input type for updating data in table "tags" */
+export interface tags_set_input {
+  created_at?: date | null
+  guild_id?: String | null
+  name?: String | null
+}
+
 /** input type for updating data in table "users" */
 export interface users_set_input {
   avatar?: String | null
+  favorite_guild_id?: String | null
   name?: String | null
   user_id?: String | null
 }
@@ -4084,7 +4456,7 @@ export interface subscription_rootRequest {
       ]
     | members_aggregateRequest
   /** fetch data from the table: "members" using primary key columns */
-  members_by_pk?: [{ id: Int }, membersRequest]
+  members_by_pk?: [{ guild_id: String; user_id: String }, membersRequest]
   /** execute function "random_image" which returns "images" */
   random_image?: [
     {
@@ -4157,6 +4529,44 @@ export interface subscription_rootRequest {
     },
     images_aggregateRequest
   ]
+  /** fetch data from the table: "tag_categories" */
+  tag_categories?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: tag_categories_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: tag_categories_order_by[] | null
+          /** filter the rows returned */
+          where?: tag_categories_bool_exp | null
+        },
+        tag_categoriesRequest
+      ]
+    | tag_categoriesRequest
+  /** fetch aggregated fields from the table: "tag_categories" */
+  tag_categories_aggregate?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: tag_categories_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: tag_categories_order_by[] | null
+          /** filter the rows returned */
+          where?: tag_categories_bool_exp | null
+        },
+        tag_categories_aggregateRequest
+      ]
+    | tag_categories_aggregateRequest
+  /** fetch data from the table: "tag_categories" using primary key columns */
+  tag_categories_by_pk?: [{ name: String }, tag_categoriesRequest]
   /** execute function "tag_count" which returns "tag_counts" */
   tag_count?:
     | [
@@ -4231,6 +4641,44 @@ export interface subscription_rootRequest {
     | tag_counts_aggregateRequest
   /** fetch data from the table: "tag_counts" using primary key columns */
   tag_counts_by_pk?: [{ name: String }, tag_countsRequest]
+  /** fetch data from the table: "tags" */
+  tags?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: tags_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: tags_order_by[] | null
+          /** filter the rows returned */
+          where?: tags_bool_exp | null
+        },
+        tagsRequest
+      ]
+    | tagsRequest
+  /** fetch aggregated fields from the table: "tags" */
+  tags_aggregate?:
+    | [
+        {
+          /** distinct select on columns */
+          distinct_on?: tags_select_column[] | null
+          /** limit the nuber of rows returned */
+          limit?: Int | null
+          /** skip the first n rows. Use only with order_by */
+          offset?: Int | null
+          /** sort the rows by one or more columns */
+          order_by?: tags_order_by[] | null
+          /** filter the rows returned */
+          where?: tags_bool_exp | null
+        },
+        tags_aggregateRequest
+      ]
+    | tags_aggregateRequest
+  /** fetch data from the table: "tags" using primary key columns */
+  tags_by_pk?: [{ guild_id: String; name: String }, tagsRequest]
   /** fetch data from the table: "users" */
   users?:
     | [
@@ -4288,16 +4736,20 @@ export interface guilds_aggregate_order_by {
 
 /** order by max() on columns of table "guilds" */
 export interface guilds_max_order_by {
+  banner?: order_by | null
   guild_id?: order_by | null
   icon?: order_by | null
+  joined_at?: order_by | null
   name?: order_by | null
   welcome_channel?: order_by | null
 }
 
 /** order by min() on columns of table "guilds" */
 export interface guilds_min_order_by {
+  banner?: order_by | null
   guild_id?: order_by | null
   icon?: order_by | null
+  joined_at?: order_by | null
   name?: order_by | null
   welcome_channel?: order_by | null
 }
@@ -4314,10 +4766,37 @@ export interface image_tags_obj_rel_insert_input {
   on_conflict?: image_tags_on_conflict | null
 }
 
-/** input type for inserting object relation for remote table "members" */
-export interface members_obj_rel_insert_input {
-  data: members_insert_input
-  on_conflict?: members_on_conflict | null
+/** order by aggregate values of table "tag_categories" */
+export interface tag_categories_aggregate_order_by {
+  count?: order_by | null
+  max?: tag_categories_max_order_by | null
+  min?: tag_categories_min_order_by | null
+}
+
+/** order by max() on columns of table "tag_categories" */
+export interface tag_categories_max_order_by {
+  added_by?: order_by | null
+  created_at?: order_by | null
+  name?: order_by | null
+}
+
+/** order by min() on columns of table "tag_categories" */
+export interface tag_categories_min_order_by {
+  added_by?: order_by | null
+  created_at?: order_by | null
+  name?: order_by | null
+}
+
+/** input type for inserting array relation for remote table "tag_categories" */
+export interface tag_categories_arr_rel_insert_input {
+  data: tag_categories_insert_input[]
+  on_conflict?: tag_categories_on_conflict | null
+}
+
+/** input type for inserting object relation for remote table "tag_categories" */
+export interface tag_categories_obj_rel_insert_input {
+  data: tag_categories_insert_input
+  on_conflict?: tag_categories_on_conflict | null
 }
 
 /** order by aggregate values of table "tag_counts" */
@@ -4401,31 +4880,37 @@ export interface tag_counts_obj_rel_insert_input {
   on_conflict?: tag_counts_on_conflict | null
 }
 
-/** order by aggregate values of table "users" */
-export interface users_aggregate_order_by {
+/** order by aggregate values of table "tags" */
+export interface tags_aggregate_order_by {
   count?: order_by | null
-  max?: users_max_order_by | null
-  min?: users_min_order_by | null
+  max?: tags_max_order_by | null
+  min?: tags_min_order_by | null
 }
 
-/** order by max() on columns of table "users" */
-export interface users_max_order_by {
-  avatar?: order_by | null
+/** order by max() on columns of table "tags" */
+export interface tags_max_order_by {
+  created_at?: order_by | null
+  guild_id?: order_by | null
   name?: order_by | null
-  user_id?: order_by | null
 }
 
-/** order by min() on columns of table "users" */
-export interface users_min_order_by {
-  avatar?: order_by | null
+/** order by min() on columns of table "tags" */
+export interface tags_min_order_by {
+  created_at?: order_by | null
+  guild_id?: order_by | null
   name?: order_by | null
-  user_id?: order_by | null
 }
 
-/** input type for inserting array relation for remote table "users" */
-export interface users_arr_rel_insert_input {
-  data: users_insert_input[]
-  on_conflict?: users_on_conflict | null
+/** input type for inserting array relation for remote table "tags" */
+export interface tags_arr_rel_insert_input {
+  data: tags_insert_input[]
+  on_conflict?: tags_on_conflict | null
+}
+
+/** input type for inserting object relation for remote table "tags" */
+export interface tags_obj_rel_insert_input {
+  data: tags_insert_input
+  on_conflict?: tags_on_conflict | null
 }
 
 const query_root_possibleTypes = ['query_root']
@@ -4524,6 +5009,12 @@ export const isguilds = (obj: { __typename: String }): obj is guilds => {
   return guilds_possibleTypes.includes(obj.__typename)
 }
 
+const users_possibleTypes = ['users']
+export const isusers = (obj: { __typename: String }): obj is users => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return users_possibleTypes.includes(obj.__typename)
+}
+
 const image_channels_aggregate_possibleTypes = ['image_channels_aggregate']
 export const isimage_channels_aggregate = (obj: { __typename: String }): obj is image_channels_aggregate => {
   if (!obj.__typename) throw new Error('__typename is missing')
@@ -4548,6 +5039,60 @@ export const isimage_channels_min_fields = (obj: { __typename: String }): obj is
   return image_channels_min_fields_possibleTypes.includes(obj.__typename)
 }
 
+const members_possibleTypes = ['members']
+export const ismembers = (obj: { __typename: String }): obj is members => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return members_possibleTypes.includes(obj.__typename)
+}
+
+const members_aggregate_possibleTypes = ['members_aggregate']
+export const ismembers_aggregate = (obj: { __typename: String }): obj is members_aggregate => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return members_aggregate_possibleTypes.includes(obj.__typename)
+}
+
+const members_aggregate_fields_possibleTypes = ['members_aggregate_fields']
+export const ismembers_aggregate_fields = (obj: { __typename: String }): obj is members_aggregate_fields => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return members_aggregate_fields_possibleTypes.includes(obj.__typename)
+}
+
+const members_max_fields_possibleTypes = ['members_max_fields']
+export const ismembers_max_fields = (obj: { __typename: String }): obj is members_max_fields => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return members_max_fields_possibleTypes.includes(obj.__typename)
+}
+
+const members_min_fields_possibleTypes = ['members_min_fields']
+export const ismembers_min_fields = (obj: { __typename: String }): obj is members_min_fields => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return members_min_fields_possibleTypes.includes(obj.__typename)
+}
+
+const users_aggregate_possibleTypes = ['users_aggregate']
+export const isusers_aggregate = (obj: { __typename: String }): obj is users_aggregate => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return users_aggregate_possibleTypes.includes(obj.__typename)
+}
+
+const users_aggregate_fields_possibleTypes = ['users_aggregate_fields']
+export const isusers_aggregate_fields = (obj: { __typename: String }): obj is users_aggregate_fields => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return users_aggregate_fields_possibleTypes.includes(obj.__typename)
+}
+
+const users_max_fields_possibleTypes = ['users_max_fields']
+export const isusers_max_fields = (obj: { __typename: String }): obj is users_max_fields => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return users_max_fields_possibleTypes.includes(obj.__typename)
+}
+
+const users_min_fields_possibleTypes = ['users_min_fields']
+export const isusers_min_fields = (obj: { __typename: String }): obj is users_min_fields => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return users_min_fields_possibleTypes.includes(obj.__typename)
+}
+
 const images_possibleTypes = ['images']
 export const isimages = (obj: { __typename: String }): obj is images => {
   if (!obj.__typename) throw new Error('__typename is missing')
@@ -4558,12 +5103,6 @@ const image_tags_possibleTypes = ['image_tags']
 export const isimage_tags = (obj: { __typename: String }): obj is image_tags => {
   if (!obj.__typename) throw new Error('__typename is missing')
   return image_tags_possibleTypes.includes(obj.__typename)
-}
-
-const users_possibleTypes = ['users']
-export const isusers = (obj: { __typename: String }): obj is users => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return users_possibleTypes.includes(obj.__typename)
 }
 
 const image_tags_aggregate_possibleTypes = ['image_tags_aggregate']
@@ -4710,84 +5249,6 @@ export const isimages_variance_fields = (obj: { __typename: String }): obj is im
   return images_variance_fields_possibleTypes.includes(obj.__typename)
 }
 
-const members_possibleTypes = ['members']
-export const ismembers = (obj: { __typename: String }): obj is members => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return members_possibleTypes.includes(obj.__typename)
-}
-
-const members_aggregate_possibleTypes = ['members_aggregate']
-export const ismembers_aggregate = (obj: { __typename: String }): obj is members_aggregate => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return members_aggregate_possibleTypes.includes(obj.__typename)
-}
-
-const members_aggregate_fields_possibleTypes = ['members_aggregate_fields']
-export const ismembers_aggregate_fields = (obj: { __typename: String }): obj is members_aggregate_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return members_aggregate_fields_possibleTypes.includes(obj.__typename)
-}
-
-const members_avg_fields_possibleTypes = ['members_avg_fields']
-export const ismembers_avg_fields = (obj: { __typename: String }): obj is members_avg_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return members_avg_fields_possibleTypes.includes(obj.__typename)
-}
-
-const members_max_fields_possibleTypes = ['members_max_fields']
-export const ismembers_max_fields = (obj: { __typename: String }): obj is members_max_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return members_max_fields_possibleTypes.includes(obj.__typename)
-}
-
-const members_min_fields_possibleTypes = ['members_min_fields']
-export const ismembers_min_fields = (obj: { __typename: String }): obj is members_min_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return members_min_fields_possibleTypes.includes(obj.__typename)
-}
-
-const members_stddev_fields_possibleTypes = ['members_stddev_fields']
-export const ismembers_stddev_fields = (obj: { __typename: String }): obj is members_stddev_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return members_stddev_fields_possibleTypes.includes(obj.__typename)
-}
-
-const members_stddev_pop_fields_possibleTypes = ['members_stddev_pop_fields']
-export const ismembers_stddev_pop_fields = (obj: { __typename: String }): obj is members_stddev_pop_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return members_stddev_pop_fields_possibleTypes.includes(obj.__typename)
-}
-
-const members_stddev_samp_fields_possibleTypes = ['members_stddev_samp_fields']
-export const ismembers_stddev_samp_fields = (obj: { __typename: String }): obj is members_stddev_samp_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return members_stddev_samp_fields_possibleTypes.includes(obj.__typename)
-}
-
-const members_sum_fields_possibleTypes = ['members_sum_fields']
-export const ismembers_sum_fields = (obj: { __typename: String }): obj is members_sum_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return members_sum_fields_possibleTypes.includes(obj.__typename)
-}
-
-const members_var_pop_fields_possibleTypes = ['members_var_pop_fields']
-export const ismembers_var_pop_fields = (obj: { __typename: String }): obj is members_var_pop_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return members_var_pop_fields_possibleTypes.includes(obj.__typename)
-}
-
-const members_var_samp_fields_possibleTypes = ['members_var_samp_fields']
-export const ismembers_var_samp_fields = (obj: { __typename: String }): obj is members_var_samp_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return members_var_samp_fields_possibleTypes.includes(obj.__typename)
-}
-
-const members_variance_fields_possibleTypes = ['members_variance_fields']
-export const ismembers_variance_fields = (obj: { __typename: String }): obj is members_variance_fields => {
-  if (!obj.__typename) throw new Error('__typename is missing')
-  return members_variance_fields_possibleTypes.includes(obj.__typename)
-}
-
 const guilds_aggregate_possibleTypes = ['guilds_aggregate']
 export const isguilds_aggregate = (obj: { __typename: String }): obj is guilds_aggregate => {
   if (!obj.__typename) throw new Error('__typename is missing')
@@ -4810,6 +5271,36 @@ const guilds_min_fields_possibleTypes = ['guilds_min_fields']
 export const isguilds_min_fields = (obj: { __typename: String }): obj is guilds_min_fields => {
   if (!obj.__typename) throw new Error('__typename is missing')
   return guilds_min_fields_possibleTypes.includes(obj.__typename)
+}
+
+const tag_categories_possibleTypes = ['tag_categories']
+export const istag_categories = (obj: { __typename: String }): obj is tag_categories => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return tag_categories_possibleTypes.includes(obj.__typename)
+}
+
+const tag_categories_aggregate_possibleTypes = ['tag_categories_aggregate']
+export const istag_categories_aggregate = (obj: { __typename: String }): obj is tag_categories_aggregate => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return tag_categories_aggregate_possibleTypes.includes(obj.__typename)
+}
+
+const tag_categories_aggregate_fields_possibleTypes = ['tag_categories_aggregate_fields']
+export const istag_categories_aggregate_fields = (obj: { __typename: String }): obj is tag_categories_aggregate_fields => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return tag_categories_aggregate_fields_possibleTypes.includes(obj.__typename)
+}
+
+const tag_categories_max_fields_possibleTypes = ['tag_categories_max_fields']
+export const istag_categories_max_fields = (obj: { __typename: String }): obj is tag_categories_max_fields => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return tag_categories_max_fields_possibleTypes.includes(obj.__typename)
+}
+
+const tag_categories_min_fields_possibleTypes = ['tag_categories_min_fields']
+export const istag_categories_min_fields = (obj: { __typename: String }): obj is tag_categories_min_fields => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return tag_categories_min_fields_possibleTypes.includes(obj.__typename)
 }
 
 const tag_counts_possibleTypes = ['tag_counts']
@@ -4890,28 +5381,34 @@ export const istag_counts_variance_fields = (obj: { __typename: String }): obj i
   return tag_counts_variance_fields_possibleTypes.includes(obj.__typename)
 }
 
-const users_aggregate_possibleTypes = ['users_aggregate']
-export const isusers_aggregate = (obj: { __typename: String }): obj is users_aggregate => {
+const tags_possibleTypes = ['tags']
+export const istags = (obj: { __typename: String }): obj is tags => {
   if (!obj.__typename) throw new Error('__typename is missing')
-  return users_aggregate_possibleTypes.includes(obj.__typename)
+  return tags_possibleTypes.includes(obj.__typename)
 }
 
-const users_aggregate_fields_possibleTypes = ['users_aggregate_fields']
-export const isusers_aggregate_fields = (obj: { __typename: String }): obj is users_aggregate_fields => {
+const tags_aggregate_possibleTypes = ['tags_aggregate']
+export const istags_aggregate = (obj: { __typename: String }): obj is tags_aggregate => {
   if (!obj.__typename) throw new Error('__typename is missing')
-  return users_aggregate_fields_possibleTypes.includes(obj.__typename)
+  return tags_aggregate_possibleTypes.includes(obj.__typename)
 }
 
-const users_max_fields_possibleTypes = ['users_max_fields']
-export const isusers_max_fields = (obj: { __typename: String }): obj is users_max_fields => {
+const tags_aggregate_fields_possibleTypes = ['tags_aggregate_fields']
+export const istags_aggregate_fields = (obj: { __typename: String }): obj is tags_aggregate_fields => {
   if (!obj.__typename) throw new Error('__typename is missing')
-  return users_max_fields_possibleTypes.includes(obj.__typename)
+  return tags_aggregate_fields_possibleTypes.includes(obj.__typename)
 }
 
-const users_min_fields_possibleTypes = ['users_min_fields']
-export const isusers_min_fields = (obj: { __typename: String }): obj is users_min_fields => {
+const tags_max_fields_possibleTypes = ['tags_max_fields']
+export const istags_max_fields = (obj: { __typename: String }): obj is tags_max_fields => {
   if (!obj.__typename) throw new Error('__typename is missing')
-  return users_min_fields_possibleTypes.includes(obj.__typename)
+  return tags_max_fields_possibleTypes.includes(obj.__typename)
+}
+
+const tags_min_fields_possibleTypes = ['tags_min_fields']
+export const istags_min_fields = (obj: { __typename: String }): obj is tags_min_fields => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return tags_min_fields_possibleTypes.includes(obj.__typename)
 }
 
 const mutation_root_possibleTypes = ['mutation_root']
@@ -4956,10 +5453,22 @@ export const ismembers_mutation_response = (obj: { __typename: String }): obj is
   return members_mutation_response_possibleTypes.includes(obj.__typename)
 }
 
+const tag_categories_mutation_response_possibleTypes = ['tag_categories_mutation_response']
+export const istag_categories_mutation_response = (obj: { __typename: String }): obj is tag_categories_mutation_response => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return tag_categories_mutation_response_possibleTypes.includes(obj.__typename)
+}
+
 const tag_counts_mutation_response_possibleTypes = ['tag_counts_mutation_response']
 export const istag_counts_mutation_response = (obj: { __typename: String }): obj is tag_counts_mutation_response => {
   if (!obj.__typename) throw new Error('__typename is missing')
   return tag_counts_mutation_response_possibleTypes.includes(obj.__typename)
+}
+
+const tags_mutation_response_possibleTypes = ['tags_mutation_response']
+export const istags_mutation_response = (obj: { __typename: String }): obj is tags_mutation_response => {
+  if (!obj.__typename) throw new Error('__typename is missing')
+  return tags_mutation_response_possibleTypes.includes(obj.__typename)
 }
 
 const users_mutation_response_possibleTypes = ['users_mutation_response']
@@ -5202,7 +5711,8 @@ export interface query_rootPromiseChain {
     })
   /** fetch data from the table: "members" using primary key columns */
   members_by_pk: (args: {
-    id: Int
+    guild_id: String
+    user_id: String
   }) => membersPromiseChain & {
     execute: (request: membersRequest, defaultValue?: members | null) => Promise<members | null>
   }
@@ -5269,6 +5779,50 @@ export interface query_rootPromiseChain {
     where?: images_bool_exp | null
   }) => images_aggregatePromiseChain & {
     execute: (request: images_aggregateRequest, defaultValue?: images_aggregate) => Promise<images_aggregate>
+  }
+  /** fetch data from the table: "tag_categories" */
+  tag_categories: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tag_categories_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tag_categories_order_by[] | null
+    /** filter the rows returned */
+    where?: tag_categories_bool_exp | null
+  }) => { execute: (request: tag_categoriesRequest, defaultValue?: tag_categories[]) => Promise<tag_categories[]> }) &
+    ({ execute: (request: tag_categoriesRequest, defaultValue?: tag_categories[]) => Promise<tag_categories[]> })
+  /** fetch aggregated fields from the table: "tag_categories" */
+  tag_categories_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tag_categories_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tag_categories_order_by[] | null
+    /** filter the rows returned */
+    where?: tag_categories_bool_exp | null
+  }) => tag_categories_aggregatePromiseChain & {
+    execute: (
+      request: tag_categories_aggregateRequest,
+      defaultValue?: tag_categories_aggregate,
+    ) => Promise<tag_categories_aggregate>
+  }) &
+    (tag_categories_aggregatePromiseChain & {
+      execute: (
+        request: tag_categories_aggregateRequest,
+        defaultValue?: tag_categories_aggregate,
+      ) => Promise<tag_categories_aggregate>
+    })
+  /** fetch data from the table: "tag_categories" using primary key columns */
+  tag_categories_by_pk: (args: {
+    name: String
+  }) => tag_categoriesPromiseChain & {
+    execute: (request: tag_categoriesRequest, defaultValue?: tag_categories | null) => Promise<tag_categories | null>
   }
   /** execute function "tag_count" which returns "tag_counts" */
   tag_count: ((args?: {
@@ -5340,6 +5894,43 @@ export interface query_rootPromiseChain {
   }) => tag_countsPromiseChain & {
     execute: (request: tag_countsRequest, defaultValue?: tag_counts | null) => Promise<tag_counts | null>
   }
+  /** fetch data from the table: "tags" */
+  tags: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tags_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tags_order_by[] | null
+    /** filter the rows returned */
+    where?: tags_bool_exp | null
+  }) => { execute: (request: tagsRequest, defaultValue?: tags[]) => Promise<tags[]> }) &
+    ({ execute: (request: tagsRequest, defaultValue?: tags[]) => Promise<tags[]> })
+  /** fetch aggregated fields from the table: "tags" */
+  tags_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tags_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tags_order_by[] | null
+    /** filter the rows returned */
+    where?: tags_bool_exp | null
+  }) => tags_aggregatePromiseChain & {
+    execute: (request: tags_aggregateRequest, defaultValue?: tags_aggregate) => Promise<tags_aggregate>
+  }) &
+    (tags_aggregatePromiseChain & {
+      execute: (request: tags_aggregateRequest, defaultValue?: tags_aggregate) => Promise<tags_aggregate>
+    })
+  /** fetch data from the table: "tags" using primary key columns */
+  tags_by_pk: (args: {
+    guild_id: String
+    name: String
+  }) => tagsPromiseChain & { execute: (request: tagsRequest, defaultValue?: tags | null) => Promise<tags | null> }
   /** fetch data from the table: "users" */
   users: ((args?: {
     /** distinct select on columns */
@@ -5613,7 +6204,8 @@ export interface query_rootObservableChain {
     })
   /** fetch data from the table: "members" using primary key columns */
   members_by_pk: (args: {
-    id: Int
+    guild_id: String
+    user_id: String
   }) => membersObservableChain & {
     execute: (request: membersRequest, defaultValue?: members | null) => Observable<members | null>
   }
@@ -5680,6 +6272,50 @@ export interface query_rootObservableChain {
     where?: images_bool_exp | null
   }) => images_aggregateObservableChain & {
     execute: (request: images_aggregateRequest, defaultValue?: images_aggregate) => Observable<images_aggregate>
+  }
+  /** fetch data from the table: "tag_categories" */
+  tag_categories: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tag_categories_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tag_categories_order_by[] | null
+    /** filter the rows returned */
+    where?: tag_categories_bool_exp | null
+  }) => { execute: (request: tag_categoriesRequest, defaultValue?: tag_categories[]) => Observable<tag_categories[]> }) &
+    ({ execute: (request: tag_categoriesRequest, defaultValue?: tag_categories[]) => Observable<tag_categories[]> })
+  /** fetch aggregated fields from the table: "tag_categories" */
+  tag_categories_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tag_categories_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tag_categories_order_by[] | null
+    /** filter the rows returned */
+    where?: tag_categories_bool_exp | null
+  }) => tag_categories_aggregateObservableChain & {
+    execute: (
+      request: tag_categories_aggregateRequest,
+      defaultValue?: tag_categories_aggregate,
+    ) => Observable<tag_categories_aggregate>
+  }) &
+    (tag_categories_aggregateObservableChain & {
+      execute: (
+        request: tag_categories_aggregateRequest,
+        defaultValue?: tag_categories_aggregate,
+      ) => Observable<tag_categories_aggregate>
+    })
+  /** fetch data from the table: "tag_categories" using primary key columns */
+  tag_categories_by_pk: (args: {
+    name: String
+  }) => tag_categoriesObservableChain & {
+    execute: (request: tag_categoriesRequest, defaultValue?: tag_categories | null) => Observable<tag_categories | null>
   }
   /** execute function "tag_count" which returns "tag_counts" */
   tag_count: ((args?: {
@@ -5757,6 +6393,43 @@ export interface query_rootObservableChain {
   }) => tag_countsObservableChain & {
     execute: (request: tag_countsRequest, defaultValue?: tag_counts | null) => Observable<tag_counts | null>
   }
+  /** fetch data from the table: "tags" */
+  tags: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tags_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tags_order_by[] | null
+    /** filter the rows returned */
+    where?: tags_bool_exp | null
+  }) => { execute: (request: tagsRequest, defaultValue?: tags[]) => Observable<tags[]> }) &
+    ({ execute: (request: tagsRequest, defaultValue?: tags[]) => Observable<tags[]> })
+  /** fetch aggregated fields from the table: "tags" */
+  tags_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tags_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tags_order_by[] | null
+    /** filter the rows returned */
+    where?: tags_bool_exp | null
+  }) => tags_aggregateObservableChain & {
+    execute: (request: tags_aggregateRequest, defaultValue?: tags_aggregate) => Observable<tags_aggregate>
+  }) &
+    (tags_aggregateObservableChain & {
+      execute: (request: tags_aggregateRequest, defaultValue?: tags_aggregate) => Observable<tags_aggregate>
+    })
+  /** fetch data from the table: "tags" using primary key columns */
+  tags_by_pk: (args: {
+    guild_id: String
+    name: String
+  }) => tagsObservableChain & { execute: (request: tagsRequest, defaultValue?: tags | null) => Observable<tags | null> }
   /** fetch data from the table: "users" */
   users: ((args?: {
     /** distinct select on columns */
@@ -6173,7 +6846,40 @@ export interface auto_tags_variance_fieldsObservableChain {
 
 /** columns and relationships of "guilds" */
 export interface guildsPromiseChain {
+  banner: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   enabled: { execute: (request?: boolean | number, defaultValue?: Boolean | null) => Promise<Boolean | null> }
+  /** An array relationship */
+  fans: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: users_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: users_order_by[] | null
+    /** filter the rows returned */
+    where?: users_bool_exp | null
+  }) => { execute: (request: usersRequest, defaultValue?: users[]) => Promise<users[]> }) &
+    ({ execute: (request: usersRequest, defaultValue?: users[]) => Promise<users[]> })
+  /** An aggregated array relationship */
+  fans_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: users_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: users_order_by[] | null
+    /** filter the rows returned */
+    where?: users_bool_exp | null
+  }) => users_aggregatePromiseChain & {
+    execute: (request: users_aggregateRequest, defaultValue?: users_aggregate) => Promise<users_aggregate>
+  }) &
+    (users_aggregatePromiseChain & {
+      execute: (request: users_aggregateRequest, defaultValue?: users_aggregate) => Promise<users_aggregate>
+    })
   guild_id: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
   icon: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   /** An array relationship */
@@ -6246,6 +6952,7 @@ export interface guildsPromiseChain {
     (images_aggregatePromiseChain & {
       execute: (request: images_aggregateRequest, defaultValue?: images_aggregate) => Promise<images_aggregate>
     })
+  joined_at: { execute: (request?: boolean | number, defaultValue?: date) => Promise<date> }
   /** An array relationship */
   members: ((args?: {
     /** distinct select on columns */
@@ -6284,7 +6991,40 @@ export interface guildsPromiseChain {
 
 /** columns and relationships of "guilds" */
 export interface guildsObservableChain {
+  banner: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   enabled: { execute: (request?: boolean | number, defaultValue?: Boolean | null) => Observable<Boolean | null> }
+  /** An array relationship */
+  fans: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: users_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: users_order_by[] | null
+    /** filter the rows returned */
+    where?: users_bool_exp | null
+  }) => { execute: (request: usersRequest, defaultValue?: users[]) => Observable<users[]> }) &
+    ({ execute: (request: usersRequest, defaultValue?: users[]) => Observable<users[]> })
+  /** An aggregated array relationship */
+  fans_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: users_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: users_order_by[] | null
+    /** filter the rows returned */
+    where?: users_bool_exp | null
+  }) => users_aggregateObservableChain & {
+    execute: (request: users_aggregateRequest, defaultValue?: users_aggregate) => Observable<users_aggregate>
+  }) &
+    (users_aggregateObservableChain & {
+      execute: (request: users_aggregateRequest, defaultValue?: users_aggregate) => Observable<users_aggregate>
+    })
   guild_id: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
   icon: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   /** An array relationship */
@@ -6357,6 +7097,7 @@ export interface guildsObservableChain {
     (images_aggregateObservableChain & {
       execute: (request: images_aggregateRequest, defaultValue?: images_aggregate) => Observable<images_aggregate>
     })
+  joined_at: { execute: (request?: boolean | number, defaultValue?: date) => Observable<date> }
   /** An array relationship */
   members: ((args?: {
     /** distinct select on columns */
@@ -6391,6 +7132,170 @@ export interface guildsObservableChain {
     })
   name: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
   welcome_channel: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+}
+
+/** columns and relationships of "users" */
+export interface usersPromiseChain {
+  avatar: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  /** An object relationship */
+  favorite_guild: guildsPromiseChain & {
+    execute: (request: guildsRequest, defaultValue?: guilds | null) => Promise<guilds | null>
+  }
+  favorite_guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  /** An array relationship */
+  image_channels: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: image_channels_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: image_channels_order_by[] | null
+    /** filter the rows returned */
+    where?: image_channels_bool_exp | null
+  }) => { execute: (request: image_channelsRequest, defaultValue?: image_channels[]) => Promise<image_channels[]> }) &
+    ({ execute: (request: image_channelsRequest, defaultValue?: image_channels[]) => Promise<image_channels[]> })
+  /** An aggregated array relationship */
+  image_channels_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: image_channels_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: image_channels_order_by[] | null
+    /** filter the rows returned */
+    where?: image_channels_bool_exp | null
+  }) => image_channels_aggregatePromiseChain & {
+    execute: (
+      request: image_channels_aggregateRequest,
+      defaultValue?: image_channels_aggregate,
+    ) => Promise<image_channels_aggregate>
+  }) &
+    (image_channels_aggregatePromiseChain & {
+      execute: (
+        request: image_channels_aggregateRequest,
+        defaultValue?: image_channels_aggregate,
+      ) => Promise<image_channels_aggregate>
+    })
+  /** An array relationship */
+  members: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: members_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: members_order_by[] | null
+    /** filter the rows returned */
+    where?: members_bool_exp | null
+  }) => { execute: (request: membersRequest, defaultValue?: members[]) => Promise<members[]> }) &
+    ({ execute: (request: membersRequest, defaultValue?: members[]) => Promise<members[]> })
+  /** An aggregated array relationship */
+  members_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: members_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: members_order_by[] | null
+    /** filter the rows returned */
+    where?: members_bool_exp | null
+  }) => members_aggregatePromiseChain & {
+    execute: (request: members_aggregateRequest, defaultValue?: members_aggregate) => Promise<members_aggregate>
+  }) &
+    (members_aggregatePromiseChain & {
+      execute: (request: members_aggregateRequest, defaultValue?: members_aggregate) => Promise<members_aggregate>
+    })
+  name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  user_id: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
+}
+
+/** columns and relationships of "users" */
+export interface usersObservableChain {
+  avatar: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  /** An object relationship */
+  favorite_guild: guildsObservableChain & {
+    execute: (request: guildsRequest, defaultValue?: guilds | null) => Observable<guilds | null>
+  }
+  favorite_guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  /** An array relationship */
+  image_channels: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: image_channels_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: image_channels_order_by[] | null
+    /** filter the rows returned */
+    where?: image_channels_bool_exp | null
+  }) => { execute: (request: image_channelsRequest, defaultValue?: image_channels[]) => Observable<image_channels[]> }) &
+    ({ execute: (request: image_channelsRequest, defaultValue?: image_channels[]) => Observable<image_channels[]> })
+  /** An aggregated array relationship */
+  image_channels_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: image_channels_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: image_channels_order_by[] | null
+    /** filter the rows returned */
+    where?: image_channels_bool_exp | null
+  }) => image_channels_aggregateObservableChain & {
+    execute: (
+      request: image_channels_aggregateRequest,
+      defaultValue?: image_channels_aggregate,
+    ) => Observable<image_channels_aggregate>
+  }) &
+    (image_channels_aggregateObservableChain & {
+      execute: (
+        request: image_channels_aggregateRequest,
+        defaultValue?: image_channels_aggregate,
+      ) => Observable<image_channels_aggregate>
+    })
+  /** An array relationship */
+  members: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: members_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: members_order_by[] | null
+    /** filter the rows returned */
+    where?: members_bool_exp | null
+  }) => { execute: (request: membersRequest, defaultValue?: members[]) => Observable<members[]> }) &
+    ({ execute: (request: membersRequest, defaultValue?: members[]) => Observable<members[]> })
+  /** An aggregated array relationship */
+  members_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: members_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: members_order_by[] | null
+    /** filter the rows returned */
+    where?: members_bool_exp | null
+  }) => members_aggregateObservableChain & {
+    execute: (request: members_aggregateRequest, defaultValue?: members_aggregate) => Observable<members_aggregate>
+  }) &
+    (members_aggregateObservableChain & {
+      execute: (request: members_aggregateRequest, defaultValue?: members_aggregate) => Observable<members_aggregate>
+    })
+  name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  user_id: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
 }
 
 /** aggregated selection of "image_channels" */
@@ -6485,6 +7390,204 @@ export interface image_channels_min_fieldsObservableChain {
   guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
 }
 
+/** columns and relationships of "members" */
+export interface membersPromiseChain {
+  /** An object relationship */
+  guild: guildsPromiseChain & { execute: (request: guildsRequest, defaultValue?: guilds) => Promise<guilds> }
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
+  /** An object relationship */
+  user: usersPromiseChain & { execute: (request: usersRequest, defaultValue?: users) => Promise<users> }
+  user_id: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
+}
+
+/** columns and relationships of "members" */
+export interface membersObservableChain {
+  /** An object relationship */
+  guild: guildsObservableChain & { execute: (request: guildsRequest, defaultValue?: guilds) => Observable<guilds> }
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
+  /** An object relationship */
+  user: usersObservableChain & { execute: (request: usersRequest, defaultValue?: users) => Observable<users> }
+  user_id: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
+}
+
+/** aggregated selection of "members" */
+export interface members_aggregatePromiseChain {
+  aggregate: members_aggregate_fieldsPromiseChain & {
+    execute: (
+      request: members_aggregate_fieldsRequest,
+      defaultValue?: members_aggregate_fields | null,
+    ) => Promise<members_aggregate_fields | null>
+  }
+  nodes: { execute: (request: membersRequest, defaultValue?: members[]) => Promise<members[]> }
+}
+
+/** aggregated selection of "members" */
+export interface members_aggregateObservableChain {
+  aggregate: members_aggregate_fieldsObservableChain & {
+    execute: (
+      request: members_aggregate_fieldsRequest,
+      defaultValue?: members_aggregate_fields | null,
+    ) => Observable<members_aggregate_fields | null>
+  }
+  nodes: { execute: (request: membersRequest, defaultValue?: members[]) => Observable<members[]> }
+}
+
+/** aggregate fields of "members" */
+export interface members_aggregate_fieldsPromiseChain {
+  count: ((args?: {
+    columns?: members_select_column[] | null
+    distinct?: Boolean | null
+  }) => { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }) &
+    ({ execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> })
+  max: members_max_fieldsPromiseChain & {
+    execute: (
+      request: members_max_fieldsRequest,
+      defaultValue?: members_max_fields | null,
+    ) => Promise<members_max_fields | null>
+  }
+  min: members_min_fieldsPromiseChain & {
+    execute: (
+      request: members_min_fieldsRequest,
+      defaultValue?: members_min_fields | null,
+    ) => Promise<members_min_fields | null>
+  }
+}
+
+/** aggregate fields of "members" */
+export interface members_aggregate_fieldsObservableChain {
+  count: ((args?: {
+    columns?: members_select_column[] | null
+    distinct?: Boolean | null
+  }) => { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }) &
+    ({ execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> })
+  max: members_max_fieldsObservableChain & {
+    execute: (
+      request: members_max_fieldsRequest,
+      defaultValue?: members_max_fields | null,
+    ) => Observable<members_max_fields | null>
+  }
+  min: members_min_fieldsObservableChain & {
+    execute: (
+      request: members_min_fieldsRequest,
+      defaultValue?: members_min_fields | null,
+    ) => Observable<members_min_fields | null>
+  }
+}
+
+/** aggregate max on columns */
+export interface members_max_fieldsPromiseChain {
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+}
+
+/** aggregate max on columns */
+export interface members_max_fieldsObservableChain {
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+}
+
+/** aggregate min on columns */
+export interface members_min_fieldsPromiseChain {
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+}
+
+/** aggregate min on columns */
+export interface members_min_fieldsObservableChain {
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+}
+
+/** aggregated selection of "users" */
+export interface users_aggregatePromiseChain {
+  aggregate: users_aggregate_fieldsPromiseChain & {
+    execute: (
+      request: users_aggregate_fieldsRequest,
+      defaultValue?: users_aggregate_fields | null,
+    ) => Promise<users_aggregate_fields | null>
+  }
+  nodes: { execute: (request: usersRequest, defaultValue?: users[]) => Promise<users[]> }
+}
+
+/** aggregated selection of "users" */
+export interface users_aggregateObservableChain {
+  aggregate: users_aggregate_fieldsObservableChain & {
+    execute: (
+      request: users_aggregate_fieldsRequest,
+      defaultValue?: users_aggregate_fields | null,
+    ) => Observable<users_aggregate_fields | null>
+  }
+  nodes: { execute: (request: usersRequest, defaultValue?: users[]) => Observable<users[]> }
+}
+
+/** aggregate fields of "users" */
+export interface users_aggregate_fieldsPromiseChain {
+  count: ((args?: {
+    columns?: users_select_column[] | null
+    distinct?: Boolean | null
+  }) => { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }) &
+    ({ execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> })
+  max: users_max_fieldsPromiseChain & {
+    execute: (request: users_max_fieldsRequest, defaultValue?: users_max_fields | null) => Promise<users_max_fields | null>
+  }
+  min: users_min_fieldsPromiseChain & {
+    execute: (request: users_min_fieldsRequest, defaultValue?: users_min_fields | null) => Promise<users_min_fields | null>
+  }
+}
+
+/** aggregate fields of "users" */
+export interface users_aggregate_fieldsObservableChain {
+  count: ((args?: {
+    columns?: users_select_column[] | null
+    distinct?: Boolean | null
+  }) => { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }) &
+    ({ execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> })
+  max: users_max_fieldsObservableChain & {
+    execute: (
+      request: users_max_fieldsRequest,
+      defaultValue?: users_max_fields | null,
+    ) => Observable<users_max_fields | null>
+  }
+  min: users_min_fieldsObservableChain & {
+    execute: (
+      request: users_min_fieldsRequest,
+      defaultValue?: users_min_fields | null,
+    ) => Observable<users_min_fields | null>
+  }
+}
+
+/** aggregate max on columns */
+export interface users_max_fieldsPromiseChain {
+  avatar: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  favorite_guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+}
+
+/** aggregate max on columns */
+export interface users_max_fieldsObservableChain {
+  avatar: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  favorite_guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+}
+
+/** aggregate min on columns */
+export interface users_min_fieldsPromiseChain {
+  avatar: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  favorite_guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+}
+
+/** aggregate min on columns */
+export interface users_min_fieldsObservableChain {
+  avatar: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  favorite_guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+}
+
 /** columns and relationships of "images" */
 export interface imagesPromiseChain {
   created_at: { execute: (request?: boolean | number, defaultValue?: timestamptz) => Promise<timestamptz> }
@@ -6525,12 +7628,10 @@ export interface imagesPromiseChain {
     (image_tags_aggregatePromiseChain & {
       execute: (request: image_tags_aggregateRequest, defaultValue?: image_tags_aggregate) => Promise<image_tags_aggregate>
     })
+  member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   message_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   public: { execute: (request?: boolean | number, defaultValue?: Boolean) => Promise<Boolean> }
   url: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
-  /** An object relationship */
-  user: usersPromiseChain & { execute: (request: usersRequest, defaultValue?: users | null) => Promise<users | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
 }
 
 /** columns and relationships of "images" */
@@ -6578,321 +7679,40 @@ export interface imagesObservableChain {
         defaultValue?: image_tags_aggregate,
       ) => Observable<image_tags_aggregate>
     })
+  member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   message_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   public: { execute: (request?: boolean | number, defaultValue?: Boolean) => Observable<Boolean> }
   url: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
-  /** An object relationship */
-  user: usersObservableChain & { execute: (request: usersRequest, defaultValue?: users | null) => Observable<users | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
 }
 
 /** columns and relationships of "image_tags" */
 export interface image_tagsPromiseChain {
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Int) => Promise<Int> }
   /** An object relationship */
   image: imagesPromiseChain & { execute: (request: imagesRequest, defaultValue?: images) => Promise<images> }
   image_id: { execute: (request?: boolean | number, defaultValue?: Int) => Promise<Int> }
-  name: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
-  tagger_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   /** An object relationship */
-  user: usersPromiseChain & { execute: (request: usersRequest, defaultValue?: users | null) => Promise<users | null> }
+  member: membersPromiseChain & {
+    execute: (request: membersRequest, defaultValue?: members | null) => Promise<members | null>
+  }
+  member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  name: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
 }
 
 /** columns and relationships of "image_tags" */
 export interface image_tagsObservableChain {
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Int) => Observable<Int> }
   /** An object relationship */
   image: imagesObservableChain & { execute: (request: imagesRequest, defaultValue?: images) => Observable<images> }
   image_id: { execute: (request?: boolean | number, defaultValue?: Int) => Observable<Int> }
-  name: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
-  tagger_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   /** An object relationship */
-  user: usersObservableChain & { execute: (request: usersRequest, defaultValue?: users | null) => Observable<users | null> }
-}
-
-/** columns and relationships of "users" */
-export interface usersPromiseChain {
-  avatar: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
-  /** An array relationship */
-  image_channels: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: image_channels_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: image_channels_order_by[] | null
-    /** filter the rows returned */
-    where?: image_channels_bool_exp | null
-  }) => { execute: (request: image_channelsRequest, defaultValue?: image_channels[]) => Promise<image_channels[]> }) &
-    ({ execute: (request: image_channelsRequest, defaultValue?: image_channels[]) => Promise<image_channels[]> })
-  /** An aggregated array relationship */
-  image_channels_aggregate: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: image_channels_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: image_channels_order_by[] | null
-    /** filter the rows returned */
-    where?: image_channels_bool_exp | null
-  }) => image_channels_aggregatePromiseChain & {
-    execute: (
-      request: image_channels_aggregateRequest,
-      defaultValue?: image_channels_aggregate,
-    ) => Promise<image_channels_aggregate>
-  }) &
-    (image_channels_aggregatePromiseChain & {
-      execute: (
-        request: image_channels_aggregateRequest,
-        defaultValue?: image_channels_aggregate,
-      ) => Promise<image_channels_aggregate>
-    })
-  /** An array relationship */
-  image_tags: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: image_tags_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: image_tags_order_by[] | null
-    /** filter the rows returned */
-    where?: image_tags_bool_exp | null
-  }) => { execute: (request: image_tagsRequest, defaultValue?: image_tags[]) => Promise<image_tags[]> }) &
-    ({ execute: (request: image_tagsRequest, defaultValue?: image_tags[]) => Promise<image_tags[]> })
-  /** An aggregated array relationship */
-  image_tags_aggregate: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: image_tags_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: image_tags_order_by[] | null
-    /** filter the rows returned */
-    where?: image_tags_bool_exp | null
-  }) => image_tags_aggregatePromiseChain & {
-    execute: (request: image_tags_aggregateRequest, defaultValue?: image_tags_aggregate) => Promise<image_tags_aggregate>
-  }) &
-    (image_tags_aggregatePromiseChain & {
-      execute: (request: image_tags_aggregateRequest, defaultValue?: image_tags_aggregate) => Promise<image_tags_aggregate>
-    })
-  /** An array relationship */
-  images: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: images_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: images_order_by[] | null
-    /** filter the rows returned */
-    where?: images_bool_exp | null
-  }) => { execute: (request: imagesRequest, defaultValue?: images[]) => Promise<images[]> }) &
-    ({ execute: (request: imagesRequest, defaultValue?: images[]) => Promise<images[]> })
-  /** An aggregated array relationship */
-  images_aggregate: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: images_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: images_order_by[] | null
-    /** filter the rows returned */
-    where?: images_bool_exp | null
-  }) => images_aggregatePromiseChain & {
-    execute: (request: images_aggregateRequest, defaultValue?: images_aggregate) => Promise<images_aggregate>
-  }) &
-    (images_aggregatePromiseChain & {
-      execute: (request: images_aggregateRequest, defaultValue?: images_aggregate) => Promise<images_aggregate>
-    })
-  /** An array relationship */
-  members: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: members_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: members_order_by[] | null
-    /** filter the rows returned */
-    where?: members_bool_exp | null
-  }) => { execute: (request: membersRequest, defaultValue?: members[]) => Promise<members[]> }) &
-    ({ execute: (request: membersRequest, defaultValue?: members[]) => Promise<members[]> })
-  /** An aggregated array relationship */
-  members_aggregate: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: members_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: members_order_by[] | null
-    /** filter the rows returned */
-    where?: members_bool_exp | null
-  }) => members_aggregatePromiseChain & {
-    execute: (request: members_aggregateRequest, defaultValue?: members_aggregate) => Promise<members_aggregate>
-  }) &
-    (members_aggregatePromiseChain & {
-      execute: (request: members_aggregateRequest, defaultValue?: members_aggregate) => Promise<members_aggregate>
-    })
-  name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
-}
-
-/** columns and relationships of "users" */
-export interface usersObservableChain {
-  avatar: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
-  /** An array relationship */
-  image_channels: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: image_channels_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: image_channels_order_by[] | null
-    /** filter the rows returned */
-    where?: image_channels_bool_exp | null
-  }) => { execute: (request: image_channelsRequest, defaultValue?: image_channels[]) => Observable<image_channels[]> }) &
-    ({ execute: (request: image_channelsRequest, defaultValue?: image_channels[]) => Observable<image_channels[]> })
-  /** An aggregated array relationship */
-  image_channels_aggregate: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: image_channels_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: image_channels_order_by[] | null
-    /** filter the rows returned */
-    where?: image_channels_bool_exp | null
-  }) => image_channels_aggregateObservableChain & {
-    execute: (
-      request: image_channels_aggregateRequest,
-      defaultValue?: image_channels_aggregate,
-    ) => Observable<image_channels_aggregate>
-  }) &
-    (image_channels_aggregateObservableChain & {
-      execute: (
-        request: image_channels_aggregateRequest,
-        defaultValue?: image_channels_aggregate,
-      ) => Observable<image_channels_aggregate>
-    })
-  /** An array relationship */
-  image_tags: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: image_tags_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: image_tags_order_by[] | null
-    /** filter the rows returned */
-    where?: image_tags_bool_exp | null
-  }) => { execute: (request: image_tagsRequest, defaultValue?: image_tags[]) => Observable<image_tags[]> }) &
-    ({ execute: (request: image_tagsRequest, defaultValue?: image_tags[]) => Observable<image_tags[]> })
-  /** An aggregated array relationship */
-  image_tags_aggregate: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: image_tags_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: image_tags_order_by[] | null
-    /** filter the rows returned */
-    where?: image_tags_bool_exp | null
-  }) => image_tags_aggregateObservableChain & {
-    execute: (request: image_tags_aggregateRequest, defaultValue?: image_tags_aggregate) => Observable<image_tags_aggregate>
-  }) &
-    (image_tags_aggregateObservableChain & {
-      execute: (
-        request: image_tags_aggregateRequest,
-        defaultValue?: image_tags_aggregate,
-      ) => Observable<image_tags_aggregate>
-    })
-  /** An array relationship */
-  images: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: images_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: images_order_by[] | null
-    /** filter the rows returned */
-    where?: images_bool_exp | null
-  }) => { execute: (request: imagesRequest, defaultValue?: images[]) => Observable<images[]> }) &
-    ({ execute: (request: imagesRequest, defaultValue?: images[]) => Observable<images[]> })
-  /** An aggregated array relationship */
-  images_aggregate: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: images_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: images_order_by[] | null
-    /** filter the rows returned */
-    where?: images_bool_exp | null
-  }) => images_aggregateObservableChain & {
-    execute: (request: images_aggregateRequest, defaultValue?: images_aggregate) => Observable<images_aggregate>
-  }) &
-    (images_aggregateObservableChain & {
-      execute: (request: images_aggregateRequest, defaultValue?: images_aggregate) => Observable<images_aggregate>
-    })
-  /** An array relationship */
-  members: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: members_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: members_order_by[] | null
-    /** filter the rows returned */
-    where?: members_bool_exp | null
-  }) => { execute: (request: membersRequest, defaultValue?: members[]) => Observable<members[]> }) &
-    ({ execute: (request: membersRequest, defaultValue?: members[]) => Observable<members[]> })
-  /** An aggregated array relationship */
-  members_aggregate: ((args?: {
-    /** distinct select on columns */
-    distinct_on?: members_select_column[] | null
-    /** limit the nuber of rows returned */
-    limit?: Int | null
-    /** skip the first n rows. Use only with order_by */
-    offset?: Int | null
-    /** sort the rows by one or more columns */
-    order_by?: members_order_by[] | null
-    /** filter the rows returned */
-    where?: members_bool_exp | null
-  }) => members_aggregateObservableChain & {
-    execute: (request: members_aggregateRequest, defaultValue?: members_aggregate) => Observable<members_aggregate>
-  }) &
-    (members_aggregateObservableChain & {
-      execute: (request: members_aggregateRequest, defaultValue?: members_aggregate) => Observable<members_aggregate>
-    })
-  name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
+  member: membersObservableChain & {
+    execute: (request: membersRequest, defaultValue?: members | null) => Observable<members | null>
+  }
+  member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  name: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
 }
 
 /** aggregated selection of "image_tags" */
@@ -7069,34 +7889,38 @@ export interface image_tags_avg_fieldsObservableChain {
 
 /** aggregate max on columns */
 export interface image_tags_max_fieldsPromiseChain {
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
   image_id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
+  member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
-  tagger_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
 }
 
 /** aggregate max on columns */
 export interface image_tags_max_fieldsObservableChain {
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
   image_id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
+  member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
-  tagger_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
 }
 
 /** aggregate min on columns */
 export interface image_tags_min_fieldsPromiseChain {
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
   image_id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
+  member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
-  tagger_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
 }
 
 /** aggregate min on columns */
 export interface image_tags_min_fieldsObservableChain {
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
   image_id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
+  member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
-  tagger_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
 }
 
 /** aggregate stddev on columns */
@@ -7359,9 +8183,9 @@ export interface images_max_fieldsPromiseChain {
   file_name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
+  member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   message_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   url: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
 }
 
 /** aggregate max on columns */
@@ -7370,9 +8194,9 @@ export interface images_max_fieldsObservableChain {
   file_name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
+  member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   message_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   url: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
 }
 
 /** aggregate min on columns */
@@ -7381,9 +8205,9 @@ export interface images_min_fieldsPromiseChain {
   file_name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
+  member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   message_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   url: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
 }
 
 /** aggregate min on columns */
@@ -7392,9 +8216,9 @@ export interface images_min_fieldsObservableChain {
   file_name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
+  member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   message_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   url: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
 }
 
 /** aggregate stddev on columns */
@@ -7467,296 +8291,6 @@ export interface images_variance_fieldsObservableChain {
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
 }
 
-/** columns and relationships of "members" */
-export interface membersPromiseChain {
-  /** An object relationship */
-  guild: guildsPromiseChain & { execute: (request: guildsRequest, defaultValue?: guilds) => Promise<guilds> }
-  guild_id: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
-  id: { execute: (request?: boolean | number, defaultValue?: Int) => Promise<Int> }
-  /** An object relationship */
-  user: usersPromiseChain & { execute: (request: usersRequest, defaultValue?: users) => Promise<users> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
-}
-
-/** columns and relationships of "members" */
-export interface membersObservableChain {
-  /** An object relationship */
-  guild: guildsObservableChain & { execute: (request: guildsRequest, defaultValue?: guilds) => Observable<guilds> }
-  guild_id: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
-  id: { execute: (request?: boolean | number, defaultValue?: Int) => Observable<Int> }
-  /** An object relationship */
-  user: usersObservableChain & { execute: (request: usersRequest, defaultValue?: users) => Observable<users> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
-}
-
-/** aggregated selection of "members" */
-export interface members_aggregatePromiseChain {
-  aggregate: members_aggregate_fieldsPromiseChain & {
-    execute: (
-      request: members_aggregate_fieldsRequest,
-      defaultValue?: members_aggregate_fields | null,
-    ) => Promise<members_aggregate_fields | null>
-  }
-  nodes: { execute: (request: membersRequest, defaultValue?: members[]) => Promise<members[]> }
-}
-
-/** aggregated selection of "members" */
-export interface members_aggregateObservableChain {
-  aggregate: members_aggregate_fieldsObservableChain & {
-    execute: (
-      request: members_aggregate_fieldsRequest,
-      defaultValue?: members_aggregate_fields | null,
-    ) => Observable<members_aggregate_fields | null>
-  }
-  nodes: { execute: (request: membersRequest, defaultValue?: members[]) => Observable<members[]> }
-}
-
-/** aggregate fields of "members" */
-export interface members_aggregate_fieldsPromiseChain {
-  avg: members_avg_fieldsPromiseChain & {
-    execute: (
-      request: members_avg_fieldsRequest,
-      defaultValue?: members_avg_fields | null,
-    ) => Promise<members_avg_fields | null>
-  }
-  count: ((args?: {
-    columns?: members_select_column[] | null
-    distinct?: Boolean | null
-  }) => { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }) &
-    ({ execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> })
-  max: members_max_fieldsPromiseChain & {
-    execute: (
-      request: members_max_fieldsRequest,
-      defaultValue?: members_max_fields | null,
-    ) => Promise<members_max_fields | null>
-  }
-  min: members_min_fieldsPromiseChain & {
-    execute: (
-      request: members_min_fieldsRequest,
-      defaultValue?: members_min_fields | null,
-    ) => Promise<members_min_fields | null>
-  }
-  stddev: members_stddev_fieldsPromiseChain & {
-    execute: (
-      request: members_stddev_fieldsRequest,
-      defaultValue?: members_stddev_fields | null,
-    ) => Promise<members_stddev_fields | null>
-  }
-  stddev_pop: members_stddev_pop_fieldsPromiseChain & {
-    execute: (
-      request: members_stddev_pop_fieldsRequest,
-      defaultValue?: members_stddev_pop_fields | null,
-    ) => Promise<members_stddev_pop_fields | null>
-  }
-  stddev_samp: members_stddev_samp_fieldsPromiseChain & {
-    execute: (
-      request: members_stddev_samp_fieldsRequest,
-      defaultValue?: members_stddev_samp_fields | null,
-    ) => Promise<members_stddev_samp_fields | null>
-  }
-  sum: members_sum_fieldsPromiseChain & {
-    execute: (
-      request: members_sum_fieldsRequest,
-      defaultValue?: members_sum_fields | null,
-    ) => Promise<members_sum_fields | null>
-  }
-  var_pop: members_var_pop_fieldsPromiseChain & {
-    execute: (
-      request: members_var_pop_fieldsRequest,
-      defaultValue?: members_var_pop_fields | null,
-    ) => Promise<members_var_pop_fields | null>
-  }
-  var_samp: members_var_samp_fieldsPromiseChain & {
-    execute: (
-      request: members_var_samp_fieldsRequest,
-      defaultValue?: members_var_samp_fields | null,
-    ) => Promise<members_var_samp_fields | null>
-  }
-  variance: members_variance_fieldsPromiseChain & {
-    execute: (
-      request: members_variance_fieldsRequest,
-      defaultValue?: members_variance_fields | null,
-    ) => Promise<members_variance_fields | null>
-  }
-}
-
-/** aggregate fields of "members" */
-export interface members_aggregate_fieldsObservableChain {
-  avg: members_avg_fieldsObservableChain & {
-    execute: (
-      request: members_avg_fieldsRequest,
-      defaultValue?: members_avg_fields | null,
-    ) => Observable<members_avg_fields | null>
-  }
-  count: ((args?: {
-    columns?: members_select_column[] | null
-    distinct?: Boolean | null
-  }) => { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }) &
-    ({ execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> })
-  max: members_max_fieldsObservableChain & {
-    execute: (
-      request: members_max_fieldsRequest,
-      defaultValue?: members_max_fields | null,
-    ) => Observable<members_max_fields | null>
-  }
-  min: members_min_fieldsObservableChain & {
-    execute: (
-      request: members_min_fieldsRequest,
-      defaultValue?: members_min_fields | null,
-    ) => Observable<members_min_fields | null>
-  }
-  stddev: members_stddev_fieldsObservableChain & {
-    execute: (
-      request: members_stddev_fieldsRequest,
-      defaultValue?: members_stddev_fields | null,
-    ) => Observable<members_stddev_fields | null>
-  }
-  stddev_pop: members_stddev_pop_fieldsObservableChain & {
-    execute: (
-      request: members_stddev_pop_fieldsRequest,
-      defaultValue?: members_stddev_pop_fields | null,
-    ) => Observable<members_stddev_pop_fields | null>
-  }
-  stddev_samp: members_stddev_samp_fieldsObservableChain & {
-    execute: (
-      request: members_stddev_samp_fieldsRequest,
-      defaultValue?: members_stddev_samp_fields | null,
-    ) => Observable<members_stddev_samp_fields | null>
-  }
-  sum: members_sum_fieldsObservableChain & {
-    execute: (
-      request: members_sum_fieldsRequest,
-      defaultValue?: members_sum_fields | null,
-    ) => Observable<members_sum_fields | null>
-  }
-  var_pop: members_var_pop_fieldsObservableChain & {
-    execute: (
-      request: members_var_pop_fieldsRequest,
-      defaultValue?: members_var_pop_fields | null,
-    ) => Observable<members_var_pop_fields | null>
-  }
-  var_samp: members_var_samp_fieldsObservableChain & {
-    execute: (
-      request: members_var_samp_fieldsRequest,
-      defaultValue?: members_var_samp_fields | null,
-    ) => Observable<members_var_samp_fields | null>
-  }
-  variance: members_variance_fieldsObservableChain & {
-    execute: (
-      request: members_variance_fieldsRequest,
-      defaultValue?: members_variance_fields | null,
-    ) => Observable<members_variance_fields | null>
-  }
-}
-
-/** aggregate avg on columns */
-export interface members_avg_fieldsPromiseChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
-}
-
-/** aggregate avg on columns */
-export interface members_avg_fieldsObservableChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
-}
-
-/** aggregate max on columns */
-export interface members_max_fieldsPromiseChain {
-  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
-  id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
-}
-
-/** aggregate max on columns */
-export interface members_max_fieldsObservableChain {
-  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
-  id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
-}
-
-/** aggregate min on columns */
-export interface members_min_fieldsPromiseChain {
-  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
-  id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
-}
-
-/** aggregate min on columns */
-export interface members_min_fieldsObservableChain {
-  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
-  id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
-}
-
-/** aggregate stddev on columns */
-export interface members_stddev_fieldsPromiseChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
-}
-
-/** aggregate stddev on columns */
-export interface members_stddev_fieldsObservableChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
-}
-
-/** aggregate stddev_pop on columns */
-export interface members_stddev_pop_fieldsPromiseChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
-}
-
-/** aggregate stddev_pop on columns */
-export interface members_stddev_pop_fieldsObservableChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
-}
-
-/** aggregate stddev_samp on columns */
-export interface members_stddev_samp_fieldsPromiseChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
-}
-
-/** aggregate stddev_samp on columns */
-export interface members_stddev_samp_fieldsObservableChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
-}
-
-/** aggregate sum on columns */
-export interface members_sum_fieldsPromiseChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
-}
-
-/** aggregate sum on columns */
-export interface members_sum_fieldsObservableChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
-}
-
-/** aggregate var_pop on columns */
-export interface members_var_pop_fieldsPromiseChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
-}
-
-/** aggregate var_pop on columns */
-export interface members_var_pop_fieldsObservableChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
-}
-
-/** aggregate var_samp on columns */
-export interface members_var_samp_fieldsPromiseChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
-}
-
-/** aggregate var_samp on columns */
-export interface members_var_samp_fieldsObservableChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
-}
-
-/** aggregate variance on columns */
-export interface members_variance_fieldsPromiseChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
-}
-
-/** aggregate variance on columns */
-export interface members_variance_fieldsObservableChain {
-  id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
-}
-
 /** aggregated selection of "guilds" */
 export interface guilds_aggregatePromiseChain {
   aggregate: guilds_aggregate_fieldsPromiseChain & {
@@ -7823,34 +8357,148 @@ export interface guilds_aggregate_fieldsObservableChain {
 
 /** aggregate max on columns */
 export interface guilds_max_fieldsPromiseChain {
+  banner: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   icon: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  joined_at: { execute: (request?: boolean | number, defaultValue?: date | null) => Promise<date | null> }
   name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   welcome_channel: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
 }
 
 /** aggregate max on columns */
 export interface guilds_max_fieldsObservableChain {
+  banner: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   icon: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  joined_at: { execute: (request?: boolean | number, defaultValue?: date | null) => Observable<date | null> }
   name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   welcome_channel: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
 }
 
 /** aggregate min on columns */
 export interface guilds_min_fieldsPromiseChain {
+  banner: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   icon: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  joined_at: { execute: (request?: boolean | number, defaultValue?: date | null) => Promise<date | null> }
   name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   welcome_channel: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
 }
 
 /** aggregate min on columns */
 export interface guilds_min_fieldsObservableChain {
+  banner: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   icon: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  joined_at: { execute: (request?: boolean | number, defaultValue?: date | null) => Observable<date | null> }
   name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   welcome_channel: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+}
+
+/** columns and relationships of "tag_categories" */
+export interface tag_categoriesPromiseChain {
+  added_by: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
+  created_at: { execute: (request?: boolean | number, defaultValue?: date) => Promise<date> }
+  name: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
+}
+
+/** columns and relationships of "tag_categories" */
+export interface tag_categoriesObservableChain {
+  added_by: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
+  created_at: { execute: (request?: boolean | number, defaultValue?: date) => Observable<date> }
+  name: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
+}
+
+/** aggregated selection of "tag_categories" */
+export interface tag_categories_aggregatePromiseChain {
+  aggregate: tag_categories_aggregate_fieldsPromiseChain & {
+    execute: (
+      request: tag_categories_aggregate_fieldsRequest,
+      defaultValue?: tag_categories_aggregate_fields | null,
+    ) => Promise<tag_categories_aggregate_fields | null>
+  }
+  nodes: { execute: (request: tag_categoriesRequest, defaultValue?: tag_categories[]) => Promise<tag_categories[]> }
+}
+
+/** aggregated selection of "tag_categories" */
+export interface tag_categories_aggregateObservableChain {
+  aggregate: tag_categories_aggregate_fieldsObservableChain & {
+    execute: (
+      request: tag_categories_aggregate_fieldsRequest,
+      defaultValue?: tag_categories_aggregate_fields | null,
+    ) => Observable<tag_categories_aggregate_fields | null>
+  }
+  nodes: { execute: (request: tag_categoriesRequest, defaultValue?: tag_categories[]) => Observable<tag_categories[]> }
+}
+
+/** aggregate fields of "tag_categories" */
+export interface tag_categories_aggregate_fieldsPromiseChain {
+  count: ((args?: {
+    columns?: tag_categories_select_column[] | null
+    distinct?: Boolean | null
+  }) => { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }) &
+    ({ execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> })
+  max: tag_categories_max_fieldsPromiseChain & {
+    execute: (
+      request: tag_categories_max_fieldsRequest,
+      defaultValue?: tag_categories_max_fields | null,
+    ) => Promise<tag_categories_max_fields | null>
+  }
+  min: tag_categories_min_fieldsPromiseChain & {
+    execute: (
+      request: tag_categories_min_fieldsRequest,
+      defaultValue?: tag_categories_min_fields | null,
+    ) => Promise<tag_categories_min_fields | null>
+  }
+}
+
+/** aggregate fields of "tag_categories" */
+export interface tag_categories_aggregate_fieldsObservableChain {
+  count: ((args?: {
+    columns?: tag_categories_select_column[] | null
+    distinct?: Boolean | null
+  }) => { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }) &
+    ({ execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> })
+  max: tag_categories_max_fieldsObservableChain & {
+    execute: (
+      request: tag_categories_max_fieldsRequest,
+      defaultValue?: tag_categories_max_fields | null,
+    ) => Observable<tag_categories_max_fields | null>
+  }
+  min: tag_categories_min_fieldsObservableChain & {
+    execute: (
+      request: tag_categories_min_fieldsRequest,
+      defaultValue?: tag_categories_min_fields | null,
+    ) => Observable<tag_categories_min_fields | null>
+  }
+}
+
+/** aggregate max on columns */
+export interface tag_categories_max_fieldsPromiseChain {
+  added_by: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  created_at: { execute: (request?: boolean | number, defaultValue?: date | null) => Promise<date | null> }
+  name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+}
+
+/** aggregate max on columns */
+export interface tag_categories_max_fieldsObservableChain {
+  added_by: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  created_at: { execute: (request?: boolean | number, defaultValue?: date | null) => Observable<date | null> }
+  name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+}
+
+/** aggregate min on columns */
+export interface tag_categories_min_fieldsPromiseChain {
+  added_by: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  created_at: { execute: (request?: boolean | number, defaultValue?: date | null) => Promise<date | null> }
+  name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+}
+
+/** aggregate min on columns */
+export interface tag_categories_min_fieldsObservableChain {
+  added_by: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  created_at: { execute: (request?: boolean | number, defaultValue?: date | null) => Observable<date | null> }
+  name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
 }
 
 /** columns and relationships of "tag_counts" */
@@ -8139,90 +8787,98 @@ export interface tag_counts_variance_fieldsObservableChain {
   count: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
 }
 
-/** aggregated selection of "users" */
-export interface users_aggregatePromiseChain {
-  aggregate: users_aggregate_fieldsPromiseChain & {
-    execute: (
-      request: users_aggregate_fieldsRequest,
-      defaultValue?: users_aggregate_fields | null,
-    ) => Promise<users_aggregate_fields | null>
-  }
-  nodes: { execute: (request: usersRequest, defaultValue?: users[]) => Promise<users[]> }
+/** columns and relationships of "tags" */
+export interface tagsPromiseChain {
+  created_at: { execute: (request?: boolean | number, defaultValue?: date) => Promise<date> }
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
+  name: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
 }
 
-/** aggregated selection of "users" */
-export interface users_aggregateObservableChain {
-  aggregate: users_aggregate_fieldsObservableChain & {
-    execute: (
-      request: users_aggregate_fieldsRequest,
-      defaultValue?: users_aggregate_fields | null,
-    ) => Observable<users_aggregate_fields | null>
-  }
-  nodes: { execute: (request: usersRequest, defaultValue?: users[]) => Observable<users[]> }
+/** columns and relationships of "tags" */
+export interface tagsObservableChain {
+  created_at: { execute: (request?: boolean | number, defaultValue?: date) => Observable<date> }
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
+  name: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
 }
 
-/** aggregate fields of "users" */
-export interface users_aggregate_fieldsPromiseChain {
+/** aggregated selection of "tags" */
+export interface tags_aggregatePromiseChain {
+  aggregate: tags_aggregate_fieldsPromiseChain & {
+    execute: (
+      request: tags_aggregate_fieldsRequest,
+      defaultValue?: tags_aggregate_fields | null,
+    ) => Promise<tags_aggregate_fields | null>
+  }
+  nodes: { execute: (request: tagsRequest, defaultValue?: tags[]) => Promise<tags[]> }
+}
+
+/** aggregated selection of "tags" */
+export interface tags_aggregateObservableChain {
+  aggregate: tags_aggregate_fieldsObservableChain & {
+    execute: (
+      request: tags_aggregate_fieldsRequest,
+      defaultValue?: tags_aggregate_fields | null,
+    ) => Observable<tags_aggregate_fields | null>
+  }
+  nodes: { execute: (request: tagsRequest, defaultValue?: tags[]) => Observable<tags[]> }
+}
+
+/** aggregate fields of "tags" */
+export interface tags_aggregate_fieldsPromiseChain {
   count: ((args?: {
-    columns?: users_select_column[] | null
+    columns?: tags_select_column[] | null
     distinct?: Boolean | null
   }) => { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }) &
     ({ execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> })
-  max: users_max_fieldsPromiseChain & {
-    execute: (request: users_max_fieldsRequest, defaultValue?: users_max_fields | null) => Promise<users_max_fields | null>
+  max: tags_max_fieldsPromiseChain & {
+    execute: (request: tags_max_fieldsRequest, defaultValue?: tags_max_fields | null) => Promise<tags_max_fields | null>
   }
-  min: users_min_fieldsPromiseChain & {
-    execute: (request: users_min_fieldsRequest, defaultValue?: users_min_fields | null) => Promise<users_min_fields | null>
+  min: tags_min_fieldsPromiseChain & {
+    execute: (request: tags_min_fieldsRequest, defaultValue?: tags_min_fields | null) => Promise<tags_min_fields | null>
   }
 }
 
-/** aggregate fields of "users" */
-export interface users_aggregate_fieldsObservableChain {
+/** aggregate fields of "tags" */
+export interface tags_aggregate_fieldsObservableChain {
   count: ((args?: {
-    columns?: users_select_column[] | null
+    columns?: tags_select_column[] | null
     distinct?: Boolean | null
   }) => { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }) &
     ({ execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> })
-  max: users_max_fieldsObservableChain & {
-    execute: (
-      request: users_max_fieldsRequest,
-      defaultValue?: users_max_fields | null,
-    ) => Observable<users_max_fields | null>
+  max: tags_max_fieldsObservableChain & {
+    execute: (request: tags_max_fieldsRequest, defaultValue?: tags_max_fields | null) => Observable<tags_max_fields | null>
   }
-  min: users_min_fieldsObservableChain & {
-    execute: (
-      request: users_min_fieldsRequest,
-      defaultValue?: users_min_fields | null,
-    ) => Observable<users_min_fields | null>
+  min: tags_min_fieldsObservableChain & {
+    execute: (request: tags_min_fieldsRequest, defaultValue?: tags_min_fields | null) => Observable<tags_min_fields | null>
   }
 }
 
 /** aggregate max on columns */
-export interface users_max_fieldsPromiseChain {
-  avatar: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+export interface tags_max_fieldsPromiseChain {
+  created_at: { execute: (request?: boolean | number, defaultValue?: date | null) => Promise<date | null> }
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
 }
 
 /** aggregate max on columns */
-export interface users_max_fieldsObservableChain {
-  avatar: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+export interface tags_max_fieldsObservableChain {
+  created_at: { execute: (request?: boolean | number, defaultValue?: date | null) => Observable<date | null> }
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
 }
 
 /** aggregate min on columns */
-export interface users_min_fieldsPromiseChain {
-  avatar: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+export interface tags_min_fieldsPromiseChain {
+  created_at: { execute: (request?: boolean | number, defaultValue?: date | null) => Promise<date | null> }
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   name: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
 }
 
 /** aggregate min on columns */
-export interface users_min_fieldsObservableChain {
-  avatar: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+export interface tags_min_fieldsObservableChain {
+  created_at: { execute: (request?: boolean | number, defaultValue?: date | null) => Observable<date | null> }
+  guild_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   name: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
-  user_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
 }
 
 /** mutation root */
@@ -8287,6 +8943,16 @@ export interface mutation_rootPromiseChain {
       defaultValue?: members_mutation_response | null,
     ) => Promise<members_mutation_response | null>
   }
+  /** delete data from the table: "tag_categories" */
+  delete_tag_categories: (args: {
+    /** filter the rows which have to be deleted */
+    where: tag_categories_bool_exp
+  }) => tag_categories_mutation_responsePromiseChain & {
+    execute: (
+      request: tag_categories_mutation_responseRequest,
+      defaultValue?: tag_categories_mutation_response | null,
+    ) => Promise<tag_categories_mutation_response | null>
+  }
   /** delete data from the table: "tag_counts" */
   delete_tag_counts: (args: {
     /** filter the rows which have to be deleted */
@@ -8296,6 +8962,16 @@ export interface mutation_rootPromiseChain {
       request: tag_counts_mutation_responseRequest,
       defaultValue?: tag_counts_mutation_response | null,
     ) => Promise<tag_counts_mutation_response | null>
+  }
+  /** delete data from the table: "tags" */
+  delete_tags: (args: {
+    /** filter the rows which have to be deleted */
+    where: tags_bool_exp
+  }) => tags_mutation_responsePromiseChain & {
+    execute: (
+      request: tags_mutation_responseRequest,
+      defaultValue?: tags_mutation_response | null,
+    ) => Promise<tags_mutation_response | null>
   }
   /** delete data from the table: "users" */
   delete_users: (args: {
@@ -8379,6 +9055,18 @@ export interface mutation_rootPromiseChain {
       defaultValue?: members_mutation_response | null,
     ) => Promise<members_mutation_response | null>
   }
+  /** insert data into the table: "tag_categories" */
+  insert_tag_categories: (args: {
+    /** the rows to be inserted */
+    objects: tag_categories_insert_input[]
+    /** on conflict condition */
+    on_conflict?: tag_categories_on_conflict | null
+  }) => tag_categories_mutation_responsePromiseChain & {
+    execute: (
+      request: tag_categories_mutation_responseRequest,
+      defaultValue?: tag_categories_mutation_response | null,
+    ) => Promise<tag_categories_mutation_response | null>
+  }
   /** insert data into the table: "tag_counts" */
   insert_tag_counts: (args: {
     /** the rows to be inserted */
@@ -8390,6 +9078,18 @@ export interface mutation_rootPromiseChain {
       request: tag_counts_mutation_responseRequest,
       defaultValue?: tag_counts_mutation_response | null,
     ) => Promise<tag_counts_mutation_response | null>
+  }
+  /** insert data into the table: "tags" */
+  insert_tags: (args: {
+    /** the rows to be inserted */
+    objects: tags_insert_input[]
+    /** on conflict condition */
+    on_conflict?: tags_on_conflict | null
+  }) => tags_mutation_responsePromiseChain & {
+    execute: (
+      request: tags_mutation_responseRequest,
+      defaultValue?: tags_mutation_response | null,
+    ) => Promise<tags_mutation_response | null>
   }
   /** insert data into the table: "users" */
   insert_users: (args: {
@@ -8471,8 +9171,6 @@ export interface mutation_rootPromiseChain {
   }
   /** update data of the table: "members" */
   update_members: (args: {
-    /** increments the integer columns with given value of the filtered values */
-    _inc?: members_inc_input | null
     /** sets the columns of the filtered rows to the given values */
     _set?: members_set_input | null
     /** filter the rows which have to be updated */
@@ -8482,6 +9180,18 @@ export interface mutation_rootPromiseChain {
       request: members_mutation_responseRequest,
       defaultValue?: members_mutation_response | null,
     ) => Promise<members_mutation_response | null>
+  }
+  /** update data of the table: "tag_categories" */
+  update_tag_categories: (args: {
+    /** sets the columns of the filtered rows to the given values */
+    _set?: tag_categories_set_input | null
+    /** filter the rows which have to be updated */
+    where: tag_categories_bool_exp
+  }) => tag_categories_mutation_responsePromiseChain & {
+    execute: (
+      request: tag_categories_mutation_responseRequest,
+      defaultValue?: tag_categories_mutation_response | null,
+    ) => Promise<tag_categories_mutation_response | null>
   }
   /** update data of the table: "tag_counts" */
   update_tag_counts: (args: {
@@ -8496,6 +9206,18 @@ export interface mutation_rootPromiseChain {
       request: tag_counts_mutation_responseRequest,
       defaultValue?: tag_counts_mutation_response | null,
     ) => Promise<tag_counts_mutation_response | null>
+  }
+  /** update data of the table: "tags" */
+  update_tags: (args: {
+    /** sets the columns of the filtered rows to the given values */
+    _set?: tags_set_input | null
+    /** filter the rows which have to be updated */
+    where: tags_bool_exp
+  }) => tags_mutation_responsePromiseChain & {
+    execute: (
+      request: tags_mutation_responseRequest,
+      defaultValue?: tags_mutation_response | null,
+    ) => Promise<tags_mutation_response | null>
   }
   /** update data of the table: "users" */
   update_users: (args: {
@@ -8573,6 +9295,16 @@ export interface mutation_rootObservableChain {
       defaultValue?: members_mutation_response | null,
     ) => Observable<members_mutation_response | null>
   }
+  /** delete data from the table: "tag_categories" */
+  delete_tag_categories: (args: {
+    /** filter the rows which have to be deleted */
+    where: tag_categories_bool_exp
+  }) => tag_categories_mutation_responseObservableChain & {
+    execute: (
+      request: tag_categories_mutation_responseRequest,
+      defaultValue?: tag_categories_mutation_response | null,
+    ) => Observable<tag_categories_mutation_response | null>
+  }
   /** delete data from the table: "tag_counts" */
   delete_tag_counts: (args: {
     /** filter the rows which have to be deleted */
@@ -8582,6 +9314,16 @@ export interface mutation_rootObservableChain {
       request: tag_counts_mutation_responseRequest,
       defaultValue?: tag_counts_mutation_response | null,
     ) => Observable<tag_counts_mutation_response | null>
+  }
+  /** delete data from the table: "tags" */
+  delete_tags: (args: {
+    /** filter the rows which have to be deleted */
+    where: tags_bool_exp
+  }) => tags_mutation_responseObservableChain & {
+    execute: (
+      request: tags_mutation_responseRequest,
+      defaultValue?: tags_mutation_response | null,
+    ) => Observable<tags_mutation_response | null>
   }
   /** delete data from the table: "users" */
   delete_users: (args: {
@@ -8665,6 +9407,18 @@ export interface mutation_rootObservableChain {
       defaultValue?: members_mutation_response | null,
     ) => Observable<members_mutation_response | null>
   }
+  /** insert data into the table: "tag_categories" */
+  insert_tag_categories: (args: {
+    /** the rows to be inserted */
+    objects: tag_categories_insert_input[]
+    /** on conflict condition */
+    on_conflict?: tag_categories_on_conflict | null
+  }) => tag_categories_mutation_responseObservableChain & {
+    execute: (
+      request: tag_categories_mutation_responseRequest,
+      defaultValue?: tag_categories_mutation_response | null,
+    ) => Observable<tag_categories_mutation_response | null>
+  }
   /** insert data into the table: "tag_counts" */
   insert_tag_counts: (args: {
     /** the rows to be inserted */
@@ -8676,6 +9430,18 @@ export interface mutation_rootObservableChain {
       request: tag_counts_mutation_responseRequest,
       defaultValue?: tag_counts_mutation_response | null,
     ) => Observable<tag_counts_mutation_response | null>
+  }
+  /** insert data into the table: "tags" */
+  insert_tags: (args: {
+    /** the rows to be inserted */
+    objects: tags_insert_input[]
+    /** on conflict condition */
+    on_conflict?: tags_on_conflict | null
+  }) => tags_mutation_responseObservableChain & {
+    execute: (
+      request: tags_mutation_responseRequest,
+      defaultValue?: tags_mutation_response | null,
+    ) => Observable<tags_mutation_response | null>
   }
   /** insert data into the table: "users" */
   insert_users: (args: {
@@ -8757,8 +9523,6 @@ export interface mutation_rootObservableChain {
   }
   /** update data of the table: "members" */
   update_members: (args: {
-    /** increments the integer columns with given value of the filtered values */
-    _inc?: members_inc_input | null
     /** sets the columns of the filtered rows to the given values */
     _set?: members_set_input | null
     /** filter the rows which have to be updated */
@@ -8768,6 +9532,18 @@ export interface mutation_rootObservableChain {
       request: members_mutation_responseRequest,
       defaultValue?: members_mutation_response | null,
     ) => Observable<members_mutation_response | null>
+  }
+  /** update data of the table: "tag_categories" */
+  update_tag_categories: (args: {
+    /** sets the columns of the filtered rows to the given values */
+    _set?: tag_categories_set_input | null
+    /** filter the rows which have to be updated */
+    where: tag_categories_bool_exp
+  }) => tag_categories_mutation_responseObservableChain & {
+    execute: (
+      request: tag_categories_mutation_responseRequest,
+      defaultValue?: tag_categories_mutation_response | null,
+    ) => Observable<tag_categories_mutation_response | null>
   }
   /** update data of the table: "tag_counts" */
   update_tag_counts: (args: {
@@ -8782,6 +9558,18 @@ export interface mutation_rootObservableChain {
       request: tag_counts_mutation_responseRequest,
       defaultValue?: tag_counts_mutation_response | null,
     ) => Observable<tag_counts_mutation_response | null>
+  }
+  /** update data of the table: "tags" */
+  update_tags: (args: {
+    /** sets the columns of the filtered rows to the given values */
+    _set?: tags_set_input | null
+    /** filter the rows which have to be updated */
+    where: tags_bool_exp
+  }) => tags_mutation_responseObservableChain & {
+    execute: (
+      request: tags_mutation_responseRequest,
+      defaultValue?: tags_mutation_response | null,
+    ) => Observable<tags_mutation_response | null>
   }
   /** update data of the table: "users" */
   update_users: (args: {
@@ -8893,6 +9681,22 @@ export interface members_mutation_responseObservableChain {
   returning: { execute: (request: membersRequest, defaultValue?: members[]) => Observable<members[]> }
 }
 
+/** response of any mutation on the table "tag_categories" */
+export interface tag_categories_mutation_responsePromiseChain {
+  /** number of affected rows by the mutation */
+  affected_rows: { execute: (request?: boolean | number, defaultValue?: Int) => Promise<Int> }
+  /** data of the affected rows by the mutation */
+  returning: { execute: (request: tag_categoriesRequest, defaultValue?: tag_categories[]) => Promise<tag_categories[]> }
+}
+
+/** response of any mutation on the table "tag_categories" */
+export interface tag_categories_mutation_responseObservableChain {
+  /** number of affected rows by the mutation */
+  affected_rows: { execute: (request?: boolean | number, defaultValue?: Int) => Observable<Int> }
+  /** data of the affected rows by the mutation */
+  returning: { execute: (request: tag_categoriesRequest, defaultValue?: tag_categories[]) => Observable<tag_categories[]> }
+}
+
 /** response of any mutation on the table "tag_counts" */
 export interface tag_counts_mutation_responsePromiseChain {
   /** number of affected rows by the mutation */
@@ -8907,6 +9711,22 @@ export interface tag_counts_mutation_responseObservableChain {
   affected_rows: { execute: (request?: boolean | number, defaultValue?: Int) => Observable<Int> }
   /** data of the affected rows by the mutation */
   returning: { execute: (request: tag_countsRequest, defaultValue?: tag_counts[]) => Observable<tag_counts[]> }
+}
+
+/** response of any mutation on the table "tags" */
+export interface tags_mutation_responsePromiseChain {
+  /** number of affected rows by the mutation */
+  affected_rows: { execute: (request?: boolean | number, defaultValue?: Int) => Promise<Int> }
+  /** data of the affected rows by the mutation */
+  returning: { execute: (request: tagsRequest, defaultValue?: tags[]) => Promise<tags[]> }
+}
+
+/** response of any mutation on the table "tags" */
+export interface tags_mutation_responseObservableChain {
+  /** number of affected rows by the mutation */
+  affected_rows: { execute: (request?: boolean | number, defaultValue?: Int) => Observable<Int> }
+  /** data of the affected rows by the mutation */
+  returning: { execute: (request: tagsRequest, defaultValue?: tags[]) => Observable<tags[]> }
 }
 
 /** response of any mutation on the table "users" */
@@ -9153,7 +9973,8 @@ export interface subscription_rootPromiseChain {
     })
   /** fetch data from the table: "members" using primary key columns */
   members_by_pk: (args: {
-    id: Int
+    guild_id: String
+    user_id: String
   }) => membersPromiseChain & {
     execute: (request: membersRequest, defaultValue?: members | null) => Promise<members | null>
   }
@@ -9220,6 +10041,50 @@ export interface subscription_rootPromiseChain {
     where?: images_bool_exp | null
   }) => images_aggregatePromiseChain & {
     execute: (request: images_aggregateRequest, defaultValue?: images_aggregate) => Promise<images_aggregate>
+  }
+  /** fetch data from the table: "tag_categories" */
+  tag_categories: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tag_categories_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tag_categories_order_by[] | null
+    /** filter the rows returned */
+    where?: tag_categories_bool_exp | null
+  }) => { execute: (request: tag_categoriesRequest, defaultValue?: tag_categories[]) => Promise<tag_categories[]> }) &
+    ({ execute: (request: tag_categoriesRequest, defaultValue?: tag_categories[]) => Promise<tag_categories[]> })
+  /** fetch aggregated fields from the table: "tag_categories" */
+  tag_categories_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tag_categories_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tag_categories_order_by[] | null
+    /** filter the rows returned */
+    where?: tag_categories_bool_exp | null
+  }) => tag_categories_aggregatePromiseChain & {
+    execute: (
+      request: tag_categories_aggregateRequest,
+      defaultValue?: tag_categories_aggregate,
+    ) => Promise<tag_categories_aggregate>
+  }) &
+    (tag_categories_aggregatePromiseChain & {
+      execute: (
+        request: tag_categories_aggregateRequest,
+        defaultValue?: tag_categories_aggregate,
+      ) => Promise<tag_categories_aggregate>
+    })
+  /** fetch data from the table: "tag_categories" using primary key columns */
+  tag_categories_by_pk: (args: {
+    name: String
+  }) => tag_categoriesPromiseChain & {
+    execute: (request: tag_categoriesRequest, defaultValue?: tag_categories | null) => Promise<tag_categories | null>
   }
   /** execute function "tag_count" which returns "tag_counts" */
   tag_count: ((args?: {
@@ -9291,6 +10156,43 @@ export interface subscription_rootPromiseChain {
   }) => tag_countsPromiseChain & {
     execute: (request: tag_countsRequest, defaultValue?: tag_counts | null) => Promise<tag_counts | null>
   }
+  /** fetch data from the table: "tags" */
+  tags: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tags_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tags_order_by[] | null
+    /** filter the rows returned */
+    where?: tags_bool_exp | null
+  }) => { execute: (request: tagsRequest, defaultValue?: tags[]) => Promise<tags[]> }) &
+    ({ execute: (request: tagsRequest, defaultValue?: tags[]) => Promise<tags[]> })
+  /** fetch aggregated fields from the table: "tags" */
+  tags_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tags_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tags_order_by[] | null
+    /** filter the rows returned */
+    where?: tags_bool_exp | null
+  }) => tags_aggregatePromiseChain & {
+    execute: (request: tags_aggregateRequest, defaultValue?: tags_aggregate) => Promise<tags_aggregate>
+  }) &
+    (tags_aggregatePromiseChain & {
+      execute: (request: tags_aggregateRequest, defaultValue?: tags_aggregate) => Promise<tags_aggregate>
+    })
+  /** fetch data from the table: "tags" using primary key columns */
+  tags_by_pk: (args: {
+    guild_id: String
+    name: String
+  }) => tagsPromiseChain & { execute: (request: tagsRequest, defaultValue?: tags | null) => Promise<tags | null> }
   /** fetch data from the table: "users" */
   users: ((args?: {
     /** distinct select on columns */
@@ -9564,7 +10466,8 @@ export interface subscription_rootObservableChain {
     })
   /** fetch data from the table: "members" using primary key columns */
   members_by_pk: (args: {
-    id: Int
+    guild_id: String
+    user_id: String
   }) => membersObservableChain & {
     execute: (request: membersRequest, defaultValue?: members | null) => Observable<members | null>
   }
@@ -9631,6 +10534,50 @@ export interface subscription_rootObservableChain {
     where?: images_bool_exp | null
   }) => images_aggregateObservableChain & {
     execute: (request: images_aggregateRequest, defaultValue?: images_aggregate) => Observable<images_aggregate>
+  }
+  /** fetch data from the table: "tag_categories" */
+  tag_categories: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tag_categories_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tag_categories_order_by[] | null
+    /** filter the rows returned */
+    where?: tag_categories_bool_exp | null
+  }) => { execute: (request: tag_categoriesRequest, defaultValue?: tag_categories[]) => Observable<tag_categories[]> }) &
+    ({ execute: (request: tag_categoriesRequest, defaultValue?: tag_categories[]) => Observable<tag_categories[]> })
+  /** fetch aggregated fields from the table: "tag_categories" */
+  tag_categories_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tag_categories_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tag_categories_order_by[] | null
+    /** filter the rows returned */
+    where?: tag_categories_bool_exp | null
+  }) => tag_categories_aggregateObservableChain & {
+    execute: (
+      request: tag_categories_aggregateRequest,
+      defaultValue?: tag_categories_aggregate,
+    ) => Observable<tag_categories_aggregate>
+  }) &
+    (tag_categories_aggregateObservableChain & {
+      execute: (
+        request: tag_categories_aggregateRequest,
+        defaultValue?: tag_categories_aggregate,
+      ) => Observable<tag_categories_aggregate>
+    })
+  /** fetch data from the table: "tag_categories" using primary key columns */
+  tag_categories_by_pk: (args: {
+    name: String
+  }) => tag_categoriesObservableChain & {
+    execute: (request: tag_categoriesRequest, defaultValue?: tag_categories | null) => Observable<tag_categories | null>
   }
   /** execute function "tag_count" which returns "tag_counts" */
   tag_count: ((args?: {
@@ -9708,6 +10655,43 @@ export interface subscription_rootObservableChain {
   }) => tag_countsObservableChain & {
     execute: (request: tag_countsRequest, defaultValue?: tag_counts | null) => Observable<tag_counts | null>
   }
+  /** fetch data from the table: "tags" */
+  tags: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tags_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tags_order_by[] | null
+    /** filter the rows returned */
+    where?: tags_bool_exp | null
+  }) => { execute: (request: tagsRequest, defaultValue?: tags[]) => Observable<tags[]> }) &
+    ({ execute: (request: tagsRequest, defaultValue?: tags[]) => Observable<tags[]> })
+  /** fetch aggregated fields from the table: "tags" */
+  tags_aggregate: ((args?: {
+    /** distinct select on columns */
+    distinct_on?: tags_select_column[] | null
+    /** limit the nuber of rows returned */
+    limit?: Int | null
+    /** skip the first n rows. Use only with order_by */
+    offset?: Int | null
+    /** sort the rows by one or more columns */
+    order_by?: tags_order_by[] | null
+    /** filter the rows returned */
+    where?: tags_bool_exp | null
+  }) => tags_aggregateObservableChain & {
+    execute: (request: tags_aggregateRequest, defaultValue?: tags_aggregate) => Observable<tags_aggregate>
+  }) &
+    (tags_aggregateObservableChain & {
+      execute: (request: tags_aggregateRequest, defaultValue?: tags_aggregate) => Observable<tags_aggregate>
+    })
+  /** fetch data from the table: "tags" using primary key columns */
+  tags_by_pk: (args: {
+    guild_id: String
+    name: String
+  }) => tagsObservableChain & { execute: (request: tagsRequest, defaultValue?: tags | null) => Observable<tags | null> }
   /** fetch data from the table: "users" */
   users: ((args?: {
     /** distinct select on columns */

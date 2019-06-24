@@ -393,11 +393,89 @@ enum conflict_action {
   update
 }
 
+scalar date
+
+"""
+expression to compare columns of type date. All fields are combined with logical 'AND'.
+"""
+input date_comparison_exp {
+  _eq: date
+  _gt: date
+  _gte: date
+  _in: [date]
+  _is_null: Boolean
+  _lt: date
+  _lte: date
+  _neq: date
+  _nin: [date]
+}
+
 """
 columns and relationships of "guilds"
 """
 type guilds {
+  banner: String
   enabled: Boolean
+
+  """
+  An array relationship
+  """
+  fans(
+    """
+    distinct select on columns
+    """
+    distinct_on: [users_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [users_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: users_bool_exp
+  ): [users!]!
+
+  """
+  An aggregated array relationship
+  """
+  fans_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [users_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [users_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: users_bool_exp
+  ): users_aggregate!
   guild_id: String!
   icon: String
 
@@ -520,6 +598,7 @@ type guilds {
     """
     where: images_bool_exp
   ): images_aggregate!
+  joined_at: date!
 
   """
   An array relationship
@@ -625,11 +704,14 @@ input guilds_bool_exp {
   _and: [guilds_bool_exp]
   _not: guilds_bool_exp
   _or: [guilds_bool_exp]
+  banner: text_comparison_exp
   enabled: boolean_comparison_exp
+  fans: users_bool_exp
   guild_id: text_comparison_exp
   icon: text_comparison_exp
   image_channels: image_channels_bool_exp
   images: images_bool_exp
+  joined_at: date_comparison_exp
   members: members_bool_exp
   name: text_comparison_exp
   welcome_channel: text_comparison_exp
@@ -649,11 +731,14 @@ enum guilds_constraint {
 input type for inserting data into table "guilds"
 """
 input guilds_insert_input {
+  banner: String
   enabled: Boolean
+  fans: users_arr_rel_insert_input
   guild_id: String
   icon: String
   image_channels: image_channels_arr_rel_insert_input
   images: images_arr_rel_insert_input
+  joined_at: date
   members: members_arr_rel_insert_input
   name: String
   welcome_channel: String
@@ -663,8 +748,10 @@ input guilds_insert_input {
 aggregate max on columns
 """
 type guilds_max_fields {
+  banner: String
   guild_id: String
   icon: String
+  joined_at: date
   name: String
   welcome_channel: String
 }
@@ -673,8 +760,10 @@ type guilds_max_fields {
 order by max() on columns of table "guilds"
 """
 input guilds_max_order_by {
+  banner: order_by
   guild_id: order_by
   icon: order_by
+  joined_at: order_by
   name: order_by
   welcome_channel: order_by
 }
@@ -683,8 +772,10 @@ input guilds_max_order_by {
 aggregate min on columns
 """
 type guilds_min_fields {
+  banner: String
   guild_id: String
   icon: String
+  joined_at: date
   name: String
   welcome_channel: String
 }
@@ -693,8 +784,10 @@ type guilds_min_fields {
 order by min() on columns of table "guilds"
 """
 input guilds_min_order_by {
+  banner: order_by
   guild_id: order_by
   icon: order_by
+  joined_at: order_by
   name: order_by
   welcome_channel: order_by
 }
@@ -734,11 +827,14 @@ input guilds_on_conflict {
 ordering options when selecting data from "guilds"
 """
 input guilds_order_by {
+  banner: order_by
   enabled: order_by
+  fans_aggregate: users_aggregate_order_by
   guild_id: order_by
   icon: order_by
   image_channels_aggregate: image_channels_aggregate_order_by
   images_aggregate: images_aggregate_order_by
+  joined_at: order_by
   members_aggregate: members_aggregate_order_by
   name: order_by
   welcome_channel: order_by
@@ -748,6 +844,11 @@ input guilds_order_by {
 select columns of table "guilds"
 """
 enum guilds_select_column {
+  """
+  column name
+  """
+  banner
+
   """
   column name
   """
@@ -762,6 +863,11 @@ enum guilds_select_column {
   column name
   """
   icon
+
+  """
+  column name
+  """
+  joined_at
 
   """
   column name
@@ -778,9 +884,11 @@ enum guilds_select_column {
 input type for updating data in table "guilds"
 """
 input guilds_set_input {
+  banner: String
   enabled: Boolean
   guild_id: String
   icon: String
+  joined_at: date
   name: String
   welcome_channel: String
 }
@@ -789,6 +897,11 @@ input guilds_set_input {
 update columns of table "guilds"
 """
 enum guilds_update_column {
+  """
+  column name
+  """
+  banner
+
   """
   column name
   """
@@ -803,6 +916,11 @@ enum guilds_update_column {
   column name
   """
   icon
+
+  """
+  column name
+  """
+  joined_at
 
   """
   column name
@@ -1097,6 +1215,7 @@ enum image_channels_update_column {
 columns and relationships of "image_tags"
 """
 type image_tags {
+  guild_id: String
   id: Int!
 
   """
@@ -1104,13 +1223,13 @@ type image_tags {
   """
   image: images!
   image_id: Int!
-  name: String!
-  tagger_id: String
 
   """
   An object relationship
   """
-  user: users
+  member: members
+  member_id: String
+  name: String!
 }
 
 """
@@ -1186,12 +1305,13 @@ input image_tags_bool_exp {
   _and: [image_tags_bool_exp]
   _not: image_tags_bool_exp
   _or: [image_tags_bool_exp]
+  guild_id: text_comparison_exp
   id: integer_comparison_exp
   image: images_bool_exp
   image_id: integer_comparison_exp
+  member: members_bool_exp
+  member_id: text_comparison_exp
   name: text_comparison_exp
-  tagger_id: text_comparison_exp
-  user: users_bool_exp
 }
 
 """
@@ -1216,52 +1336,57 @@ input image_tags_inc_input {
 input type for inserting data into table "image_tags"
 """
 input image_tags_insert_input {
+  guild_id: String
   id: Int
   image: images_obj_rel_insert_input
   image_id: Int
+  member: members_obj_rel_insert_input
+  member_id: String
   name: String
-  tagger_id: String
-  user: users_obj_rel_insert_input
 }
 
 """
 aggregate max on columns
 """
 type image_tags_max_fields {
+  guild_id: String
   id: Int
   image_id: Int
+  member_id: String
   name: String
-  tagger_id: String
 }
 
 """
 order by max() on columns of table "image_tags"
 """
 input image_tags_max_order_by {
+  guild_id: order_by
   id: order_by
   image_id: order_by
+  member_id: order_by
   name: order_by
-  tagger_id: order_by
 }
 
 """
 aggregate min on columns
 """
 type image_tags_min_fields {
+  guild_id: String
   id: Int
   image_id: Int
+  member_id: String
   name: String
-  tagger_id: String
 }
 
 """
 order by min() on columns of table "image_tags"
 """
 input image_tags_min_order_by {
+  guild_id: order_by
   id: order_by
   image_id: order_by
+  member_id: order_by
   name: order_by
-  tagger_id: order_by
 }
 
 """
@@ -1299,18 +1424,24 @@ input image_tags_on_conflict {
 ordering options when selecting data from "image_tags"
 """
 input image_tags_order_by {
+  guild_id: order_by
   id: order_by
   image: images_order_by
   image_id: order_by
+  member: members_order_by
+  member_id: order_by
   name: order_by
-  tagger_id: order_by
-  user: users_order_by
 }
 
 """
 select columns of table "image_tags"
 """
 enum image_tags_select_column {
+  """
+  column name
+  """
+  guild_id
+
   """
   column name
   """
@@ -1324,22 +1455,23 @@ enum image_tags_select_column {
   """
   column name
   """
-  name
+  member_id
 
   """
   column name
   """
-  tagger_id
+  name
 }
 
 """
 input type for updating data in table "image_tags"
 """
 input image_tags_set_input {
+  guild_id: String
   id: Int
   image_id: Int
+  member_id: String
   name: String
-  tagger_id: String
 }
 
 """
@@ -1413,6 +1545,11 @@ enum image_tags_update_column {
   """
   column name
   """
+  guild_id
+
+  """
+  column name
+  """
   id
 
   """
@@ -1423,12 +1560,12 @@ enum image_tags_update_column {
   """
   column name
   """
-  name
+  member_id
 
   """
   column name
   """
-  tagger_id
+  name
 }
 
 """
@@ -1552,15 +1689,10 @@ type images {
     """
     where: image_tags_bool_exp
   ): image_tags_aggregate!
+  member_id: String
   message_id: String
   public: Boolean!
   url: String!
-
-  """
-  An object relationship
-  """
-  user: users
-  user_id: String
 }
 
 """
@@ -1640,11 +1772,10 @@ input images_bool_exp {
   guild_id: text_comparison_exp
   id: integer_comparison_exp
   image_tags: image_tags_bool_exp
+  member_id: text_comparison_exp
   message_id: text_comparison_exp
   public: boolean_comparison_exp
   url: text_comparison_exp
-  user: users_bool_exp
-  user_id: text_comparison_exp
 }
 
 """
@@ -1674,11 +1805,10 @@ input images_insert_input {
   guild_id: String
   id: Int
   image_tags: image_tags_arr_rel_insert_input
+  member_id: String
   message_id: String
   public: Boolean
   url: String
-  user: users_obj_rel_insert_input
-  user_id: String
 }
 
 """
@@ -1689,9 +1819,9 @@ type images_max_fields {
   file_name: String
   guild_id: String
   id: Int
+  member_id: String
   message_id: String
   url: String
-  user_id: String
 }
 
 """
@@ -1702,9 +1832,9 @@ input images_max_order_by {
   file_name: order_by
   guild_id: order_by
   id: order_by
+  member_id: order_by
   message_id: order_by
   url: order_by
-  user_id: order_by
 }
 
 """
@@ -1715,9 +1845,9 @@ type images_min_fields {
   file_name: String
   guild_id: String
   id: Int
+  member_id: String
   message_id: String
   url: String
-  user_id: String
 }
 
 """
@@ -1728,9 +1858,9 @@ input images_min_order_by {
   file_name: order_by
   guild_id: order_by
   id: order_by
+  member_id: order_by
   message_id: order_by
   url: order_by
-  user_id: order_by
 }
 
 """
@@ -1774,11 +1904,10 @@ input images_order_by {
   guild_id: order_by
   id: order_by
   image_tags_aggregate: image_tags_aggregate_order_by
+  member_id: order_by
   message_id: order_by
   public: order_by
   url: order_by
-  user: users_order_by
-  user_id: order_by
 }
 
 """
@@ -1808,6 +1937,11 @@ enum images_select_column {
   """
   column name
   """
+  member_id
+
+  """
+  column name
+  """
   message_id
 
   """
@@ -1819,11 +1953,6 @@ enum images_select_column {
   column name
   """
   url
-
-  """
-  column name
-  """
-  user_id
 }
 
 """
@@ -1834,10 +1963,10 @@ input images_set_input {
   file_name: String
   guild_id: String
   id: Int
+  member_id: String
   message_id: String
   public: Boolean
   url: String
-  user_id: String
 }
 
 """
@@ -1923,6 +2052,11 @@ enum images_update_column {
   """
   column name
   """
+  member_id
+
+  """
+  column name
+  """
   message_id
 
   """
@@ -1934,11 +2068,6 @@ enum images_update_column {
   column name
   """
   url
-
-  """
-  column name
-  """
-  user_id
 }
 
 """
@@ -2007,7 +2136,6 @@ type members {
   """
   guild: guilds!
   guild_id: String!
-  id: Int!
 
   """
   An object relationship
@@ -2028,34 +2156,18 @@ type members_aggregate {
 aggregate fields of "members"
 """
 type members_aggregate_fields {
-  avg: members_avg_fields
   count(columns: [members_select_column!], distinct: Boolean): Int
   max: members_max_fields
   min: members_min_fields
-  stddev: members_stddev_fields
-  stddev_pop: members_stddev_pop_fields
-  stddev_samp: members_stddev_samp_fields
-  sum: members_sum_fields
-  var_pop: members_var_pop_fields
-  var_samp: members_var_samp_fields
-  variance: members_variance_fields
 }
 
 """
 order by aggregate values of table "members"
 """
 input members_aggregate_order_by {
-  avg: members_avg_order_by
   count: order_by
   max: members_max_order_by
   min: members_min_order_by
-  stddev: members_stddev_order_by
-  stddev_pop: members_stddev_pop_order_by
-  stddev_samp: members_stddev_samp_order_by
-  sum: members_sum_order_by
-  var_pop: members_var_pop_order_by
-  var_samp: members_var_samp_order_by
-  variance: members_variance_order_by
 }
 
 """
@@ -2067,20 +2179,6 @@ input members_arr_rel_insert_input {
 }
 
 """
-aggregate avg on columns
-"""
-type members_avg_fields {
-  id: Float
-}
-
-"""
-order by avg() on columns of table "members"
-"""
-input members_avg_order_by {
-  id: order_by
-}
-
-"""
 Boolean expression to filter rows from the table "members". All fields are combined with a logical 'AND'.
 """
 input members_bool_exp {
@@ -2089,7 +2187,6 @@ input members_bool_exp {
   _or: [members_bool_exp]
   guild: guilds_bool_exp
   guild_id: text_comparison_exp
-  id: integer_comparison_exp
   user: users_bool_exp
   user_id: text_comparison_exp
 }
@@ -2105,19 +2202,11 @@ enum members_constraint {
 }
 
 """
-input type for incrementing integer columne in table "members"
-"""
-input members_inc_input {
-  id: Int
-}
-
-"""
 input type for inserting data into table "members"
 """
 input members_insert_input {
   guild: guilds_obj_rel_insert_input
   guild_id: String
-  id: Int
   user: users_obj_rel_insert_input
   user_id: String
 }
@@ -2127,7 +2216,6 @@ aggregate max on columns
 """
 type members_max_fields {
   guild_id: String
-  id: Int
   user_id: String
 }
 
@@ -2136,7 +2224,6 @@ order by max() on columns of table "members"
 """
 input members_max_order_by {
   guild_id: order_by
-  id: order_by
   user_id: order_by
 }
 
@@ -2145,7 +2232,6 @@ aggregate min on columns
 """
 type members_min_fields {
   guild_id: String
-  id: Int
   user_id: String
 }
 
@@ -2154,7 +2240,6 @@ order by min() on columns of table "members"
 """
 input members_min_order_by {
   guild_id: order_by
-  id: order_by
   user_id: order_by
 }
 
@@ -2195,7 +2280,6 @@ ordering options when selecting data from "members"
 input members_order_by {
   guild: guilds_order_by
   guild_id: order_by
-  id: order_by
   user: users_order_by
   user_id: order_by
 }
@@ -2212,11 +2296,6 @@ enum members_select_column {
   """
   column name
   """
-  id
-
-  """
-  column name
-  """
   user_id
 }
 
@@ -2225,64 +2304,7 @@ input type for updating data in table "members"
 """
 input members_set_input {
   guild_id: String
-  id: Int
   user_id: String
-}
-
-"""
-aggregate stddev on columns
-"""
-type members_stddev_fields {
-  id: Float
-}
-
-"""
-order by stddev() on columns of table "members"
-"""
-input members_stddev_order_by {
-  id: order_by
-}
-
-"""
-aggregate stddev_pop on columns
-"""
-type members_stddev_pop_fields {
-  id: Float
-}
-
-"""
-order by stddev_pop() on columns of table "members"
-"""
-input members_stddev_pop_order_by {
-  id: order_by
-}
-
-"""
-aggregate stddev_samp on columns
-"""
-type members_stddev_samp_fields {
-  id: Float
-}
-
-"""
-order by stddev_samp() on columns of table "members"
-"""
-input members_stddev_samp_order_by {
-  id: order_by
-}
-
-"""
-aggregate sum on columns
-"""
-type members_sum_fields {
-  id: Int
-}
-
-"""
-order by sum() on columns of table "members"
-"""
-input members_sum_order_by {
-  id: order_by
 }
 
 """
@@ -2297,54 +2319,7 @@ enum members_update_column {
   """
   column name
   """
-  id
-
-  """
-  column name
-  """
   user_id
-}
-
-"""
-aggregate var_pop on columns
-"""
-type members_var_pop_fields {
-  id: Float
-}
-
-"""
-order by var_pop() on columns of table "members"
-"""
-input members_var_pop_order_by {
-  id: order_by
-}
-
-"""
-aggregate var_samp on columns
-"""
-type members_var_samp_fields {
-  id: Float
-}
-
-"""
-order by var_samp() on columns of table "members"
-"""
-input members_var_samp_order_by {
-  id: order_by
-}
-
-"""
-aggregate variance on columns
-"""
-type members_variance_fields {
-  id: Float
-}
-
-"""
-order by variance() on columns of table "members"
-"""
-input members_variance_order_by {
-  id: order_by
 }
 
 """
@@ -2412,6 +2387,16 @@ type mutation_root {
   ): members_mutation_response
 
   """
+  delete data from the table: "tag_categories"
+  """
+  delete_tag_categories(
+    """
+    filter the rows which have to be deleted
+    """
+    where: tag_categories_bool_exp!
+  ): tag_categories_mutation_response
+
+  """
   delete data from the table: "tag_counts"
   """
   delete_tag_counts(
@@ -2420,6 +2405,16 @@ type mutation_root {
     """
     where: tag_counts_bool_exp!
   ): tag_counts_mutation_response
+
+  """
+  delete data from the table: "tags"
+  """
+  delete_tags(
+    """
+    filter the rows which have to be deleted
+    """
+    where: tags_bool_exp!
+  ): tags_mutation_response
 
   """
   delete data from the table: "users"
@@ -2522,6 +2517,21 @@ type mutation_root {
   ): members_mutation_response
 
   """
+  insert data into the table: "tag_categories"
+  """
+  insert_tag_categories(
+    """
+    the rows to be inserted
+    """
+    objects: [tag_categories_insert_input!]!
+
+    """
+    on conflict condition
+    """
+    on_conflict: tag_categories_on_conflict
+  ): tag_categories_mutation_response
+
+  """
   insert data into the table: "tag_counts"
   """
   insert_tag_counts(
@@ -2535,6 +2545,21 @@ type mutation_root {
     """
     on_conflict: tag_counts_on_conflict
   ): tag_counts_mutation_response
+
+  """
+  insert data into the table: "tags"
+  """
+  insert_tags(
+    """
+    the rows to be inserted
+    """
+    objects: [tags_insert_input!]!
+
+    """
+    on conflict condition
+    """
+    on_conflict: tags_on_conflict
+  ): tags_mutation_response
 
   """
   insert data into the table: "users"
@@ -2646,11 +2671,6 @@ type mutation_root {
   """
   update_members(
     """
-    increments the integer columns with given value of the filtered values
-    """
-    _inc: members_inc_input
-
-    """
     sets the columns of the filtered rows to the given values
     """
     _set: members_set_input
@@ -2660,6 +2680,21 @@ type mutation_root {
     """
     where: members_bool_exp!
   ): members_mutation_response
+
+  """
+  update data of the table: "tag_categories"
+  """
+  update_tag_categories(
+    """
+    sets the columns of the filtered rows to the given values
+    """
+    _set: tag_categories_set_input
+
+    """
+    filter the rows which have to be updated
+    """
+    where: tag_categories_bool_exp!
+  ): tag_categories_mutation_response
 
   """
   update data of the table: "tag_counts"
@@ -2680,6 +2715,21 @@ type mutation_root {
     """
     where: tag_counts_bool_exp!
   ): tag_counts_mutation_response
+
+  """
+  update data of the table: "tags"
+  """
+  update_tags(
+    """
+    sets the columns of the filtered rows to the given values
+    """
+    _set: tags_set_input
+
+    """
+    filter the rows which have to be updated
+    """
+    where: tags_bool_exp!
+  ): tags_mutation_response
 
   """
   update data of the table: "users"
@@ -3124,7 +3174,7 @@ type query_root {
   """
   fetch data from the table: "members" using primary key columns
   """
-  members_by_pk(id: Int!): members
+  members_by_pk(guild_id: String!, user_id: String!): members
 
   """
   execute function "random_image" which returns "images"
@@ -3267,6 +3317,71 @@ type query_root {
   ): images_aggregate!
 
   """
+  fetch data from the table: "tag_categories"
+  """
+  tag_categories(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tag_categories_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tag_categories_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tag_categories_bool_exp
+  ): [tag_categories!]!
+
+  """
+  fetch aggregated fields from the table: "tag_categories"
+  """
+  tag_categories_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tag_categories_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tag_categories_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tag_categories_bool_exp
+  ): tag_categories_aggregate!
+
+  """
+  fetch data from the table: "tag_categories" using primary key columns
+  """
+  tag_categories_by_pk(name: String!): tag_categories
+
+  """
   execute function "tag_count" which returns "tag_counts"
   """
   tag_count(
@@ -3390,6 +3505,71 @@ type query_root {
   fetch data from the table: "tag_counts" using primary key columns
   """
   tag_counts_by_pk(name: String!): tag_counts
+
+  """
+  fetch data from the table: "tags"
+  """
+  tags(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tags_bool_exp
+  ): [tags!]!
+
+  """
+  fetch aggregated fields from the table: "tags"
+  """
+  tags_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tags_bool_exp
+  ): tags_aggregate!
+
+  """
+  fetch data from the table: "tags" using primary key columns
+  """
+  tags_by_pk(guild_id: String!, name: String!): tags
 
   """
   fetch data from the table: "users"
@@ -3857,7 +4037,7 @@ type subscription_root {
   """
   fetch data from the table: "members" using primary key columns
   """
-  members_by_pk(id: Int!): members
+  members_by_pk(guild_id: String!, user_id: String!): members
 
   """
   execute function "random_image" which returns "images"
@@ -4000,6 +4180,71 @@ type subscription_root {
   ): images_aggregate!
 
   """
+  fetch data from the table: "tag_categories"
+  """
+  tag_categories(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tag_categories_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tag_categories_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tag_categories_bool_exp
+  ): [tag_categories!]!
+
+  """
+  fetch aggregated fields from the table: "tag_categories"
+  """
+  tag_categories_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tag_categories_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tag_categories_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tag_categories_bool_exp
+  ): tag_categories_aggregate!
+
+  """
+  fetch data from the table: "tag_categories" using primary key columns
+  """
+  tag_categories_by_pk(name: String!): tag_categories
+
+  """
   execute function "tag_count" which returns "tag_counts"
   """
   tag_count(
@@ -4125,6 +4370,71 @@ type subscription_root {
   tag_counts_by_pk(name: String!): tag_counts
 
   """
+  fetch data from the table: "tags"
+  """
+  tags(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tags_bool_exp
+  ): [tags!]!
+
+  """
+  fetch aggregated fields from the table: "tags"
+  """
+  tags_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tags_bool_exp
+  ): tags_aggregate!
+
+  """
+  fetch data from the table: "tags" using primary key columns
+  """
+  tags_by_pk(guild_id: String!, name: String!): tags
+
+  """
   fetch data from the table: "users"
   """
   users(
@@ -4188,6 +4498,205 @@ type subscription_root {
   fetch data from the table: "users" using primary key columns
   """
   users_by_pk(user_id: String!): users
+}
+
+"""
+columns and relationships of "tag_categories"
+"""
+type tag_categories {
+  added_by: String!
+  created_at: date!
+  name: String!
+}
+
+"""
+aggregated selection of "tag_categories"
+"""
+type tag_categories_aggregate {
+  aggregate: tag_categories_aggregate_fields
+  nodes: [tag_categories!]!
+}
+
+"""
+aggregate fields of "tag_categories"
+"""
+type tag_categories_aggregate_fields {
+  count(columns: [tag_categories_select_column!], distinct: Boolean): Int
+  max: tag_categories_max_fields
+  min: tag_categories_min_fields
+}
+
+"""
+order by aggregate values of table "tag_categories"
+"""
+input tag_categories_aggregate_order_by {
+  count: order_by
+  max: tag_categories_max_order_by
+  min: tag_categories_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "tag_categories"
+"""
+input tag_categories_arr_rel_insert_input {
+  data: [tag_categories_insert_input!]!
+  on_conflict: tag_categories_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "tag_categories". All fields are combined with a logical 'AND'.
+"""
+input tag_categories_bool_exp {
+  _and: [tag_categories_bool_exp]
+  _not: tag_categories_bool_exp
+  _or: [tag_categories_bool_exp]
+  added_by: text_comparison_exp
+  created_at: date_comparison_exp
+  name: text_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "tag_categories"
+"""
+enum tag_categories_constraint {
+  """
+  unique or primary key constraint
+  """
+  tag_categories_pkey
+}
+
+"""
+input type for inserting data into table "tag_categories"
+"""
+input tag_categories_insert_input {
+  added_by: String
+  created_at: date
+  name: String
+}
+
+"""
+aggregate max on columns
+"""
+type tag_categories_max_fields {
+  added_by: String
+  created_at: date
+  name: String
+}
+
+"""
+order by max() on columns of table "tag_categories"
+"""
+input tag_categories_max_order_by {
+  added_by: order_by
+  created_at: order_by
+  name: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type tag_categories_min_fields {
+  added_by: String
+  created_at: date
+  name: String
+}
+
+"""
+order by min() on columns of table "tag_categories"
+"""
+input tag_categories_min_order_by {
+  added_by: order_by
+  created_at: order_by
+  name: order_by
+}
+
+"""
+response of any mutation on the table "tag_categories"
+"""
+type tag_categories_mutation_response {
+  """
+  number of affected rows by the mutation
+  """
+  affected_rows: Int!
+
+  """
+  data of the affected rows by the mutation
+  """
+  returning: [tag_categories!]!
+}
+
+"""
+input type for inserting object relation for remote table "tag_categories"
+"""
+input tag_categories_obj_rel_insert_input {
+  data: tag_categories_insert_input!
+  on_conflict: tag_categories_on_conflict
+}
+
+"""
+on conflict condition type for table "tag_categories"
+"""
+input tag_categories_on_conflict {
+  constraint: tag_categories_constraint!
+  update_columns: [tag_categories_update_column!]!
+}
+
+"""
+ordering options when selecting data from "tag_categories"
+"""
+input tag_categories_order_by {
+  added_by: order_by
+  created_at: order_by
+  name: order_by
+}
+
+"""
+select columns of table "tag_categories"
+"""
+enum tag_categories_select_column {
+  """
+  column name
+  """
+  added_by
+
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  name
+}
+
+"""
+input type for updating data in table "tag_categories"
+"""
+input tag_categories_set_input {
+  added_by: String
+  created_at: date
+  name: String
+}
+
+"""
+update columns of table "tag_categories"
+"""
+enum tag_categories_update_column {
+  """
+  column name
+  """
+  added_by
+
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  name
 }
 
 """
@@ -4533,6 +5042,205 @@ input tag_counts_variance_order_by {
 }
 
 """
+columns and relationships of "tags"
+"""
+type tags {
+  created_at: date!
+  guild_id: String!
+  name: String!
+}
+
+"""
+aggregated selection of "tags"
+"""
+type tags_aggregate {
+  aggregate: tags_aggregate_fields
+  nodes: [tags!]!
+}
+
+"""
+aggregate fields of "tags"
+"""
+type tags_aggregate_fields {
+  count(columns: [tags_select_column!], distinct: Boolean): Int
+  max: tags_max_fields
+  min: tags_min_fields
+}
+
+"""
+order by aggregate values of table "tags"
+"""
+input tags_aggregate_order_by {
+  count: order_by
+  max: tags_max_order_by
+  min: tags_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "tags"
+"""
+input tags_arr_rel_insert_input {
+  data: [tags_insert_input!]!
+  on_conflict: tags_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "tags". All fields are combined with a logical 'AND'.
+"""
+input tags_bool_exp {
+  _and: [tags_bool_exp]
+  _not: tags_bool_exp
+  _or: [tags_bool_exp]
+  created_at: date_comparison_exp
+  guild_id: text_comparison_exp
+  name: text_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "tags"
+"""
+enum tags_constraint {
+  """
+  unique or primary key constraint
+  """
+  tags_pkey
+}
+
+"""
+input type for inserting data into table "tags"
+"""
+input tags_insert_input {
+  created_at: date
+  guild_id: String
+  name: String
+}
+
+"""
+aggregate max on columns
+"""
+type tags_max_fields {
+  created_at: date
+  guild_id: String
+  name: String
+}
+
+"""
+order by max() on columns of table "tags"
+"""
+input tags_max_order_by {
+  created_at: order_by
+  guild_id: order_by
+  name: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type tags_min_fields {
+  created_at: date
+  guild_id: String
+  name: String
+}
+
+"""
+order by min() on columns of table "tags"
+"""
+input tags_min_order_by {
+  created_at: order_by
+  guild_id: order_by
+  name: order_by
+}
+
+"""
+response of any mutation on the table "tags"
+"""
+type tags_mutation_response {
+  """
+  number of affected rows by the mutation
+  """
+  affected_rows: Int!
+
+  """
+  data of the affected rows by the mutation
+  """
+  returning: [tags!]!
+}
+
+"""
+input type for inserting object relation for remote table "tags"
+"""
+input tags_obj_rel_insert_input {
+  data: tags_insert_input!
+  on_conflict: tags_on_conflict
+}
+
+"""
+on conflict condition type for table "tags"
+"""
+input tags_on_conflict {
+  constraint: tags_constraint!
+  update_columns: [tags_update_column!]!
+}
+
+"""
+ordering options when selecting data from "tags"
+"""
+input tags_order_by {
+  created_at: order_by
+  guild_id: order_by
+  name: order_by
+}
+
+"""
+select columns of table "tags"
+"""
+enum tags_select_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  guild_id
+
+  """
+  column name
+  """
+  name
+}
+
+"""
+input type for updating data in table "tags"
+"""
+input tags_set_input {
+  created_at: date
+  guild_id: String
+  name: String
+}
+
+"""
+update columns of table "tags"
+"""
+enum tags_update_column {
+  """
+  column name
+  """
+  created_at
+
+  """
+  column name
+  """
+  guild_id
+
+  """
+  column name
+  """
+  name
+}
+
+"""
 expression to compare columns of type text. All fields are combined with logical 'AND'.
 """
 input text_comparison_exp {
@@ -4575,6 +5283,12 @@ columns and relationships of "users"
 """
 type users {
   avatar: String
+
+  """
+  An object relationship
+  """
+  favorite_guild: guilds
+  favorite_guild_id: String
 
   """
   An array relationship
@@ -4635,126 +5349,6 @@ type users {
     """
     where: image_channels_bool_exp
   ): image_channels_aggregate!
-
-  """
-  An array relationship
-  """
-  image_tags(
-    """
-    distinct select on columns
-    """
-    distinct_on: [image_tags_select_column!]
-
-    """
-    limit the nuber of rows returned
-    """
-    limit: Int
-
-    """
-    skip the first n rows. Use only with order_by
-    """
-    offset: Int
-
-    """
-    sort the rows by one or more columns
-    """
-    order_by: [image_tags_order_by!]
-
-    """
-    filter the rows returned
-    """
-    where: image_tags_bool_exp
-  ): [image_tags!]!
-
-  """
-  An aggregated array relationship
-  """
-  image_tags_aggregate(
-    """
-    distinct select on columns
-    """
-    distinct_on: [image_tags_select_column!]
-
-    """
-    limit the nuber of rows returned
-    """
-    limit: Int
-
-    """
-    skip the first n rows. Use only with order_by
-    """
-    offset: Int
-
-    """
-    sort the rows by one or more columns
-    """
-    order_by: [image_tags_order_by!]
-
-    """
-    filter the rows returned
-    """
-    where: image_tags_bool_exp
-  ): image_tags_aggregate!
-
-  """
-  An array relationship
-  """
-  images(
-    """
-    distinct select on columns
-    """
-    distinct_on: [images_select_column!]
-
-    """
-    limit the nuber of rows returned
-    """
-    limit: Int
-
-    """
-    skip the first n rows. Use only with order_by
-    """
-    offset: Int
-
-    """
-    sort the rows by one or more columns
-    """
-    order_by: [images_order_by!]
-
-    """
-    filter the rows returned
-    """
-    where: images_bool_exp
-  ): [images!]!
-
-  """
-  An aggregated array relationship
-  """
-  images_aggregate(
-    """
-    distinct select on columns
-    """
-    distinct_on: [images_select_column!]
-
-    """
-    limit the nuber of rows returned
-    """
-    limit: Int
-
-    """
-    skip the first n rows. Use only with order_by
-    """
-    offset: Int
-
-    """
-    sort the rows by one or more columns
-    """
-    order_by: [images_order_by!]
-
-    """
-    filter the rows returned
-    """
-    where: images_bool_exp
-  ): images_aggregate!
 
   """
   An array relationship
@@ -4861,9 +5455,9 @@ input users_bool_exp {
   _not: users_bool_exp
   _or: [users_bool_exp]
   avatar: text_comparison_exp
+  favorite_guild: guilds_bool_exp
+  favorite_guild_id: text_comparison_exp
   image_channels: image_channels_bool_exp
-  image_tags: image_tags_bool_exp
-  images: images_bool_exp
   members: members_bool_exp
   name: text_comparison_exp
   user_id: text_comparison_exp
@@ -4884,9 +5478,9 @@ input type for inserting data into table "users"
 """
 input users_insert_input {
   avatar: String
+  favorite_guild: guilds_obj_rel_insert_input
+  favorite_guild_id: String
   image_channels: image_channels_arr_rel_insert_input
-  image_tags: image_tags_arr_rel_insert_input
-  images: images_arr_rel_insert_input
   members: members_arr_rel_insert_input
   name: String
   user_id: String
@@ -4897,6 +5491,7 @@ aggregate max on columns
 """
 type users_max_fields {
   avatar: String
+  favorite_guild_id: String
   name: String
   user_id: String
 }
@@ -4906,6 +5501,7 @@ order by max() on columns of table "users"
 """
 input users_max_order_by {
   avatar: order_by
+  favorite_guild_id: order_by
   name: order_by
   user_id: order_by
 }
@@ -4915,6 +5511,7 @@ aggregate min on columns
 """
 type users_min_fields {
   avatar: String
+  favorite_guild_id: String
   name: String
   user_id: String
 }
@@ -4924,6 +5521,7 @@ order by min() on columns of table "users"
 """
 input users_min_order_by {
   avatar: order_by
+  favorite_guild_id: order_by
   name: order_by
   user_id: order_by
 }
@@ -4964,9 +5562,9 @@ ordering options when selecting data from "users"
 """
 input users_order_by {
   avatar: order_by
+  favorite_guild: guilds_order_by
+  favorite_guild_id: order_by
   image_channels_aggregate: image_channels_aggregate_order_by
-  image_tags_aggregate: image_tags_aggregate_order_by
-  images_aggregate: images_aggregate_order_by
   members_aggregate: members_aggregate_order_by
   name: order_by
   user_id: order_by
@@ -4984,6 +5582,11 @@ enum users_select_column {
   """
   column name
   """
+  favorite_guild_id
+
+  """
+  column name
+  """
   name
 
   """
@@ -4997,6 +5600,7 @@ input type for updating data in table "users"
 """
 input users_set_input {
   avatar: String
+  favorite_guild_id: String
   name: String
   user_id: String
 }
@@ -5009,6 +5613,11 @@ enum users_update_column {
   column name
   """
   avatar
+
+  """
+  column name
+  """
+  favorite_guild_id
 
   """
   column name

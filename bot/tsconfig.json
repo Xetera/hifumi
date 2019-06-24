@@ -8,7 +8,8 @@
 		/* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
 		"lib": [
 			"es6",
-			"dom"
+			"dom",
+			"esnext.array"
 		],
 		 "allowJs": true,                       /* Allow javascript files to be compiled. */
 		// "checkJs": true,                       /* Report errors in .js files. */

@@ -44,7 +44,7 @@ export default class extends Command {
 
     const where: images_bool_exp = {
       _and: [{
-        user_id: { _eq: targetMsg.author.id }
+        member_id: { _eq: targetMsg.author.id }
       }, {
         url: { _eq: url }
       }]
@@ -59,7 +59,7 @@ export default class extends Command {
           name: 1
         }
       }]
-    })
+    });
     if (!data) {
       return;
     }
@@ -92,7 +92,7 @@ export default class extends Command {
     const { filename } = targetMsg.attachments.first() || { filename: null };
     const image: images_insert_input = {
       file_name: filename,
-      user_id: targetMsg.author.id,
+      member_id: targetMsg.author.id,
       message_id: targetMsg.id,
       guild_id: targetMsg.guild.id,
       url,
