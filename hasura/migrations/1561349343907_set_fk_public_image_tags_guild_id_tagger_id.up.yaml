@@ -1,0 +1,8 @@
+- args:
+    sql: alter table "public"."image_tags" drop constraint "image_tags_tagger_id_fkey";
+  type: run_sql
+- args:
+    sql: alter table "public"."image_tags" add constraint "image_tags_tagger_id_fkey"
+      foreign key ("guild_id", "tagger_id") references "public"."members"("guild_id",
+      "user_id") on update cascade on delete cascade;
+  type: run_sql

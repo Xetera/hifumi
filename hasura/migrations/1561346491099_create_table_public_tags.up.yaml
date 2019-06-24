@@ -1,0 +1,10 @@
+- args:
+    sql: CREATE TABLE "public"."tags"("name" text NOT NULL, "guild_id" text NOT NULL,
+      "created_at" date NOT NULL DEFAULT now(), PRIMARY KEY ("guild_id","name") ,
+      FOREIGN KEY ("guild_id") REFERENCES "public"."guilds"("guild_id") ON UPDATE
+      cascade ON DELETE cascade);
+  type: run_sql
+- args:
+    name: tags
+    schema: public
+  type: add_existing_table_or_view

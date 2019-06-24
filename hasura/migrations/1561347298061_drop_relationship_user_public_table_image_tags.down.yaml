@@ -1,0 +1,8 @@
+- args:
+    name: user
+    table:
+      name: image_tags
+      schema: public
+    using:
+      foreign_key_constraint_on: tagger_id
+  type: create_object_relationship

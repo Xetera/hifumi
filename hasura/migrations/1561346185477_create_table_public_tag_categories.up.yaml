@@ -1,0 +1,10 @@
+- args:
+    sql: CREATE TABLE "public"."tag_categories"("name" text NOT NULL, "added_by" text
+      NOT NULL, "created_at" date NOT NULL DEFAULT now(), PRIMARY KEY ("name") , FOREIGN
+      KEY ("added_by") REFERENCES "public"."users"("user_id") ON UPDATE cascade ON
+      DELETE set null, UNIQUE ("name"));
+  type: run_sql
+- args:
+    name: tag_categories
+    schema: public
+  type: add_existing_table_or_view

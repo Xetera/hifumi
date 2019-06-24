@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "public"."guilds" ADD COLUMN "joined_at" date NOT NULL DEFAULT
+      now()
+  type: run_sql

@@ -1,0 +1,8 @@
+- args:
+    sql: alter table "public"."members" drop constraint "members_pkey";
+  type: run_sql
+- args:
+    sql: |-
+      alter table "public"."members"
+          add constraint "members_pkey" primary key ( "user_id", "guild_id" );
+  type: run_sql

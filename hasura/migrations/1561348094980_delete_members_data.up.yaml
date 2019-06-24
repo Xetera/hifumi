@@ -1,0 +1,4 @@
+- args:
+    cascade: false
+    sql: delete from members *;
+  type: run_sql
