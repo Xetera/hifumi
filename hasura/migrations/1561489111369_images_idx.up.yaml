@@ -1,0 +1,4 @@
+- args:
+    cascade: false
+    sql: CREATE INDEX images_idx_guild ON images (guild_id)
+  type: run_sql

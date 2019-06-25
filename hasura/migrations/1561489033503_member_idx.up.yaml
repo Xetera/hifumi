@@ -1,0 +1,4 @@
+- args:
+    cascade: false
+    sql: CREATE INDEX member_idx_id ON members (user_id)
+  type: run_sql
