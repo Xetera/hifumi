@@ -1,15 +1,27 @@
 @import "variables";
 
 /* Responsive Design */
-@mixin on-tablet {
+@mixin on-mobile {
   @media (min-width: #{$mobile-width}){
     @content
   }
 }
 
-@mixin on-desktop {
-  @media (min-width: #{$tablet-width}) {
+@mixin on-tablet {
+  @media (min-width: #{$tablet-width}){
     @content
+  }
+}
+
+@mixin on-desktop {
+  @media (min-width: #{$desktop-width}) {
+    @content
+  }
+}
+
+@mixin hidden-on-mobile {
+  @media (max-width: #{$mobile-width}) {
+    display: none;
   }
 }
 

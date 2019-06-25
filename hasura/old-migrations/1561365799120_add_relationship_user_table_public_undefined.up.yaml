@@ -1,0 +1,8 @@
+- args:
+    name: user
+    table:
+      name: tag_categories
+      schema: public
+    using:
+      foreign_key_constraint_on: added_by
+  type: create_object_relationship

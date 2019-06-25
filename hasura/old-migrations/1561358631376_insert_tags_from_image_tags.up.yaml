@@ -1,0 +1,9 @@
+- args:
+    cascade: false
+    sql: |
+      INSERT INTO tags
+      SELECT image_tags.name, members.guild_id FROM image_tags
+      INNER JOIN members ON members.user_id = image_tags.member_id
+      INNER JOIN images ON images.guild_id = members.guild_id
+      GROUP BY image_tags.name, members.guild_id;
+  type: run_sql

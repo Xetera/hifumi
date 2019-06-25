@@ -1,0 +1,9 @@
+- args:
+    cascade: false
+    sql: |-
+      UPDATE image_tags
+      SET guild_id = images.guild_id
+      FROM image_tags as it
+      JOIN members ON members.user_id = it.member_id
+      JOIN images ON members.guild_id = images.guild_id
+  type: run_sql

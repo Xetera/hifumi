@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div>
-      <h3 class="sidebar-label">{{ label }}</h3>
-    </div>
     <div class="sidebar-menu-items">
       <slot></slot>
     </div>

@@ -1,17 +1,21 @@
 <template>
   <div class="sidebar">
     <div>
-      <SidebarHead />
-      <div
-        class="sidebar-guild-wrapper"
-        v-for="guild in guilds"
-        :key="`${guild.name}:${guild.icon}`"
-      >
-        <router-link
-          :to="{ name: 'guild-home', params: { guild_id: guild.guild_id } }"
+      <router-link :to="{ name: 'home' }">
+        <SidebarHead />
+      </router-link>
+      <div class="sidebar-scrollable">
+        <div
+          class="sidebar-guild-wrapper"
+          v-for="guild in guilds"
+          :key="`${guild.name}:${guild.icon}`"
         >
-          <SidebarGuild :name="guild.name" :image="guild.icon" />
-        </router-link>
+          <router-link
+            :to="{ name: 'guild-home', params: { guild_id: guild.guild_id } }"
+          >
+            <SidebarGuild :name="guild.name" :image="guild.icon" />
+          </router-link>
+        </div>
       </div>
       <div class="sidebar-guild-wrapper">
         <router-link :to="{ name: 'support-server' }" v-if="!inSupportServer">
@@ -23,7 +27,7 @@
         </router-link>
       </div>
     </div>
-    <div>
+    <div class="sidebar-static-wrapper">
       <SidebarMenuStatic />
       <SidebarUser />
     </div>
@@ -59,9 +63,16 @@ export default {
 a.router-link-active .sidebar-top {
   background: $sidebar-selected-tab !important;
 }
+.sidebar-scrollable {
+  overflow-y: auto;
+  flex: 1;
+}
+
 .sidebar-guild-wrapper {
   margin-top: 10px;
   height: 65px;
+}
+.sidebar-static-wrapper {
 }
 .sidebar {
   z-index: 2;

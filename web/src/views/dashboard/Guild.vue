@@ -1,7 +1,11 @@
 <template>
-  <div class="dashboard">
-    <GuildHeader :banner="guild.banner" :server-image="guild.icon" :name="guild.name" />
-    <router-view class="fullwidth"></router-view>
+  <div class="guild">
+    <GuildHeader
+      :banner="guild.banner"
+      :server-image="guild.icon"
+      :name="guild.name"
+    />
+    <router-view class="guild-view"></router-view>
   </div>
 </template>
 
@@ -33,39 +37,17 @@ export default {
       this.$route.params.guild_id
     );
   },
-  apollo: {
-    $subscribe: {
-      image_tags: {
-        query: graphql(imagesAggregate),
-        variables() {
-          return {
-            where: this.where
-          };
-        },
-        result({ data }) {
-          this.$store.commit("images/setTotal", data.images.aggregate.count);
-        }
-      },
-      images: {
-        query: graphql(images),
-        variables() {
-          const { where, limit, offset } = this;
-          return {
-            where,
-            limit,
-            offset
-          };
-        },
-        result({ data }) {
-          return this.$store.commit("images/setImages", data.images);
-        }
-      }
-    }
-  }
 };
 </script>
 
 <style scoped lang="scss">
+.guild-view {
+  height: 100%;
+}
+.guild {
+  width: 100%;
+  height: 100%;
+}
 .menu-transition {
   animation: slide-down 0.3s ease-in-out;
 }

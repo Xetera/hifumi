@@ -1,9 +1,9 @@
 <template>
-  <VueCustomScrollbar class="view-wrapper">
-    <div class="view-wrapper">
+  <div class="view-wrapper">
+    <VueCustomScrollbar style="" class="view">
       <slot></slot>
-    </div>
-  </VueCustomScrollbar>
+    </VueCustomScrollbar>
+  </div>
 </template>
 
 <script>
@@ -15,11 +15,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.view {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .view-wrapper {
   display: flex;
-  overflow-y: auto;
   justify-content: center;
   align-items: flex-start;
   width: 100%;
+  height: 100%;
 }
 </style>

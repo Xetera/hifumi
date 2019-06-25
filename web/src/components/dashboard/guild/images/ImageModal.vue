@@ -33,7 +33,7 @@
       </div>
     </div>
     <vue-custom-scrollbar class="modal-image-middle">
-      <div v-if="imageFailed">
+      <div v-if="imageFailed" class="modal-image-middle">
         <b-notification
           :active="true"
           type="is-danger"
@@ -173,7 +173,7 @@ $section-height: 80px;
   @include flex-col;
 }
 .modal-image-middle {
-  transition: 0.3s ease-in;
+  transition: height 0.3s ease-in;
   background-color: $background-dark;
   max-height: 600px;
   overflow-y: auto;

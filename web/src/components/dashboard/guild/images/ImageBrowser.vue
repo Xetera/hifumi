@@ -2,14 +2,15 @@
   <div class="grid-wrapper">
     <transition name="fade">
       <div class="images-filter-field">
-<!--        <SearchTitle-->
-<!--          search="Newgame"-->
-<!--          :tags="['hifumi', 'cute']"-->
-<!--          :results="images.length"-->
-<!--        />-->
-<!--        <div class="margin-top image-page-search">-->
-<!--          <SearchBar class="padding-top" />-->
-<!--        </div>-->
+        <h3 class="title thin">{{ images.length }} results</h3>
+        <!--        <SearchTitle-->
+        <!--          search="Newgame"-->
+        <!--          :tags="['hifumi', 'cute']"-->
+        <!--          :results="images.length"-->
+        <!--        />-->
+        <!--        <div class="margin-top image-page-search">-->
+        <!--          <SearchBar class="padding-top" />-->
+        <!--        </div>-->
 
         <div class="margin-top">
           <CurrentTags />
@@ -21,12 +22,16 @@
       </div>
     </transition>
 
-    <b-modal :active.sync="modalOpen">
+    <b-modal :active.sync="modalOpen" scroll="clip">
       <ImageModal v-bind="modal" />
     </b-modal>
-    <div class="margin-top">
+    <div
+      class="margin-top"
+      v-infinite-scroll="infiniteHandler"
+      infinite-scroll-disabled="loading"
+      infinite-scroll-distance="10"
+    >
       <ServerImageGrid v-if="images.length > 0">
-        <!--        <b-loading :active.sync="loading" />-->
         <ServerImage
           v-for="image in images"
           :key="image.url"
@@ -35,10 +40,6 @@
         />
       </ServerImageGrid>
     </div>
-
-    <!--      <div v-if="images.length === 0">-->
-    <!--        <p>Looks like this server hasn't tagged any images yet</p>-->
-    <!--      </div>-->
   </div>
 </template>
 
@@ -46,24 +47,20 @@
 import ServerImage from "./Image";
 import ServerImageGrid from "@/components/dashboard/guild/images/ImageGrid";
 import { mapState } from "vuex";
-import VueCustomScrollbar from "vue-custom-scrollbar/src/vue-scrollbar";
 import BModal from "buefy/src/components/modal/Modal";
 import ImageModal from "@/components/dashboard/guild/images/ImageModal";
-import SearchBar from "./SearchBar";
-import SearchTitle from "./SearchTitle";
 import AvailableTags from "./AvailableTags";
 import CurrentTags from "./CurrentTags";
+import { graphql } from "@/graphql";
+import { images, imagesAggregate } from "@/graphql/subscriptions";
 
 export default {
   name: "ImageBrowser",
   components: {
     CurrentTags,
     AvailableTags,
-    SearchTitle,
-    SearchBar,
     ImageModal,
     BModal,
-    VueCustomScrollbar,
     ServerImageGrid,
     ServerImage
   },
@@ -74,14 +71,57 @@ export default {
     };
   },
   computed: {
-    ...mapState("images", ["images", "page", "loading"]),
+    ...mapState("images", [
+      "images",
+      "page",
+      "loading",
+      "where",
+      "limit",
+      "offset"
+    ]),
     ...mapState(["guilds", "currentGuild"])
   },
   methods: {
+    infiniteHandler() {
+      console.log("fetching more");
+      this.$store.dispatch("images/incrementPage");
+    },
     openModal(modal) {
-      console.log(modal);
       this.modalOpen = true;
       this.modal = modal;
+    }
+  },
+  apollo: {
+    $subscribe: {
+      image_tags: {
+        query: graphql(imagesAggregate),
+        variables() {
+          return {
+            where: this.where
+          };
+        },
+        result({ data }) {
+          this.$store.commit("images/setTotal", data.images.aggregate.count);
+        }
+      },
+      images: {
+        query: graphql(images),
+        variables() {
+          const { where, limit, offset } = this;
+          this.$store.commit("images/setLoading", true);
+          console.log("where");
+          return {
+            where,
+            limit,
+            offset
+          };
+        },
+        result({ data }) {
+          this.$emit("results-fetched");
+          this.$store.commit("images/setLoading", false);
+          return this.$store.commit("images/setImages", data.images);
+        }
+      }
     }
   }
 };
@@ -89,7 +129,7 @@ export default {
 
 <style scoped lang="scss">
 .images-filter-field {
-  background: #2a2b2c;
+  background: $foreground-light;
   box-shadow: $shadow;
   padding: 3%;
 }
@@ -101,11 +141,8 @@ export default {
 }
 .grid-wrapper {
   text-align: left;
-  /*padding: 3%;*/
   width: 100%;
-  max-height: 100%;
   height: 100%;
-  overflow-y: auto;
 }
 
 .pagination-item {

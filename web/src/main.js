@@ -13,11 +13,13 @@ import "./utils/registerServiceWorker";
 import { apolloProvider } from "./graphql";
 import { sync } from "vuex-router-sync";
 import { Snackbar } from "buefy/src/components/snackbar";
+import InfiniteScroll from "vue-infinite-scroll";
 
 sync(store, router);
 
 Vue.config.productionTip = false;
 Vue.use(Snackbar);
+Vue.use(InfiniteScroll);
 
 new Vue({
   router,

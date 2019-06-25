@@ -8,6 +8,9 @@ import GuildSettings from "@/components/dashboard/guild/GuildSettings";
 import Guild from "@/views/dashboard/Guild";
 import ImageView from "@/views/dashboard/ImageView";
 import SupportServer from "../views/dashboard/SupportServer";
+import Premium from "../views/dashboard/static/Premium";
+import Developers from "../views/dashboard/static/Developers";
+import Profile from "../views/dashboard/static/Profile";
 
 export default {
   ...withDiscordAuth,
@@ -28,6 +31,21 @@ export default {
       path: "settings",
       name: "settings",
       component: DashboardSettings
+    },
+    {
+      path: "developers",
+      name: "developers",
+      component: Developers
+    },
+    {
+      path: "profile",
+      name: "profile",
+      component: Profile
+    },
+    {
+      path: "premium",
+      name: "premium",
+      component: Premium
     },
     {
       path: ":guild_id",

@@ -7,6 +7,7 @@ import { addMutation } from "@/mixins/vuex";
 import { kickToFrontPage } from "../router/guards";
 import router from "../router";
 import { guild } from "./modules/guild.store";
+import { LoadingProgrammatic } from "buefy/dist/components/loading";
 
 // const defaultGuild = {
 //   name: "Home",
@@ -23,6 +24,7 @@ export const base = {
     modal: {},
     contributors: 0,
     menuOpen: false
+    h god
   },
   getters: {
     isAuthed() {
@@ -53,6 +55,16 @@ export const base = {
     }
   },
   actions: {
+    logout() {
+      const spinner = LoadingProgrammatic.open({
+        isFullPage: true
+      });
+      setTimeout(() => {
+        spinner.close();
+        localStorage.removeItem("token");
+        router.push({ name: "bot-home" });
+      }, 1000);
+    },
     checkLogin: ({ commit }) => {
       return get(`${AUTH_URL}/auth`)
         .then(({ authorized }) => {

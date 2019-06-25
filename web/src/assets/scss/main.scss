@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 @import url("https://fonts.googleapis.com/css?family=Lato");
 
 :root {
@@ -32,16 +33,24 @@ body {
   background-color: $background;
 }
 
-.tag {
-  height: 40px;
-  flex-direction: row;
-  border-radius: 999px;
-  background: $tag-color;
-  display: inline-flex;
-  align-content: flex-start;
-  align-items: center;
-  flex-shrink: 1;
+.thin {
+  font-weight: 200;
 }
+
+//.tag {
+//  height: 40px;
+//  flex-direction: row;
+//  border-radius: 999px;
+//  background: $tag-color;
+//  display: inline-flex;
+//  align-content: flex-start;
+//  align-items: center;
+//  flex-shrink: 1;
+//}
+.hidden-on-mobile {
+   @include hidden-on-mobile;
+}
+
 .sidebar-image {
   max-height: 45px;
   border-radius: 9999px;

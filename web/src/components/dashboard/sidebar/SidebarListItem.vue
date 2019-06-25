@@ -1,19 +1,12 @@
 <template>
-  <router-link
-    :to="to"
-    class="sidebar-link sidebar-list-item"
-    :style="{ background: background }"
-  >
-    <!--    <div v-if="selected" class="sidebar-selected-icon-wrapper">-->
-    <!--      <img src="@/assets/svg/play.svg" />-->
-    <!--    </div>-->
+  <div class="sidebar-list-item">
     <div class="sidebar-list-item-content">
       <div class="sidebar-list-item-icon">
         <component :is="icon" :size="iconSize" />
       </div>
-      <span class="sidebar-list-item-name">{{ name }}</span>
+      <p class="sidebar-list-item-name">{{ name }}</p>
     </div>
-  </router-link>
+  </div>
 </template>
 
 <script>
@@ -39,12 +32,7 @@ export default {
     HomeIcon
   },
   props: {
-    to: Object,
     icon: String,
-    background: {
-      optional: true,
-      type: String
-    },
     name: {
       optional: false,
       type: String
@@ -59,36 +47,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.router-link-exact-active {
-  background: $sidebar-selected-tab !important;
-  // fix this play button thingy
-  &.sidebar-list-item-content:before {
-    display: flex;
-    position: absolute;
-    left: 0;
-    background: red;
-    background: url(../../../assets/svg/play.svg);
-  }
-}
 .sidebar-selected-icon {
   text-align: left;
   font-size: 2em;
 }
-.sidebar-list-item {
-  &:hover {
-    background: #36393f;
-  }
-  color: white !important;
-  align-items: center;
-  display: flex;
-  justify-content: flex-start;
-  height: 40px;
-}
 
 .sidebar-list-item-content {
   align-items: center;
+  color: white;
   display: flex;
-  width: 100%;
+  max-width: 100%;
   justify-content: flex-start;
   margin: 0 20px;
 }

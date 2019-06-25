@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div>
-      <p>{{ guild.name }}</p>
-    </div>
     <div>{{ contributors }} contributors</div>
   </div>
 </template>

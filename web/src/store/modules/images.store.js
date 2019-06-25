@@ -1,12 +1,12 @@
 import { addMutation, createModule } from "@/mixins/vuex";
 const state = {
   images: [],
-  limit: 40,
+  limit: 15,
   offset: 0,
-  page: 1,
   total: 1,
   where: {},
   currentTags: [],
+  loading: false,
   tags: []
 };
 
@@ -14,9 +14,9 @@ export const images = createModule({
   state,
   mutations: {
     ...addMutation("setImages", "images"),
-    ...addMutation("setPage", "page"),
     ...addMutation("setTotal", "total"),
     ...addMutation("setWhere", "where"),
+    ...addMutation("setLoading", "loading"),
     ...addMutation("setOffset", "offset"),
     ...addMutation("setTags", "tags"),
     ...addMutation("setTagCount", "tagCount"),
@@ -93,6 +93,9 @@ export const images = createModule({
       commit("addTag", obj);
       commit("removeCurrentTag", obj);
       commit("updateWhere");
+    },
+    incrementPage({ commit, state }) {
+      commit("setOffset", state.offset + state.limit);
     }
   }
 });

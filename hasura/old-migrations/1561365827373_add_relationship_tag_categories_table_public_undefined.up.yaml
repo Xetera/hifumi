@@ -1,0 +1,12 @@
+- args:
+    name: tag_categories
+    table:
+      name: users
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: added_by
+        table:
+          name: tag_categories
+          schema: public
+  type: create_array_relationship

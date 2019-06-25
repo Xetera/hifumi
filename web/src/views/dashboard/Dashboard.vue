@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <Sidebar />
+    <Sidebar class="hidden-on-mobile" />
     <TheDashboardDisplay>
       <router-view />
     </TheDashboardDisplay>
@@ -28,10 +28,7 @@ export default {
 <style scoped lang="scss">
 .dashboard {
   background: $background;
-  @include flex-col;
-  @include on-tablet {
-    flex-direction: row;
-  }
+  @include flex-row;
   height: 100%;
 }
 </style>

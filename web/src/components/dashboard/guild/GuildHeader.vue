@@ -4,7 +4,7 @@
       <div class="overlay"></div>
       <img :src="banner" class="guild-header-banner" />
       <div class="guild-header-info">
-        <img :src="serverImage" />
+<!--        <img :src="serverImage" />-->
         <h2 class="guild-header-name">{{ name }}</h2>
       </div>
     </div>
@@ -68,22 +68,29 @@ export default {
 }
 .guild-header-name {
   @include text-shadowed;
-  font-size: 42px;
+  font-size: 24px;
+  @include on-tablet {
+    font-size: 42px;
+  }
   margin-left: 20px;
 }
 .guild-header-info {
   @include flex-row;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   z-index: 4;
   position: absolute;
   bottom: 0;
-  left: 30%;
+  @include on-tablet {
+  }
 }
 .guild-header-banner-wrapper {
   display: flex;
   justify-content: center;
   position: relative;
   height: 100%;
+  min-height: 360px;
   max-height: 360px;
 }
 .overlay {

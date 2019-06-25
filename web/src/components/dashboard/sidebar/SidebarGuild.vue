@@ -62,18 +62,18 @@ export default {
   align-items: center;
 }
 .sidebar-top {
+  &:hover {
+    background: $foreground-light !important;
+  }
   height: 100%;
-  cursor: pointer;
   padding: 10px;
+  cursor: pointer;
   font-size: 12px;
   color: $font-light;
 }
 
-.thin {
-  font-weight: 200;
-}
 .disabled {
-  filter: grayscale(80%);
+  filter: grayscale(90%);
 }
 .disabled-text {
   color: #919191;
