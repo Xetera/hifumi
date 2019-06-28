@@ -23,15 +23,15 @@ const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
 });
 
 export const syncAll = ({ guilds, users }: AkairoClient) => {
-  const members =
-    guilds.map((guild) => guild.members.array())
-      .reduce((a, b) => a.concat(b), []);
-  Promise.all([
+  const members = guilds
+    .map((guild) => guild.members.array())
+    .reduce((a, b) => a.concat(b), []);
+  return Promise.all([
     syncGuilds(guilds.array()),
     syncUsers(users.array()),
     syncMembers(members)
   ]);
- }
+};
 
 export const _client = createClient({
   fetcher: ({ query, variables }: { query: any; variables: any }, fetch: any) =>
@@ -51,7 +51,7 @@ export const syncGuilds = (guilds: Guild[]) => {
   return _client.mutation({
     insert_guilds: [
       {
-        objects: guilds.map((guild) => ({
+        objects: guilds.map(guild => ({
           guild_id: guild.id,
           name: guild.name,
           icon: guild.iconURL

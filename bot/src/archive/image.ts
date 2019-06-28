@@ -21,9 +21,9 @@ const upsertImage = (message: Message, att: MessageAttachment, url: string, tags
       message_id: message.id,
       url,
       image_tags: {
-        data: tags.map((tag) => ({
-          name: tag,
-        }))
+        data:  [{
+          tag: {}
+        }]
       },
       file_name: att.filename,
       guild_id: message.guild.id,

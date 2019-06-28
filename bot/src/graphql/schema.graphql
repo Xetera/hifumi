@@ -5,6 +5,663 @@ schema {
 }
 
 """
+columns and relationships of "__tag_counts"
+"""
+type __tag_counts {
+  count: bigint!
+
+  """
+  An object relationship
+  """
+  guild: guilds!
+  guild_id: String!
+  name: String!
+}
+
+"""
+aggregated selection of "__tag_counts"
+"""
+type __tag_counts_aggregate {
+  aggregate: __tag_counts_aggregate_fields
+  nodes: [__tag_counts!]!
+}
+
+"""
+aggregate fields of "__tag_counts"
+"""
+type __tag_counts_aggregate_fields {
+  avg: __tag_counts_avg_fields
+  count(columns: [__tag_counts_select_column!], distinct: Boolean): Int
+  max: __tag_counts_max_fields
+  min: __tag_counts_min_fields
+  stddev: __tag_counts_stddev_fields
+  stddev_pop: __tag_counts_stddev_pop_fields
+  stddev_samp: __tag_counts_stddev_samp_fields
+  sum: __tag_counts_sum_fields
+  var_pop: __tag_counts_var_pop_fields
+  var_samp: __tag_counts_var_samp_fields
+  variance: __tag_counts_variance_fields
+}
+
+"""
+order by aggregate values of table "__tag_counts"
+"""
+input __tag_counts_aggregate_order_by {
+  avg: __tag_counts_avg_order_by
+  count: order_by
+  max: __tag_counts_max_order_by
+  min: __tag_counts_min_order_by
+  stddev: __tag_counts_stddev_order_by
+  stddev_pop: __tag_counts_stddev_pop_order_by
+  stddev_samp: __tag_counts_stddev_samp_order_by
+  sum: __tag_counts_sum_order_by
+  var_pop: __tag_counts_var_pop_order_by
+  var_samp: __tag_counts_var_samp_order_by
+  variance: __tag_counts_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "__tag_counts"
+"""
+input __tag_counts_arr_rel_insert_input {
+  data: [__tag_counts_insert_input!]!
+  on_conflict: __tag_counts_on_conflict
+}
+
+"""
+aggregate avg on columns
+"""
+type __tag_counts_avg_fields {
+  count: Float
+}
+
+"""
+order by avg() on columns of table "__tag_counts"
+"""
+input __tag_counts_avg_order_by {
+  count: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "__tag_counts". All fields are combined with a logical 'AND'.
+"""
+input __tag_counts_bool_exp {
+  _and: [__tag_counts_bool_exp]
+  _not: __tag_counts_bool_exp
+  _or: [__tag_counts_bool_exp]
+  count: bigint_comparison_exp
+  guild: guilds_bool_exp
+  guild_id: text_comparison_exp
+  name: text_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "__tag_counts"
+"""
+enum __tag_counts_constraint {
+  """
+  unique or primary key constraint
+  """
+  tag_counts_pkey
+}
+
+"""
+input type for incrementing integer columne in table "__tag_counts"
+"""
+input __tag_counts_inc_input {
+  count: bigint
+}
+
+"""
+input type for inserting data into table "__tag_counts"
+"""
+input __tag_counts_insert_input {
+  count: bigint
+  guild: guilds_obj_rel_insert_input
+  guild_id: String
+  name: String
+}
+
+"""
+aggregate max on columns
+"""
+type __tag_counts_max_fields {
+  count: bigint
+  guild_id: String
+  name: String
+}
+
+"""
+order by max() on columns of table "__tag_counts"
+"""
+input __tag_counts_max_order_by {
+  count: order_by
+  guild_id: order_by
+  name: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type __tag_counts_min_fields {
+  count: bigint
+  guild_id: String
+  name: String
+}
+
+"""
+order by min() on columns of table "__tag_counts"
+"""
+input __tag_counts_min_order_by {
+  count: order_by
+  guild_id: order_by
+  name: order_by
+}
+
+"""
+response of any mutation on the table "__tag_counts"
+"""
+type __tag_counts_mutation_response {
+  """
+  number of affected rows by the mutation
+  """
+  affected_rows: Int!
+
+  """
+  data of the affected rows by the mutation
+  """
+  returning: [__tag_counts!]!
+}
+
+"""
+input type for inserting object relation for remote table "__tag_counts"
+"""
+input __tag_counts_obj_rel_insert_input {
+  data: __tag_counts_insert_input!
+  on_conflict: __tag_counts_on_conflict
+}
+
+"""
+on conflict condition type for table "__tag_counts"
+"""
+input __tag_counts_on_conflict {
+  constraint: __tag_counts_constraint!
+  update_columns: [__tag_counts_update_column!]!
+}
+
+"""
+ordering options when selecting data from "__tag_counts"
+"""
+input __tag_counts_order_by {
+  count: order_by
+  guild: guilds_order_by
+  guild_id: order_by
+  name: order_by
+}
+
+"""
+select columns of table "__tag_counts"
+"""
+enum __tag_counts_select_column {
+  """
+  column name
+  """
+  count
+
+  """
+  column name
+  """
+  guild_id
+
+  """
+  column name
+  """
+  name
+}
+
+"""
+input type for updating data in table "__tag_counts"
+"""
+input __tag_counts_set_input {
+  count: bigint
+  guild_id: String
+  name: String
+}
+
+"""
+aggregate stddev on columns
+"""
+type __tag_counts_stddev_fields {
+  count: Float
+}
+
+"""
+order by stddev() on columns of table "__tag_counts"
+"""
+input __tag_counts_stddev_order_by {
+  count: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type __tag_counts_stddev_pop_fields {
+  count: Float
+}
+
+"""
+order by stddev_pop() on columns of table "__tag_counts"
+"""
+input __tag_counts_stddev_pop_order_by {
+  count: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type __tag_counts_stddev_samp_fields {
+  count: Float
+}
+
+"""
+order by stddev_samp() on columns of table "__tag_counts"
+"""
+input __tag_counts_stddev_samp_order_by {
+  count: order_by
+}
+
+"""
+aggregate sum on columns
+"""
+type __tag_counts_sum_fields {
+  count: bigint
+}
+
+"""
+order by sum() on columns of table "__tag_counts"
+"""
+input __tag_counts_sum_order_by {
+  count: order_by
+}
+
+"""
+update columns of table "__tag_counts"
+"""
+enum __tag_counts_update_column {
+  """
+  column name
+  """
+  count
+
+  """
+  column name
+  """
+  guild_id
+
+  """
+  column name
+  """
+  name
+}
+
+"""
+aggregate var_pop on columns
+"""
+type __tag_counts_var_pop_fields {
+  count: Float
+}
+
+"""
+order by var_pop() on columns of table "__tag_counts"
+"""
+input __tag_counts_var_pop_order_by {
+  count: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type __tag_counts_var_samp_fields {
+  count: Float
+}
+
+"""
+order by var_samp() on columns of table "__tag_counts"
+"""
+input __tag_counts_var_samp_order_by {
+  count: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type __tag_counts_variance_fields {
+  count: Float
+}
+
+"""
+order by variance() on columns of table "__tag_counts"
+"""
+input __tag_counts_variance_order_by {
+  count: order_by
+}
+
+"""
+columns and relationships of "__tag_suggestions"
+"""
+type __tag_suggestions {
+  levenshtein: Int!
+  name: String!
+}
+
+"""
+aggregated selection of "__tag_suggestions"
+"""
+type __tag_suggestions_aggregate {
+  aggregate: __tag_suggestions_aggregate_fields
+  nodes: [__tag_suggestions!]!
+}
+
+"""
+aggregate fields of "__tag_suggestions"
+"""
+type __tag_suggestions_aggregate_fields {
+  avg: __tag_suggestions_avg_fields
+  count(columns: [__tag_suggestions_select_column!], distinct: Boolean): Int
+  max: __tag_suggestions_max_fields
+  min: __tag_suggestions_min_fields
+  stddev: __tag_suggestions_stddev_fields
+  stddev_pop: __tag_suggestions_stddev_pop_fields
+  stddev_samp: __tag_suggestions_stddev_samp_fields
+  sum: __tag_suggestions_sum_fields
+  var_pop: __tag_suggestions_var_pop_fields
+  var_samp: __tag_suggestions_var_samp_fields
+  variance: __tag_suggestions_variance_fields
+}
+
+"""
+order by aggregate values of table "__tag_suggestions"
+"""
+input __tag_suggestions_aggregate_order_by {
+  avg: __tag_suggestions_avg_order_by
+  count: order_by
+  max: __tag_suggestions_max_order_by
+  min: __tag_suggestions_min_order_by
+  stddev: __tag_suggestions_stddev_order_by
+  stddev_pop: __tag_suggestions_stddev_pop_order_by
+  stddev_samp: __tag_suggestions_stddev_samp_order_by
+  sum: __tag_suggestions_sum_order_by
+  var_pop: __tag_suggestions_var_pop_order_by
+  var_samp: __tag_suggestions_var_samp_order_by
+  variance: __tag_suggestions_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "__tag_suggestions"
+"""
+input __tag_suggestions_arr_rel_insert_input {
+  data: [__tag_suggestions_insert_input!]!
+  on_conflict: __tag_suggestions_on_conflict
+}
+
+"""
+aggregate avg on columns
+"""
+type __tag_suggestions_avg_fields {
+  levenshtein: Float
+}
+
+"""
+order by avg() on columns of table "__tag_suggestions"
+"""
+input __tag_suggestions_avg_order_by {
+  levenshtein: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "__tag_suggestions". All fields are combined with a logical 'AND'.
+"""
+input __tag_suggestions_bool_exp {
+  _and: [__tag_suggestions_bool_exp]
+  _not: __tag_suggestions_bool_exp
+  _or: [__tag_suggestions_bool_exp]
+  levenshtein: integer_comparison_exp
+  name: text_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "__tag_suggestions"
+"""
+enum __tag_suggestions_constraint {
+  """
+  unique or primary key constraint
+  """
+  __tag_suggestion_pkey
+}
+
+"""
+input type for incrementing integer columne in table "__tag_suggestions"
+"""
+input __tag_suggestions_inc_input {
+  levenshtein: Int
+}
+
+"""
+input type for inserting data into table "__tag_suggestions"
+"""
+input __tag_suggestions_insert_input {
+  levenshtein: Int
+  name: String
+}
+
+"""
+aggregate max on columns
+"""
+type __tag_suggestions_max_fields {
+  levenshtein: Int
+  name: String
+}
+
+"""
+order by max() on columns of table "__tag_suggestions"
+"""
+input __tag_suggestions_max_order_by {
+  levenshtein: order_by
+  name: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type __tag_suggestions_min_fields {
+  levenshtein: Int
+  name: String
+}
+
+"""
+order by min() on columns of table "__tag_suggestions"
+"""
+input __tag_suggestions_min_order_by {
+  levenshtein: order_by
+  name: order_by
+}
+
+"""
+response of any mutation on the table "__tag_suggestions"
+"""
+type __tag_suggestions_mutation_response {
+  """
+  number of affected rows by the mutation
+  """
+  affected_rows: Int!
+
+  """
+  data of the affected rows by the mutation
+  """
+  returning: [__tag_suggestions!]!
+}
+
+"""
+input type for inserting object relation for remote table "__tag_suggestions"
+"""
+input __tag_suggestions_obj_rel_insert_input {
+  data: __tag_suggestions_insert_input!
+  on_conflict: __tag_suggestions_on_conflict
+}
+
+"""
+on conflict condition type for table "__tag_suggestions"
+"""
+input __tag_suggestions_on_conflict {
+  constraint: __tag_suggestions_constraint!
+  update_columns: [__tag_suggestions_update_column!]!
+}
+
+"""
+ordering options when selecting data from "__tag_suggestions"
+"""
+input __tag_suggestions_order_by {
+  levenshtein: order_by
+  name: order_by
+}
+
+"""
+select columns of table "__tag_suggestions"
+"""
+enum __tag_suggestions_select_column {
+  """
+  column name
+  """
+  levenshtein
+
+  """
+  column name
+  """
+  name
+}
+
+"""
+input type for updating data in table "__tag_suggestions"
+"""
+input __tag_suggestions_set_input {
+  levenshtein: Int
+  name: String
+}
+
+"""
+aggregate stddev on columns
+"""
+type __tag_suggestions_stddev_fields {
+  levenshtein: Float
+}
+
+"""
+order by stddev() on columns of table "__tag_suggestions"
+"""
+input __tag_suggestions_stddev_order_by {
+  levenshtein: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type __tag_suggestions_stddev_pop_fields {
+  levenshtein: Float
+}
+
+"""
+order by stddev_pop() on columns of table "__tag_suggestions"
+"""
+input __tag_suggestions_stddev_pop_order_by {
+  levenshtein: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type __tag_suggestions_stddev_samp_fields {
+  levenshtein: Float
+}
+
+"""
+order by stddev_samp() on columns of table "__tag_suggestions"
+"""
+input __tag_suggestions_stddev_samp_order_by {
+  levenshtein: order_by
+}
+
+"""
+aggregate sum on columns
+"""
+type __tag_suggestions_sum_fields {
+  levenshtein: Int
+}
+
+"""
+order by sum() on columns of table "__tag_suggestions"
+"""
+input __tag_suggestions_sum_order_by {
+  levenshtein: order_by
+}
+
+"""
+update columns of table "__tag_suggestions"
+"""
+enum __tag_suggestions_update_column {
+  """
+  column name
+  """
+  levenshtein
+
+  """
+  column name
+  """
+  name
+}
+
+"""
+aggregate var_pop on columns
+"""
+type __tag_suggestions_var_pop_fields {
+  levenshtein: Float
+}
+
+"""
+order by var_pop() on columns of table "__tag_suggestions"
+"""
+input __tag_suggestions_var_pop_order_by {
+  levenshtein: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type __tag_suggestions_var_samp_fields {
+  levenshtein: Float
+}
+
+"""
+order by var_samp() on columns of table "__tag_suggestions"
+"""
+input __tag_suggestions_var_samp_order_by {
+  levenshtein: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type __tag_suggestions_variance_fields {
+  levenshtein: Float
+}
+
+"""
+order by variance() on columns of table "__tag_suggestions"
+"""
+input __tag_suggestions_variance_order_by {
+  levenshtein: order_by
+}
+
+"""
 columns and relationships of "auto_tags"
 """
 type auto_tags {
@@ -415,7 +1072,7 @@ columns and relationships of "guilds"
 """
 type guilds {
   banner: String
-  enabled: Boolean
+  enabled: Boolean!
 
   """
   An array relationship
@@ -660,6 +1317,66 @@ type guilds {
     where: members_bool_exp
   ): members_aggregate!
   name: String!
+
+  """
+  An array relationship
+  """
+  tags(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tags_bool_exp
+  ): [tags!]!
+
+  """
+  An aggregated array relationship
+  """
+  tags_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: tags_bool_exp
+  ): tags_aggregate!
   welcome_channel: String
 }
 
@@ -714,6 +1431,7 @@ input guilds_bool_exp {
   joined_at: date_comparison_exp
   members: members_bool_exp
   name: text_comparison_exp
+  tags: tags_bool_exp
   welcome_channel: text_comparison_exp
 }
 
@@ -741,6 +1459,7 @@ input guilds_insert_input {
   joined_at: date
   members: members_arr_rel_insert_input
   name: String
+  tags: tags_arr_rel_insert_input
   welcome_channel: String
 }
 
@@ -837,6 +1556,7 @@ input guilds_order_by {
   joined_at: order_by
   members_aggregate: members_aggregate_order_by
   name: order_by
+  tags_aggregate: tags_aggregate_order_by
   welcome_channel: order_by
 }
 
@@ -1215,7 +1935,7 @@ enum image_channels_update_column {
 columns and relationships of "image_tags"
 """
 type image_tags {
-  guild_id: String
+  guild_id: String!
   id: Int!
 
   """
@@ -1228,8 +1948,18 @@ type image_tags {
   An object relationship
   """
   member: members
-  member_id: String
   name: String!
+
+  """
+  An object relationship
+  """
+  tag: tags
+
+  """
+  An object relationship
+  """
+  user: users
+  user_id: String
 }
 
 """
@@ -1310,8 +2040,10 @@ input image_tags_bool_exp {
   image: images_bool_exp
   image_id: integer_comparison_exp
   member: members_bool_exp
-  member_id: text_comparison_exp
   name: text_comparison_exp
+  tag: tags_bool_exp
+  user: users_bool_exp
+  user_id: text_comparison_exp
 }
 
 """
@@ -1341,8 +2073,10 @@ input image_tags_insert_input {
   image: images_obj_rel_insert_input
   image_id: Int
   member: members_obj_rel_insert_input
-  member_id: String
   name: String
+  tag: tags_obj_rel_insert_input
+  user: users_obj_rel_insert_input
+  user_id: String
 }
 
 """
@@ -1352,8 +2086,8 @@ type image_tags_max_fields {
   guild_id: String
   id: Int
   image_id: Int
-  member_id: String
   name: String
+  user_id: String
 }
 
 """
@@ -1363,8 +2097,8 @@ input image_tags_max_order_by {
   guild_id: order_by
   id: order_by
   image_id: order_by
-  member_id: order_by
   name: order_by
+  user_id: order_by
 }
 
 """
@@ -1374,8 +2108,8 @@ type image_tags_min_fields {
   guild_id: String
   id: Int
   image_id: Int
-  member_id: String
   name: String
+  user_id: String
 }
 
 """
@@ -1385,8 +2119,8 @@ input image_tags_min_order_by {
   guild_id: order_by
   id: order_by
   image_id: order_by
-  member_id: order_by
   name: order_by
+  user_id: order_by
 }
 
 """
@@ -1429,8 +2163,10 @@ input image_tags_order_by {
   image: images_order_by
   image_id: order_by
   member: members_order_by
-  member_id: order_by
   name: order_by
+  tag: tags_order_by
+  user: users_order_by
+  user_id: order_by
 }
 
 """
@@ -1455,12 +2191,12 @@ enum image_tags_select_column {
   """
   column name
   """
-  member_id
+  name
 
   """
   column name
   """
-  name
+  user_id
 }
 
 """
@@ -1470,8 +2206,8 @@ input image_tags_set_input {
   guild_id: String
   id: Int
   image_id: Int
-  member_id: String
   name: String
+  user_id: String
 }
 
 """
@@ -1560,12 +2296,12 @@ enum image_tags_update_column {
   """
   column name
   """
-  member_id
+  name
 
   """
   column name
   """
-  name
+  user_id
 }
 
 """
@@ -1693,6 +2429,11 @@ type images {
   message_id: String
   public: Boolean!
   url: String!
+
+  """
+  An object relationship
+  """
+  user: users
 }
 
 """
@@ -1776,6 +2517,7 @@ input images_bool_exp {
   message_id: text_comparison_exp
   public: boolean_comparison_exp
   url: text_comparison_exp
+  user: users_bool_exp
 }
 
 """
@@ -1809,6 +2551,7 @@ input images_insert_input {
   message_id: String
   public: Boolean
   url: String
+  user: users_obj_rel_insert_input
 }
 
 """
@@ -1908,6 +2651,7 @@ input images_order_by {
   message_id: order_by
   public: order_by
   url: order_by
+  user: users_order_by
 }
 
 """
@@ -2327,6 +3071,26 @@ mutation root
 """
 type mutation_root {
   """
+  delete data from the table: "__tag_counts"
+  """
+  delete___tag_counts(
+    """
+    filter the rows which have to be deleted
+    """
+    where: __tag_counts_bool_exp!
+  ): __tag_counts_mutation_response
+
+  """
+  delete data from the table: "__tag_suggestions"
+  """
+  delete___tag_suggestions(
+    """
+    filter the rows which have to be deleted
+    """
+    where: __tag_suggestions_bool_exp!
+  ): __tag_suggestions_mutation_response
+
+  """
   delete data from the table: "auto_tags"
   """
   delete_auto_tags(
@@ -2397,16 +3161,6 @@ type mutation_root {
   ): tag_categories_mutation_response
 
   """
-  delete data from the table: "tag_counts"
-  """
-  delete_tag_counts(
-    """
-    filter the rows which have to be deleted
-    """
-    where: tag_counts_bool_exp!
-  ): tag_counts_mutation_response
-
-  """
   delete data from the table: "tags"
   """
   delete_tags(
@@ -2425,6 +3179,36 @@ type mutation_root {
     """
     where: users_bool_exp!
   ): users_mutation_response
+
+  """
+  insert data into the table: "__tag_counts"
+  """
+  insert___tag_counts(
+    """
+    the rows to be inserted
+    """
+    objects: [__tag_counts_insert_input!]!
+
+    """
+    on conflict condition
+    """
+    on_conflict: __tag_counts_on_conflict
+  ): __tag_counts_mutation_response
+
+  """
+  insert data into the table: "__tag_suggestions"
+  """
+  insert___tag_suggestions(
+    """
+    the rows to be inserted
+    """
+    objects: [__tag_suggestions_insert_input!]!
+
+    """
+    on conflict condition
+    """
+    on_conflict: __tag_suggestions_on_conflict
+  ): __tag_suggestions_mutation_response
 
   """
   insert data into the table: "auto_tags"
@@ -2532,21 +3316,6 @@ type mutation_root {
   ): tag_categories_mutation_response
 
   """
-  insert data into the table: "tag_counts"
-  """
-  insert_tag_counts(
-    """
-    the rows to be inserted
-    """
-    objects: [tag_counts_insert_input!]!
-
-    """
-    on conflict condition
-    """
-    on_conflict: tag_counts_on_conflict
-  ): tag_counts_mutation_response
-
-  """
   insert data into the table: "tags"
   """
   insert_tags(
@@ -2575,6 +3344,46 @@ type mutation_root {
     """
     on_conflict: users_on_conflict
   ): users_mutation_response
+
+  """
+  update data of the table: "__tag_counts"
+  """
+  update___tag_counts(
+    """
+    increments the integer columns with given value of the filtered values
+    """
+    _inc: __tag_counts_inc_input
+
+    """
+    sets the columns of the filtered rows to the given values
+    """
+    _set: __tag_counts_set_input
+
+    """
+    filter the rows which have to be updated
+    """
+    where: __tag_counts_bool_exp!
+  ): __tag_counts_mutation_response
+
+  """
+  update data of the table: "__tag_suggestions"
+  """
+  update___tag_suggestions(
+    """
+    increments the integer columns with given value of the filtered values
+    """
+    _inc: __tag_suggestions_inc_input
+
+    """
+    sets the columns of the filtered rows to the given values
+    """
+    _set: __tag_suggestions_set_input
+
+    """
+    filter the rows which have to be updated
+    """
+    where: __tag_suggestions_bool_exp!
+  ): __tag_suggestions_mutation_response
 
   """
   update data of the table: "auto_tags"
@@ -2697,26 +3506,6 @@ type mutation_root {
   ): tag_categories_mutation_response
 
   """
-  update data of the table: "tag_counts"
-  """
-  update_tag_counts(
-    """
-    increments the integer columns with given value of the filtered values
-    """
-    _inc: tag_counts_inc_input
-
-    """
-    sets the columns of the filtered rows to the given values
-    """
-    _set: tag_counts_set_input
-
-    """
-    filter the rows which have to be updated
-    """
-    where: tag_counts_bool_exp!
-  ): tag_counts_mutation_response
-
-  """
   update data of the table: "tags"
   """
   update_tags(
@@ -2786,6 +3575,136 @@ enum order_by {
 query root
 """
 type query_root {
+  """
+  fetch data from the table: "__tag_counts"
+  """
+  __tag_counts(
+    """
+    distinct select on columns
+    """
+    distinct_on: [__tag_counts_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [__tag_counts_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: __tag_counts_bool_exp
+  ): [__tag_counts!]!
+
+  """
+  fetch aggregated fields from the table: "__tag_counts"
+  """
+  __tag_counts_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [__tag_counts_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [__tag_counts_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: __tag_counts_bool_exp
+  ): __tag_counts_aggregate!
+
+  """
+  fetch data from the table: "__tag_counts" using primary key columns
+  """
+  __tag_counts_by_pk(name: String!): __tag_counts
+
+  """
+  fetch data from the table: "__tag_suggestions"
+  """
+  __tag_suggestions(
+    """
+    distinct select on columns
+    """
+    distinct_on: [__tag_suggestions_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [__tag_suggestions_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: __tag_suggestions_bool_exp
+  ): [__tag_suggestions!]!
+
+  """
+  fetch aggregated fields from the table: "__tag_suggestions"
+  """
+  __tag_suggestions_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [__tag_suggestions_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [__tag_suggestions_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: __tag_suggestions_bool_exp
+  ): __tag_suggestions_aggregate!
+
+  """
+  fetch data from the table: "__tag_suggestions" using primary key columns
+  """
+  __tag_suggestions_by_pk(name: String!): __tag_suggestions
+
   """
   fetch data from the table: "auto_tags"
   """
@@ -3177,146 +4096,6 @@ type query_root {
   members_by_pk(guild_id: String!, user_id: String!): members
 
   """
-  execute function "random_image" which returns "images"
-  """
-  random_image(
-    """
-    input parameters for function "random_image"
-    """
-    args: random_image_args!
-
-    """
-    distinct select on columns
-    """
-    distinct_on: [images_select_column!]
-
-    """
-    limit the nuber of rows returned
-    """
-    limit: Int
-
-    """
-    skip the first n rows. Use only with order_by
-    """
-    offset: Int
-
-    """
-    sort the rows by one or more columns
-    """
-    order_by: [images_order_by!]
-
-    """
-    filter the rows returned
-    """
-    where: images_bool_exp
-  ): [images!]!
-
-  """
-  execute function "random_image" and query aggregates on result of table type "images"
-  """
-  random_image_aggregate(
-    """
-    input parameters for function "random_image"
-    """
-    args: random_image_args!
-
-    """
-    distinct select on columns
-    """
-    distinct_on: [images_select_column!]
-
-    """
-    limit the nuber of rows returned
-    """
-    limit: Int
-
-    """
-    skip the first n rows. Use only with order_by
-    """
-    offset: Int
-
-    """
-    sort the rows by one or more columns
-    """
-    order_by: [images_order_by!]
-
-    """
-    filter the rows returned
-    """
-    where: images_bool_exp
-  ): images_aggregate!
-
-  """
-  execute function "random_tagged_image" which returns "images"
-  """
-  random_tagged_image(
-    """
-    input parameters for function "random_tagged_image"
-    """
-    args: random_tagged_image_args!
-
-    """
-    distinct select on columns
-    """
-    distinct_on: [images_select_column!]
-
-    """
-    limit the nuber of rows returned
-    """
-    limit: Int
-
-    """
-    skip the first n rows. Use only with order_by
-    """
-    offset: Int
-
-    """
-    sort the rows by one or more columns
-    """
-    order_by: [images_order_by!]
-
-    """
-    filter the rows returned
-    """
-    where: images_bool_exp
-  ): [images!]!
-
-  """
-  execute function "random_tagged_image" and query aggregates on result of table type "images"
-  """
-  random_tagged_image_aggregate(
-    """
-    input parameters for function "random_tagged_image"
-    """
-    args: random_tagged_image_args!
-
-    """
-    distinct select on columns
-    """
-    distinct_on: [images_select_column!]
-
-    """
-    limit the nuber of rows returned
-    """
-    limit: Int
-
-    """
-    skip the first n rows. Use only with order_by
-    """
-    offset: Int
-
-    """
-    sort the rows by one or more columns
-    """
-    order_by: [images_order_by!]
-
-    """
-    filter the rows returned
-    """
-    where: images_bool_exp
-  ): images_aggregate!
-
-  """
   fetch data from the table: "tag_categories"
   """
   tag_categories(
@@ -3382,13 +4161,13 @@ type query_root {
   tag_categories_by_pk(name: String!): tag_categories
 
   """
-  execute function "tag_count" which returns "tag_counts"
+  execute function "tag_count" which returns "__tag_counts"
   """
   tag_count(
     """
     distinct select on columns
     """
-    distinct_on: [tag_counts_select_column!]
+    distinct_on: [__tag_counts_select_column!]
 
     """
     limit the nuber of rows returned
@@ -3403,22 +4182,22 @@ type query_root {
     """
     sort the rows by one or more columns
     """
-    order_by: [tag_counts_order_by!]
+    order_by: [__tag_counts_order_by!]
 
     """
     filter the rows returned
     """
-    where: tag_counts_bool_exp
-  ): [tag_counts!]!
+    where: __tag_counts_bool_exp
+  ): [__tag_counts!]!
 
   """
-  execute function "tag_count" and query aggregates on result of table type "tag_counts"
+  execute function "tag_count" and query aggregates on result of table type "__tag_counts"
   """
   tag_count_aggregate(
     """
     distinct select on columns
     """
-    distinct_on: [tag_counts_select_column!]
+    distinct_on: [__tag_counts_select_column!]
 
     """
     limit the nuber of rows returned
@@ -3433,22 +4212,27 @@ type query_root {
     """
     sort the rows by one or more columns
     """
-    order_by: [tag_counts_order_by!]
+    order_by: [__tag_counts_order_by!]
 
     """
     filter the rows returned
     """
-    where: tag_counts_bool_exp
-  ): tag_counts_aggregate!
+    where: __tag_counts_bool_exp
+  ): __tag_counts_aggregate!
 
   """
-  fetch data from the table: "tag_counts"
+  execute function "tag_suggestion" which returns "__tag_suggestions"
   """
-  tag_counts(
+  tag_suggestion(
+    """
+    input parameters for function "tag_suggestion"
+    """
+    args: tag_suggestion_args!
+
     """
     distinct select on columns
     """
-    distinct_on: [tag_counts_select_column!]
+    distinct_on: [__tag_suggestions_select_column!]
 
     """
     limit the nuber of rows returned
@@ -3463,22 +4247,27 @@ type query_root {
     """
     sort the rows by one or more columns
     """
-    order_by: [tag_counts_order_by!]
+    order_by: [__tag_suggestions_order_by!]
 
     """
     filter the rows returned
     """
-    where: tag_counts_bool_exp
-  ): [tag_counts!]!
+    where: __tag_suggestions_bool_exp
+  ): [__tag_suggestions!]!
 
   """
-  fetch aggregated fields from the table: "tag_counts"
+  execute function "tag_suggestion" and query aggregates on result of table type "__tag_suggestions"
   """
-  tag_counts_aggregate(
+  tag_suggestion_aggregate(
+    """
+    input parameters for function "tag_suggestion"
+    """
+    args: tag_suggestion_args!
+
     """
     distinct select on columns
     """
-    distinct_on: [tag_counts_select_column!]
+    distinct_on: [__tag_suggestions_select_column!]
 
     """
     limit the nuber of rows returned
@@ -3493,18 +4282,13 @@ type query_root {
     """
     sort the rows by one or more columns
     """
-    order_by: [tag_counts_order_by!]
+    order_by: [__tag_suggestions_order_by!]
 
     """
     filter the rows returned
     """
-    where: tag_counts_bool_exp
-  ): tag_counts_aggregate!
-
-  """
-  fetch data from the table: "tag_counts" using primary key columns
-  """
-  tag_counts_by_pk(name: String!): tag_counts
+    where: __tag_suggestions_bool_exp
+  ): __tag_suggestions_aggregate!
 
   """
   fetch data from the table: "tags"
@@ -3637,18 +4421,140 @@ type query_root {
   users_by_pk(user_id: String!): users
 }
 
-input random_image_args {
-  tag: String!
-}
-
-input random_tagged_image_args {
-  tag: String!
-}
-
 """
 subscription root
 """
 type subscription_root {
+  """
+  fetch data from the table: "__tag_counts"
+  """
+  __tag_counts(
+    """
+    distinct select on columns
+    """
+    distinct_on: [__tag_counts_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [__tag_counts_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: __tag_counts_bool_exp
+  ): [__tag_counts!]!
+
+  """
+  fetch aggregated fields from the table: "__tag_counts"
+  """
+  __tag_counts_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [__tag_counts_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [__tag_counts_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: __tag_counts_bool_exp
+  ): __tag_counts_aggregate!
+
+  """
+  fetch data from the table: "__tag_counts" using primary key columns
+  """
+  __tag_counts_by_pk(name: String!): __tag_counts
+
+  """
+  fetch data from the table: "__tag_suggestions"
+  """
+  __tag_suggestions(
+    """
+    distinct select on columns
+    """
+    distinct_on: [__tag_suggestions_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [__tag_suggestions_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: __tag_suggestions_bool_exp
+  ): [__tag_suggestions!]!
+
+  """
+  fetch aggregated fields from the table: "__tag_suggestions"
+  """
+  __tag_suggestions_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [__tag_suggestions_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [__tag_suggestions_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: __tag_suggestions_bool_exp
+  ): __tag_suggestions_aggregate!
+
+  """
+  fetch data from the table: "__tag_suggestions" using primary key columns
+  """
+  __tag_suggestions_by_pk(name: String!): __tag_suggestions
+
   """
   fetch data from the table: "auto_tags"
   """
@@ -4040,146 +4946,6 @@ type subscription_root {
   members_by_pk(guild_id: String!, user_id: String!): members
 
   """
-  execute function "random_image" which returns "images"
-  """
-  random_image(
-    """
-    input parameters for function "random_image"
-    """
-    args: random_image_args!
-
-    """
-    distinct select on columns
-    """
-    distinct_on: [images_select_column!]
-
-    """
-    limit the nuber of rows returned
-    """
-    limit: Int
-
-    """
-    skip the first n rows. Use only with order_by
-    """
-    offset: Int
-
-    """
-    sort the rows by one or more columns
-    """
-    order_by: [images_order_by!]
-
-    """
-    filter the rows returned
-    """
-    where: images_bool_exp
-  ): [images!]!
-
-  """
-  execute function "random_image" and query aggregates on result of table type "images"
-  """
-  random_image_aggregate(
-    """
-    input parameters for function "random_image"
-    """
-    args: random_image_args!
-
-    """
-    distinct select on columns
-    """
-    distinct_on: [images_select_column!]
-
-    """
-    limit the nuber of rows returned
-    """
-    limit: Int
-
-    """
-    skip the first n rows. Use only with order_by
-    """
-    offset: Int
-
-    """
-    sort the rows by one or more columns
-    """
-    order_by: [images_order_by!]
-
-    """
-    filter the rows returned
-    """
-    where: images_bool_exp
-  ): images_aggregate!
-
-  """
-  execute function "random_tagged_image" which returns "images"
-  """
-  random_tagged_image(
-    """
-    input parameters for function "random_tagged_image"
-    """
-    args: random_tagged_image_args!
-
-    """
-    distinct select on columns
-    """
-    distinct_on: [images_select_column!]
-
-    """
-    limit the nuber of rows returned
-    """
-    limit: Int
-
-    """
-    skip the first n rows. Use only with order_by
-    """
-    offset: Int
-
-    """
-    sort the rows by one or more columns
-    """
-    order_by: [images_order_by!]
-
-    """
-    filter the rows returned
-    """
-    where: images_bool_exp
-  ): [images!]!
-
-  """
-  execute function "random_tagged_image" and query aggregates on result of table type "images"
-  """
-  random_tagged_image_aggregate(
-    """
-    input parameters for function "random_tagged_image"
-    """
-    args: random_tagged_image_args!
-
-    """
-    distinct select on columns
-    """
-    distinct_on: [images_select_column!]
-
-    """
-    limit the nuber of rows returned
-    """
-    limit: Int
-
-    """
-    skip the first n rows. Use only with order_by
-    """
-    offset: Int
-
-    """
-    sort the rows by one or more columns
-    """
-    order_by: [images_order_by!]
-
-    """
-    filter the rows returned
-    """
-    where: images_bool_exp
-  ): images_aggregate!
-
-  """
   fetch data from the table: "tag_categories"
   """
   tag_categories(
@@ -4245,13 +5011,13 @@ type subscription_root {
   tag_categories_by_pk(name: String!): tag_categories
 
   """
-  execute function "tag_count" which returns "tag_counts"
+  execute function "tag_count" which returns "__tag_counts"
   """
   tag_count(
     """
     distinct select on columns
     """
-    distinct_on: [tag_counts_select_column!]
+    distinct_on: [__tag_counts_select_column!]
 
     """
     limit the nuber of rows returned
@@ -4266,22 +5032,22 @@ type subscription_root {
     """
     sort the rows by one or more columns
     """
-    order_by: [tag_counts_order_by!]
+    order_by: [__tag_counts_order_by!]
 
     """
     filter the rows returned
     """
-    where: tag_counts_bool_exp
-  ): [tag_counts!]!
+    where: __tag_counts_bool_exp
+  ): [__tag_counts!]!
 
   """
-  execute function "tag_count" and query aggregates on result of table type "tag_counts"
+  execute function "tag_count" and query aggregates on result of table type "__tag_counts"
   """
   tag_count_aggregate(
     """
     distinct select on columns
     """
-    distinct_on: [tag_counts_select_column!]
+    distinct_on: [__tag_counts_select_column!]
 
     """
     limit the nuber of rows returned
@@ -4296,22 +5062,27 @@ type subscription_root {
     """
     sort the rows by one or more columns
     """
-    order_by: [tag_counts_order_by!]
+    order_by: [__tag_counts_order_by!]
 
     """
     filter the rows returned
     """
-    where: tag_counts_bool_exp
-  ): tag_counts_aggregate!
+    where: __tag_counts_bool_exp
+  ): __tag_counts_aggregate!
 
   """
-  fetch data from the table: "tag_counts"
+  execute function "tag_suggestion" which returns "__tag_suggestions"
   """
-  tag_counts(
+  tag_suggestion(
+    """
+    input parameters for function "tag_suggestion"
+    """
+    args: tag_suggestion_args!
+
     """
     distinct select on columns
     """
-    distinct_on: [tag_counts_select_column!]
+    distinct_on: [__tag_suggestions_select_column!]
 
     """
     limit the nuber of rows returned
@@ -4326,22 +5097,27 @@ type subscription_root {
     """
     sort the rows by one or more columns
     """
-    order_by: [tag_counts_order_by!]
+    order_by: [__tag_suggestions_order_by!]
 
     """
     filter the rows returned
     """
-    where: tag_counts_bool_exp
-  ): [tag_counts!]!
+    where: __tag_suggestions_bool_exp
+  ): [__tag_suggestions!]!
 
   """
-  fetch aggregated fields from the table: "tag_counts"
+  execute function "tag_suggestion" and query aggregates on result of table type "__tag_suggestions"
   """
-  tag_counts_aggregate(
+  tag_suggestion_aggregate(
+    """
+    input parameters for function "tag_suggestion"
+    """
+    args: tag_suggestion_args!
+
     """
     distinct select on columns
     """
-    distinct_on: [tag_counts_select_column!]
+    distinct_on: [__tag_suggestions_select_column!]
 
     """
     limit the nuber of rows returned
@@ -4356,18 +5132,13 @@ type subscription_root {
     """
     sort the rows by one or more columns
     """
-    order_by: [tag_counts_order_by!]
+    order_by: [__tag_suggestions_order_by!]
 
     """
     filter the rows returned
     """
-    where: tag_counts_bool_exp
-  ): tag_counts_aggregate!
-
-  """
-  fetch data from the table: "tag_counts" using primary key columns
-  """
-  tag_counts_by_pk(name: String!): tag_counts
+    where: __tag_suggestions_bool_exp
+  ): __tag_suggestions_aggregate!
 
   """
   fetch data from the table: "tags"
@@ -4699,346 +5470,9 @@ enum tag_categories_update_column {
   name
 }
 
-"""
-columns and relationships of "tag_counts"
-"""
-type tag_counts {
-  count: bigint!
-
-  """
-  An object relationship
-  """
-  guild: guilds!
+input tag_suggestion_args {
   guild_id: String!
-  name: String!
-}
-
-"""
-aggregated selection of "tag_counts"
-"""
-type tag_counts_aggregate {
-  aggregate: tag_counts_aggregate_fields
-  nodes: [tag_counts!]!
-}
-
-"""
-aggregate fields of "tag_counts"
-"""
-type tag_counts_aggregate_fields {
-  avg: tag_counts_avg_fields
-  count(columns: [tag_counts_select_column!], distinct: Boolean): Int
-  max: tag_counts_max_fields
-  min: tag_counts_min_fields
-  stddev: tag_counts_stddev_fields
-  stddev_pop: tag_counts_stddev_pop_fields
-  stddev_samp: tag_counts_stddev_samp_fields
-  sum: tag_counts_sum_fields
-  var_pop: tag_counts_var_pop_fields
-  var_samp: tag_counts_var_samp_fields
-  variance: tag_counts_variance_fields
-}
-
-"""
-order by aggregate values of table "tag_counts"
-"""
-input tag_counts_aggregate_order_by {
-  avg: tag_counts_avg_order_by
-  count: order_by
-  max: tag_counts_max_order_by
-  min: tag_counts_min_order_by
-  stddev: tag_counts_stddev_order_by
-  stddev_pop: tag_counts_stddev_pop_order_by
-  stddev_samp: tag_counts_stddev_samp_order_by
-  sum: tag_counts_sum_order_by
-  var_pop: tag_counts_var_pop_order_by
-  var_samp: tag_counts_var_samp_order_by
-  variance: tag_counts_variance_order_by
-}
-
-"""
-input type for inserting array relation for remote table "tag_counts"
-"""
-input tag_counts_arr_rel_insert_input {
-  data: [tag_counts_insert_input!]!
-  on_conflict: tag_counts_on_conflict
-}
-
-"""
-aggregate avg on columns
-"""
-type tag_counts_avg_fields {
-  count: Float
-}
-
-"""
-order by avg() on columns of table "tag_counts"
-"""
-input tag_counts_avg_order_by {
-  count: order_by
-}
-
-"""
-Boolean expression to filter rows from the table "tag_counts". All fields are combined with a logical 'AND'.
-"""
-input tag_counts_bool_exp {
-  _and: [tag_counts_bool_exp]
-  _not: tag_counts_bool_exp
-  _or: [tag_counts_bool_exp]
-  count: bigint_comparison_exp
-  guild: guilds_bool_exp
-  guild_id: text_comparison_exp
-  name: text_comparison_exp
-}
-
-"""
-unique or primary key constraints on table "tag_counts"
-"""
-enum tag_counts_constraint {
-  """
-  unique or primary key constraint
-  """
-  tag_counts_pkey
-}
-
-"""
-input type for incrementing integer columne in table "tag_counts"
-"""
-input tag_counts_inc_input {
-  count: bigint
-}
-
-"""
-input type for inserting data into table "tag_counts"
-"""
-input tag_counts_insert_input {
-  count: bigint
-  guild: guilds_obj_rel_insert_input
-  guild_id: String
-  name: String
-}
-
-"""
-aggregate max on columns
-"""
-type tag_counts_max_fields {
-  count: bigint
-  guild_id: String
-  name: String
-}
-
-"""
-order by max() on columns of table "tag_counts"
-"""
-input tag_counts_max_order_by {
-  count: order_by
-  guild_id: order_by
-  name: order_by
-}
-
-"""
-aggregate min on columns
-"""
-type tag_counts_min_fields {
-  count: bigint
-  guild_id: String
-  name: String
-}
-
-"""
-order by min() on columns of table "tag_counts"
-"""
-input tag_counts_min_order_by {
-  count: order_by
-  guild_id: order_by
-  name: order_by
-}
-
-"""
-response of any mutation on the table "tag_counts"
-"""
-type tag_counts_mutation_response {
-  """
-  number of affected rows by the mutation
-  """
-  affected_rows: Int!
-
-  """
-  data of the affected rows by the mutation
-  """
-  returning: [tag_counts!]!
-}
-
-"""
-input type for inserting object relation for remote table "tag_counts"
-"""
-input tag_counts_obj_rel_insert_input {
-  data: tag_counts_insert_input!
-  on_conflict: tag_counts_on_conflict
-}
-
-"""
-on conflict condition type for table "tag_counts"
-"""
-input tag_counts_on_conflict {
-  constraint: tag_counts_constraint!
-  update_columns: [tag_counts_update_column!]!
-}
-
-"""
-ordering options when selecting data from "tag_counts"
-"""
-input tag_counts_order_by {
-  count: order_by
-  guild: guilds_order_by
-  guild_id: order_by
-  name: order_by
-}
-
-"""
-select columns of table "tag_counts"
-"""
-enum tag_counts_select_column {
-  """
-  column name
-  """
-  count
-
-  """
-  column name
-  """
-  guild_id
-
-  """
-  column name
-  """
-  name
-}
-
-"""
-input type for updating data in table "tag_counts"
-"""
-input tag_counts_set_input {
-  count: bigint
-  guild_id: String
-  name: String
-}
-
-"""
-aggregate stddev on columns
-"""
-type tag_counts_stddev_fields {
-  count: Float
-}
-
-"""
-order by stddev() on columns of table "tag_counts"
-"""
-input tag_counts_stddev_order_by {
-  count: order_by
-}
-
-"""
-aggregate stddev_pop on columns
-"""
-type tag_counts_stddev_pop_fields {
-  count: Float
-}
-
-"""
-order by stddev_pop() on columns of table "tag_counts"
-"""
-input tag_counts_stddev_pop_order_by {
-  count: order_by
-}
-
-"""
-aggregate stddev_samp on columns
-"""
-type tag_counts_stddev_samp_fields {
-  count: Float
-}
-
-"""
-order by stddev_samp() on columns of table "tag_counts"
-"""
-input tag_counts_stddev_samp_order_by {
-  count: order_by
-}
-
-"""
-aggregate sum on columns
-"""
-type tag_counts_sum_fields {
-  count: bigint
-}
-
-"""
-order by sum() on columns of table "tag_counts"
-"""
-input tag_counts_sum_order_by {
-  count: order_by
-}
-
-"""
-update columns of table "tag_counts"
-"""
-enum tag_counts_update_column {
-  """
-  column name
-  """
-  count
-
-  """
-  column name
-  """
-  guild_id
-
-  """
-  column name
-  """
-  name
-}
-
-"""
-aggregate var_pop on columns
-"""
-type tag_counts_var_pop_fields {
-  count: Float
-}
-
-"""
-order by var_pop() on columns of table "tag_counts"
-"""
-input tag_counts_var_pop_order_by {
-  count: order_by
-}
-
-"""
-aggregate var_samp on columns
-"""
-type tag_counts_var_samp_fields {
-  count: Float
-}
-
-"""
-order by var_samp() on columns of table "tag_counts"
-"""
-input tag_counts_var_samp_order_by {
-  count: order_by
-}
-
-"""
-aggregate variance on columns
-"""
-type tag_counts_variance_fields {
-  count: Float
-}
-
-"""
-order by variance() on columns of table "tag_counts"
-"""
-input tag_counts_variance_order_by {
-  count: order_by
+  input: String!
 }
 
 """
@@ -5046,7 +5480,72 @@ columns and relationships of "tags"
 """
 type tags {
   created_at: date!
+
+  """
+  An object relationship
+  """
+  guild: guilds!
   guild_id: String!
+
+  """
+  An array relationship
+  """
+  image_tags(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_tags_bool_exp
+  ): [image_tags!]!
+
+  """
+  An aggregated array relationship
+  """
+  image_tags_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_tags_bool_exp
+  ): image_tags_aggregate!
   name: String!
 }
 
@@ -5092,7 +5591,9 @@ input tags_bool_exp {
   _not: tags_bool_exp
   _or: [tags_bool_exp]
   created_at: date_comparison_exp
+  guild: guilds_bool_exp
   guild_id: text_comparison_exp
+  image_tags: image_tags_bool_exp
   name: text_comparison_exp
 }
 
@@ -5111,7 +5612,9 @@ input type for inserting data into table "tags"
 """
 input tags_insert_input {
   created_at: date
+  guild: guilds_obj_rel_insert_input
   guild_id: String
+  image_tags: image_tags_arr_rel_insert_input
   name: String
 }
 
@@ -5187,7 +5690,9 @@ ordering options when selecting data from "tags"
 """
 input tags_order_by {
   created_at: order_by
+  guild: guilds_order_by
   guild_id: order_by
+  image_tags_aggregate: image_tags_aggregate_order_by
   name: order_by
 }
 
@@ -5353,6 +5858,126 @@ type users {
   """
   An array relationship
   """
+  image_tags(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_tags_bool_exp
+  ): [image_tags!]!
+
+  """
+  An aggregated array relationship
+  """
+  image_tags_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [image_tags_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [image_tags_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: image_tags_bool_exp
+  ): image_tags_aggregate!
+
+  """
+  An array relationship
+  """
+  images(
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): [images!]!
+
+  """
+  An aggregated array relationship
+  """
+  images_aggregate(
+    """
+    distinct select on columns
+    """
+    distinct_on: [images_select_column!]
+
+    """
+    limit the nuber of rows returned
+    """
+    limit: Int
+
+    """
+    skip the first n rows. Use only with order_by
+    """
+    offset: Int
+
+    """
+    sort the rows by one or more columns
+    """
+    order_by: [images_order_by!]
+
+    """
+    filter the rows returned
+    """
+    where: images_bool_exp
+  ): images_aggregate!
+
+  """
+  An array relationship
+  """
   members(
     """
     distinct select on columns
@@ -5458,6 +6083,8 @@ input users_bool_exp {
   favorite_guild: guilds_bool_exp
   favorite_guild_id: text_comparison_exp
   image_channels: image_channels_bool_exp
+  image_tags: image_tags_bool_exp
+  images: images_bool_exp
   members: members_bool_exp
   name: text_comparison_exp
   user_id: text_comparison_exp
@@ -5481,6 +6108,8 @@ input users_insert_input {
   favorite_guild: guilds_obj_rel_insert_input
   favorite_guild_id: String
   image_channels: image_channels_arr_rel_insert_input
+  image_tags: image_tags_arr_rel_insert_input
+  images: images_arr_rel_insert_input
   members: members_arr_rel_insert_input
   name: String
   user_id: String
@@ -5565,6 +6194,8 @@ input users_order_by {
   favorite_guild: guilds_order_by
   favorite_guild_id: order_by
   image_channels_aggregate: image_channels_aggregate_order_by
+  image_tags_aggregate: image_tags_aggregate_order_by
+  images_aggregate: images_aggregate_order_by
   members_aggregate: members_aggregate_order_by
   name: order_by
   user_id: order_by

@@ -43,6 +43,7 @@
 		"nodemon": "^1.18.10",
 		"pino-pretty": "^2.5.0",
 		"tslint": "^5.13.0",
+		"tslint-config-prettier": "^1.18.0",
 		"typescript": "^3.1.6"
 	},
 	"dependencies": {
