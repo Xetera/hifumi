@@ -1,0 +1,4 @@
+commonLabels:
+  env: production
+bases:
+  - ../../
