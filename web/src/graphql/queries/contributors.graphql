@@ -1,10 +1,26 @@
-query Contributors($guild: String!) {
-  images_aggregate(
-    distinct_on: [user_id]
-    where: { guild_id: { _eq: $guild } }
+query Contributors($guild_id: String, $limit: Int = 20) {
+  contributors: members(
+    where: { guild_id: { _eq: $guild_id } }
+    limit: $limit
+    order_by: {
+      image_tags_aggregate: { count: desc }
+      images_aggregate: { count: desc }
+    }
   ) {
-    aggregate {
-      count
+    user {
+      user_id
+      name
+      avatar
+    }
+    images_aggregate(where: { guild_id: { _eq: $guild_id } }) {
+      aggregate {
+        count
+      }
+    }
+    image_tags_aggregate(where: { guild_id: { _eq: $guild_id } }) {
+      aggregate {
+        count
+      }
     }
   }
 }

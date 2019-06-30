@@ -13,7 +13,6 @@ spec:
       app: hasura
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: hasura
     spec:
@@ -23,7 +22,7 @@ spec:
         name: hasura
         env:
         - name: HASURA_GRAPHQL_DATABASE_URL
-          value: postgres://username:password@hostname:port/dbname
+          value: postgres://hifumi:k8s-yeet@postgres:5432/hifumi
         - name: HASURA_GRAPHQL_ENABLE_CONSOLE
           value: "true"
         ports:

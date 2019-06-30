@@ -23,8 +23,7 @@ export const base = {
     currentGuild: null,
     modal: {},
     contributors: 0,
-    menuOpen: false
-    h god
+    menuOpen: false,
   },
   getters: {
     isAuthed() {

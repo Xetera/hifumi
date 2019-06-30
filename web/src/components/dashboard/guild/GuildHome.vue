@@ -1,11 +1,13 @@
 <template>
   <div>
-    <div>{{ contributors }} contributors</div>
+    <div v-for="contributor in contributors" :key="contributor.user.user_id">
+      <div>{{ contributor.user.name }} contributors</div>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
 import { graphql } from "@/graphql";
 import { contributors } from "@/graphql/queries";
 
@@ -15,20 +17,18 @@ export default {
     ...mapState("guild", ["contributors"]),
     ...mapGetters(["guild"])
   },
+  methods: mapMutations("guild", ["setContributors"]),
   apollo: {
     contributors: {
       query: graphql(contributors),
       variables() {
         return {
-          guild: this.guild.guild_id
+          guild_id: this.guild.guild_id
         };
       },
       result({ data }) {
-        console.log(data);
-        this.$store.commit(
-          "guild/setContributors",
-          data.images_aggregate.aggregate.count
-        );
+        console.log(data.contributors);
+        this.setContributors(data.contributors);
       }
     }
   }

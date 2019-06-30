@@ -1,7 +1,7 @@
 import { addMutation, createModule } from "@/mixins/vuex";
 
 const state = {
-  contributors: 0
+  contributors: []
 };
 
 export const guild = createModule({
