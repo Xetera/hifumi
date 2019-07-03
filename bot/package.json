@@ -1,65 +1,69 @@
 {
-	"name": "hifumi",
-	"version": "1.0.0",
-	"description": "A bot for the best girl",
-	"main": "index.ts",
-	"scripts": {
-		"start": "node ./dist/index.js",
-		"dev": "nodemon",
-		"build": "tsc --skipLibCheck",
-		"lint": "tslint -c tslint.json 'src/**/*.ts'",
-		"test": "echo O hai dere",
-		"codegen": "generate-graphql-client -f src/scripts/fetcher.js -o src/graphql"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/moedevs/hifumi.git"
-	},
-	"keywords": [
-		"npm"
-	],
-	"author": "/r/newgame",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/moedevs/hifumi/issues"
-	},
-	"homepage": "https://github.com/hifumibestgirl/hifumi#readme",
-	"devDependencies": {
-		"@graphql-codegen/cli": "^1.0.3",
-		"@graphql-codegen/introspection": "^1.0.3",
-		"@graphql-codegen/typescript": "1.0.3",
-		"@graphql-codegen/typescript-resolvers": "1.0.3",
-		"@playlyfe/gql": "^2.6.1",
-		"@types/datadog-metrics": "^0.6.0",
-		"@types/debug": "^4.1.2",
-		"@types/dotenv": "^6.1.0",
-		"@types/glob": "^7.1.1",
-		"@types/graphql": "^14.0.7",
-		"@types/mongodb": "^3.1.19",
-		"@types/mongoose": "^5.3.20",
-		"@types/pino": "^5.8.5",
-		"@types/ramda": "^0.25.51",
-		"graphql": "^14.1.1",
-		"nodemon": "^1.18.10",
-		"pino-pretty": "^2.5.0",
-		"tslint": "^5.13.0",
-		"typescript": "^3.1.6"
-	},
-	"dependencies": {
-		"canvas": "^2.3.1",
-		"canvas-text-wrapper": "^0.10.2",
-		"datadog-metrics": "^0.8.1",
-		"discord-akairo": "^7.5.5",
-		"discord.js": "^11.4.2",
-		"dotenv": "^6.2.0",
-		"glob": "^7.1.3",
-		"gql-tag": "^1.0.1",
-		"graphql-request": "^1.8.2",
-		"graphql-tag": "^2.10.1",
-		"graphql-typed-client": "^1.5.1",
-		"media-extractor": "^1.1.3",
-		"mongoose": "^5.4.16",
-		"pino": "^5.11.1",
-		"ramda": "^0.26.1"
-	}
+  "name": "hifumi",
+  "version": "1.0.0",
+  "description": "A bot for the best girl",
+  "main": "index.ts",
+  "scripts": {
+    "start": "node ./dist/index.js",
+    "dev": "nodemon",
+    "build": "tsc --skipLibCheck",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "test": "echo O hai dere",
+    "codegen": "generate-graphql-client -f src/scripts/fetcher.js -o src/graphql",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/moedevs/hifumi.git"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "/r/newgame",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/moedevs/hifumi/issues"
+  },
+  "homepage": "https://github.com/hifumibestgirl/hifumi#readme",
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.0.3",
+    "@graphql-codegen/introspection": "^1.0.3",
+    "@graphql-codegen/typescript": "1.0.3",
+    "@graphql-codegen/typescript-resolvers": "1.0.3",
+    "@playlyfe/gql": "^2.6.1",
+    "@types/datadog-metrics": "^0.6.0",
+    "@types/debug": "^4.1.2",
+    "@types/dotenv": "^6.1.0",
+    "@types/glob": "^7.1.1",
+    "@types/graphql": "^14.0.7",
+    "@types/mongodb": "^3.1.19",
+    "@types/mongoose": "^5.3.20",
+    "@types/pino": "^5.8.5",
+    "@types/ramda": "^0.25.51",
+    "graphql": "^14.1.1",
+    "nodemon": "^1.18.10",
+    "pino-pretty": "^2.5.0",
+    "tslint": "^5.13.0",
+    "typescript": "^3.1.6"
+  },
+  "dependencies": {
+    "canvas": "^2.3.1",
+    "canvas-text-wrapper": "^0.10.2",
+    "datadog-metrics": "^0.8.1",
+    "discord-akairo": "^7.5.5",
+    "discord.js": "^11.4.2",
+    "dotenv": "^6.2.0",
+    "glob": "^7.1.3",
+    "gql-tag": "^1.0.1",
+    "graphql-request": "^1.8.2",
+    "graphql-tag": "^2.10.1",
+    "graphql-typed-client": "^1.5.1",
+    "media-extractor": "^1.1.3",
+    "mongoose": "^5.4.16",
+    "pino": "^5.11.1",
+    "ramda": "^0.26.1",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
