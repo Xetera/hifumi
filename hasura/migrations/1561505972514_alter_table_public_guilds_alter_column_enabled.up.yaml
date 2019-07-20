@@ -1,0 +1,9 @@
+- args:
+    sql: ALTER TABLE "public"."guilds" ALTER COLUMN "enabled" TYPE bool;
+  type: run_sql
+- args:
+    sql: ALTER TABLE ONLY "public"."guilds" ALTER COLUMN "enabled" SET DEFAULT true;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."guilds"."enabled" IS ''
+  type: run_sql

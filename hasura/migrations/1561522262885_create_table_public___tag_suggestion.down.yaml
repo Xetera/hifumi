@@ -1,0 +1,3 @@
+- args:
+    sql: DROP TABLE "public"."__tag_suggestion"
+  type: run_sql

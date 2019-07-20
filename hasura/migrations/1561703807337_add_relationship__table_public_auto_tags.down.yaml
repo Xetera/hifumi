@@ -1,0 +1,6 @@
+- args:
+    relationship: guild
+    table:
+      name: auto_tags
+      schema: public
+  type: drop_relationship

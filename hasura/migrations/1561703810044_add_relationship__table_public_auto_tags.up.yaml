@@ -1,0 +1,14 @@
+- args:
+    name: tag
+    table:
+      name: auto_tags
+      schema: public
+    using:
+      manual_configuration:
+        column_mapping:
+          guild_id: guild_id
+          name: name
+        remote_table:
+          name: tags
+          schema: public
+  type: create_object_relationship

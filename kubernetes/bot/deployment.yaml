@@ -18,3 +18,14 @@ spec:
         - name: hifumi
           image: moedevs/hifumi
           imagePullPolicy: Always
+          env:
+            - name: HIFUMI_HASURA_ACCESS_KEY
+              value: test
+            - name: HIFUMI_HASURA_URL
+              value: http://hasura/v1/graphql
+            - name: HIFUMI_TOKEN
+              value: MzEzNDI2NTgzMjE1OTMxMzk1.XPKqXQ.GiKjuv39ll8wZHe0ryqpdeqK4sU
+            - name: HIFUMI_PREFIX
+              value: $
+            - name: HIFUMI_OWNERS
+              value: 140862798832861184,136644132117413888

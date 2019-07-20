@@ -1,0 +1,12 @@
+- args:
+    cascade: false
+    sql: "CREATE OR REPLACE FUNCTION public.tag_count()\n RETURNS SETOF __tag_counts\n
+      LANGUAGE sql\n STABLE\nAS $function$\nSELECT\n    distinct image_tags.name as
+      \"name\",\n    COUNT(name) AS \"count\",\n  images.guild_id as \"guild_id\"\nFROM\n
+      \ image_tags\nINNER JOIN images \nON images.id = image_tags.image_id\nGROUP
+      BY\n  name, images.guild_id \n  $function$\n"
+  type: run_sql
+- args:
+    name: tag_count
+    schema: public
+  type: track_function

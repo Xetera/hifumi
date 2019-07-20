@@ -1,0 +1,6 @@
+- args:
+    sql: ALTER TABLE "public"."image_tags" ALTER COLUMN "guild_id" DROP NOT NULL;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."image_tags"."guild_id" IS 'null'
+  type: run_sql

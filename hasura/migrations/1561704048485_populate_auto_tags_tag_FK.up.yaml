@@ -1,0 +1,7 @@
+- args:
+    cascade: false
+    sql: |-
+      UPDATE auto_tags
+      SET guild_id = tags.guild_id
+      FROM auto_tags as at join tags on tags.name = at.name
+  type: run_sql

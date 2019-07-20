@@ -1,0 +1,5 @@
+- args:
+    sql: alter table "public"."image_tags" add constraint "image_tags_guild_id_user_id_fkey"
+      foreign key ("guild_id", "user_id") references "public"."members"("guild_id",
+      "user_id") on update set null on delete set null;
+  type: run_sql

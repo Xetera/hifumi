@@ -1,0 +1,9 @@
+- args:
+    sql: CREATE TABLE "public"."__tag_suggestion"("levenshtein" integer NOT NULL,
+      "name" text NOT NULL, PRIMARY KEY ("name") ); COMMENT ON TABLE "public"."__tag_suggestion"
+      IS 'Metadata'
+  type: run_sql
+- args:
+    name: __tag_suggestion
+    schema: public
+  type: add_existing_table_or_view

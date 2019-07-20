@@ -3,7 +3,7 @@ version: "3.5"
 services:
   hasura:
     container_name: hasura
-    build: 
+    build:
       context: hasura
       dockerfile: Dockerfile
     restart: always
@@ -15,7 +15,9 @@ services:
       - postgres
   postgres:
     container_name: postgres
-    image: postgres
+    build:
+      context: postgres
+      dockerfile: Dockerfile
     ports:
       - 5432:5432
     volumes:

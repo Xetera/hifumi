@@ -9,7 +9,6 @@ import {
   guilds_constraint,
   guilds_update_column,
   members_constraint,
-  members_update_column,
   users_insert_input
 } from "./graphql/schema";
 import { logger } from "./utils";
@@ -22,17 +21,18 @@ const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
     : {}
 });
 
-export const syncAll = ({ guilds, users }: AkairoClient) => {
+export const syncAll = async ({ guilds, users }: AkairoClient) => {
   const members = guilds
     .map((guild) => guild.members.array())
     .reduce((a, b) => a.concat(b), []);
-  return Promise.all([
+  await Promise.all([
     syncGuilds(guilds.array()),
     syncUsers(users.array()),
-    syncMembers(members)
   ]);
+  return syncMembers(members)
 };
 
+console.log(`Admin secret is: ${process.env.HIFUMI_HASURA_ACCESS_KEY}`);
 export const _client = createClient({
   fetcher: ({ query, variables }: { query: any; variables: any }, fetch: any) =>
     fetch(process.env.HIFUMI_HASURA_URL!, {

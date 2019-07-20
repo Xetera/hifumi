@@ -1,0 +1,3 @@
+- args:
+    sql: alter table "public"."__tag_suggestions" rename to "__tag_suggestion";
+  type: run_sql

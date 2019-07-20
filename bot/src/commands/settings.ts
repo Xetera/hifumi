@@ -1,10 +1,11 @@
 import { Command } from "discord-akairo";
 import { Message, TextChannel, User } from "discord.js";
 import gql from "gql-tag/dist";
-import { req } from "../db";
+import { _client, req } from "../db";
 import { isMod, isOwner, logger } from "../utils";
 
-const changeWelcome = (message: Message, channel: TextChannel) => req(gql`
+const changeWelcome = (message: Message, channel: TextChannel) =>
+  req(gql`
   mutation {
     update_guilds(
       _set: {
@@ -23,7 +24,8 @@ const changeWelcome = (message: Message, channel: TextChannel) => req(gql`
   }
 `);
 
-const deleteWelcome = (message: Message) => req(gql`
+const deleteWelcome = (message: Message) =>
+  req(gql`
   mutation {
     update_guilds(
       _set: {
@@ -42,23 +44,28 @@ const deleteWelcome = (message: Message) => req(gql`
   }
 `);
 
-const upsertImageChannel = (channel: TextChannel, user: User) => req(gql`
-  mutation {
-    insert_image_channels(
-      objects: [{
-        channel_id: "${channel.id}"
-        guild_id: "${channel.guild.id}"
-        assigner_id: "${user.id}"
-      }]
-    ) {
-      returning {
-        channel_id
+const upsertImageChannel = (channel: TextChannel, user: User) =>
+  _client.mutation({
+    insert_image_channels: [
+      {
+        objects: [
+          {
+            channel_id: channel.id,
+            guild_id: channel.guild.id,
+            assigner_id: user.id
+          }
+        ]
+      },
+      {
+        returning: {
+          channel_id: 1
+        }
       }
-    }
-  }
-`);
+    ]
+  });
 
-const deleteImageChannel = (channel: TextChannel) => req(gql`
+const deleteImageChannel = (channel: TextChannel) =>
+  req(gql`
   mutation {
     delete_image_channels(
       where: {
@@ -85,7 +92,9 @@ const settings: { [k: string]: (ctx: Context) => Promise<void> } = {
     const targetChannel = message.mentions.channels.first();
     if (targetChannel) {
       await changeWelcome(message, targetChannel);
-      await message.channel.send(`Set your welcome channel to ${targetChannel}.`);
+      await message.channel.send(
+        `Set your welcome channel to ${targetChannel}.`
+      );
     } else if (value === "disable" || value === "off") {
       await deleteWelcome(message);
       await message.channel.send(`Disabled the server welcome.`);
@@ -99,10 +108,14 @@ const settings: { [k: string]: (ctx: Context) => Promise<void> } = {
     }
     if (target === "remove") {
       await deleteImageChannel(targetChannel);
-      await message.channel.send(`${targetChannel} was removed from your tracked image archives`);
+      await message.channel.send(
+        `${targetChannel} was removed from your tracked image archives`
+      );
     } else if (target === "add") {
       await upsertImageChannel(targetChannel, message.author);
-      await message.channel.send(`Added ${targetChannel} to your tracked image archives`);
+      await message.channel.send(
+        `Added ${targetChannel} to your tracked image archives`
+      );
     } else if (!target) {
       await message.channel.send(`No setting specified`);
     }
@@ -114,13 +127,16 @@ export default class extends Command {
     super("settings", {
       aliases: ["settings"],
       description: "Adjusts the settings",
-      args: [{
-        id: "setting",
-      }, {
-        id: "args",
-        match: "rest",
-        type: "string"
-      }],
+      args: [
+        {
+          id: "setting"
+        },
+        {
+          id: "args",
+          match: "rest",
+          type: "string"
+        }
+      ]
     });
   }
 
@@ -139,7 +155,9 @@ export default class extends Command {
     try {
       await func({ message, args });
     } catch (e) {
-      await message.channel.send(`Something went wrong while trying to change that setting!`);
+      await message.channel.send(
+        `Something went wrong while trying to change that setting!`
+      );
       logger.error(e);
     }
   }

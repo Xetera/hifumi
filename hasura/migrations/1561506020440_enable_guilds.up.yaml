@@ -1,0 +1,6 @@
+- args:
+    cascade: false
+    sql: |-
+      UPDATE guilds
+      SET enabled = True
+  type: run_sql

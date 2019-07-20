@@ -1,0 +1,3 @@
+- args:
+    sql: alter table "public"."auto_tags" drop constraint "auto_tags_guild_id_fkey";
+  type: run_sql

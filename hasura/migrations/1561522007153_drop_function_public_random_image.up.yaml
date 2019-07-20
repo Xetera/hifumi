@@ -1,0 +1,3 @@
+- args:
+    sql: DROP FUNCTION "public"."random_image"(text )
+  type: run_sql

@@ -1,0 +1,6 @@
+- args:
+    sql: ALTER TABLE "public"."auto_tags" ALTER COLUMN "guild_id" SET NOT NULL;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."auto_tags"."guild_id" IS ''
+  type: run_sql

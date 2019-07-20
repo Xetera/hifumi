@@ -68,13 +68,15 @@ export default class extends Command {
       insert_auto_tags: [{
         objects: uniqueTags.map((name: string) => ({
           channel_id: channel.id,
-          name
+          name,
+          guild_id: message.guild.id
         }))
       }, {
         affected_rows: 1
       }]
     });
     if (addedTags.errors) {
+      console.log(addedTags.errors);
       return message.channel.send(`There was an error adding those tags`);
     }
     return message.channel.send(

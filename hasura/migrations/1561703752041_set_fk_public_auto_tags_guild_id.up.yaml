@@ -1,0 +1,5 @@
+- args:
+    sql: alter table "public"."auto_tags" add constraint "auto_tags_guild_id_fkey"
+      foreign key ("guild_id") references "public"."guilds"("guild_id") on update
+      cascade on delete cascade;
+  type: run_sql

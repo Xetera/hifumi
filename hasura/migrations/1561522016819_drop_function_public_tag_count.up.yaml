@@ -1,0 +1,3 @@
+- args:
+    sql: DROP FUNCTION "public"."tag_count"
+  type: run_sql

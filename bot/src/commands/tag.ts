@@ -1,14 +1,14 @@
 import { Command } from "discord-akairo";
 import { Message, TextChannel } from "discord.js";
 import { resolve } from "media-extractor";
+import R from "ramda";
+import { withDatadog } from "../analytics/datadog";
+import { insertImages, registerTags } from "../archive/image";
 import { _client } from "../db";
 import {
   images_insert_input,
-  tags_constraint,
-  tags_insert_input
 } from "../graphql/schema";
-import { image_tags_insert_input, images_bool_exp } from "./../graphql/schema";
-import R from "ramda";
+import { images_bool_exp } from "../graphql/schema";
 
 export default class extends Command {
   constructor() {
@@ -43,11 +43,6 @@ export default class extends Command {
     }
 
     const tags: string[] = rest ? rest.split(",").map(R.trim) : [];
-    // .map((name: string) => ({
-    //   name,
-    //   user_id: targetMsg.author.id,
-    //   guild_id: targetMsg.guild.id
-    // }));
 
     const url = await resolve(this.fetchMedia(targetMsg));
 
@@ -80,7 +75,6 @@ export default class extends Command {
     }
     const imageExists = data.images.length;
     if (imageExists && tags) {
-      console.log("existing tag");
       const [existing] = data.images;
 
       const updatedTags = tags
@@ -91,7 +85,7 @@ export default class extends Command {
         }))
         .filter(e => existing.image_tags.every(tag => tag.name !== e.name));
 
-      const results = await this.addTags(updatedTags);
+      const results = await registerTags(updatedTags);
 
       console.log(results);
 
@@ -113,10 +107,13 @@ export default class extends Command {
         return;
       }
       // @ts-ignore
-      const { affected_rows } = res.data;
+      const { affected_rows } = res.data.insert_image_tags;
       console.log(affected_rows);
       const s = affected_rows === 1 ? "" : "s";
 
+      withDatadog(client => {
+        client.increment("bot.images.tags_added", updatedTags.length);
+      });
       return msg.channel.send(
         `Added ${affected_rows} new tag${s} to that image`
       );
@@ -129,37 +126,33 @@ export default class extends Command {
       guild_id: targetMsg.guild.id
     }));
 
-    await this.addTags(tagsToAdd);
+    await registerTags(tagsToAdd);
 
     const { filename } = targetMsg.attachments.first() || { filename: null };
+    const imageTags = tags.length
+      ? {
+          image_tags: {
+            data: tagsToAdd.map(items => ({
+              ...items,
+              user_id: targetMsg.author.id
+            }))
+          }
+        }
+      : {};
     const image: images_insert_input = {
+      ...imageTags,
       file_name: filename,
       member_id: targetMsg.author.id,
       message_id: targetMsg.id,
       guild_id: targetMsg.guild.id,
-      url,
-      ...(tags.length
-        ? {
-            image_tags: {
-              data: tagsToAdd.map(items => ({
-                ...items,
-                user_id: targetMsg.author.id
-              }))
-            }
-          }
-        : {})
+      url
     };
-    const resp = await _client.mutation({
-      insert_images: [
-        { objects: [image] },
-        {
-          returning: {
-            id: 1
-          }
-        }
-      ]
-    });
+    const resp = await insertImages([image]);
     console.log(resp);
+    withDatadog(client => {
+      client.increment("bot.images.uploaded");
+      client.increment("bot.images.tags_added", tags.length);
+    });
     const wrappedTags = tags.map(t => `\`${t}\``);
     msg.channel.send(
       `✅ | Saved ${
@@ -177,23 +170,4 @@ export default class extends Command {
   private fetchMedia = (msg: Message) =>
     (msg.attachments.first() && msg.attachments.first().url) ||
     (msg.embeds[0] && msg.embeds[0].url);
-
-  private addTags(tags: tags_insert_input[]) {
-    return _client.mutation({
-      insert_tags: [
-        {
-          objects: tags,
-          on_conflict: {
-            constraint: tags_constraint.tags_pkey,
-            update_columns: []
-          }
-        },
-        {
-          returning: {
-            name: 1
-          }
-        }
-      ]
-    });
-  }
 }

@@ -1,0 +1,6 @@
+- args:
+    sql: COMMENT ON COLUMN "public"."image_tags"."member_id" IS ''
+  type: run_sql
+- args:
+    sql: alter table "public"."image_tags" rename column "member_id" to "user_id";
+  type: run_sql

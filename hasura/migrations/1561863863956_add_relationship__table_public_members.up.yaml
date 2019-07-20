@@ -1,0 +1,14 @@
+- args:
+    name: image_tags
+    table:
+      name: members
+      schema: public
+    using:
+      manual_configuration:
+        column_mapping:
+          guild_id: guild_id
+          user_id: user_id
+        remote_table:
+          name: image_tags
+          schema: public
+  type: create_array_relationship
