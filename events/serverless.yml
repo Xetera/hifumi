@@ -1,0 +1,23 @@
+service: events
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+functions:
+  resize:
+    handler: resizer.resize
+    path: src
+    events:
+      - http:
+          method: post
+          path: /resize
+
+custom:
+  dotenv:
+    path: ../.env

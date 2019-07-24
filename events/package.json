@@ -1,0 +1,29 @@
+{
+  "name": "event-handlers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "serverless offline --port 1024"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.498.0",
+    "gm": "^1.23.1",
+    "node-fetch": "^2.6.0",
+    "sharp": "^0.22.1"
+  },
+  "devDependencies": {
+    "@types/gm": "^1.18.3",
+    "@types/node-fetch": "^2.5.0",
+    "@types/sharp": "^0.22.2",
+    "serverless-dotenv-plugin": "^2.1.1",
+    "serverless-offline": "^5.8.0",
+    "serverless-plugin-typescript": "^1.1.9",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  }
+}
