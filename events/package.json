@@ -13,11 +13,15 @@
   "dependencies": {
     "aws-sdk": "^2.498.0",
     "gm": "^1.23.1",
+    "hashids": "^1.2.2",
+    "mime-types": "^2.1.24",
     "node-fetch": "^2.6.0",
     "sharp": "^0.22.1"
   },
   "devDependencies": {
     "@types/gm": "^1.18.3",
+    "@types/hashids": "^1.0.30",
+    "@types/mime-types": "^2.1.0",
     "@types/node-fetch": "^2.5.0",
     "@types/sharp": "^0.22.2",
     "serverless-dotenv-plugin": "^2.1.1",

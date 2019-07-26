@@ -1,11 +1,16 @@
-import fetch, { Response } from "node-fetch";
-import sharp, { Sharp, Metadata } from "sharp";
-import { Stream } from "stream";
-import fs from "fs";
-import AWS from "aws-sdk";
-import gm from "gm";
+import fetch from "node-fetch";
+import sharp, { Metadata } from "sharp";
+import { S3 } from "aws-sdk";
+import gm, { State } from "gm";
+import mime from "mime-types";
+import Hashids from "hashids";
 
-const s3 = new AWS.S3();
+// please don't look at this salt to try to reverse engineer the
+// ids of images, I trust that you're all good boys.
+const SALT = "hifumi";
+const hash = new Hashids(SALT);
+
+const s3 = new S3();
 
 const img = gm.subClass({ imageMagick: true });
 
@@ -31,12 +36,15 @@ const getBuffer = (url: string): Promise<Buffer> => fetch(url).then(r => r.buffe
 const metadata = (image: Buffer): Promise<Metadata> =>
   sharp(image).metadata();
 
-const resizeImage = (image: Buffer): Promise<Buffer> =>
-  new Promise((res, rej) => {
-    img(image)
-      .resize(RESIZE_WIDTH)
-      .toBuffer(convertCallbacks(res, rej));
-  })
+const withImg = (f: (img: State) => State) => (image: Buffer): Promise<Buffer> =>
+  new Promise((res, rej) =>
+    f(img(image))
+      .toBuffer(convertCallbacks(res, rej))
+  )
+
+const resizeImage = withImg(i => i.resize(RESIZE_WIDTH).compress("LZMA"))
+
+const compress = withImg(i => i.compress("LZMA"))
 
 const downloadImage = async ({ original_url }: any): Promise<DownloadedImage> => {
   const image = await getBuffer(original_url);
@@ -47,11 +55,18 @@ const downloadImage = async ({ original_url }: any): Promise<DownloadedImage> =>
   }
 };
 
-const uploadImage = async (image: Buffer, filename: string) => {
+const uploadImage = async (image: Buffer, filename: string, meta: Metadata) => {
+  const contentType = mime.lookup(meta.format || '[unknown]');
+
+  if (contentType === false) {
+    throw new Error(`${contentType} is not a valid upload type for ${filename}`);
+  }
+
   return s3.putObject({
     Bucket: EVENTS_BUCKET_NAME!,
     Key: filename,
-    Body: image
+    Body: image,
+    ContentType: contentType
   }).promise()
 }
 
@@ -60,10 +75,16 @@ export const resize = async ({ body }) => {
     const data = JSON.parse(body).event.data.new;
     const { image, meta } = await downloadImage(data)
     const resized = await resizeImage(image);
-    const resizedName = `thumbnails/${data.id}`;
-    const originalName = `images/${data.id}`;
+    const key = hash.encode(data.id);
 
-    await Promise.all([uploadImage(image, originalName), uploadImage(resized, resizedName)]);
+    const resizedName = `thumbnails/${key}.${meta.format}`;
+    const originalName = `images/${key}.${meta.format}`;
+    const compressed = await compress(image);
+
+    await Promise.all([
+      uploadImage(compressed, originalName, meta),
+      uploadImage(resized, resizedName, meta)
+    ]);
 
     return {
       body: JSON.stringify({
@@ -72,6 +93,6 @@ export const resize = async ({ body }) => {
     }
   } catch (err) {
     console.error(err);
-
+    return {}
   }
 }
