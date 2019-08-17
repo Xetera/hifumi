@@ -56,7 +56,7 @@ export default class extends Command {
     }
     const embed: RichEmbedOptions = {
       image: {
-        url: first.url
+        url: first.url || first.original_url
       },
       description: `**Posted By:** <@!${first.member_id}>\n${first.image_tags.length ?
         `**Tags**: ${first.image_tags.map((tag) => tag.name).join(", ")}` : ""}`

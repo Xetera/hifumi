@@ -1,0 +1,4 @@
+- args:
+    name: tag_suggestion
+    schema: public
+  type: track_function

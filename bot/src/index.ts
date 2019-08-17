@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
-dotenv.config();
+import path from "path";
+dotenv.config({ path: path.resolve("..", ".env") });
 import { AkairoClient } from "discord-akairo";
 import { handleEvents } from "./events";
 import { logger } from "./utils";
@@ -15,8 +16,8 @@ const client = new AkairoClient({
   commandDirectory: "./dist/commands/",
   inhibitorDirectory: "./dist/inhibitors",
 }, {
-  disableEveryone: true,
-});
+    disableEveryone: true,
+  });
 
 logger.debug(`Logging in...`);
 

@@ -1,0 +1,6 @@
+- args:
+    sql: ALTER TABLE "public"."images" DROP CONSTRAINT "images_originalUrl_key"
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."images"."originalUrl" IS 'null'
+  type: run_sql

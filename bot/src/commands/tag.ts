@@ -131,13 +131,13 @@ export default class extends Command {
     const { filename } = targetMsg.attachments.first() || { filename: null };
     const imageTags = tags.length
       ? {
-          image_tags: {
-            data: tagsToAdd.map(items => ({
-              ...items,
-              user_id: targetMsg.author.id
-            }))
-          }
+        image_tags: {
+          data: tagsToAdd.map(items => ({
+            ...items,
+            user_id: targetMsg.author.id
+          }))
         }
+      }
       : {};
     const image: images_insert_input = {
       ...imageTags,
@@ -145,7 +145,7 @@ export default class extends Command {
       member_id: targetMsg.author.id,
       message_id: targetMsg.id,
       guild_id: targetMsg.guild.id,
-      url
+      original_url: url
     };
     const resp = await insertImages([image]);
     console.log(resp);
@@ -156,7 +156,7 @@ export default class extends Command {
     const wrappedTags = tags.map(t => `\`${t}\``);
     msg.channel.send(
       `✅ | Saved ${
-        targetMsg.author.username
+      targetMsg.author.username
       }'s image with the following tags: ${wrappedTags.join(", ")}`
     );
   }

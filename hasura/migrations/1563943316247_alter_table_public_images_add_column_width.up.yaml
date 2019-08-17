@@ -1,0 +1,3 @@
+- args:
+    sql: ALTER TABLE "public"."images" ADD COLUMN "width" integer NULL
+  type: run_sql

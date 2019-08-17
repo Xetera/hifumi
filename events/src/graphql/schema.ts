@@ -74,7 +74,7 @@ export interface query_root {
   users_aggregate: users_aggregate
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk: users | null
-  __typename: String
+  __typename: 'query_root'
 }
 
 /** select columns of table "auto_tags" */
@@ -89,7 +89,7 @@ export enum auto_tags_select_column {
   name = 'name',
 }
 
-/** The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.  */
+/** The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. */
 export type Int = number
 
 /** column ordering options */
@@ -130,7 +130,7 @@ export interface auto_tags {
   name: String
   /** An object relationship */
   tag: tags | null
-  __typename: String
+  __typename: 'auto_tags'
 }
 
 /** columns and relationships of "guilds" */
@@ -166,14 +166,14 @@ export interface guilds {
   /** An aggregated array relationship */
   tags_aggregate: tags_aggregate
   welcome_channel: String | null
-  __typename: String
+  __typename: 'guilds'
 }
 
 /** aggregated selection of "auto_tags" */
 export interface auto_tags_aggregate {
   aggregate: auto_tags_aggregate_fields | null
   nodes: auto_tags[]
-  __typename: String
+  __typename: 'auto_tags_aggregate'
 }
 
 /** aggregate fields of "auto_tags" */
@@ -189,16 +189,16 @@ export interface auto_tags_aggregate_fields {
   var_pop: auto_tags_var_pop_fields | null
   var_samp: auto_tags_var_samp_fields | null
   variance: auto_tags_variance_fields | null
-  __typename: String
+  __typename: 'auto_tags_aggregate_fields'
 }
 
 /** aggregate avg on columns */
 export interface auto_tags_avg_fields {
   id: Float | null
-  __typename: String
+  __typename: 'auto_tags_avg_fields'
 }
 
-/** The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).  */
+/** The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). */
 export type Float = number
 
 /** aggregate max on columns */
@@ -207,7 +207,7 @@ export interface auto_tags_max_fields {
   guild_id: String | null
   id: Int | null
   name: String | null
-  __typename: String
+  __typename: 'auto_tags_max_fields'
 }
 
 /** aggregate min on columns */
@@ -216,49 +216,49 @@ export interface auto_tags_min_fields {
   guild_id: String | null
   id: Int | null
   name: String | null
-  __typename: String
+  __typename: 'auto_tags_min_fields'
 }
 
 /** aggregate stddev on columns */
 export interface auto_tags_stddev_fields {
   id: Float | null
-  __typename: String
+  __typename: 'auto_tags_stddev_fields'
 }
 
 /** aggregate stddev_pop on columns */
 export interface auto_tags_stddev_pop_fields {
   id: Float | null
-  __typename: String
+  __typename: 'auto_tags_stddev_pop_fields'
 }
 
 /** aggregate stddev_samp on columns */
 export interface auto_tags_stddev_samp_fields {
   id: Float | null
-  __typename: String
+  __typename: 'auto_tags_stddev_samp_fields'
 }
 
 /** aggregate sum on columns */
 export interface auto_tags_sum_fields {
   id: Int | null
-  __typename: String
+  __typename: 'auto_tags_sum_fields'
 }
 
 /** aggregate var_pop on columns */
 export interface auto_tags_var_pop_fields {
   id: Float | null
-  __typename: String
+  __typename: 'auto_tags_var_pop_fields'
 }
 
 /** aggregate var_samp on columns */
 export interface auto_tags_var_samp_fields {
   id: Float | null
-  __typename: String
+  __typename: 'auto_tags_var_samp_fields'
 }
 
 /** aggregate variance on columns */
 export interface auto_tags_variance_fields {
   id: Float | null
-  __typename: String
+  __typename: 'auto_tags_variance_fields'
 }
 
 /** select columns of table "users" */
@@ -297,7 +297,7 @@ export interface users {
   members_aggregate: members_aggregate
   name: String | null
   user_id: String
-  __typename: String
+  __typename: 'users'
 }
 
 /** select columns of table "image_channels" */
@@ -323,14 +323,14 @@ export interface image_channels {
   guild_id: String
   /** An object relationship */
   user: users
-  __typename: String
+  __typename: 'image_channels'
 }
 
 /** aggregated selection of "image_channels" */
 export interface image_channels_aggregate {
   aggregate: image_channels_aggregate_fields | null
   nodes: image_channels[]
-  __typename: String
+  __typename: 'image_channels_aggregate'
 }
 
 /** aggregate fields of "image_channels" */
@@ -338,7 +338,7 @@ export interface image_channels_aggregate_fields {
   count: Int | null
   max: image_channels_max_fields | null
   min: image_channels_min_fields | null
-  __typename: String
+  __typename: 'image_channels_aggregate_fields'
 }
 
 /** aggregate max on columns */
@@ -346,7 +346,7 @@ export interface image_channels_max_fields {
   assigner_id: String | null
   channel_id: String | null
   guild_id: String | null
-  __typename: String
+  __typename: 'image_channels_max_fields'
 }
 
 /** aggregate min on columns */
@@ -354,7 +354,7 @@ export interface image_channels_min_fields {
   assigner_id: String | null
   channel_id: String | null
   guild_id: String | null
-  __typename: String
+  __typename: 'image_channels_min_fields'
 }
 
 /** select columns of table "image_tags" */
@@ -389,7 +389,7 @@ export interface image_tags {
   /** An object relationship */
   user: users | null
   user_id: String | null
-  __typename: String
+  __typename: 'image_tags'
 }
 
 /** columns and relationships of "images" */
@@ -415,14 +415,14 @@ export interface images {
   /** An object relationship */
   user: users | null
   width: Int | null
-  __typename: String
+  __typename: 'images'
 }
 
 /** aggregated selection of "image_tags" */
 export interface image_tags_aggregate {
   aggregate: image_tags_aggregate_fields | null
   nodes: image_tags[]
-  __typename: String
+  __typename: 'image_tags_aggregate'
 }
 
 /** aggregate fields of "image_tags" */
@@ -438,14 +438,14 @@ export interface image_tags_aggregate_fields {
   var_pop: image_tags_var_pop_fields | null
   var_samp: image_tags_var_samp_fields | null
   variance: image_tags_variance_fields | null
-  __typename: String
+  __typename: 'image_tags_aggregate_fields'
 }
 
 /** aggregate avg on columns */
 export interface image_tags_avg_fields {
   id: Float | null
   image_id: Float | null
-  __typename: String
+  __typename: 'image_tags_avg_fields'
 }
 
 /** aggregate max on columns */
@@ -456,7 +456,7 @@ export interface image_tags_max_fields {
   image_id: Int | null
   name: String | null
   user_id: String | null
-  __typename: String
+  __typename: 'image_tags_max_fields'
 }
 
 /** aggregate min on columns */
@@ -467,56 +467,56 @@ export interface image_tags_min_fields {
   image_id: Int | null
   name: String | null
   user_id: String | null
-  __typename: String
+  __typename: 'image_tags_min_fields'
 }
 
 /** aggregate stddev on columns */
 export interface image_tags_stddev_fields {
   id: Float | null
   image_id: Float | null
-  __typename: String
+  __typename: 'image_tags_stddev_fields'
 }
 
 /** aggregate stddev_pop on columns */
 export interface image_tags_stddev_pop_fields {
   id: Float | null
   image_id: Float | null
-  __typename: String
+  __typename: 'image_tags_stddev_pop_fields'
 }
 
 /** aggregate stddev_samp on columns */
 export interface image_tags_stddev_samp_fields {
   id: Float | null
   image_id: Float | null
-  __typename: String
+  __typename: 'image_tags_stddev_samp_fields'
 }
 
 /** aggregate sum on columns */
 export interface image_tags_sum_fields {
   id: Int | null
   image_id: Int | null
-  __typename: String
+  __typename: 'image_tags_sum_fields'
 }
 
 /** aggregate var_pop on columns */
 export interface image_tags_var_pop_fields {
   id: Float | null
   image_id: Float | null
-  __typename: String
+  __typename: 'image_tags_var_pop_fields'
 }
 
 /** aggregate var_samp on columns */
 export interface image_tags_var_samp_fields {
   id: Float | null
   image_id: Float | null
-  __typename: String
+  __typename: 'image_tags_var_samp_fields'
 }
 
 /** aggregate variance on columns */
 export interface image_tags_variance_fields {
   id: Float | null
   image_id: Float | null
-  __typename: String
+  __typename: 'image_tags_variance_fields'
 }
 
 /** columns and relationships of "members" */
@@ -535,7 +535,7 @@ export interface members {
   /** An object relationship */
   user: users
   user_id: String
-  __typename: String
+  __typename: 'members'
 }
 
 /** select columns of table "images" */
@@ -572,7 +572,7 @@ export enum images_select_column {
 export interface images_aggregate {
   aggregate: images_aggregate_fields | null
   nodes: images[]
-  __typename: String
+  __typename: 'images_aggregate'
 }
 
 /** aggregate fields of "images" */
@@ -588,7 +588,7 @@ export interface images_aggregate_fields {
   var_pop: images_var_pop_fields | null
   var_samp: images_var_samp_fields | null
   variance: images_variance_fields | null
-  __typename: String
+  __typename: 'images_aggregate_fields'
 }
 
 /** aggregate avg on columns */
@@ -596,7 +596,7 @@ export interface images_avg_fields {
   height: Float | null
   id: Float | null
   width: Float | null
-  __typename: String
+  __typename: 'images_avg_fields'
 }
 
 /** aggregate max on columns */
@@ -613,7 +613,7 @@ export interface images_max_fields {
   thumbnail_url: String | null
   url: String | null
   width: Int | null
-  __typename: String
+  __typename: 'images_max_fields'
 }
 
 /** aggregate min on columns */
@@ -630,7 +630,7 @@ export interface images_min_fields {
   thumbnail_url: String | null
   url: String | null
   width: Int | null
-  __typename: String
+  __typename: 'images_min_fields'
 }
 
 /** aggregate stddev on columns */
@@ -638,7 +638,7 @@ export interface images_stddev_fields {
   height: Float | null
   id: Float | null
   width: Float | null
-  __typename: String
+  __typename: 'images_stddev_fields'
 }
 
 /** aggregate stddev_pop on columns */
@@ -646,7 +646,7 @@ export interface images_stddev_pop_fields {
   height: Float | null
   id: Float | null
   width: Float | null
-  __typename: String
+  __typename: 'images_stddev_pop_fields'
 }
 
 /** aggregate stddev_samp on columns */
@@ -654,7 +654,7 @@ export interface images_stddev_samp_fields {
   height: Float | null
   id: Float | null
   width: Float | null
-  __typename: String
+  __typename: 'images_stddev_samp_fields'
 }
 
 /** aggregate sum on columns */
@@ -662,7 +662,7 @@ export interface images_sum_fields {
   height: Int | null
   id: Int | null
   width: Int | null
-  __typename: String
+  __typename: 'images_sum_fields'
 }
 
 /** aggregate var_pop on columns */
@@ -670,7 +670,7 @@ export interface images_var_pop_fields {
   height: Float | null
   id: Float | null
   width: Float | null
-  __typename: String
+  __typename: 'images_var_pop_fields'
 }
 
 /** aggregate var_samp on columns */
@@ -678,7 +678,7 @@ export interface images_var_samp_fields {
   height: Float | null
   id: Float | null
   width: Float | null
-  __typename: String
+  __typename: 'images_var_samp_fields'
 }
 
 /** aggregate variance on columns */
@@ -686,7 +686,7 @@ export interface images_variance_fields {
   height: Float | null
   id: Float | null
   width: Float | null
-  __typename: String
+  __typename: 'images_variance_fields'
 }
 
 /** columns and relationships of "tags" */
@@ -700,7 +700,7 @@ export interface tags {
   /** An aggregated array relationship */
   image_tags_aggregate: image_tags_aggregate
   name: String
-  __typename: String
+  __typename: 'tags'
 }
 
 /** select columns of table "members" */
@@ -715,7 +715,7 @@ export enum members_select_column {
 export interface members_aggregate {
   aggregate: members_aggregate_fields | null
   nodes: members[]
-  __typename: String
+  __typename: 'members_aggregate'
 }
 
 /** aggregate fields of "members" */
@@ -723,28 +723,28 @@ export interface members_aggregate_fields {
   count: Int | null
   max: members_max_fields | null
   min: members_min_fields | null
-  __typename: String
+  __typename: 'members_aggregate_fields'
 }
 
 /** aggregate max on columns */
 export interface members_max_fields {
   guild_id: String | null
   user_id: String | null
-  __typename: String
+  __typename: 'members_max_fields'
 }
 
 /** aggregate min on columns */
 export interface members_min_fields {
   guild_id: String | null
   user_id: String | null
-  __typename: String
+  __typename: 'members_min_fields'
 }
 
 /** aggregated selection of "users" */
 export interface users_aggregate {
   aggregate: users_aggregate_fields | null
   nodes: users[]
-  __typename: String
+  __typename: 'users_aggregate'
 }
 
 /** aggregate fields of "users" */
@@ -752,7 +752,7 @@ export interface users_aggregate_fields {
   count: Int | null
   max: users_max_fields | null
   min: users_min_fields | null
-  __typename: String
+  __typename: 'users_aggregate_fields'
 }
 
 /** aggregate max on columns */
@@ -761,7 +761,7 @@ export interface users_max_fields {
   favorite_guild_id: String | null
   name: String | null
   user_id: String | null
-  __typename: String
+  __typename: 'users_max_fields'
 }
 
 /** aggregate min on columns */
@@ -770,7 +770,7 @@ export interface users_min_fields {
   favorite_guild_id: String | null
   name: String | null
   user_id: String | null
-  __typename: String
+  __typename: 'users_min_fields'
 }
 
 /** select columns of table "tags" */
@@ -787,7 +787,7 @@ export enum tags_select_column {
 export interface tags_aggregate {
   aggregate: tags_aggregate_fields | null
   nodes: tags[]
-  __typename: String
+  __typename: 'tags_aggregate'
 }
 
 /** aggregate fields of "tags" */
@@ -795,7 +795,7 @@ export interface tags_aggregate_fields {
   count: Int | null
   max: tags_max_fields | null
   min: tags_min_fields | null
-  __typename: String
+  __typename: 'tags_aggregate_fields'
 }
 
 /** aggregate max on columns */
@@ -803,7 +803,7 @@ export interface tags_max_fields {
   created_at: date | null
   guild_id: String | null
   name: String | null
-  __typename: String
+  __typename: 'tags_max_fields'
 }
 
 /** aggregate min on columns */
@@ -811,7 +811,7 @@ export interface tags_min_fields {
   created_at: date | null
   guild_id: String | null
   name: String | null
-  __typename: String
+  __typename: 'tags_min_fields'
 }
 
 /** select columns of table "guilds" */
@@ -836,7 +836,7 @@ export enum guilds_select_column {
 export interface guilds_aggregate {
   aggregate: guilds_aggregate_fields | null
   nodes: guilds[]
-  __typename: String
+  __typename: 'guilds_aggregate'
 }
 
 /** aggregate fields of "guilds" */
@@ -844,7 +844,7 @@ export interface guilds_aggregate_fields {
   count: Int | null
   max: guilds_max_fields | null
   min: guilds_min_fields | null
-  __typename: String
+  __typename: 'guilds_aggregate_fields'
 }
 
 /** aggregate max on columns */
@@ -855,7 +855,7 @@ export interface guilds_max_fields {
   joined_at: date | null
   name: String | null
   welcome_channel: String | null
-  __typename: String
+  __typename: 'guilds_max_fields'
 }
 
 /** aggregate min on columns */
@@ -866,7 +866,7 @@ export interface guilds_min_fields {
   joined_at: date | null
   name: String | null
   welcome_channel: String | null
-  __typename: String
+  __typename: 'guilds_min_fields'
 }
 
 /** select columns of table "tag_categories" */
@@ -886,14 +886,14 @@ export interface tag_categories {
   name: String
   /** An object relationship */
   user: users
-  __typename: String
+  __typename: 'tag_categories'
 }
 
 /** aggregated selection of "tag_categories" */
 export interface tag_categories_aggregate {
   aggregate: tag_categories_aggregate_fields | null
   nodes: tag_categories[]
-  __typename: String
+  __typename: 'tag_categories_aggregate'
 }
 
 /** aggregate fields of "tag_categories" */
@@ -901,7 +901,7 @@ export interface tag_categories_aggregate_fields {
   count: Int | null
   max: tag_categories_max_fields | null
   min: tag_categories_min_fields | null
-  __typename: String
+  __typename: 'tag_categories_aggregate_fields'
 }
 
 /** aggregate max on columns */
@@ -909,7 +909,7 @@ export interface tag_categories_max_fields {
   added_by: String | null
   created_at: date | null
   name: String | null
-  __typename: String
+  __typename: 'tag_categories_max_fields'
 }
 
 /** aggregate min on columns */
@@ -917,7 +917,7 @@ export interface tag_categories_min_fields {
   added_by: String | null
   created_at: date | null
   name: String | null
-  __typename: String
+  __typename: 'tag_categories_min_fields'
 }
 
 /** select columns of table "tag_counts" */
@@ -939,14 +939,14 @@ export interface tag_counts {
   guild: guilds
   guild_id: String
   name: String
-  __typename: String
+  __typename: 'tag_counts'
 }
 
 /** aggregated selection of "tag_counts" */
 export interface tag_counts_aggregate {
   aggregate: tag_counts_aggregate_fields | null
   nodes: tag_counts[]
-  __typename: String
+  __typename: 'tag_counts_aggregate'
 }
 
 /** aggregate fields of "tag_counts" */
@@ -962,13 +962,13 @@ export interface tag_counts_aggregate_fields {
   var_pop: tag_counts_var_pop_fields | null
   var_samp: tag_counts_var_samp_fields | null
   variance: tag_counts_variance_fields | null
-  __typename: String
+  __typename: 'tag_counts_aggregate_fields'
 }
 
 /** aggregate avg on columns */
 export interface tag_counts_avg_fields {
   count: Float | null
-  __typename: String
+  __typename: 'tag_counts_avg_fields'
 }
 
 /** aggregate max on columns */
@@ -976,7 +976,7 @@ export interface tag_counts_max_fields {
   count: bigint | null
   guild_id: String | null
   name: String | null
-  __typename: String
+  __typename: 'tag_counts_max_fields'
 }
 
 /** aggregate min on columns */
@@ -984,49 +984,49 @@ export interface tag_counts_min_fields {
   count: bigint | null
   guild_id: String | null
   name: String | null
-  __typename: String
+  __typename: 'tag_counts_min_fields'
 }
 
 /** aggregate stddev on columns */
 export interface tag_counts_stddev_fields {
   count: Float | null
-  __typename: String
+  __typename: 'tag_counts_stddev_fields'
 }
 
 /** aggregate stddev_pop on columns */
 export interface tag_counts_stddev_pop_fields {
   count: Float | null
-  __typename: String
+  __typename: 'tag_counts_stddev_pop_fields'
 }
 
 /** aggregate stddev_samp on columns */
 export interface tag_counts_stddev_samp_fields {
   count: Float | null
-  __typename: String
+  __typename: 'tag_counts_stddev_samp_fields'
 }
 
 /** aggregate sum on columns */
 export interface tag_counts_sum_fields {
   count: bigint | null
-  __typename: String
+  __typename: 'tag_counts_sum_fields'
 }
 
 /** aggregate var_pop on columns */
 export interface tag_counts_var_pop_fields {
   count: Float | null
-  __typename: String
+  __typename: 'tag_counts_var_pop_fields'
 }
 
 /** aggregate var_samp on columns */
 export interface tag_counts_var_samp_fields {
   count: Float | null
-  __typename: String
+  __typename: 'tag_counts_var_samp_fields'
 }
 
 /** aggregate variance on columns */
 export interface tag_counts_variance_fields {
   count: Float | null
-  __typename: String
+  __typename: 'tag_counts_variance_fields'
 }
 
 /** select columns of table "tag_suggestions" */
@@ -1041,14 +1041,14 @@ export enum tag_suggestions_select_column {
 export interface tag_suggestions {
   levenshtein: Int
   name: String
-  __typename: String
+  __typename: 'tag_suggestions'
 }
 
 /** aggregated selection of "tag_suggestions" */
 export interface tag_suggestions_aggregate {
   aggregate: tag_suggestions_aggregate_fields | null
   nodes: tag_suggestions[]
-  __typename: String
+  __typename: 'tag_suggestions_aggregate'
 }
 
 /** aggregate fields of "tag_suggestions" */
@@ -1064,69 +1064,69 @@ export interface tag_suggestions_aggregate_fields {
   var_pop: tag_suggestions_var_pop_fields | null
   var_samp: tag_suggestions_var_samp_fields | null
   variance: tag_suggestions_variance_fields | null
-  __typename: String
+  __typename: 'tag_suggestions_aggregate_fields'
 }
 
 /** aggregate avg on columns */
 export interface tag_suggestions_avg_fields {
   levenshtein: Float | null
-  __typename: String
+  __typename: 'tag_suggestions_avg_fields'
 }
 
 /** aggregate max on columns */
 export interface tag_suggestions_max_fields {
   levenshtein: Int | null
   name: String | null
-  __typename: String
+  __typename: 'tag_suggestions_max_fields'
 }
 
 /** aggregate min on columns */
 export interface tag_suggestions_min_fields {
   levenshtein: Int | null
   name: String | null
-  __typename: String
+  __typename: 'tag_suggestions_min_fields'
 }
 
 /** aggregate stddev on columns */
 export interface tag_suggestions_stddev_fields {
   levenshtein: Float | null
-  __typename: String
+  __typename: 'tag_suggestions_stddev_fields'
 }
 
 /** aggregate stddev_pop on columns */
 export interface tag_suggestions_stddev_pop_fields {
   levenshtein: Float | null
-  __typename: String
+  __typename: 'tag_suggestions_stddev_pop_fields'
 }
 
 /** aggregate stddev_samp on columns */
 export interface tag_suggestions_stddev_samp_fields {
   levenshtein: Float | null
-  __typename: String
+  __typename: 'tag_suggestions_stddev_samp_fields'
 }
 
 /** aggregate sum on columns */
 export interface tag_suggestions_sum_fields {
   levenshtein: Int | null
-  __typename: String
+  __typename: 'tag_suggestions_sum_fields'
 }
 
 /** aggregate var_pop on columns */
 export interface tag_suggestions_var_pop_fields {
   levenshtein: Float | null
-  __typename: String
+  __typename: 'tag_suggestions_var_pop_fields'
 }
 
 /** aggregate var_samp on columns */
 export interface tag_suggestions_var_samp_fields {
   levenshtein: Float | null
-  __typename: String
+  __typename: 'tag_suggestions_var_samp_fields'
 }
 
 /** aggregate variance on columns */
 export interface tag_suggestions_variance_fields {
   levenshtein: Float | null
-  __typename: String
+  __typename: 'tag_suggestions_variance_fields'
 }
 
 /** mutation root */
@@ -1197,7 +1197,7 @@ export interface mutation_root {
   update_tags: tags_mutation_response | null
   /** update data of the table: "users" */
   update_users: users_mutation_response | null
-  __typename: String
+  __typename: 'mutation_root'
 }
 
 /** response of any mutation on the table "auto_tags" */
@@ -1206,7 +1206,7 @@ export interface auto_tags_mutation_response {
   affected_rows: Int
   /** data of the affected rows by the mutation */
   returning: auto_tags[]
-  __typename: String
+  __typename: 'auto_tags_mutation_response'
 }
 
 /** response of any mutation on the table "guilds" */
@@ -1215,7 +1215,7 @@ export interface guilds_mutation_response {
   affected_rows: Int
   /** data of the affected rows by the mutation */
   returning: guilds[]
-  __typename: String
+  __typename: 'guilds_mutation_response'
 }
 
 /** response of any mutation on the table "image_channels" */
@@ -1224,7 +1224,7 @@ export interface image_channels_mutation_response {
   affected_rows: Int
   /** data of the affected rows by the mutation */
   returning: image_channels[]
-  __typename: String
+  __typename: 'image_channels_mutation_response'
 }
 
 /** response of any mutation on the table "image_tags" */
@@ -1233,7 +1233,7 @@ export interface image_tags_mutation_response {
   affected_rows: Int
   /** data of the affected rows by the mutation */
   returning: image_tags[]
-  __typename: String
+  __typename: 'image_tags_mutation_response'
 }
 
 /** response of any mutation on the table "images" */
@@ -1242,7 +1242,7 @@ export interface images_mutation_response {
   affected_rows: Int
   /** data of the affected rows by the mutation */
   returning: images[]
-  __typename: String
+  __typename: 'images_mutation_response'
 }
 
 /** response of any mutation on the table "members" */
@@ -1251,7 +1251,7 @@ export interface members_mutation_response {
   affected_rows: Int
   /** data of the affected rows by the mutation */
   returning: members[]
-  __typename: String
+  __typename: 'members_mutation_response'
 }
 
 /** response of any mutation on the table "tag_categories" */
@@ -1260,7 +1260,7 @@ export interface tag_categories_mutation_response {
   affected_rows: Int
   /** data of the affected rows by the mutation */
   returning: tag_categories[]
-  __typename: String
+  __typename: 'tag_categories_mutation_response'
 }
 
 /** response of any mutation on the table "tag_counts" */
@@ -1269,7 +1269,7 @@ export interface tag_counts_mutation_response {
   affected_rows: Int
   /** data of the affected rows by the mutation */
   returning: tag_counts[]
-  __typename: String
+  __typename: 'tag_counts_mutation_response'
 }
 
 /** response of any mutation on the table "tag_suggestions" */
@@ -1278,7 +1278,7 @@ export interface tag_suggestions_mutation_response {
   affected_rows: Int
   /** data of the affected rows by the mutation */
   returning: tag_suggestions[]
-  __typename: String
+  __typename: 'tag_suggestions_mutation_response'
 }
 
 /** response of any mutation on the table "tags" */
@@ -1287,7 +1287,7 @@ export interface tags_mutation_response {
   affected_rows: Int
   /** data of the affected rows by the mutation */
   returning: tags[]
-  __typename: String
+  __typename: 'tags_mutation_response'
 }
 
 /** response of any mutation on the table "users" */
@@ -1296,7 +1296,7 @@ export interface users_mutation_response {
   affected_rows: Int
   /** data of the affected rows by the mutation */
   returning: users[]
-  __typename: String
+  __typename: 'users_mutation_response'
 }
 
 /** unique or primary key constraints on table "auto_tags" */
@@ -1571,7 +1571,7 @@ export interface subscription_root {
   users_aggregate: users_aggregate
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk: users | null
-  __typename: String
+  __typename: 'subscription_root'
 }
 
 /** The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID. */
@@ -1602,7 +1602,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: auto_tags_bool_exp | null
         },
-        auto_tagsRequest
+        auto_tagsRequest,
       ]
     | auto_tagsRequest
   /** fetch aggregated fields from the table: "auto_tags" */
@@ -1620,7 +1620,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: auto_tags_bool_exp | null
         },
-        auto_tags_aggregateRequest
+        auto_tags_aggregateRequest,
       ]
     | auto_tags_aggregateRequest
   /** fetch data from the table: "auto_tags" using primary key columns */
@@ -1640,7 +1640,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: guilds_bool_exp | null
         },
-        guildsRequest
+        guildsRequest,
       ]
     | guildsRequest
   /** fetch aggregated fields from the table: "guilds" */
@@ -1658,7 +1658,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: guilds_bool_exp | null
         },
-        guilds_aggregateRequest
+        guilds_aggregateRequest,
       ]
     | guilds_aggregateRequest
   /** fetch data from the table: "guilds" using primary key columns */
@@ -1678,7 +1678,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: image_channels_bool_exp | null
         },
-        image_channelsRequest
+        image_channelsRequest,
       ]
     | image_channelsRequest
   /** fetch aggregated fields from the table: "image_channels" */
@@ -1696,7 +1696,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: image_channels_bool_exp | null
         },
-        image_channels_aggregateRequest
+        image_channels_aggregateRequest,
       ]
     | image_channels_aggregateRequest
   /** fetch data from the table: "image_channels" using primary key columns */
@@ -1716,7 +1716,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: image_tags_bool_exp | null
         },
-        image_tagsRequest
+        image_tagsRequest,
       ]
     | image_tagsRequest
   /** fetch aggregated fields from the table: "image_tags" */
@@ -1734,7 +1734,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: image_tags_bool_exp | null
         },
-        image_tags_aggregateRequest
+        image_tags_aggregateRequest,
       ]
     | image_tags_aggregateRequest
   /** fetch data from the table: "image_tags" using primary key columns */
@@ -1754,7 +1754,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: images_bool_exp | null
         },
-        imagesRequest
+        imagesRequest,
       ]
     | imagesRequest
   /** fetch aggregated fields from the table: "images" */
@@ -1772,7 +1772,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: images_bool_exp | null
         },
-        images_aggregateRequest
+        images_aggregateRequest,
       ]
     | images_aggregateRequest
   /** fetch data from the table: "images" using primary key columns */
@@ -1792,7 +1792,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: members_bool_exp | null
         },
-        membersRequest
+        membersRequest,
       ]
     | membersRequest
   /** fetch aggregated fields from the table: "members" */
@@ -1810,7 +1810,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: members_bool_exp | null
         },
-        members_aggregateRequest
+        members_aggregateRequest,
       ]
     | members_aggregateRequest
   /** fetch data from the table: "members" using primary key columns */
@@ -1830,7 +1830,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: tag_categories_bool_exp | null
         },
-        tag_categoriesRequest
+        tag_categoriesRequest,
       ]
     | tag_categoriesRequest
   /** fetch aggregated fields from the table: "tag_categories" */
@@ -1848,7 +1848,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: tag_categories_bool_exp | null
         },
-        tag_categories_aggregateRequest
+        tag_categories_aggregateRequest,
       ]
     | tag_categories_aggregateRequest
   /** fetch data from the table: "tag_categories" using primary key columns */
@@ -1868,7 +1868,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: tag_counts_bool_exp | null
         },
-        tag_countsRequest
+        tag_countsRequest,
       ]
     | tag_countsRequest
   /** execute function "tag_count" and query aggregates on result of table type "tag_counts" */
@@ -1886,7 +1886,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: tag_counts_bool_exp | null
         },
-        tag_counts_aggregateRequest
+        tag_counts_aggregateRequest,
       ]
     | tag_counts_aggregateRequest
   /** fetch data from the table: "tag_counts" */
@@ -1904,7 +1904,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: tag_counts_bool_exp | null
         },
-        tag_countsRequest
+        tag_countsRequest,
       ]
     | tag_countsRequest
   /** fetch aggregated fields from the table: "tag_counts" */
@@ -1922,7 +1922,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: tag_counts_bool_exp | null
         },
-        tag_counts_aggregateRequest
+        tag_counts_aggregateRequest,
       ]
     | tag_counts_aggregateRequest
   /** fetch data from the table: "tag_counts" using primary key columns */
@@ -1943,7 +1943,7 @@ export interface query_rootRequest {
       /** filter the rows returned */
       where?: tag_suggestions_bool_exp | null
     },
-    tag_suggestionsRequest
+    tag_suggestionsRequest,
   ]
   /** execute function "tag_suggestion" and query aggregates on result of table type "tag_suggestions" */
   tag_suggestion_aggregate?: [
@@ -1961,7 +1961,7 @@ export interface query_rootRequest {
       /** filter the rows returned */
       where?: tag_suggestions_bool_exp | null
     },
-    tag_suggestions_aggregateRequest
+    tag_suggestions_aggregateRequest,
   ]
   /** fetch data from the table: "tag_suggestions" */
   tag_suggestions?:
@@ -1978,7 +1978,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: tag_suggestions_bool_exp | null
         },
-        tag_suggestionsRequest
+        tag_suggestionsRequest,
       ]
     | tag_suggestionsRequest
   /** fetch aggregated fields from the table: "tag_suggestions" */
@@ -1996,7 +1996,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: tag_suggestions_bool_exp | null
         },
-        tag_suggestions_aggregateRequest
+        tag_suggestions_aggregateRequest,
       ]
     | tag_suggestions_aggregateRequest
   /** fetch data from the table: "tags" */
@@ -2014,7 +2014,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: tags_bool_exp | null
         },
-        tagsRequest
+        tagsRequest,
       ]
     | tagsRequest
   /** fetch aggregated fields from the table: "tags" */
@@ -2032,7 +2032,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: tags_bool_exp | null
         },
-        tags_aggregateRequest
+        tags_aggregateRequest,
       ]
     | tags_aggregateRequest
   /** fetch data from the table: "tags" using primary key columns */
@@ -2052,7 +2052,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: users_bool_exp | null
         },
-        usersRequest
+        usersRequest,
       ]
     | usersRequest
   /** fetch aggregated fields from the table: "users" */
@@ -2070,7 +2070,7 @@ export interface query_rootRequest {
           /** filter the rows returned */
           where?: users_bool_exp | null
         },
-        users_aggregateRequest
+        users_aggregateRequest,
       ]
     | users_aggregateRequest
   /** fetch data from the table: "users" using primary key columns */
@@ -2712,7 +2712,7 @@ export interface guildsRequest {
           /** filter the rows returned */
           where?: auto_tags_bool_exp | null
         },
-        auto_tagsRequest
+        auto_tagsRequest,
       ]
     | auto_tagsRequest
   /** An aggregated array relationship */
@@ -2730,7 +2730,7 @@ export interface guildsRequest {
           /** filter the rows returned */
           where?: auto_tags_bool_exp | null
         },
-        auto_tags_aggregateRequest
+        auto_tags_aggregateRequest,
       ]
     | auto_tags_aggregateRequest
   banner?: boolean | number
@@ -2750,7 +2750,7 @@ export interface guildsRequest {
           /** filter the rows returned */
           where?: users_bool_exp | null
         },
-        usersRequest
+        usersRequest,
       ]
     | usersRequest
   /** An aggregated array relationship */
@@ -2768,7 +2768,7 @@ export interface guildsRequest {
           /** filter the rows returned */
           where?: users_bool_exp | null
         },
-        users_aggregateRequest
+        users_aggregateRequest,
       ]
     | users_aggregateRequest
   guild_id?: boolean | number
@@ -2788,7 +2788,7 @@ export interface guildsRequest {
           /** filter the rows returned */
           where?: image_channels_bool_exp | null
         },
-        image_channelsRequest
+        image_channelsRequest,
       ]
     | image_channelsRequest
   /** An aggregated array relationship */
@@ -2806,7 +2806,7 @@ export interface guildsRequest {
           /** filter the rows returned */
           where?: image_channels_bool_exp | null
         },
-        image_channels_aggregateRequest
+        image_channels_aggregateRequest,
       ]
     | image_channels_aggregateRequest
   /** An array relationship */
@@ -2824,7 +2824,7 @@ export interface guildsRequest {
           /** filter the rows returned */
           where?: images_bool_exp | null
         },
-        imagesRequest
+        imagesRequest,
       ]
     | imagesRequest
   /** An aggregated array relationship */
@@ -2842,7 +2842,7 @@ export interface guildsRequest {
           /** filter the rows returned */
           where?: images_bool_exp | null
         },
-        images_aggregateRequest
+        images_aggregateRequest,
       ]
     | images_aggregateRequest
   joined_at?: boolean | number
@@ -2861,7 +2861,7 @@ export interface guildsRequest {
           /** filter the rows returned */
           where?: members_bool_exp | null
         },
-        membersRequest
+        membersRequest,
       ]
     | membersRequest
   /** An aggregated array relationship */
@@ -2879,7 +2879,7 @@ export interface guildsRequest {
           /** filter the rows returned */
           where?: members_bool_exp | null
         },
-        members_aggregateRequest
+        members_aggregateRequest,
       ]
     | members_aggregateRequest
   name?: boolean | number
@@ -2898,7 +2898,7 @@ export interface guildsRequest {
           /** filter the rows returned */
           where?: tags_bool_exp | null
         },
-        tagsRequest
+        tagsRequest,
       ]
     | tagsRequest
   /** An aggregated array relationship */
@@ -2916,7 +2916,7 @@ export interface guildsRequest {
           /** filter the rows returned */
           where?: tags_bool_exp | null
         },
-        tags_aggregateRequest
+        tags_aggregateRequest,
       ]
     | tags_aggregateRequest
   welcome_channel?: boolean | number
@@ -3046,7 +3046,7 @@ export interface usersRequest {
           /** filter the rows returned */
           where?: image_channels_bool_exp | null
         },
-        image_channelsRequest
+        image_channelsRequest,
       ]
     | image_channelsRequest
   /** An aggregated array relationship */
@@ -3064,7 +3064,7 @@ export interface usersRequest {
           /** filter the rows returned */
           where?: image_channels_bool_exp | null
         },
-        image_channels_aggregateRequest
+        image_channels_aggregateRequest,
       ]
     | image_channels_aggregateRequest
   /** An array relationship */
@@ -3082,7 +3082,7 @@ export interface usersRequest {
           /** filter the rows returned */
           where?: image_tags_bool_exp | null
         },
-        image_tagsRequest
+        image_tagsRequest,
       ]
     | image_tagsRequest
   /** An aggregated array relationship */
@@ -3100,7 +3100,7 @@ export interface usersRequest {
           /** filter the rows returned */
           where?: image_tags_bool_exp | null
         },
-        image_tags_aggregateRequest
+        image_tags_aggregateRequest,
       ]
     | image_tags_aggregateRequest
   /** An array relationship */
@@ -3118,7 +3118,7 @@ export interface usersRequest {
           /** filter the rows returned */
           where?: images_bool_exp | null
         },
-        imagesRequest
+        imagesRequest,
       ]
     | imagesRequest
   /** An aggregated array relationship */
@@ -3136,7 +3136,7 @@ export interface usersRequest {
           /** filter the rows returned */
           where?: images_bool_exp | null
         },
-        images_aggregateRequest
+        images_aggregateRequest,
       ]
     | images_aggregateRequest
   /** An array relationship */
@@ -3154,7 +3154,7 @@ export interface usersRequest {
           /** filter the rows returned */
           where?: members_bool_exp | null
         },
-        membersRequest
+        membersRequest,
       ]
     | membersRequest
   /** An aggregated array relationship */
@@ -3172,7 +3172,7 @@ export interface usersRequest {
           /** filter the rows returned */
           where?: members_bool_exp | null
         },
-        members_aggregateRequest
+        members_aggregateRequest,
       ]
     | members_aggregateRequest
   name?: boolean | number
@@ -3199,7 +3199,7 @@ export interface image_channelsRequest {
           /** filter the rows returned */
           where?: auto_tags_bool_exp | null
         },
-        auto_tagsRequest
+        auto_tagsRequest,
       ]
     | auto_tagsRequest
   /** An aggregated array relationship */
@@ -3217,7 +3217,7 @@ export interface image_channelsRequest {
           /** filter the rows returned */
           where?: auto_tags_bool_exp | null
         },
-        auto_tags_aggregateRequest
+        auto_tags_aggregateRequest,
       ]
     | auto_tags_aggregateRequest
   channel_id?: boolean | number
@@ -3354,7 +3354,7 @@ export interface imagesRequest {
           /** filter the rows returned */
           where?: image_tags_bool_exp | null
         },
-        image_tagsRequest
+        image_tagsRequest,
       ]
     | image_tagsRequest
   /** An aggregated array relationship */
@@ -3372,7 +3372,7 @@ export interface imagesRequest {
           /** filter the rows returned */
           where?: image_tags_bool_exp | null
         },
-        image_tags_aggregateRequest
+        image_tags_aggregateRequest,
       ]
     | image_tags_aggregateRequest
   member_id?: boolean | number
@@ -3521,7 +3521,7 @@ export interface membersRequest {
           /** filter the rows returned */
           where?: image_tags_bool_exp | null
         },
-        image_tagsRequest
+        image_tagsRequest,
       ]
     | image_tagsRequest
   /** An aggregated array relationship */
@@ -3539,7 +3539,7 @@ export interface membersRequest {
           /** filter the rows returned */
           where?: image_tags_bool_exp | null
         },
-        image_tags_aggregateRequest
+        image_tags_aggregateRequest,
       ]
     | image_tags_aggregateRequest
   /** An array relationship */
@@ -3557,7 +3557,7 @@ export interface membersRequest {
           /** filter the rows returned */
           where?: images_bool_exp | null
         },
-        imagesRequest
+        imagesRequest,
       ]
     | imagesRequest
   /** An aggregated array relationship */
@@ -3575,7 +3575,7 @@ export interface membersRequest {
           /** filter the rows returned */
           where?: images_bool_exp | null
         },
-        images_aggregateRequest
+        images_aggregateRequest,
       ]
     | images_aggregateRequest
   /** An object relationship */
@@ -3739,7 +3739,7 @@ export interface tagsRequest {
           /** filter the rows returned */
           where?: image_tags_bool_exp | null
         },
-        image_tagsRequest
+        image_tagsRequest,
       ]
     | image_tagsRequest
   /** An aggregated array relationship */
@@ -3757,7 +3757,7 @@ export interface tagsRequest {
           /** filter the rows returned */
           where?: image_tags_bool_exp | null
         },
-        image_tags_aggregateRequest
+        image_tags_aggregateRequest,
       ]
     | image_tags_aggregateRequest
   name?: boolean | number
@@ -4251,7 +4251,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be deleted */
       where: auto_tags_bool_exp
     },
-    auto_tags_mutation_responseRequest
+    auto_tags_mutation_responseRequest,
   ]
   /** delete data from the table: "guilds" */
   delete_guilds?: [
@@ -4259,7 +4259,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be deleted */
       where: guilds_bool_exp
     },
-    guilds_mutation_responseRequest
+    guilds_mutation_responseRequest,
   ]
   /** delete data from the table: "image_channels" */
   delete_image_channels?: [
@@ -4267,7 +4267,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be deleted */
       where: image_channels_bool_exp
     },
-    image_channels_mutation_responseRequest
+    image_channels_mutation_responseRequest,
   ]
   /** delete data from the table: "image_tags" */
   delete_image_tags?: [
@@ -4275,7 +4275,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be deleted */
       where: image_tags_bool_exp
     },
-    image_tags_mutation_responseRequest
+    image_tags_mutation_responseRequest,
   ]
   /** delete data from the table: "images" */
   delete_images?: [
@@ -4283,7 +4283,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be deleted */
       where: images_bool_exp
     },
-    images_mutation_responseRequest
+    images_mutation_responseRequest,
   ]
   /** delete data from the table: "members" */
   delete_members?: [
@@ -4291,7 +4291,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be deleted */
       where: members_bool_exp
     },
-    members_mutation_responseRequest
+    members_mutation_responseRequest,
   ]
   /** delete data from the table: "tag_categories" */
   delete_tag_categories?: [
@@ -4299,7 +4299,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be deleted */
       where: tag_categories_bool_exp
     },
-    tag_categories_mutation_responseRequest
+    tag_categories_mutation_responseRequest,
   ]
   /** delete data from the table: "tag_counts" */
   delete_tag_counts?: [
@@ -4307,7 +4307,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be deleted */
       where: tag_counts_bool_exp
     },
-    tag_counts_mutation_responseRequest
+    tag_counts_mutation_responseRequest,
   ]
   /** delete data from the table: "tag_suggestions" */
   delete_tag_suggestions?: [
@@ -4315,7 +4315,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be deleted */
       where: tag_suggestions_bool_exp
     },
-    tag_suggestions_mutation_responseRequest
+    tag_suggestions_mutation_responseRequest,
   ]
   /** delete data from the table: "tags" */
   delete_tags?: [
@@ -4323,7 +4323,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be deleted */
       where: tags_bool_exp
     },
-    tags_mutation_responseRequest
+    tags_mutation_responseRequest,
   ]
   /** delete data from the table: "users" */
   delete_users?: [
@@ -4331,7 +4331,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be deleted */
       where: users_bool_exp
     },
-    users_mutation_responseRequest
+    users_mutation_responseRequest,
   ]
   /** insert data into the table: "auto_tags" */
   insert_auto_tags?: [
@@ -4341,7 +4341,7 @@ export interface mutation_rootRequest {
       /** on conflict condition */
       on_conflict?: auto_tags_on_conflict | null
     },
-    auto_tags_mutation_responseRequest
+    auto_tags_mutation_responseRequest,
   ]
   /** insert data into the table: "guilds" */
   insert_guilds?: [
@@ -4351,7 +4351,7 @@ export interface mutation_rootRequest {
       /** on conflict condition */
       on_conflict?: guilds_on_conflict | null
     },
-    guilds_mutation_responseRequest
+    guilds_mutation_responseRequest,
   ]
   /** insert data into the table: "image_channels" */
   insert_image_channels?: [
@@ -4361,7 +4361,7 @@ export interface mutation_rootRequest {
       /** on conflict condition */
       on_conflict?: image_channels_on_conflict | null
     },
-    image_channels_mutation_responseRequest
+    image_channels_mutation_responseRequest,
   ]
   /** insert data into the table: "image_tags" */
   insert_image_tags?: [
@@ -4371,7 +4371,7 @@ export interface mutation_rootRequest {
       /** on conflict condition */
       on_conflict?: image_tags_on_conflict | null
     },
-    image_tags_mutation_responseRequest
+    image_tags_mutation_responseRequest,
   ]
   /** insert data into the table: "images" */
   insert_images?: [
@@ -4381,7 +4381,7 @@ export interface mutation_rootRequest {
       /** on conflict condition */
       on_conflict?: images_on_conflict | null
     },
-    images_mutation_responseRequest
+    images_mutation_responseRequest,
   ]
   /** insert data into the table: "members" */
   insert_members?: [
@@ -4391,7 +4391,7 @@ export interface mutation_rootRequest {
       /** on conflict condition */
       on_conflict?: members_on_conflict | null
     },
-    members_mutation_responseRequest
+    members_mutation_responseRequest,
   ]
   /** insert data into the table: "tag_categories" */
   insert_tag_categories?: [
@@ -4401,7 +4401,7 @@ export interface mutation_rootRequest {
       /** on conflict condition */
       on_conflict?: tag_categories_on_conflict | null
     },
-    tag_categories_mutation_responseRequest
+    tag_categories_mutation_responseRequest,
   ]
   /** insert data into the table: "tag_counts" */
   insert_tag_counts?: [
@@ -4411,7 +4411,7 @@ export interface mutation_rootRequest {
       /** on conflict condition */
       on_conflict?: tag_counts_on_conflict | null
     },
-    tag_counts_mutation_responseRequest
+    tag_counts_mutation_responseRequest,
   ]
   /** insert data into the table: "tag_suggestions" */
   insert_tag_suggestions?: [
@@ -4419,7 +4419,7 @@ export interface mutation_rootRequest {
       /** the rows to be inserted */
       objects: tag_suggestions_insert_input[]
     },
-    tag_suggestions_mutation_responseRequest
+    tag_suggestions_mutation_responseRequest,
   ]
   /** insert data into the table: "tags" */
   insert_tags?: [
@@ -4429,7 +4429,7 @@ export interface mutation_rootRequest {
       /** on conflict condition */
       on_conflict?: tags_on_conflict | null
     },
-    tags_mutation_responseRequest
+    tags_mutation_responseRequest,
   ]
   /** insert data into the table: "users" */
   insert_users?: [
@@ -4439,7 +4439,7 @@ export interface mutation_rootRequest {
       /** on conflict condition */
       on_conflict?: users_on_conflict | null
     },
-    users_mutation_responseRequest
+    users_mutation_responseRequest,
   ]
   /** update data of the table: "auto_tags" */
   update_auto_tags?: [
@@ -4451,7 +4451,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be updated */
       where: auto_tags_bool_exp
     },
-    auto_tags_mutation_responseRequest
+    auto_tags_mutation_responseRequest,
   ]
   /** update data of the table: "guilds" */
   update_guilds?: [
@@ -4461,7 +4461,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be updated */
       where: guilds_bool_exp
     },
-    guilds_mutation_responseRequest
+    guilds_mutation_responseRequest,
   ]
   /** update data of the table: "image_channels" */
   update_image_channels?: [
@@ -4471,7 +4471,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be updated */
       where: image_channels_bool_exp
     },
-    image_channels_mutation_responseRequest
+    image_channels_mutation_responseRequest,
   ]
   /** update data of the table: "image_tags" */
   update_image_tags?: [
@@ -4483,7 +4483,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be updated */
       where: image_tags_bool_exp
     },
-    image_tags_mutation_responseRequest
+    image_tags_mutation_responseRequest,
   ]
   /** update data of the table: "images" */
   update_images?: [
@@ -4495,7 +4495,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be updated */
       where: images_bool_exp
     },
-    images_mutation_responseRequest
+    images_mutation_responseRequest,
   ]
   /** update data of the table: "members" */
   update_members?: [
@@ -4505,7 +4505,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be updated */
       where: members_bool_exp
     },
-    members_mutation_responseRequest
+    members_mutation_responseRequest,
   ]
   /** update data of the table: "tag_categories" */
   update_tag_categories?: [
@@ -4515,7 +4515,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be updated */
       where: tag_categories_bool_exp
     },
-    tag_categories_mutation_responseRequest
+    tag_categories_mutation_responseRequest,
   ]
   /** update data of the table: "tag_counts" */
   update_tag_counts?: [
@@ -4527,7 +4527,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be updated */
       where: tag_counts_bool_exp
     },
-    tag_counts_mutation_responseRequest
+    tag_counts_mutation_responseRequest,
   ]
   /** update data of the table: "tag_suggestions" */
   update_tag_suggestions?: [
@@ -4539,7 +4539,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be updated */
       where: tag_suggestions_bool_exp
     },
-    tag_suggestions_mutation_responseRequest
+    tag_suggestions_mutation_responseRequest,
   ]
   /** update data of the table: "tags" */
   update_tags?: [
@@ -4549,7 +4549,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be updated */
       where: tags_bool_exp
     },
-    tags_mutation_responseRequest
+    tags_mutation_responseRequest,
   ]
   /** update data of the table: "users" */
   update_users?: [
@@ -4559,7 +4559,7 @@ export interface mutation_rootRequest {
       /** filter the rows which have to be updated */
       where: users_bool_exp
     },
-    users_mutation_responseRequest
+    users_mutation_responseRequest,
   ]
   __typename?: boolean | number
   __scalar?: boolean | number
@@ -5078,7 +5078,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: auto_tags_bool_exp | null
         },
-        auto_tagsRequest
+        auto_tagsRequest,
       ]
     | auto_tagsRequest
   /** fetch aggregated fields from the table: "auto_tags" */
@@ -5096,7 +5096,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: auto_tags_bool_exp | null
         },
-        auto_tags_aggregateRequest
+        auto_tags_aggregateRequest,
       ]
     | auto_tags_aggregateRequest
   /** fetch data from the table: "auto_tags" using primary key columns */
@@ -5116,7 +5116,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: guilds_bool_exp | null
         },
-        guildsRequest
+        guildsRequest,
       ]
     | guildsRequest
   /** fetch aggregated fields from the table: "guilds" */
@@ -5134,7 +5134,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: guilds_bool_exp | null
         },
-        guilds_aggregateRequest
+        guilds_aggregateRequest,
       ]
     | guilds_aggregateRequest
   /** fetch data from the table: "guilds" using primary key columns */
@@ -5154,7 +5154,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: image_channels_bool_exp | null
         },
-        image_channelsRequest
+        image_channelsRequest,
       ]
     | image_channelsRequest
   /** fetch aggregated fields from the table: "image_channels" */
@@ -5172,7 +5172,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: image_channels_bool_exp | null
         },
-        image_channels_aggregateRequest
+        image_channels_aggregateRequest,
       ]
     | image_channels_aggregateRequest
   /** fetch data from the table: "image_channels" using primary key columns */
@@ -5192,7 +5192,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: image_tags_bool_exp | null
         },
-        image_tagsRequest
+        image_tagsRequest,
       ]
     | image_tagsRequest
   /** fetch aggregated fields from the table: "image_tags" */
@@ -5210,7 +5210,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: image_tags_bool_exp | null
         },
-        image_tags_aggregateRequest
+        image_tags_aggregateRequest,
       ]
     | image_tags_aggregateRequest
   /** fetch data from the table: "image_tags" using primary key columns */
@@ -5230,7 +5230,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: images_bool_exp | null
         },
-        imagesRequest
+        imagesRequest,
       ]
     | imagesRequest
   /** fetch aggregated fields from the table: "images" */
@@ -5248,7 +5248,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: images_bool_exp | null
         },
-        images_aggregateRequest
+        images_aggregateRequest,
       ]
     | images_aggregateRequest
   /** fetch data from the table: "images" using primary key columns */
@@ -5268,7 +5268,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: members_bool_exp | null
         },
-        membersRequest
+        membersRequest,
       ]
     | membersRequest
   /** fetch aggregated fields from the table: "members" */
@@ -5286,7 +5286,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: members_bool_exp | null
         },
-        members_aggregateRequest
+        members_aggregateRequest,
       ]
     | members_aggregateRequest
   /** fetch data from the table: "members" using primary key columns */
@@ -5306,7 +5306,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: tag_categories_bool_exp | null
         },
-        tag_categoriesRequest
+        tag_categoriesRequest,
       ]
     | tag_categoriesRequest
   /** fetch aggregated fields from the table: "tag_categories" */
@@ -5324,7 +5324,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: tag_categories_bool_exp | null
         },
-        tag_categories_aggregateRequest
+        tag_categories_aggregateRequest,
       ]
     | tag_categories_aggregateRequest
   /** fetch data from the table: "tag_categories" using primary key columns */
@@ -5344,7 +5344,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: tag_counts_bool_exp | null
         },
-        tag_countsRequest
+        tag_countsRequest,
       ]
     | tag_countsRequest
   /** execute function "tag_count" and query aggregates on result of table type "tag_counts" */
@@ -5362,7 +5362,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: tag_counts_bool_exp | null
         },
-        tag_counts_aggregateRequest
+        tag_counts_aggregateRequest,
       ]
     | tag_counts_aggregateRequest
   /** fetch data from the table: "tag_counts" */
@@ -5380,7 +5380,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: tag_counts_bool_exp | null
         },
-        tag_countsRequest
+        tag_countsRequest,
       ]
     | tag_countsRequest
   /** fetch aggregated fields from the table: "tag_counts" */
@@ -5398,7 +5398,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: tag_counts_bool_exp | null
         },
-        tag_counts_aggregateRequest
+        tag_counts_aggregateRequest,
       ]
     | tag_counts_aggregateRequest
   /** fetch data from the table: "tag_counts" using primary key columns */
@@ -5419,7 +5419,7 @@ export interface subscription_rootRequest {
       /** filter the rows returned */
       where?: tag_suggestions_bool_exp | null
     },
-    tag_suggestionsRequest
+    tag_suggestionsRequest,
   ]
   /** execute function "tag_suggestion" and query aggregates on result of table type "tag_suggestions" */
   tag_suggestion_aggregate?: [
@@ -5437,7 +5437,7 @@ export interface subscription_rootRequest {
       /** filter the rows returned */
       where?: tag_suggestions_bool_exp | null
     },
-    tag_suggestions_aggregateRequest
+    tag_suggestions_aggregateRequest,
   ]
   /** fetch data from the table: "tag_suggestions" */
   tag_suggestions?:
@@ -5454,7 +5454,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: tag_suggestions_bool_exp | null
         },
-        tag_suggestionsRequest
+        tag_suggestionsRequest,
       ]
     | tag_suggestionsRequest
   /** fetch aggregated fields from the table: "tag_suggestions" */
@@ -5472,7 +5472,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: tag_suggestions_bool_exp | null
         },
-        tag_suggestions_aggregateRequest
+        tag_suggestions_aggregateRequest,
       ]
     | tag_suggestions_aggregateRequest
   /** fetch data from the table: "tags" */
@@ -5490,7 +5490,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: tags_bool_exp | null
         },
-        tagsRequest
+        tagsRequest,
       ]
     | tagsRequest
   /** fetch aggregated fields from the table: "tags" */
@@ -5508,7 +5508,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: tags_bool_exp | null
         },
-        tags_aggregateRequest
+        tags_aggregateRequest,
       ]
     | tags_aggregateRequest
   /** fetch data from the table: "tags" using primary key columns */
@@ -5528,7 +5528,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: users_bool_exp | null
         },
-        usersRequest
+        usersRequest,
       ]
     | usersRequest
   /** fetch aggregated fields from the table: "users" */
@@ -5546,7 +5546,7 @@ export interface subscription_rootRequest {
           /** filter the rows returned */
           where?: users_bool_exp | null
         },
-        users_aggregateRequest
+        users_aggregateRequest,
       ]
     | users_aggregateRequest
   /** fetch data from the table: "users" using primary key columns */

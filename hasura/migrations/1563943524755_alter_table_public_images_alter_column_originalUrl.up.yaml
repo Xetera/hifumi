@@ -1,0 +1,6 @@
+- args:
+    sql: COMMENT ON COLUMN "public"."images"."originalUrl" IS ''
+  type: run_sql
+- args:
+    sql: alter table "public"."images" rename column "originalUrl" to "original_url";
+  type: run_sql

@@ -1,0 +1,4 @@
+- args:
+    name: tag_count
+    schema: public
+  type: untrack_function

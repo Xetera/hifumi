@@ -1,0 +1,7 @@
+- args:
+    sql: ALTER TABLE "public"."images" ADD CONSTRAINT "images_originalUrl_key" UNIQUE
+      ("originalUrl")
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."images"."originalUrl" IS ''
+  type: run_sql

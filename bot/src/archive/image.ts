@@ -109,7 +109,7 @@ const archiveAttachments = async (message: Message) => {
     return insertImages([
       {
         message_id: message.id,
-        url: src,
+        original_url: src,
         image_tags: {
           data: tags.map(tag => ({
             name: tag,
@@ -142,7 +142,7 @@ export const processImage = async (message: Message) => {
   }
   logger.debug(
     `Uploading valid image from channel ${
-      message.channel instanceof TextChannel ? message.channel.name : ""
+    message.channel instanceof TextChannel ? message.channel.name : ""
     }`
   );
   return archiveAttachments(message);

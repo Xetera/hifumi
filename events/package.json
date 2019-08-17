@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "codegen": "generate-graphql-client -f fetcher.js -o graphql",
     "dev": "serverless offline --port 1024"
   },
   "keywords": [],
@@ -13,20 +14,29 @@
   "dependencies": {
     "aws-sdk": "^2.498.0",
     "gm": "^1.23.1",
+    "graphql-request": "^1.8.2",
+    "graphql-typed-client": "^1.7.0",
     "hashids": "^1.2.2",
     "mime-types": "^2.1.24",
-    "node-fetch": "^2.6.0",
-    "sharp": "^0.22.1"
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@types/gm": "^1.18.3",
     "@types/hashids": "^1.0.30",
+    "@types/jest": "^24.0.17",
     "@types/mime-types": "^2.1.0",
     "@types/node-fetch": "^2.5.0",
     "@types/sharp": "^0.22.2",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "jest": "^24.8.0",
     "serverless-dotenv-plugin": "^2.1.1",
     "serverless-offline": "^5.8.0",
     "serverless-plugin-typescript": "^1.1.9",
+    "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   }

@@ -1,0 +1,3 @@
+- sql: "alter table \"public\".\"tag_suggestions\"\n    add constraint \"__tag_suggestion_pkey\"
+    \n    primary key ( \"name\" );"
+  type: run_sql

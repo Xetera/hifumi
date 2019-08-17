@@ -9,9 +9,13 @@ provider:
   name: aws
   runtime: nodejs10.x
 
+package:
+  include:
+    - src/graphql/*
+
 functions:
   resize:
-    handler: resizer.resize
+    handler: src/resizer.resize
     path: src
     events:
       - http:

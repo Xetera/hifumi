@@ -1,65 +1,73 @@
-require("dotenv").config();
+import path from "path";
+require("dotenv").config({ path: path.resolve("..", ".env") });
 import jwt from "jsonwebtoken";
 
+import { HttpLink } from "apollo-link-http";
 import fetch from "isomorphic-fetch";
 import {
-  makeExecutableSchema,
+  makeExecutableSchema, makeRemoteExecutableSchema, introspectSchema, IGraphQLToolsResolveInfo, mergeSchemas,
 } from "graphql-tools";
+import { setContext } from "apollo-link-context";
+
 
 import { ApolloServer } from "apollo-server";
 
-const typeDefs = `
-  enum Privilege {
-    Owner,
-    Admin,
-    Moderator,
-    ImageModerator
+// we should probably change this
+const { HIFUMI_HASURA_URL } = process.env;
+console.log(HIFUMI_HASURA_URL)
+const authLink = setContext(() => ({
+  headers: {
+    "X-Hasura-Admin-Secret": "test"
   }
-  type User {
-    name: String!
-    avatar: String!
-    discriminator: String!
-    privilege: Privilege
-  }
-  type Query {
-    user(id: String!): User!
-  }
-`;
+}))
 
-const resolvers = {
-  Query: {
-    user: async (_, args, ctx, info) => {
-      console.log(args.id);
-      const yeet = await fetch(process.env.HASURA_GRAPHQL_URL, {
-        method: "POST",
-        body: JSON.stringify({
-          query: `{
-            users_by_pk(user_id: ${String(args.id)}) {
-              name
-              avatar
-            }
-          }`
-        }),
-        headers: {
-          "X-Hasura-Access-Key": "test",
-          "Content-Type": "application/json"
-        }
-      }).then(r => r.json());
-      console.log(yeet);
-      return {
-        name: "yes"
-      };
-    }
-  }
-};
-
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers
+const httpLink = new HttpLink({
+  uri: HIFUMI_HASURA_URL,
+  fetch,
 });
+
+const link = authLink.concat(httpLink);
+
+const createRemoteExecutableSchema = () => introspectSchema(link)
+  .then(remoteSchema => makeRemoteExecutableSchema({
+    schema: remoteSchema,
+    link
+  }));
+
+const createNewSchema = async () => {
+  const schema = await createRemoteExecutableSchema();
+
+  const resolvers = {
+    Mutation: {
+      insert_images: async (_, args, ctx, info: IGraphQLToolsResolveInfo) => {
+        console.log("received info");
+
+        console.log(ctx);
+        // if (!args.id) {
+        //   return [];
+        // }
+        return info.mergeInfo!.delegateToSchema({
+          schema,
+          operation: 'mutation',
+          fieldName: 'insert_images',
+          args,
+          context: ctx,
+          info
+        })
+      }
+    }
+  };
+
+  return mergeSchemas({
+    schemas: [schema],
+    resolvers
+  })
+}
+
+
 const runServer = async () => {
-  // Get newly merged schema
-  // start server with the new schema (set knex instance in the context)
+  const schema = await createNewSchema();
+
   const server = new ApolloServer({
     schema,
     context: ({ req }) => {
