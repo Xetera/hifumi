@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "codegen": "generate-graphql-client -f fetcher.js -o graphql",
+    "codegen": "generate-graphql-client -f src/fetcher.js -o src/graphql",
     "dev": "serverless offline --port 1024"
   },
   "keywords": [],
-  "author": "",
+  "author": "xetera",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.498.0",
@@ -33,6 +33,7 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.8.0",
+    "serverless": "^1.50.0",
     "serverless-dotenv-plugin": "^2.1.1",
     "serverless-offline": "^5.8.0",
     "serverless-plugin-typescript": "^1.1.9",

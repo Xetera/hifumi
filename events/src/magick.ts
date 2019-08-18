@@ -10,19 +10,11 @@ export type Metadata = Readonly<{
   }>;
 }>;
 
-export const withImg = (f: (img: State) => State) => (
-  image: Buffer
-): Promise<Buffer> => {
-  return new Promise((res, rej) =>
-    f(img(image)).toBuffer((e, data) => {
-      if (e) return rej(e);
-      res(data);
-    })
-  );
-};
-
 export const toBuffer = (image: State): Promise<Buffer> =>
   promisify(image.toBuffer).bind(image)() as Promise<Buffer>;
+
+export const bufferSize = (buf: Buffer): number =>
+  Math.ceil(buf.byteLength / 1024);
 
 export const metadata = (state: State): Promise<Metadata> => {
   return new Promise((res, rej) => {

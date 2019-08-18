@@ -1,8 +1,10 @@
-import { withImg, img, metadata } from "../src/magick";
+import { img, metadata, bufferSize } from "../magick";
 import * as fs from "fs";
 import { promisify } from "util";
 
-const readAsync = promisify(fs.readFile).bind(fs);
+export const readAsync = promisify(fs.readFile).bind(fs);
+
+const withinReasonableRange = (one: number, two: number) => two / one;
 
 const testMeta = async ({ expects, source }) => {
   const buf = await readAsync(source);
@@ -20,7 +22,7 @@ test("grabbing gif metadata", () =>
       width: 250,
       format: "gif",
     },
-    source: "__tests__/test.gif",
+    source: "src/__tests__/test.gif",
   }));
 
 test("grabbing png metadata", () =>
@@ -30,7 +32,7 @@ test("grabbing png metadata", () =>
       width: 1200,
       format: "png",
     },
-    source: "./__tests__/test.png",
+    source: "./src/__tests__/test.png",
   }));
 
 test("grabbing jpg metadata", () =>
@@ -40,5 +42,17 @@ test("grabbing jpg metadata", () =>
       width: 1920,
       format: "jpeg",
     },
-    source: "./__tests__/test.jpg",
+    source: "./src/__tests__/test.jpg",
   }));
+
+test("reading jpg image size", async () => {
+  const buf = await readAsync("./src/__tests__/test.jpg");
+  const kb = bufferSize(buf);
+  expect(kb).toEqual(485);
+});
+
+test("reading png image size", async () => {
+  const buf = await readAsync("./src/__tests__/test.png");
+  const kb = bufferSize(buf);
+  expect(kb).toEqual(578);
+});

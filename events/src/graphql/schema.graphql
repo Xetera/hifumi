@@ -1890,6 +1890,7 @@ type images {
   message_id: String
   original_url: String!
   public: Boolean!
+  size: Int
   thumbnail_url: String
   url: String
 
@@ -1956,6 +1957,7 @@ aggregate avg on columns
 type images_avg_fields {
   height: Float
   id: Float
+  size: Float
   width: Float
 }
 
@@ -1965,6 +1967,7 @@ order by avg() on columns of table "images"
 input images_avg_order_by {
   height: order_by
   id: order_by
+  size: order_by
   width: order_by
 }
 
@@ -1987,6 +1990,7 @@ input images_bool_exp {
   message_id: text_comparison_exp
   original_url: text_comparison_exp
   public: boolean_comparison_exp
+  size: integer_comparison_exp
   thumbnail_url: text_comparison_exp
   url: text_comparison_exp
   user: users_bool_exp
@@ -2014,6 +2018,7 @@ input type for incrementing integer columne in table "images"
 input images_inc_input {
   height: Int
   id: Int
+  size: Int
   width: Int
 }
 
@@ -2033,6 +2038,7 @@ input images_insert_input {
   message_id: String
   original_url: String
   public: Boolean
+  size: Int
   thumbnail_url: String
   url: String
   user: users_obj_rel_insert_input
@@ -2052,6 +2058,7 @@ type images_max_fields {
   member_id: String
   message_id: String
   original_url: String
+  size: Int
   thumbnail_url: String
   url: String
   width: Int
@@ -2070,6 +2077,7 @@ input images_max_order_by {
   member_id: order_by
   message_id: order_by
   original_url: order_by
+  size: order_by
   thumbnail_url: order_by
   url: order_by
   width: order_by
@@ -2088,6 +2096,7 @@ type images_min_fields {
   member_id: String
   message_id: String
   original_url: String
+  size: Int
   thumbnail_url: String
   url: String
   width: Int
@@ -2106,6 +2115,7 @@ input images_min_order_by {
   member_id: order_by
   message_id: order_by
   original_url: order_by
+  size: order_by
   thumbnail_url: order_by
   url: order_by
   width: order_by
@@ -2158,6 +2168,7 @@ input images_order_by {
   message_id: order_by
   original_url: order_by
   public: order_by
+  size: order_by
   thumbnail_url: order_by
   url: order_by
   user: users_order_by
@@ -2221,6 +2232,11 @@ enum images_select_column {
   """
   column name
   """
+  size
+
+  """
+  column name
+  """
   thumbnail_url
 
   """
@@ -2248,6 +2264,7 @@ input images_set_input {
   message_id: String
   original_url: String
   public: Boolean
+  size: Int
   thumbnail_url: String
   url: String
   width: Int
@@ -2259,6 +2276,7 @@ aggregate stddev on columns
 type images_stddev_fields {
   height: Float
   id: Float
+  size: Float
   width: Float
 }
 
@@ -2268,6 +2286,7 @@ order by stddev() on columns of table "images"
 input images_stddev_order_by {
   height: order_by
   id: order_by
+  size: order_by
   width: order_by
 }
 
@@ -2277,6 +2296,7 @@ aggregate stddev_pop on columns
 type images_stddev_pop_fields {
   height: Float
   id: Float
+  size: Float
   width: Float
 }
 
@@ -2286,6 +2306,7 @@ order by stddev_pop() on columns of table "images"
 input images_stddev_pop_order_by {
   height: order_by
   id: order_by
+  size: order_by
   width: order_by
 }
 
@@ -2295,6 +2316,7 @@ aggregate stddev_samp on columns
 type images_stddev_samp_fields {
   height: Float
   id: Float
+  size: Float
   width: Float
 }
 
@@ -2304,6 +2326,7 @@ order by stddev_samp() on columns of table "images"
 input images_stddev_samp_order_by {
   height: order_by
   id: order_by
+  size: order_by
   width: order_by
 }
 
@@ -2313,6 +2336,7 @@ aggregate sum on columns
 type images_sum_fields {
   height: Int
   id: Int
+  size: Int
   width: Int
 }
 
@@ -2322,6 +2346,7 @@ order by sum() on columns of table "images"
 input images_sum_order_by {
   height: order_by
   id: order_by
+  size: order_by
   width: order_by
 }
 
@@ -2382,6 +2407,11 @@ enum images_update_column {
   """
   column name
   """
+  size
+
+  """
+  column name
+  """
   thumbnail_url
 
   """
@@ -2401,6 +2431,7 @@ aggregate var_pop on columns
 type images_var_pop_fields {
   height: Float
   id: Float
+  size: Float
   width: Float
 }
 
@@ -2410,6 +2441,7 @@ order by var_pop() on columns of table "images"
 input images_var_pop_order_by {
   height: order_by
   id: order_by
+  size: order_by
   width: order_by
 }
 
@@ -2419,6 +2451,7 @@ aggregate var_samp on columns
 type images_var_samp_fields {
   height: Float
   id: Float
+  size: Float
   width: Float
 }
 
@@ -2428,6 +2461,7 @@ order by var_samp() on columns of table "images"
 input images_var_samp_order_by {
   height: order_by
   id: order_by
+  size: order_by
   width: order_by
 }
 
@@ -2437,6 +2471,7 @@ aggregate variance on columns
 type images_variance_fields {
   height: Float
   id: Float
+  size: Float
   width: Float
 }
 
@@ -2446,6 +2481,7 @@ order by variance() on columns of table "images"
 input images_variance_order_by {
   height: order_by
   id: order_by
+  size: order_by
   width: order_by
 }
 

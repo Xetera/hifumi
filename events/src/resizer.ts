@@ -1,11 +1,11 @@
 import fetch from "node-fetch";
-import { S3 } from "aws-sdk";
-import { withImg, Metadata, metadata, img, toBuffer } from "./magick";
+import { S3, AWSError } from "aws-sdk";
+import { Metadata, metadata, img, toBuffer, bufferSize } from "./magick";
 import mime from "mime-types";
 import Hashids from "hashids";
 import { updateImage } from "./gql";
 import { State } from "gm";
-import { promisify } from "util";
+import { PromiseResult } from "aws-sdk/lib/request";
 
 // please don't look at this salt to try to reverse engineer the
 // ids of images, I trust that you're all good boys.
@@ -13,7 +13,7 @@ const SALT = "hifumi";
 const COMPRESSION_TYPE = "LZMA";
 const RESIZE_WIDTH = 300;
 
-const noopAsync = () => Promise.resolve();
+const noopAsync = (): Promise<void> => Promise.resolve();
 const s3 = new S3();
 const hash = new Hashids(SALT);
 const { EVENTS_BUCKET_NAME, EVENTS_CDN_ROOT } = process.env;
@@ -32,7 +32,7 @@ const resizeImage = (state: State) =>
 
 const compress = (state: State) => state.compress(COMPRESSION_TYPE);
 
-const needsResizing = ({ size }: Metadata) => size.width > RESIZE_WIDTH;
+export const needsResizing = ({ size }: Metadata) => size.width > RESIZE_WIDTH;
 
 const downloadImage = async (url: string): Promise<DownloadedImage> => {
   const image = await getBuffer(url);
@@ -41,7 +41,11 @@ const downloadImage = async (url: string): Promise<DownloadedImage> => {
   return { image, meta, state };
 };
 
-const uploadImage = async (image: Buffer, filename: string, meta: Metadata) => {
+const uploadImage = async (
+  image: Buffer,
+  filename: string,
+  meta: Metadata
+): Promise<PromiseResult<S3.PutObjectOutput, AWSError>> => {
   const contentType = mime.lookup(meta.format || "[unknown]");
 
   if (contentType === false) {
@@ -60,31 +64,50 @@ const uploadImage = async (image: Buffer, filename: string, meta: Metadata) => {
   return s3.putObject(payload).promise();
 };
 
+const prepareThumbnail = (state: State): Promise<Buffer> =>
+  toBuffer(resizeImage(compress(state)));
+
 export const resize = async ({ body }) => {
   try {
-    console.time("resize");
+    console.time("full resize");
+    // TODO: validate first
     const data = JSON.parse(body).event.data.new;
     const { original_url, id } = data;
+    console.time("download");
     const { image, meta, state } = await downloadImage(original_url);
+    console.timeEnd("download");
     const { size, format } = meta;
     const key = hash.encode(data.id);
 
-    const resizedName = `thumbnails/${key}.${format}`;
+    const thumbName = `thumbnails/${key}.${format}`;
+    const originalBuffer = await toBuffer(await compress(state));
+    const imageSize = bufferSize(originalBuffer);
+    const isResizing = needsResizing(meta);
+    console.log(
+      `${isResizing ? "" : "Not "}resizing ${size.width}x${
+        size.height
+      } image [${id}]`
+    );
     const originalName = `images/${key}.${format}`;
-    const compressed = await compress(state);
-    const compressedBuffer = await toBuffer(compressed);
-    const resizedBuffer = await toBuffer(resized);
+    const resizedUrl = isResizing ? thumbName : originalName;
 
-    await Promise.all([
-      uploadImage(compressedBuffer, originalName, meta),
-      needsResizing(meta)
-        ? uploadImage(resizedBuffer, resizedName, meta)
+    console.time("upload");
+    await Promise.all<any>([
+      uploadImage(originalBuffer, originalName, meta),
+      isResizing
+        ? (async () => {
+            console.time("thumbnail");
+            const thumbnail = await prepareThumbnail(state);
+            console.timeEnd("thumbnail");
+            return uploadImage(thumbnail, thumbName, meta);
+          })()
         : noopAsync(),
     ]);
+    console.timeEnd("upload");
 
     const { width, height } = size;
     const url = `${EVENTS_CDN_ROOT}/${originalName}`;
-    const thumbnailUrl = `${EVENTS_CDN_ROOT}/${resizedName}`;
+    const thumbnailUrl = `${EVENTS_CDN_ROOT}/${resizedUrl}`;
 
     await updateImage(
       {
@@ -92,12 +115,13 @@ export const resize = async ({ body }) => {
         height,
         url,
         format,
+        size: imageSize,
         thumbnail_url: thumbnailUrl,
       },
-      { id }
+      id
     );
 
-    console.timeEnd("resize");
+    console.timeEnd("full resize");
     return {
       body: JSON.stringify({
         meta,

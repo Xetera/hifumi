@@ -12,7 +12,7 @@ export const client = createClient({
     }).then((r: any) => r.json()),
 });
 
-export const updateImage = (set: images_set_input, { id }: { id: number }) =>
+export const updateImage = (set: images_set_input, id: number) =>
   client.mutation({
     update_images: [
       {

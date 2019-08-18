@@ -410,6 +410,7 @@ export interface images {
   message_id: String | null
   original_url: String
   public: Boolean
+  size: Int | null
   thumbnail_url: String | null
   url: String | null
   /** An object relationship */
@@ -561,6 +562,8 @@ export enum images_select_column {
   /** column name */
   public = 'public',
   /** column name */
+  size = 'size',
+  /** column name */
   thumbnail_url = 'thumbnail_url',
   /** column name */
   url = 'url',
@@ -595,6 +598,7 @@ export interface images_aggregate_fields {
 export interface images_avg_fields {
   height: Float | null
   id: Float | null
+  size: Float | null
   width: Float | null
   __typename: 'images_avg_fields'
 }
@@ -610,6 +614,7 @@ export interface images_max_fields {
   member_id: String | null
   message_id: String | null
   original_url: String | null
+  size: Int | null
   thumbnail_url: String | null
   url: String | null
   width: Int | null
@@ -627,6 +632,7 @@ export interface images_min_fields {
   member_id: String | null
   message_id: String | null
   original_url: String | null
+  size: Int | null
   thumbnail_url: String | null
   url: String | null
   width: Int | null
@@ -637,6 +643,7 @@ export interface images_min_fields {
 export interface images_stddev_fields {
   height: Float | null
   id: Float | null
+  size: Float | null
   width: Float | null
   __typename: 'images_stddev_fields'
 }
@@ -645,6 +652,7 @@ export interface images_stddev_fields {
 export interface images_stddev_pop_fields {
   height: Float | null
   id: Float | null
+  size: Float | null
   width: Float | null
   __typename: 'images_stddev_pop_fields'
 }
@@ -653,6 +661,7 @@ export interface images_stddev_pop_fields {
 export interface images_stddev_samp_fields {
   height: Float | null
   id: Float | null
+  size: Float | null
   width: Float | null
   __typename: 'images_stddev_samp_fields'
 }
@@ -661,6 +670,7 @@ export interface images_stddev_samp_fields {
 export interface images_sum_fields {
   height: Int | null
   id: Int | null
+  size: Int | null
   width: Int | null
   __typename: 'images_sum_fields'
 }
@@ -669,6 +679,7 @@ export interface images_sum_fields {
 export interface images_var_pop_fields {
   height: Float | null
   id: Float | null
+  size: Float | null
   width: Float | null
   __typename: 'images_var_pop_fields'
 }
@@ -677,6 +688,7 @@ export interface images_var_pop_fields {
 export interface images_var_samp_fields {
   height: Float | null
   id: Float | null
+  size: Float | null
   width: Float | null
   __typename: 'images_var_samp_fields'
 }
@@ -685,6 +697,7 @@ export interface images_var_samp_fields {
 export interface images_variance_fields {
   height: Float | null
   id: Float | null
+  size: Float | null
   width: Float | null
   __typename: 'images_variance_fields'
 }
@@ -1381,6 +1394,8 @@ export enum images_update_column {
   original_url = 'original_url',
   /** column name */
   public = 'public',
+  /** column name */
+  size = 'size',
   /** column name */
   thumbnail_url = 'thumbnail_url',
   /** column name */
@@ -2241,6 +2256,7 @@ export interface images_aggregate_order_by {
 export interface images_avg_order_by {
   height?: order_by | null
   id?: order_by | null
+  size?: order_by | null
   width?: order_by | null
 }
 
@@ -2255,6 +2271,7 @@ export interface images_max_order_by {
   member_id?: order_by | null
   message_id?: order_by | null
   original_url?: order_by | null
+  size?: order_by | null
   thumbnail_url?: order_by | null
   url?: order_by | null
   width?: order_by | null
@@ -2271,6 +2288,7 @@ export interface images_min_order_by {
   member_id?: order_by | null
   message_id?: order_by | null
   original_url?: order_by | null
+  size?: order_by | null
   thumbnail_url?: order_by | null
   url?: order_by | null
   width?: order_by | null
@@ -2280,6 +2298,7 @@ export interface images_min_order_by {
 export interface images_stddev_order_by {
   height?: order_by | null
   id?: order_by | null
+  size?: order_by | null
   width?: order_by | null
 }
 
@@ -2287,6 +2306,7 @@ export interface images_stddev_order_by {
 export interface images_stddev_pop_order_by {
   height?: order_by | null
   id?: order_by | null
+  size?: order_by | null
   width?: order_by | null
 }
 
@@ -2294,6 +2314,7 @@ export interface images_stddev_pop_order_by {
 export interface images_stddev_samp_order_by {
   height?: order_by | null
   id?: order_by | null
+  size?: order_by | null
   width?: order_by | null
 }
 
@@ -2301,6 +2322,7 @@ export interface images_stddev_samp_order_by {
 export interface images_sum_order_by {
   height?: order_by | null
   id?: order_by | null
+  size?: order_by | null
   width?: order_by | null
 }
 
@@ -2308,6 +2330,7 @@ export interface images_sum_order_by {
 export interface images_var_pop_order_by {
   height?: order_by | null
   id?: order_by | null
+  size?: order_by | null
   width?: order_by | null
 }
 
@@ -2315,6 +2338,7 @@ export interface images_var_pop_order_by {
 export interface images_var_samp_order_by {
   height?: order_by | null
   id?: order_by | null
+  size?: order_by | null
   width?: order_by | null
 }
 
@@ -2322,6 +2346,7 @@ export interface images_var_samp_order_by {
 export interface images_variance_order_by {
   height?: order_by | null
   id?: order_by | null
+  size?: order_by | null
   width?: order_by | null
 }
 
@@ -2635,6 +2660,7 @@ export interface images_bool_exp {
   message_id?: text_comparison_exp | null
   original_url?: text_comparison_exp | null
   public?: boolean_comparison_exp | null
+  size?: integer_comparison_exp | null
   thumbnail_url?: text_comparison_exp | null
   url?: text_comparison_exp | null
   user?: users_bool_exp | null
@@ -3293,6 +3319,7 @@ export interface images_order_by {
   message_id?: order_by | null
   original_url?: order_by | null
   public?: order_by | null
+  size?: order_by | null
   thumbnail_url?: order_by | null
   url?: order_by | null
   user?: users_order_by | null
@@ -3379,6 +3406,7 @@ export interface imagesRequest {
   message_id?: boolean | number
   original_url?: boolean | number
   public?: boolean | number
+  size?: boolean | number
   thumbnail_url?: boolean | number
   url?: boolean | number
   /** An object relationship */
@@ -3614,6 +3642,7 @@ export interface images_aggregate_fieldsRequest {
 export interface images_avg_fieldsRequest {
   height?: boolean | number
   id?: boolean | number
+  size?: boolean | number
   width?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
@@ -3630,6 +3659,7 @@ export interface images_max_fieldsRequest {
   member_id?: boolean | number
   message_id?: boolean | number
   original_url?: boolean | number
+  size?: boolean | number
   thumbnail_url?: boolean | number
   url?: boolean | number
   width?: boolean | number
@@ -3648,6 +3678,7 @@ export interface images_min_fieldsRequest {
   member_id?: boolean | number
   message_id?: boolean | number
   original_url?: boolean | number
+  size?: boolean | number
   thumbnail_url?: boolean | number
   url?: boolean | number
   width?: boolean | number
@@ -3659,6 +3690,7 @@ export interface images_min_fieldsRequest {
 export interface images_stddev_fieldsRequest {
   height?: boolean | number
   id?: boolean | number
+  size?: boolean | number
   width?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
@@ -3668,6 +3700,7 @@ export interface images_stddev_fieldsRequest {
 export interface images_stddev_pop_fieldsRequest {
   height?: boolean | number
   id?: boolean | number
+  size?: boolean | number
   width?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
@@ -3677,6 +3710,7 @@ export interface images_stddev_pop_fieldsRequest {
 export interface images_stddev_samp_fieldsRequest {
   height?: boolean | number
   id?: boolean | number
+  size?: boolean | number
   width?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
@@ -3686,6 +3720,7 @@ export interface images_stddev_samp_fieldsRequest {
 export interface images_sum_fieldsRequest {
   height?: boolean | number
   id?: boolean | number
+  size?: boolean | number
   width?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
@@ -3695,6 +3730,7 @@ export interface images_sum_fieldsRequest {
 export interface images_var_pop_fieldsRequest {
   height?: boolean | number
   id?: boolean | number
+  size?: boolean | number
   width?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
@@ -3704,6 +3740,7 @@ export interface images_var_pop_fieldsRequest {
 export interface images_var_samp_fieldsRequest {
   height?: boolean | number
   id?: boolean | number
+  size?: boolean | number
   width?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
@@ -3713,6 +3750,7 @@ export interface images_var_samp_fieldsRequest {
 export interface images_variance_fieldsRequest {
   height?: boolean | number
   id?: boolean | number
+  size?: boolean | number
   width?: boolean | number
   __typename?: boolean | number
   __scalar?: boolean | number
@@ -4814,6 +4852,7 @@ export interface images_insert_input {
   message_id?: String | null
   original_url?: String | null
   public?: Boolean | null
+  size?: Int | null
   thumbnail_url?: String | null
   url?: String | null
   user?: users_obj_rel_insert_input | null
@@ -4990,6 +5029,7 @@ export interface image_tags_set_input {
 export interface images_inc_input {
   height?: Int | null
   id?: Int | null
+  size?: Int | null
   width?: Int | null
 }
 
@@ -5005,6 +5045,7 @@ export interface images_set_input {
   message_id?: String | null
   original_url?: String | null
   public?: Boolean | null
+  size?: Int | null
   thumbnail_url?: String | null
   url?: String | null
   width?: Int | null
@@ -8735,6 +8776,7 @@ export interface imagesPromiseChain {
   message_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   original_url: { execute: (request?: boolean | number, defaultValue?: String) => Promise<String> }
   public: { execute: (request?: boolean | number, defaultValue?: Boolean) => Promise<Boolean> }
+  size: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
   thumbnail_url: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   url: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   /** An object relationship */
@@ -8793,6 +8835,7 @@ export interface imagesObservableChain {
   message_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   original_url: { execute: (request?: boolean | number, defaultValue?: String) => Observable<String> }
   public: { execute: (request?: boolean | number, defaultValue?: Boolean) => Observable<Boolean> }
+  size: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
   thumbnail_url: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   url: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   /** An object relationship */
@@ -9411,6 +9454,7 @@ export interface images_aggregate_fieldsObservableChain {
 export interface images_avg_fieldsPromiseChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
 }
 
@@ -9418,6 +9462,7 @@ export interface images_avg_fieldsPromiseChain {
 export interface images_avg_fieldsObservableChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
 }
 
@@ -9432,6 +9477,7 @@ export interface images_max_fieldsPromiseChain {
   member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   message_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   original_url: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
   thumbnail_url: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   url: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
@@ -9448,6 +9494,7 @@ export interface images_max_fieldsObservableChain {
   member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   message_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   original_url: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
   thumbnail_url: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   url: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
@@ -9464,6 +9511,7 @@ export interface images_min_fieldsPromiseChain {
   member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   message_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   original_url: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
   thumbnail_url: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   url: { execute: (request?: boolean | number, defaultValue?: String | null) => Promise<String | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
@@ -9480,6 +9528,7 @@ export interface images_min_fieldsObservableChain {
   member_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   message_id: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   original_url: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
   thumbnail_url: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   url: { execute: (request?: boolean | number, defaultValue?: String | null) => Observable<String | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
@@ -9489,6 +9538,7 @@ export interface images_min_fieldsObservableChain {
 export interface images_stddev_fieldsPromiseChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
 }
 
@@ -9496,6 +9546,7 @@ export interface images_stddev_fieldsPromiseChain {
 export interface images_stddev_fieldsObservableChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
 }
 
@@ -9503,6 +9554,7 @@ export interface images_stddev_fieldsObservableChain {
 export interface images_stddev_pop_fieldsPromiseChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
 }
 
@@ -9510,6 +9562,7 @@ export interface images_stddev_pop_fieldsPromiseChain {
 export interface images_stddev_pop_fieldsObservableChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
 }
 
@@ -9517,6 +9570,7 @@ export interface images_stddev_pop_fieldsObservableChain {
 export interface images_stddev_samp_fieldsPromiseChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
 }
 
@@ -9524,6 +9578,7 @@ export interface images_stddev_samp_fieldsPromiseChain {
 export interface images_stddev_samp_fieldsObservableChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
 }
 
@@ -9531,6 +9586,7 @@ export interface images_stddev_samp_fieldsObservableChain {
 export interface images_sum_fieldsPromiseChain {
   height: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Int | null) => Promise<Int | null> }
 }
 
@@ -9538,6 +9594,7 @@ export interface images_sum_fieldsPromiseChain {
 export interface images_sum_fieldsObservableChain {
   height: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Int | null) => Observable<Int | null> }
 }
 
@@ -9545,6 +9602,7 @@ export interface images_sum_fieldsObservableChain {
 export interface images_var_pop_fieldsPromiseChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
 }
 
@@ -9552,6 +9610,7 @@ export interface images_var_pop_fieldsPromiseChain {
 export interface images_var_pop_fieldsObservableChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
 }
 
@@ -9559,6 +9618,7 @@ export interface images_var_pop_fieldsObservableChain {
 export interface images_var_samp_fieldsPromiseChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
 }
 
@@ -9566,6 +9626,7 @@ export interface images_var_samp_fieldsPromiseChain {
 export interface images_var_samp_fieldsObservableChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
 }
 
@@ -9573,6 +9634,7 @@ export interface images_var_samp_fieldsObservableChain {
 export interface images_variance_fieldsPromiseChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Promise<Float | null> }
 }
 
@@ -9580,6 +9642,7 @@ export interface images_variance_fieldsPromiseChain {
 export interface images_variance_fieldsObservableChain {
   height: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   id: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
+  size: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
   width: { execute: (request?: boolean | number, defaultValue?: Float | null) => Observable<Float | null> }
 }
 
