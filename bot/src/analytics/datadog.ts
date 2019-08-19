@@ -2,22 +2,24 @@ import { BufferedMetricsLogger } from "datadog-metrics";
 import { AkairoClient } from "discord-akairo";
 import { countMembers, logger } from "../utils";
 
-const { HIFUMI_DATADOG_API_KEY } = process.env;
+const { HIFUMI_DATADOG_API_KEY, NODE_ENV } = process.env;
 
 const _dd = new BufferedMetricsLogger({
   apiKey: HIFUMI_DATADOG_API_KEY || "disabled in development",
   host: "hifumi",
   prefix: "hifumi.",
   // allows us to buffer stats and send them in bulk
-  flushIntervalSeconds: 15,
+  flushIntervalSeconds: 15
 });
 
 /**
  * Wrapper function that prevents calling metrics in development mode
  * @param func
  */
-export const withDatadog = (func: (client: BufferedMetricsLogger) => void): void => {
-  if (HIFUMI_DATADOG_API_KEY) {
+export const withDatadog = (
+  func: (client: BufferedMetricsLogger) => void
+): void => {
+  if (HIFUMI_DATADOG_API_KEY && NODE_ENV === "production") {
     func(_dd);
   }
 };
@@ -28,7 +30,7 @@ export const sendAnalytics = (client: AkairoClient) => {
   const totalServers = client.guilds.size;
   const ping = client.ping;
   const uptime = client.uptime / perMinute;
-  withDatadog((datadog) => {
+  withDatadog(datadog => {
     logger.debug(`Sending analytics`);
     datadog.gauge("bot.member.count", totalMembers);
     datadog.gauge("bot.server.count", totalServers);

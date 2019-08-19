@@ -9,6 +9,7 @@ import {
   tags_insert_input
 } from "../graphql/schema";
 import { logger } from "../utils";
+import { reactUploaded } from "../services/reaction";
 
 export const registerTags = (tags: tags_insert_input[]) => {
   return _client.mutation({
@@ -73,27 +74,34 @@ const isArchiveChannel = async (channel: Channel) => {
   return res.data.image_channels.some(chan => chan.channel_id === channel.id);
 };
 
-const hasArchivableContent = async (message: Message) =>
-  message.attachments.size > 0;
+const hasArchivableContent = (message: Message) => message.attachments.size > 0;
 
-const archiveAttachments = async (message: Message) => {
-  const uploads = message.attachments.map(async att => {
-    const src = await resolve(att.url);
-    const tagsRes = await _client.query({
-      auto_tags: [
-        {
-          where: {
-            channel_id: {
-              _eq: message.channel.id
-            }
-          }
-        },
-        {
+const fetchChannelAutoTags = async (channelId: string): Promise<string[]> => {
+  const res = await _client.query({
+    image_channels_by_pk: [
+      {
+        channel_id: channelId
+      },
+      {
+        auto_tags: {
           name: 1
         }
-      ]
-    });
-    const tags = tagsRes.data!.auto_tags.map(t => t.name);
+      }
+    ]
+  });
+  if (res.errors) {
+    return Promise.reject(res.errors);
+  }
+  const channel = res.data!.image_channels_by_pk;
+  if (!channel) {
+    return Promise.reject(Error(`No channel with id ${channelId} was found`));
+  }
+  return channel.auto_tags.map(r => r.name);
+};
+
+export const archiveAttachments = async (message: Message, tags: string[]) => {
+  const uploads = message.attachments.map(async att => {
+    const src = await resolve(att.url);
     const e = await registerTags(
       tags.map(tag => ({
         name: tag,
@@ -110,6 +118,8 @@ const archiveAttachments = async (message: Message) => {
       {
         message_id: message.id,
         original_url: src,
+        guild_id: message.guild.id,
+        member_id: message.author.id,
         image_tags: {
           data: tags.map(tag => ({
             name: tag,
@@ -127,23 +137,27 @@ const archiveAttachments = async (message: Message) => {
   return Promise.all(uploads).then(res => {
     withDatadog(client => {
       client.increment("bot.images.uploaded", res.length);
-      client.increment("bot.images.auto_tagged", res.length)
+      client.increment("bot.images.auto_tagged", res.length);
     });
     return res;
   });
 };
 
 export const processImage = async (message: Message) => {
-  if (
+  const isInvalidImage =
     !hasArchivableContent(message) ||
-    !(await isArchiveChannel(message.channel))
-  ) {
+    !(await isArchiveChannel(message.channel));
+
+  if (isInvalidImage) {
     return;
   }
+
   logger.debug(
     `Uploading valid image from channel ${
-    message.channel instanceof TextChannel ? message.channel.name : ""
+      message.channel instanceof TextChannel ? message.channel.name : ""
     }`
   );
-  return archiveAttachments(message);
+  const autoTags = await fetchChannelAutoTags(message.channel.id);
+  await archiveAttachments(message, autoTags);
+  await reactUploaded(message);
 };

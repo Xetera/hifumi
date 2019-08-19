@@ -5,10 +5,9 @@ import R from "ramda";
 import { withDatadog } from "../analytics/datadog";
 import { insertImages, registerTags } from "../archive/image";
 import { _client } from "../db";
-import {
-  images_insert_input,
-} from "../graphql/schema";
+import { images_insert_input } from "../graphql/schema";
 import { images_bool_exp } from "../graphql/schema";
+import { reactUploaded } from "../services/reaction";
 
 export default class extends Command {
   constructor() {
@@ -128,27 +127,24 @@ export default class extends Command {
 
     await registerTags(tagsToAdd);
 
-    const { filename } = targetMsg.attachments.first() || { filename: null };
     const imageTags = tags.length
       ? {
-        image_tags: {
-          data: tagsToAdd.map(items => ({
-            ...items,
-            user_id: targetMsg.author.id
-          }))
+          image_tags: {
+            data: tagsToAdd.map(items => ({
+              ...items,
+              user_id: targetMsg.author.id
+            }))
+          }
         }
-      }
       : {};
     const image: images_insert_input = {
       ...imageTags,
-      file_name: filename,
       member_id: targetMsg.author.id,
       message_id: targetMsg.id,
       guild_id: targetMsg.guild.id,
       original_url: url
     };
     const resp = await insertImages([image]);
-    console.log(resp);
     withDatadog(client => {
       client.increment("bot.images.uploaded");
       client.increment("bot.images.tags_added", tags.length);
@@ -156,9 +152,10 @@ export default class extends Command {
     const wrappedTags = tags.map(t => `\`${t}\``);
     msg.channel.send(
       `✅ | Saved ${
-      targetMsg.author.username
+        targetMsg.author.username
       }'s image with the following tags: ${wrappedTags.join(", ")}`
     );
+    reactUploaded(targetMsg);
   }
 
   private findValidMessage = (channel: TextChannel) =>

@@ -1,0 +1,4 @@
+- args:
+    sql: COMMENT ON COLUMN "public"."images"."format" IS E'Image format (png, jpg,
+      gif, etc)'
+  type: run_sql

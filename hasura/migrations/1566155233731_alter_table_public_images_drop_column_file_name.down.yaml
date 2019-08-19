@@ -1,0 +1,6 @@
+- args:
+    sql: ALTER TABLE "public"."images" ADD COLUMN "file_name" text
+  type: run_sql
+- args:
+    sql: ALTER TABLE "public"."images" ALTER COLUMN "file_name" DROP NOT NULL
+  type: run_sql

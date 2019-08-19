@@ -1,0 +1,3 @@
+- args:
+    sql: COMMENT ON COLUMN "public"."images"."format" IS E'null'
+  type: run_sql

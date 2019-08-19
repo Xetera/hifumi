@@ -1,0 +1,6 @@
+- args:
+    sql: ALTER TABLE "public"."images" ALTER COLUMN "width" TYPE integer;
+  type: run_sql
+- args:
+    sql: COMMENT ON COLUMN "public"."images"."width" IS E'null'
+  type: run_sql
