@@ -10,9 +10,7 @@
           v-for="guild in guilds"
           :key="`${guild.name}:${guild.icon}`"
         >
-          <router-link
-            :to="{ name: 'guild-home', params: { guild_id: guild.guild_id } }"
-          >
+          <router-link :to="{ name: 'guild-home', params: { guild_id: guild.guild_id } }">
             <SidebarGuild :name="guild.name" :image="guild.icon" />
           </router-link>
         </div>
@@ -49,9 +47,7 @@ export default {
     SidebarGuild
   },
   computed: {
-    ...mapGetters({
-      guilds: "guildsArray"
-    }),
+    ...mapGetters({ guilds: "guildsArray" }),
     inSupportServer() {
       return this.guilds.includes("414334929002823680");
     }

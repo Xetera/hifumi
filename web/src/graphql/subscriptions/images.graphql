@@ -10,6 +10,7 @@ subscription ImagesSubscription(
     offset: $offset
   ) {
     id
+    thumbnail_url
     url
     created_at
     user {

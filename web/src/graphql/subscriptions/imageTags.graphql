@@ -1,4 +1,4 @@
-subscription ImageTags($limit: Int = 20, $where: __tag_counts_bool_exp) {
+subscription ImageTags($limit: Int = 20, $where: tag_counts_bool_exp) {
   tags: tag_count(limit: $limit, where: $where, order_by: { count: desc }) {
     name
     count

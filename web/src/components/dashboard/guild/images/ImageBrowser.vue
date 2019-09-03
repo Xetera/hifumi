@@ -3,15 +3,6 @@
     <transition name="fade">
       <div class="images-filter-field">
         <h3 class="title thin">{{ images.length }} results</h3>
-        <!--        <SearchTitle-->
-        <!--          search="Newgame"-->
-        <!--          :tags="['hifumi', 'cute']"-->
-        <!--          :results="images.length"-->
-        <!--        />-->
-        <!--        <div class="margin-top image-page-search">-->
-        <!--          <SearchBar class="padding-top" />-->
-        <!--        </div>-->
-
         <div class="margin-top">
           <CurrentTags />
         </div>
@@ -25,21 +16,9 @@
     <b-modal :active.sync="modalOpen" scroll="clip">
       <ImageModal v-bind="modal" />
     </b-modal>
-    <div
-      class="margin-top"
-      v-infinite-scroll="infiniteHandler"
-      infinite-scroll-disabled="loading"
-      infinite-scroll-distance="10"
-    >
-      <ServerImageGrid v-if="images.length > 0">
-        <ServerImage
-          v-for="image in images"
-          :key="image.url"
-          v-bind="image"
-          @open-modal="openModal"
-        />
-      </ServerImageGrid>
-    </div>
+    <ServerImageGrid v-if="images.length > 0">
+      <ServerImage v-for="image in images" :key="image.url" v-bind="image" @open-modal="openModal" />
+    </ServerImageGrid>
   </div>
 </template>
 
@@ -107,13 +86,11 @@ export default {
       images: {
         query: graphql(images),
         variables() {
-          const { where, limit, offset } = this;
           this.$store.commit("images/setLoading", true);
-          console.log("where");
           return {
-            where,
-            limit,
-            offset
+            where: this.where,
+            limit: this.limit,
+            offset: this.offset
           };
         },
         result({ data }) {

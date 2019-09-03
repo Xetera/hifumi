@@ -5,47 +5,32 @@
       <img
         class="server-image"
         :class="{ 'image-errored': errored }"
-        :src="proxyImage"
+        :src="thumbnailImage"
         alt="image"
-        v-if="url"
+        v-if="thumbnail_url"
         :style="{ display: loaded ? 'block' : 'none' }"
         @error="imageLoadError"
         @load="removePlaceholder"
       />
       <div v-if="loaded && !errored" class="image-tags">
-        <div
-          v-for="tag in relevantTags"
-          :key="tag.name"
-        >
+        <div v-for="tag in relevantTags" :key="tag.name">
           <ImageTag :name="tag.name" />
         </div>
         <div v-if="remainingTags > 0">
           <ImageTag :name="`${remainingTags} more tags`" />
         </div>
       </div>
-      <div v-if="loaded && errored" class="image-error-message">
-        Oops
-      </div>
+      <div v-if="loaded && errored" class="image-error-message">Oops</div>
     </div>
     <transition name="slide-fade">
       <div v-if="loaded" class="image-bottom">
         <div class="bottom-left">
-          <img
-            class="image-user-avatar"
-            :src="avatar"
-            alt="user-avatar"
-            @error="avatarLoadError"
-          />
+          <img class="image-user-avatar" :src="avatar" alt="user-avatar" @error="avatarLoadError" />
           <div>
             <p class="image-user-name">{{ name }}</p>
           </div>
         </div>
-        <router-link
-          :to="{ name: 'image', params: { id } }"
-          class="bottom-right"
-        >
-          View
-        </router-link>
+        <router-link :to="{ name: 'image', params: { id } }" class="bottom-right">View</router-link>
       </div>
     </transition>
   </div>
@@ -62,6 +47,7 @@ export default {
   components: { ImageTag, ServerImagePlaceholder },
   props: {
     id: Number,
+    thumbnail_url: String,
     url: String,
     image_tags: Array,
     user: Object,
@@ -78,11 +64,11 @@ export default {
     name() {
       return this.user ? this.user.name : "Unknown";
     },
-    proxyImage() {
+    thumbnailImage() {
       if (this.errored) {
-        return placeholder;
+        return this.url;
       }
-      return proxy(this.url);
+      return this.thumbnail_url;
     },
     relevantTags() {
       return this.image_tags.slice(0, 4);
@@ -92,7 +78,7 @@ export default {
     }
   },
   methods: {
-    addTag( tag) {
+    addTag(tag) {
       this.$store.dispatch("images/addSelected", tag);
     },
     async removePlaceholder() {
@@ -110,8 +96,6 @@ export default {
 
 <style scoped lang="scss">
 @import "@/assets/scss/animations.scss";
-.image-error-message {
-}
 .image-errored {
   border-bottom: 1px red solid;
 }
@@ -134,6 +118,7 @@ export default {
 .server-image {
   @include image-dimensions;
   position: absolute;
+  object-fit: cover;
 }
 
 .bottom-left {
