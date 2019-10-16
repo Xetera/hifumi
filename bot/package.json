@@ -58,7 +58,7 @@
 		"graphql-tag": "^2.10.1",
 		"graphql-typed-client": "^1.5.1",
 		"media-extractor": "^1.1.3",
-		"mongoose": "^5.4.16",
+		"mongoose": "^5.7.5",
 		"pino": "^5.11.1",
 		"ramda": "^0.26.1"
 	}
